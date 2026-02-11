@@ -295,19 +295,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\seanp\\.nuget\\packages\\": {}
+    "C:\\Users\\jjkps\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2\\Sprint2\\Sprint2.csproj",
+      "projectUniqueName": "C:\\Users\\jjkps\\CSE3902\\Sprint2\\CSE3902Sprint2\\Sprint2\\Sprint2.csproj",
       "projectName": "Sprint2",
-      "projectPath": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2\\Sprint2\\Sprint2.csproj",
-      "packagesPath": "C:\\Users\\seanp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2\\Sprint2\\obj\\",
+      "projectPath": "C:\\Users\\jjkps\\CSE3902\\Sprint2\\CSE3902Sprint2\\Sprint2\\Sprint2.csproj",
+      "packagesPath": "C:\\Users\\jjkps\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jjkps\\CSE3902\\Sprint2\\CSE3902Sprint2\\Sprint2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\seanp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\jjkps\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -360,19 +360,19 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[9.0.12, 9.0.12]"
+            "version": "[9.0.11, 9.0.11]"
           },
           {
             "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[9.0.12, 9.0.12]"
+            "version": "[9.0.11, 9.0.11]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[9.0.12, 9.0.12]"
+            "version": "[9.0.11, 9.0.11]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[9.0.12, 9.0.12]"
+            "version": "[9.0.11, 9.0.11]"
           }
         ],
         "frameworkReferences": {
@@ -380,7 +380,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
