@@ -1,14 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Sprint2.Controllers;
+using Sprint2.Entities;
+using Sprint2.Interfaces;
+using System.Collections.Generic;
 
 namespace Sprint2;
 
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
+    private SpriteBatch spriteBatch;
+    public SpriteBatch SpriteBatch { get => spriteBatch; }
+    private List<IController> controllers;
+    private IPlayer player;
+    public IPlayer Player { get => player; }
 
     public Game1()
     {
@@ -19,34 +25,35 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
+        controllers = new List<IController>();
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // TODO: use this.Content to load your game content here
+        spriteBatch = new SpriteBatch(GraphicsDevice);
+        controllers.Add(new KeyBoardController(this));
+        player = new Link(this);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
-
-        // TODO: Add your update logic here
-
+        foreach (IController controller in controllers)
+        {
+            controller.Update();
+        }
+        player.Update(gameTime);
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
+        spriteBatch.Begin();
 
-        // TODO: Add your drawing code here
+        player.Draw();
 
+        spriteBatch.End();
         base.Draw(gameTime);
     }
 }
