@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.EntityStateMachine;
+using Sprint2.EntityStateMachines;
 using Sprint2.Interfaces;
 using Sprint2.Sprites;
+
 
 namespace Sprint2.Player
 {

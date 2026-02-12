@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using static Sprint2.Sprites.LinkSprite;
+
 
 namespace Sprint2.Constants
 {

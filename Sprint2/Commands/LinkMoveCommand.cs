@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Sprint2.Interfaces;
 
-namespace Sprint2.Command
+
+namespace Sprint2.Commands
 {
     public class LinkMoveCommand : ICommand
     {

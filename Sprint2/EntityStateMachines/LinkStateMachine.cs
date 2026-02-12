@@ -3,7 +3,8 @@ using Sprint2.Constants;
 using Sprint2.Interfaces;
 using Sprint2.Sprites;
 
-namespace Sprint2.EntityStateMachine
+
+namespace Sprint2.EntityStateMachines
 {
     public class LinkStateMachine : IEntityStateMachine
     {

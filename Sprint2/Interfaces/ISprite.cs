@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using static Sprint2.Sprites.LinkSprite;
+
 
 namespace Sprint2.Interfaces
 {

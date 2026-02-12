@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Constants;
 using Sprint2.Interfaces;
 
+
 namespace Sprint2.Sprites
 {
     public class LinkSprite : ISprite

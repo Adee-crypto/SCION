@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
+
 namespace Sprint2.Interfaces
 {
     public interface IEntityStateMachine
