@@ -295,19 +295,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+    "C:\\Users\\hsbj1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\vscp\\sprint2\\Sprint2\\Sprint2.csproj",
+      "projectUniqueName": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Sprint2.csproj",
       "projectName": "Sprint2",
-      "projectPath": "E:\\vscp\\sprint2\\Sprint2\\Sprint2.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "E:\\vscp\\sprint2\\Sprint2\\obj\\",
+      "projectPath": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Sprint2.csproj",
+      "packagesPath": "C:\\Users\\hsbj1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hsbj1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
