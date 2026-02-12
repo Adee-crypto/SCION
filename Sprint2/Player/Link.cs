@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.EntityStates;
+using Sprint2.EntityStateMachine;
 using Sprint2.Interfaces;
 using Sprint2.Sprites;
 
-namespace Sprint2.Entities
+namespace Sprint2.Player
 {
     public class Link : IPlayer
     {

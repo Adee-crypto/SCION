@@ -53,7 +53,7 @@ namespace Sprint2.Controllers
 
                 if (previousKeyPressed && !currentKeyPressed) // stop pressing a key
                 {
-                    this.commands.KeyboardCommands[keySet].StopExecute();
+                    this.commands.KeyboardCommands[keySet].Unexecute();
                 }
             }
 

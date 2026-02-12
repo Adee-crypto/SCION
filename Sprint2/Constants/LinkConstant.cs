@@ -9,7 +9,7 @@ namespace Sprint2.Constants
     {
         public const int linkDefaultXDirection = 1;
         public const int linkDefaultyDirection = 1;
-        public const double linkMillisecondsPerFrame = 100;
+        public const double linkMillisecondsPerFrame = 250;
         public static Dictionary<LinkAnimationState, Rectangle[]> GetLinkFrames()
         {
             Dictionary<LinkAnimationState, Rectangle[]> LinkFramesMap = new Dictionary<LinkAnimationState, Rectangle[]>()

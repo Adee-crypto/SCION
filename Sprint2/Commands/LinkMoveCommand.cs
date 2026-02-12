@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Sprint2.Interfaces;
-using System;
 
 namespace Sprint2.Command
 {
@@ -38,7 +37,7 @@ namespace Sprint2.Command
             game.Player.ChangeDirection(direction);
         }
 
-        public void StopExecute()
+        public void Unexecute()
         {
             game.Player.ChangeDirection(new Vector2(0, 0));
         }

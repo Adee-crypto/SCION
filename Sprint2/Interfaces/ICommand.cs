@@ -3,6 +3,6 @@
     public interface ICommand
     {
         public void Execute(int index);
-        public void StopExecute();
+        public void Unexecute();
     }
 }

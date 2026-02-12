@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Constants;
-using Sprint2.EntityStates;
 using Sprint2.Interfaces;
-using System;
 
 namespace Sprint2.Sprites
 {

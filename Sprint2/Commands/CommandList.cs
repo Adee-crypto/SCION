@@ -26,6 +26,8 @@ namespace Sprint2.Commands
                 //{new Keys[] {Keys.Z, Keys.N}, new LinkAttackCommand(game)},
                 //{new Keys[] {Keys.D1}, new LinkItemCommand(game)},
                 //{new Keys[] {Keys.E}, new LinkDamagedCommand(game)}
+                {new Keys[] {Keys.Q}, new QuitCommand(game)}
+
             };
         }
 
