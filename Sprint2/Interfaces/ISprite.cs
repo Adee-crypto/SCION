@@ -6,7 +6,7 @@ namespace Sprint2.Interfaces
 {
     internal interface ISprite
     {
-        public void setState(LinkAnimationState linkAnimationState);
+        public void setFrames(LinkAnimationState linkAnimationState);
         public void Update(GameTime gameTime);
         public void Draw();
     }

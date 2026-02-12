@@ -26,6 +26,11 @@ namespace Sprint2.Player
             linkStateMachine.ChangeDirection(direction);
         }
 
+        public void attack()
+        {
+            linkStateMachine.attack();
+        }
+
         public void Update(GameTime gameTime)
         {
             linkStateMachine.Update(gameTime);

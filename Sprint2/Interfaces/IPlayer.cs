@@ -6,7 +6,11 @@ namespace Sprint2.Interfaces
     public interface IPlayer
     {
         public void ChangeDirection(Vector2 direction);
+
+        public void attack();       
+
         public void Update(GameTime gameTime);
+
         public void Draw();
     }
 }

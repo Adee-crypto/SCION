@@ -9,7 +9,9 @@ namespace Sprint2.Constants
     {
         public const int linkDefaultXDirection = 1;
         public const int linkDefaultyDirection = 1;
-        public const double linkMillisecondsPerFrame = 250;
+        public const float linkSecondsPerFrame = 0.25f;
+        public const float linkSpeed = 100;
+
         public static Dictionary<LinkAnimationState, Rectangle[]> GetLinkFrames()
         {
             Dictionary<LinkAnimationState, Rectangle[]> LinkFramesMap = new Dictionary<LinkAnimationState, Rectangle[]>()
@@ -21,25 +23,13 @@ namespace Sprint2.Constants
                 { LinkAnimationState.LeftFacing, [new (32, 0, 16, 16)] },
                 { LinkAnimationState.LeftRunning, [new(32, 0, 16, 16), new(48, 0, 16, 16)] },
                 { LinkAnimationState.RightFacing, [new (0, 0, 16, 16)] },
-                { LinkAnimationState.RightRunning, [new(0, 0, 16, 16), new(16, 0, 16, 16)] }
+                { LinkAnimationState.RightRunning, [new(0, 0, 16, 16), new(16, 0, 16, 16)] },
+                { LinkAnimationState.UpAttack, [new(32, 32, 16, 16)]},
+                { LinkAnimationState.DownAttack, [new(48, 32, 16, 16)]},
+                { LinkAnimationState.LeftAttack, [new(16, 32, 16, 16)]},
+                { LinkAnimationState.RightAttack, [new(0, 32, 16, 16)]},
             };
             return LinkFramesMap;
-        }
-
-        public static Dictionary<LinkAnimationState, Vector2> GetLinkVelocity()
-        {
-            Dictionary<LinkAnimationState, Vector2> LinkVelocity = new Dictionary<LinkAnimationState, Vector2>()
-            {
-                { LinkAnimationState.UpRunning, new Vector2(0, -1) },
-                { LinkAnimationState.UpFacing, new Vector2(0, 0) },
-                { LinkAnimationState.DownRunning, new Vector2(0, 1) },
-                { LinkAnimationState.DownFacing, new Vector2(0, 0) },
-                { LinkAnimationState.LeftRunning, new Vector2(-1, 0) },
-                { LinkAnimationState.LeftFacing, new Vector2(0, 0) },
-                { LinkAnimationState.RightRunning, new Vector2(1, 0) },
-                { LinkAnimationState.RightFacing, new Vector2(0, 0) }
-            };
-            return LinkVelocity;
         }
     }
 }

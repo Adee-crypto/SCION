@@ -18,18 +18,25 @@ namespace Sprint2.Sprites
             LeftRunning,
             RightFacing,
             RightRunning,
+            UpAttack,
+            DownAttack,
+            LeftAttack,
+            RightAttack
         };
-        private LinkAnimationState linkAnimationState;
         private SpriteBatch spriteBatch;
         private Texture2D linkTextrue;
         private Rectangle[] frames;
         private int currentFrameIndex;
         private double timeSinceLastFrame;
         private Vector2 position;
+        public Vector2 Position
+        {
+            get => position;
+            set => position = value;
+        }
 
         public LinkSprite(SpriteBatch spriteBatch, Texture2D linkTextrue)
         {   
-            linkAnimationState = LinkAnimationState.RightFacing;
             this.spriteBatch = spriteBatch;
             this.linkTextrue = linkTextrue;
             frames = LinkConstant.GetLinkFrames()[LinkAnimationState.RightFacing];
@@ -38,24 +45,20 @@ namespace Sprint2.Sprites
             position = new Vector2(0, 0);
         }
 
-        public void setState(LinkAnimationState linkAnimationState)
+        public void setFrames(LinkAnimationState linkAnimationState)
         {
-            this.linkAnimationState = linkAnimationState;
+            frames = LinkConstant.GetLinkFrames()[linkAnimationState];
             currentFrameIndex = 0;
             timeSinceLastFrame = 0;
         }
         public void Update(GameTime gameTime)
         {
-            frames = LinkConstant.GetLinkFrames()[linkAnimationState];
-
-            timeSinceLastFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (timeSinceLastFrame >= LinkConstant.linkMillisecondsPerFrame)
+            timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
+            if (timeSinceLastFrame >= LinkConstant.linkSecondsPerFrame)
             {
                 currentFrameIndex = (currentFrameIndex + 1) % frames.Length; // Frames rotate
                 timeSinceLastFrame = 0;
             }
-
-            position += LinkConstant.GetLinkVelocity()[linkAnimationState];
         }
 
         public void Draw()
