@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Controllers;
-using Sprint2.Entities;
+using Sprint2.Player;
 using Sprint2.Interfaces;
 using System.Collections.Generic;
 

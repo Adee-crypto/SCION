@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|c:\\users\\hsbj1\\source\\repos\\cse3902sprint2\\sprint2\\commands\\quitcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:commands\\quitcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|c:\\users\\hsbj1\\source\\repos\\cse3902sprint2\\sprint2\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|c:\\users\\hsbj1\\source\\repos\\cse3902sprint2\\sprint2\\commands\\commandlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:commands\\commandlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|c:\\users\\hsbj1\\source\\repos\\cse3902sprint2\\sprint2\\sprites\\linksprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:sprites\\linksprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|c:\\users\\hsbj1\\source\\repos\\cse3902sprint2\\sprint2\\commands\\linkmovecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:commands\\linkmovecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|c:\\users\\hsbj1\\source\\repos\\cse3902sprint2\\sprint2\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|c:\\users\\hsbj1\\source\\repos\\cse3902sprint2\\sprint2\\sprites\\linksprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:sprites\\linksprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|c:\\users\\hsbj1\\source\\repos\\cse3902sprint2\\sprint2\\commands\\quitcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:commands\\quitcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,30 +30,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "LinkMoveCommand.cs",
               "DocumentMoniker": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Commands\\LinkMoveCommand.cs",
               "RelativeDocumentMoniker": "Commands\\LinkMoveCommand.cs",
               "ToolTip": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Commands\\LinkMoveCommand.cs",
               "RelativeToolTip": "Commands\\LinkMoveCommand.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-12T18:58:53.844Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "LinkSprite.cs",
               "DocumentMoniker": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Sprites\\LinkSprite.cs",
               "RelativeDocumentMoniker": "Sprites\\LinkSprite.cs",
               "ToolTip": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Sprites\\LinkSprite.cs",
               "RelativeToolTip": "Sprites\\LinkSprite.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAQwAMAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-12T18:51:34.294Z",
               "EditorCaption": ""
@@ -66,27 +66,27 @@
               "RelativeDocumentMoniker": "Commands\\CommandList.cs",
               "ToolTip": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Commands\\CommandList.cs",
               "RelativeToolTip": "Commands\\CommandList.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBwAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAmwBwAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-12T18:50:35.445Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Game1.cs",
               "DocumentMoniker": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Game1.cs",
               "RelativeDocumentMoniker": "Game1.cs",
               "ToolTip": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Game1.cs",
               "RelativeToolTip": "Game1.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAcAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-12T18:50:23.396Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "QuitCommand.cs",
               "DocumentMoniker": "C:\\Users\\hsbj1\\source\\repos\\CSE3902Sprint2\\Sprint2\\Commands\\QuitCommand.cs",
               "RelativeDocumentMoniker": "Commands\\QuitCommand.cs",
