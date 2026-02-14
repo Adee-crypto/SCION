@@ -135,7 +135,6 @@ C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.pdb
 C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.genruntimeconfig.cache
 C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\ref\Sprint2.dll
 C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\Content\sprites\Link.xnb
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Content\sprites\Link.xnb
 C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Sprint2.exe
 C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Sprint2.deps.json
 C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Sprint2.runtimeconfig.json
@@ -170,3 +169,5 @@ C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\refint\Sprint2.dll
 C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.pdb
 C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.genruntimeconfig.cache
 C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\ref\Sprint2.dll
+C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Content\Link.xnb
+C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Content\testsheet.xnb

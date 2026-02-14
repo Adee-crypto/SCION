@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using Sprint2.Commands;
-using Sprint2.Interfaces;
+using Interfaces;
 
 
 namespace Sprint2.Controllers

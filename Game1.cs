@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Sprint2.Controllers;
 using Sprint2.Player;
-using Sprint2.Interfaces;
-using System.Collections.Generic;
+using Interfaces;
 
 
 namespace Sprint2;
@@ -52,7 +52,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
 
-        player.Draw();
+        player.Draw(spriteBatch);
 
         spriteBatch.End();
         base.Draw(gameTime);

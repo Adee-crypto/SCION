@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Sprint2.Interfaces;
+using Interfaces;
 
 
 namespace Sprint2.Commands
@@ -15,7 +15,7 @@ namespace Sprint2.Commands
 
         public void Execute(int index)
         {
-            game.Player.attack();
+            game.Player.Attack();
         }
 
         public void Unexecute()

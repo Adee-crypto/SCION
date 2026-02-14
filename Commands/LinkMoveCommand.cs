@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Sprint2.Interfaces;
+using Interfaces;
 
 
 namespace Sprint2.Commands

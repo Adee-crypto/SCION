@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
-using Sprint2.Interfaces;
+using Interfaces;
 using System.Collections.Generic;
 
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.Constants;
-using Sprint2.Interfaces;
+using Util;
+using Interfaces;
 
 
 namespace Sprint2.Sprites
@@ -23,7 +23,6 @@ namespace Sprint2.Sprites
             LeftAttack,
             RightAttack
         };
-        private SpriteBatch spriteBatch;
         private Texture2D linkTextrue;
         private Rectangle[] frames;
         private int currentFrameIndex;
@@ -35,9 +34,8 @@ namespace Sprint2.Sprites
             set => position = value;
         }
 
-        public LinkSprite(SpriteBatch spriteBatch, Texture2D linkTextrue)
-        {   
-            this.spriteBatch = spriteBatch;
+        public LinkSprite(Texture2D linkTextrue)
+        {
             this.linkTextrue = linkTextrue;
             frames = LinkConstant.GetLinkFrames()[LinkAnimationState.RightFacing];
             currentFrameIndex = 0;
@@ -45,7 +43,7 @@ namespace Sprint2.Sprites
             position = new Vector2(0, 0);
         }
 
-        public void setFrames(LinkAnimationState linkAnimationState)
+        public void SetFrames(LinkAnimationState linkAnimationState)
         {
             frames = LinkConstant.GetLinkFrames()[linkAnimationState];
             currentFrameIndex = 0;
@@ -61,7 +59,7 @@ namespace Sprint2.Sprites
             }
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(linkTextrue, position, frames[currentFrameIndex], Color.White);
         }

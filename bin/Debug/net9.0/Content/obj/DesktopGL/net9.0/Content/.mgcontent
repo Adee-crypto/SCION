@@ -4,9 +4,11 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/dcveovt-737d0eac-6895-4227-b7ac-a789ff421786-1335908830.png</File>
     <File>C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/sprites/Link.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

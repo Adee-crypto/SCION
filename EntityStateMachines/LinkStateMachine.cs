@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Sprint2.Constants;
-using Sprint2.Interfaces;
+using Microsoft.Xna.Framework.Graphics;
+using Util;
+using Interfaces;
 using Sprint2.Sprites;
+using static Sprint2.Sprites.LinkSprite;
 
 
 namespace Sprint2.EntityStateMachines
@@ -35,28 +37,28 @@ namespace Sprint2.EntityStateMachines
             if (newDirection.X == 0 && newDirection.Y == 0)
             {
                 linkMode = LinkMode.Still;
-                if (currentDirection.X > 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.RightFacing);
-                if (currentDirection.X < 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.LeftFacing);
-                if (currentDirection.Y > 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.DownFacing);
-                if (currentDirection.Y < 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.UpFacing);
+                if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
+                if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
+                if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
+                if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
             }
             else
             {
                 currentDirection = newDirection;
                 linkMode = LinkMode.Moving;
-                if (newDirection.X > 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.RightRunning);
-                if (newDirection.X < 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.LeftRunning);
-                if (newDirection.Y > 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.DownRunning);
-                if (newDirection.Y < 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.UpRunning);
+                if (newDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
+                if (newDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
+                if (newDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownRunning);
+                if (newDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpRunning);
             }
         }
 
-        public void attack()
+        public void Attack()
         {
-            if (currentDirection.X > 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.RightAttack);
-            if (currentDirection.X < 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.LeftAttack);
-            if (currentDirection.Y > 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.DownAttack);
-            if (currentDirection.Y < 0) linkSprite.setFrames(LinkSprite.LinkAnimationState.UpAttack);
+            if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
+            if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
+            if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownAttack);
+            if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpAttack);
         }
 
         public void Update(GameTime gameTime)
@@ -69,9 +71,9 @@ namespace Sprint2.EntityStateMachines
             linkSprite.Update(gameTime);
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
-            linkSprite.Draw();
+            linkSprite.Draw(spriteBatch);
         }
     }
 }

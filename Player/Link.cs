@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.EntityStateMachines;
-using Sprint2.Interfaces;
+using Interfaces;
 using Sprint2.Sprites;
-
 
 namespace Sprint2.Player
 {
@@ -17,7 +16,7 @@ namespace Sprint2.Player
         public Link(Game1 game)
         {
             Texture2D linkTexture = game.Content.Load<Texture2D>("bin/DesktopGL/sprites/Link");
-            linkSprite = new LinkSprite(game.SpriteBatch, linkTexture);
+            linkSprite = new LinkSprite(linkTexture);
             linkStateMachine = new LinkStateMachine(linkSprite);
         }
 
@@ -26,9 +25,9 @@ namespace Sprint2.Player
             linkStateMachine.ChangeDirection(direction);
         }
 
-        public void attack()
+        public void Attack()
         {
-            linkStateMachine.attack();
+            linkStateMachine.Attack();
         }
 
         public void Update(GameTime gameTime)
@@ -36,9 +35,9 @@ namespace Sprint2.Player
             linkStateMachine.Update(gameTime);
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
-            linkStateMachine.Draw();
+            linkStateMachine.Draw(spriteBatch);
         }
     }
 }

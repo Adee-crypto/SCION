@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"c:/Users/seanp/MonoGame_Projects/Sprint2/Content/Link.png","c:/Users/seanp/MonoGame_Projects/Sprint2/Content/bin/DesktopGL/Link.xnb","TextureProcessor","Texture2DContent",1719,24661,0.2636654
+"c:/Users/seanp/MonoGame_Projects/Sprint2/Content/testsheet.png","c:/Users/seanp/MonoGame_Projects/Sprint2/Content/bin/DesktopGL/testsheet.xnb","TextureProcessor","Texture2DContent",235737,835669,0.439777
