@@ -36,8 +36,8 @@ public class Game1 : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
         controllers.Add(new KeyBoardController(this));
-        player = new Link(this.Content.Load<Texture2D>("bin/DesktopGL/sprites/Link"));
-        // testPlant = new(PlantConst.Species.grass, this.Content.Load<Texture2D>("bin/DesktopGL/sprites/testsheet"), (20, 20));
+        player = new Link(Content.Load<Texture2D>("Link"));
+        testPlant = new(PlantConst.Species.grass, Content.Load<Texture2D>("testsheet"), (20, 20));
     }
 
     protected override void Update(GameTime gameTime)
