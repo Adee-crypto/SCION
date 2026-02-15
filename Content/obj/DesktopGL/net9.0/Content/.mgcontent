@@ -4,8 +4,8 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/Content/Link.png</File>
-    <File>C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/Content/testsheet.png</File>
+    <File>C:/Users/seanp/MonoGame_Projects/Sprint2/Content/Link.png</File>
+    <File>C:/Users/seanp/MonoGame_Projects/Sprint2/Content/testsheet.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
