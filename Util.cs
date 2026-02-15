@@ -36,11 +36,13 @@ public static class LinkUtil
 }
 
 public static class PlantUtil {
+    public const int cellWidth = 16; 
+
     public static Dictionary<Plant.Species, Rectangle> SpeciesSpriteRects = new Dictionary<Plant.Species, Rectangle>()
     {
-        { Plant.Species.grass, new (0, 0, 16, 16) },
-        { Plant.Species.apple, new (16, 0, 16, 16) },
-        { Plant.Species.pineapple, new (32, 0, 16, 16) },
+        { Plant.Species.grass, new (0, 0, cellWidth, cellWidth) },
+        { Plant.Species.apple, new (cellWidth, 0, cellWidth, cellWidth) },
+        { Plant.Species.pineapple, new (2*cellWidth, 0, cellWidth, cellWidth) },
     };
 
     public static List<(int, int)> growDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];

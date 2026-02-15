@@ -39,11 +39,11 @@ public class Plant(Plant.Species species, Texture2D spritesheet, (int, int) root
     {
         foreach ((int x, int y) in stem_cells)
         {
-            spriteBatch.Draw(spritesheet, new Vector2(x * 8, y * 8), PlantUtil.SpeciesSpriteRects[species], Color.Gray);
+            spriteBatch.Draw(spritesheet, new Vector2(x, y)*PlantUtil.cellWidth, PlantUtil.SpeciesSpriteRects[species], Color.Gray);
         }
         foreach ((int x, int y) in bud_cells)
         {
-            spriteBatch.Draw(spritesheet, new Vector2(x * 8, y * 8), PlantUtil.SpeciesSpriteRects[species], Color.White);
+            spriteBatch.Draw(spritesheet, new Vector2(x, y)*PlantUtil.cellWidth, PlantUtil.SpeciesSpriteRects[species], Color.White);
         }
     }
 }
