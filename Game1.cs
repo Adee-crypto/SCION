@@ -1,9 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Sprint2.Controllers;
 using Sprint2.Player;
 using Interfaces;
+using Util;
+using System.Dynamic;
 
 
 namespace Sprint2;
@@ -12,10 +15,9 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
-    public SpriteBatch SpriteBatch { get => spriteBatch; }
     private List<IController> controllers;
-    private IPlayer player;
-    public IPlayer Player { get => player; }
+    public IPlayer player;
+    public Plant testPlant;
 
     public Game1()
     {
@@ -26,7 +28,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        controllers = new List<IController>();
+        controllers = [];
         base.Initialize();
     }
 
@@ -34,7 +36,8 @@ public class Game1 : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
         controllers.Add(new KeyBoardController(this));
-        player = new Link(this);
+        player = new Link(this.Content.Load<Texture2D>("bin/DesktopGL/sprites/Link"));
+        // testPlant = new(PlantConst.Species.grass, this.Content.Load<Texture2D>("bin/DesktopGL/sprites/testsheet"), (20, 20));
     }
 
     protected override void Update(GameTime gameTime)
@@ -44,6 +47,10 @@ public class Game1 : Game
             controller.Update();
         }
         player.Update(gameTime);
+        // if (Keyboard.GetState().IsKeyDown(Keys.D1))
+        // {
+        //     testPlant.Update(gameTime);
+        // }
         base.Update(gameTime);
     }
 
@@ -51,7 +58,7 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
-
+        // testPlant.Draw(spriteBatch);
         player.Draw(spriteBatch);
 
         spriteBatch.End();

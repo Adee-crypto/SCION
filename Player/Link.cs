@@ -8,14 +8,11 @@ namespace Sprint2.Player
 {
     public class Link : IPlayer
     {
-        private Game1 game;
-
         private LinkSprite linkSprite;
         private LinkStateMachine linkStateMachine;
 
-        public Link(Game1 game)
+        public Link(Texture2D linkTexture)
         {
-            Texture2D linkTexture = game.Content.Load<Texture2D>("bin/DesktopGL/sprites/Link");
             linkSprite = new LinkSprite(linkTexture);
             linkStateMachine = new LinkStateMachine(linkSprite);
         }

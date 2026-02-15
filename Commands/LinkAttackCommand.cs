@@ -15,12 +15,12 @@ namespace Sprint2.Commands
 
         public void Execute(int index)
         {
-            game.Player.Attack();
+            game.player.Attack();
         }
 
         public void Unexecute()
         {
-            game.Player.ChangeDirection(new Vector2(0, 0));
+            game.player.ChangeDirection(new Vector2(0, 0));
         }
     }
 }

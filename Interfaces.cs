@@ -25,14 +25,12 @@ public interface IController
 public interface IEntityStateMachine : IScreenObject
 {
     public void ChangeDirection(Vector2 direction);
-
     public void Attack();
 }
 
 public interface IPlayer : IScreenObject
 {
     public void ChangeDirection(Vector2 direction);
-
     public void Attack();
 }
 

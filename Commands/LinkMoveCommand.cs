@@ -15,7 +15,7 @@ namespace Sprint2.Commands
 
         public void Execute(int index)
         {
-            index = index % 4;
+            index %= 4;
             Vector2 direction;
             switch (index)
             {
@@ -35,12 +35,12 @@ namespace Sprint2.Commands
                     direction = new Vector2(0, 0); // never happen
                     break;
             }
-            game.Player.ChangeDirection(direction);
+            game.player.ChangeDirection(direction);
         }
 
         public void Unexecute()
         {
-            game.Player.ChangeDirection(new Vector2(0, 0));
+            game.player.ChangeDirection(new Vector2(0, 0));
         }
     }
 }

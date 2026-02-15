@@ -300,11 +300,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2\\Sprint2.csproj",
+      "projectUniqueName": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2 - Backup\\Sprint2.csproj",
       "projectName": "Sprint2",
-      "projectPath": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2\\Sprint2.csproj",
+      "projectPath": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2 - Backup\\Sprint2.csproj",
       "packagesPath": "C:\\Users\\seanp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2\\obj\\",
+      "outputPath": "C:\\Users\\seanp\\MonoGame_Projects\\Sprint2 - Backup\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\seanp\\AppData\\Roaming\\NuGet\\NuGet.Config"
