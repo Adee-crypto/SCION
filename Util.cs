@@ -50,7 +50,7 @@ public static class PlantUtil {
 
     public static Texture2D spritesheet; // Set in Game1.LoadContent
 
-    public static Dictionary<Plant.Species, Rectangle> SpeciesSpriteRects = new Dictionary<Plant.Species, Rectangle>()
+    public static Dictionary<Plant.Species, Rectangle> SpeciesSpriteRects = new()
     {
         { Plant.Species.grass, new (0, 0, cellWidth, cellWidth) },
         { Plant.Species.apple, new (cellWidth, 0, cellWidth, cellWidth) },

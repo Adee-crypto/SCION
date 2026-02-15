@@ -4,14 +4,9 @@ using Interfaces;
 
 namespace Sprint2.Commands
 {
-    public class LinkAttackCommand : ICommand
+    public class LinkAttackCommand(Game1 game) : ICommand
     {
-        private Game1 game;
-
-        public LinkAttackCommand(Game1 game)
-        {
-            this.game = game;
-        }
+        private Game1 game = game;
 
         public void Execute(int index)
         {
@@ -20,7 +15,7 @@ namespace Sprint2.Commands
 
         public void Unexecute()
         {
-            game.player.ChangeDirection(new Vector2(0, 0));
+            game.player.ChangeDirection(-1);
         }
     }
 }

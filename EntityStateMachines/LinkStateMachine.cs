@@ -29,11 +29,19 @@ namespace Sprint2.EntityStateMachines
             speed = LinkUtil.linkSpeed;
         }
 
-        public void ChangeDirection(Vector2 newDirection)
+        public void ChangeDirection(int index)
         {
-            if (newDirection.Equals(currentDirection) && linkMode == LinkMode.Moving) return;
+            Vector2 direction = (index%4) switch
+            {
+                0 => new Vector2(0, -1),// up
+                1 => new Vector2(0, 1),// down
+                2 => new Vector2(-1, 0),// left
+                3 => new Vector2(1, 0),// right
+                _ => new Vector2(0, 0),// never happen
+            };
 
-            if (newDirection.X == 0 && newDirection.Y == 0)
+            // If stopped moving
+            if (direction.X == 0 && direction.Y == 0)
             {
                 linkMode = LinkMode.Still;
                 if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
@@ -41,14 +49,15 @@ namespace Sprint2.EntityStateMachines
                 if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
                 if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
             }
+            //If changing direciton
             else
             {
-                currentDirection = newDirection;
+                currentDirection = direction;
                 linkMode = LinkMode.Moving;
-                if (newDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
-                if (newDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
-                if (newDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownRunning);
-                if (newDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpRunning);
+                if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
+                if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
+                if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownRunning);
+                if (direction.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpRunning);
             }
         }
 

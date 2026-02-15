@@ -17,9 +17,9 @@ namespace Sprint2.Player
             linkStateMachine = new LinkStateMachine(linkSprite);
         }
 
-        public void ChangeDirection(Vector2 direction)
+        public void ChangeDirection(int index)
         {
-            linkStateMachine.ChangeDirection(direction);
+            linkStateMachine.ChangeDirection(index);
         }
 
         public void Attack()

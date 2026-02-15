@@ -61,18 +61,22 @@ public class Game1 : Game
         {
             testPlant.Update(gameTime);
         }
+        if (Keyboard.GetState().IsKeyDown(Keys.D2))
+        {
+            testPlant.ToggleSpecies();
+        }
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
         spriteBatch.Begin();
+
         testPlant.Draw(spriteBatch);
         player.Draw(spriteBatch);
-        spriteBatch.End();
 
+        spriteBatch.End();
         base.Draw(gameTime);
     }
 }
