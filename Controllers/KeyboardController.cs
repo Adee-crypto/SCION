@@ -5,16 +5,15 @@ using Interfaces;
 
 namespace Sprint2.Controllers
 {
-    public class KeyBoardController(Game1 game) : IController
+    public class KeyBoardController : IController
     {
-        private CommandList commands = new CommandList(game);
         private KeyboardState previousKeyboardState = new KeyboardState();
 
         public void Update()
         {
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
-            foreach (Keys[] keySet in commands.KeyboardCommands.Keys)
+            foreach ((Keys[] keySet, ICommand command) in CommandUtil.keyCommandBindings)
             {
                 bool currentKeyPressed = false;
                 bool previousKeyPressed = false;
@@ -36,8 +35,7 @@ namespace Sprint2.Controllers
                     if (currentKeyboardState.IsKeyDown(key) && !moveCancel)
                     {
                         currentKeyPressed = true;
-                        commands.KeyboardCommands[keySet].Execute(i);
-                        break;
+                        command.Execute(i);
                     }
                     else if (previousKeyboardState.IsKeyDown(key))
                     {
@@ -47,7 +45,7 @@ namespace Sprint2.Controllers
 
                 if (previousKeyPressed && !currentKeyPressed) // On key release
                 {
-                    commands.KeyboardCommands[keySet].Unexecute();
+                    command.Unexecute();
                 }
             }
 

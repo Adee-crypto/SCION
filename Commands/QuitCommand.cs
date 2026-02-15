@@ -2,14 +2,9 @@
 
 namespace Sprint2.Commands
 {
-    public class QuitCommand : ICommand
+    public class QuitCommand(Game1 game) : ICommand
     {
-        private Game1 game;
-
-        public QuitCommand(Game1 game)
-        {
-            this.game = game;
-        }
+        private Game1 game = game;
 
         public void Execute(int index)
         {

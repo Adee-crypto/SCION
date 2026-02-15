@@ -1,11 +1,18 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using static Sprint2.Sprites.LinkSprite;
 using System.Linq;
 using System;
+using Interfaces;
 
 namespace Sprint2;
+
+public static class CommandUtil
+{
+    public static Dictionary<Keys[], ICommand> keyCommandBindings;
+}
 
 public static class LinkUtil
 {

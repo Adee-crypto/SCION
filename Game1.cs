@@ -28,18 +28,28 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        keyboardController = new KeyBoardController(this);
-        // mouseController = new MouseController(this); //this doesn't exist yet
         base.Initialize();
+        spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        keyboardController = new KeyBoardController();
+        // mouseController = new MouseController(this); //this doesn't exist yet
+        player = new Link();
+        testPlant = new(Plant.Species.grass, (20, 20));
+
+        CommandUtil.keyCommandBindings = new()
+        {
+            {[Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.W, Keys.S, Keys.A, Keys.D], new Commands.LinkMoveCommand(this)},
+            {[Keys.Z, Keys.N], new Commands.LinkAttackCommand(this)},
+            //{[Keys.D1], new Commands.LinkItemCommand(this)},
+            //{[Keys.E], new Commands.LinkDamagedCommand(this)}
+            {[Keys.Q], new Commands.QuitCommand(this)}
+        };
     }
 
     protected override void LoadContent()
     {
-        spriteBatch = new SpriteBatch(GraphicsDevice);
         LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
-        player = new Link();
-        testPlant = new(Plant.Species.grass, (20, 20));
     }
 
     protected override void Update(GameTime gameTime)
