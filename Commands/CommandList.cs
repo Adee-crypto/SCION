@@ -21,11 +21,11 @@ namespace Sprint2.Commands
         {
             keyboardCommandMap = new Dictionary<Keys[], ICommand>()
             {
-                {new Keys[] {Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.W, Keys.S, Keys.A, Keys.D}, new LinkMoveCommand(game)},
-                {new Keys[] {Keys.Z, Keys.N}, new LinkAttackCommand(game)},
-                //{new Keys[] {Keys.D1}, new LinkItemCommand(game)},
-                //{new Keys[] {Keys.E}, new LinkDamagedCommand(game)}
-                {new Keys[] {Keys.Q}, new QuitCommand(game)}
+                {[Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.W, Keys.S, Keys.A, Keys.D], new LinkMoveCommand(game)},
+                {[Keys.Z, Keys.N], new LinkAttackCommand(game)},
+                //{[Keys.D1], new LinkItemCommand(game)},
+                //{[Keys.E], new LinkDamagedCommand(game)}
+                {[Keys.Q], new QuitCommand(game)}
 
             };
         }

@@ -6,12 +6,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Sprint2;
 
-public class Plant(Plant.Species species, Texture2D spritesheet, (int, int) root)
+public class Plant(Plant.Species species, (int, int) root)
 {
     public enum Species {grass, apple, pineapple};
 
     private Species species = species;
-    private Texture2D spritesheet = spritesheet;
     private HashSet<(int, int)> bud_cells = [root];
     private HashSet<(int, int)> stem_cells = [];
 
@@ -30,7 +29,7 @@ public class Plant(Plant.Species species, Texture2D spritesheet, (int, int) root
             }
         }
 
-        //Move buds to stem, and replenism new buds
+        //Move buds to stem, and replenish new buds
         stem_cells.UnionWith(bud_cells);
         bud_cells = newGrowth; //this very possibly might not do what i want
     }
@@ -39,11 +38,23 @@ public class Plant(Plant.Species species, Texture2D spritesheet, (int, int) root
     {
         foreach ((int x, int y) in stem_cells)
         {
-            spriteBatch.Draw(spritesheet, new Vector2(x, y)*PlantUtil.cellWidth, PlantUtil.SpeciesSpriteRects[species], Color.Gray);
+            spriteBatch.Draw(PlantUtil.spritesheet, new Vector2(x, y)*PlantUtil.cellWidth, PlantUtil.SpeciesSpriteRects[species], Color.Gray);
         }
         foreach ((int x, int y) in bud_cells)
         {
-            spriteBatch.Draw(spritesheet, new Vector2(x, y)*PlantUtil.cellWidth, PlantUtil.SpeciesSpriteRects[species], Color.White);
+            spriteBatch.Draw(PlantUtil.spritesheet, new Vector2(x, y)*PlantUtil.cellWidth, PlantUtil.SpeciesSpriteRects[species], Color.White);
         }
+    }
+
+    //Just a test method, prob won't be used in final game
+    public void ToggleSpecies()
+    {
+        species = species switch
+        {
+            Species.grass => Species.apple,
+            Species.apple => Species.pineapple,
+            Species.pineapple => Species.grass,
+            _ => species, // never happen
+        };
     }
 }

@@ -14,7 +14,8 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
-    private List<IController> controllers;
+    private IController keyboardController;
+    // private IController mouseController; //this doesn't exist yet
     public IPlayer player;
     public Plant testPlant;
 
@@ -27,24 +28,24 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        controllers = [];
+        keyboardController = new KeyBoardController(this);
+        // mouseController = new MouseController(this); //this doesn't exist yet
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
-        controllers.Add(new KeyBoardController(this));
-        player = new Link(Content.Load<Texture2D>("Link"));
-        testPlant = new(Plant.Species.grass, Content.Load<Texture2D>("testsheet"), (20, 20));
+        LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
+        PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
+        player = new Link();
+        testPlant = new(Plant.Species.grass, (20, 20));
     }
 
     protected override void Update(GameTime gameTime)
     {
-        foreach (IController controller in controllers)
-        {
-            controller.Update();
-        }
+        keyboardController.Update();
+        // mouseController.Update();
         player.Update(gameTime);
         if (Keyboard.GetState().IsKeyDown(Keys.D1))
         {
@@ -56,11 +57,12 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
+
         spriteBatch.Begin();
         testPlant.Draw(spriteBatch);
         player.Draw(spriteBatch);
-
         spriteBatch.End();
+
         base.Draw(gameTime);
     }
 }

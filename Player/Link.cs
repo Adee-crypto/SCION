@@ -11,9 +11,9 @@ namespace Sprint2.Player
         private LinkSprite linkSprite;
         private LinkStateMachine linkStateMachine;
 
-        public Link(Texture2D linkTexture)
+        public Link()
         {
-            linkSprite = new LinkSprite(linkTexture);
+            linkSprite = new LinkSprite();
             linkStateMachine = new LinkStateMachine(linkSprite);
         }
 

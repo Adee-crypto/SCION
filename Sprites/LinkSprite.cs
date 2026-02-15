@@ -5,7 +5,7 @@ using Interfaces;
 
 namespace Sprint2.Sprites
 {
-    public class LinkSprite(Texture2D linkTextrue) : ISprite
+    public class LinkSprite() : ISprite
     {
         public enum LinkAnimationState
         {
@@ -22,7 +22,6 @@ namespace Sprint2.Sprites
             LeftAttack,
             RightAttack
         };
-        private Texture2D linkTextrue = linkTextrue;
         private Rectangle[] frames = LinkUtil.GetLinkFrames()[LinkAnimationState.RightFacing];
         private int currentFrameIndex = 0;
         private double timeSinceLastFrame = 0;
@@ -51,7 +50,7 @@ namespace Sprint2.Sprites
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(linkTextrue, position, frames[currentFrameIndex], Color.White);
+            spriteBatch.Draw(LinkUtil.linkTexture, position, frames[currentFrameIndex], Color.White);
         }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using static Sprint2.Sprites.LinkSprite;
 using System.Linq;
 using System;
@@ -13,9 +14,11 @@ public static class LinkUtil
     public const float linkSecondsPerFrame = 0.25f;
     public const float linkSpeed = 100;
 
+    public static Texture2D linkTexture; // Set in Game1.LoadContent
+
     public static Dictionary<LinkAnimationState, Rectangle[]> GetLinkFrames()
     {
-        Dictionary<LinkAnimationState, Rectangle[]> LinkFramesMap = new Dictionary<LinkAnimationState, Rectangle[]>()
+        Dictionary<LinkAnimationState, Rectangle[]> LinkFramesMap = new()
         {
             { LinkAnimationState.UpFacing, [new (16, 16, 16, 16)] },
             { LinkAnimationState.UpRunning, [new (0, 16, 16, 16), new(16, 16, 16, 16)] },
@@ -37,6 +40,8 @@ public static class LinkUtil
 
 public static class PlantUtil {
     public const int cellWidth = 16; 
+
+    public static Texture2D spritesheet; // Set in Game1.LoadContent
 
     public static Dictionary<Plant.Species, Rectangle> SpeciesSpriteRects = new Dictionary<Plant.Species, Rectangle>()
     {

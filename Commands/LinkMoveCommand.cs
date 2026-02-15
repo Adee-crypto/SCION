@@ -15,8 +15,7 @@ namespace Sprint2.Commands
 
         public void Execute(int index)
         {
-            index %= 4;
-            Vector2 direction = index switch
+            Vector2 direction = (index%4) switch
             {
                 0 => new Vector2(0, -1),// up
                 1 => new Vector2(0, 1),// down
