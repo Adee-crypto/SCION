@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Sprint2.Controllers;
 using Sprint2.Player;
 using Interfaces;
-using Util;
 using System.Dynamic;
 
 
@@ -37,7 +36,7 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
         controllers.Add(new KeyBoardController(this));
         player = new Link(Content.Load<Texture2D>("Link"));
-        testPlant = new(PlantConst.Species.grass, Content.Load<Texture2D>("testsheet"), (20, 20));
+        testPlant = new(Plant.Species.grass, Content.Load<Texture2D>("testsheet"), (20, 20));
     }
 
     protected override void Update(GameTime gameTime)
@@ -47,10 +46,10 @@ public class Game1 : Game
             controller.Update();
         }
         player.Update(gameTime);
-        // if (Keyboard.GetState().IsKeyDown(Keys.D1))
-        // {
-        //     testPlant.Update(gameTime);
-        // }
+        if (Keyboard.GetState().IsKeyDown(Keys.D1))
+        {
+            testPlant.Update(gameTime);
+        }
         base.Update(gameTime);
     }
 
@@ -58,7 +57,7 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
-        // testPlant.Draw(spriteBatch);
+        testPlant.Draw(spriteBatch);
         player.Draw(spriteBatch);
 
         spriteBatch.End();

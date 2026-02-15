@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Util;
 using static Sprint2.Sprites.LinkSprite;
 
 namespace Interfaces;

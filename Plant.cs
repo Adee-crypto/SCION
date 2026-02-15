@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Util;
 
-public class Plant(PlantConst.Species species, Texture2D spritesheet, (int, int) root)
+namespace Sprint2;
+
+public class Plant(Plant.Species species, Texture2D spritesheet, (int, int) root)
 {
-    private PlantConst.Species species = species;
+    public enum Species {grass, apple, pineapple};
+
+    private Species species = species;
     private Texture2D spritesheet = spritesheet;
     private HashSet<(int, int)> bud_cells = [root];
     private HashSet<(int, int)> stem_cells = [];
@@ -15,23 +18,15 @@ public class Plant(PlantConst.Species species, Texture2D spritesheet, (int, int)
     public void Update(GameTime gameTime)
     {
         HashSet<(int, int)> newGrowth = [];
-        foreach ((int, int) bud in bud_cells)
+        foreach ((int x, int y) in bud_cells)
         {
-            (int x, int y) = bud;
-            int delta = new Random().Next(2) * 2 - 1;
-            int axis = new Random().Next(2);
-            if (axis == 1)
-            {
-                x += delta;
-            }
-            else
-            {
-                y += delta;
-            }
-
-            if (!stem_cells.Contains((x, y)) && !bud_cells.Contains((x, y)))
-            {
-                newGrowth.Add((x, y));
+            foreach ((int dx, int dy) in PlantUtil.ShuffledDirs()) {
+            (int, int) newCell = (x + dx, y + dy);
+            if (!stem_cells.Contains(newCell) && !bud_cells.Contains(newCell))
+                {
+                    newGrowth.Add(newCell);
+                    break;
+                }
             }
         }
 
@@ -42,6 +37,13 @@ public class Plant(PlantConst.Species species, Texture2D spritesheet, (int, int)
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(spritesheet, new Vector2(100, 100), PlantConst.SpeciesSpriteRects[species], Color.White);
+        foreach ((int x, int y) in stem_cells)
+        {
+            spriteBatch.Draw(spritesheet, new Vector2(x * 8, y * 8), PlantUtil.SpeciesSpriteRects[species], Color.Gray);
+        }
+        foreach ((int x, int y) in bud_cells)
+        {
+            spriteBatch.Draw(spritesheet, new Vector2(x * 8, y * 8), PlantUtil.SpeciesSpriteRects[species], Color.White);
+        }
     }
 }

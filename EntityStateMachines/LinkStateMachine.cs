@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Util;
 using Interfaces;
 using Sprint2.Sprites;
 using static Sprint2.Sprites.LinkSprite;
@@ -25,9 +24,9 @@ namespace Sprint2.EntityStateMachines
         {
             linkMode = LinkMode.Still;
             this.linkSprite = linkSprite;
-            currentDirection = new Vector2(LinkConstant.linkDefaultXDirection, 0);
+            currentDirection = new Vector2(LinkUtil.linkDefaultXDirection, 0);
             currentPosition = new Vector2(0, 0);
-            speed = LinkConstant.linkSpeed;
+            speed = LinkUtil.linkSpeed;
         }
 
         public void ChangeDirection(Vector2 newDirection)

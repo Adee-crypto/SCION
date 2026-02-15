@@ -1,209 +1,245 @@
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.exe
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.deps.json
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.runtimeconfig.json
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.pdb
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\MonoGame.Framework.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\NVorbis.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-arm\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-arm64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-x64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-x86\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\ios-arm64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-arm64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-x64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-arm64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libopenal.dylib
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\openal.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libSDL2-2.0.0.dylib
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\SDL2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\mgcb.tool.restore
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.AssemblyReference.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfoInputs.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfo.cs
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.CoreCompileInputs.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.sourcelink.json
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.Up2Date
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\refint\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.pdb
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.genruntimeconfig.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\obj\Debug\net9.0\ref\Sprint2.dll
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.exe
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.deps.json
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.runtimeconfig.json
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.dll
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.pdb
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\MonoGame.Framework.dll
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\NVorbis.dll
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-arm\native\libopenal.so
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-arm64\native\libopenal.so
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-x64\native\libopenal.so
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-x86\native\libopenal.so
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\ios-arm64\native\libopenal.a
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-arm64\native\libopenal.a
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-x64\native\libopenal.a
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-arm64\native\libopenal.so
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libopenal.so
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libopenal.dylib
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\openal.dll
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libSDL2-2.0.0.dylib
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\SDL2.dll
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\mgcb.tool.restore
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.AssemblyReference.cache
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfoInputs.cache
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfo.cs
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.CoreCompileInputs.cache
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.sourcelink.json
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.Up2Date
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.dll
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\refint\Sprint2.dll
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.pdb
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.genruntimeconfig.cache
-C:\Users\jjkps\CSE3902\Sprint2\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\ref\Sprint2.dll
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.exe
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.deps.json
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.runtimeconfig.json
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.dll
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.pdb
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\MonoGame.Framework.dll
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\NVorbis.dll
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-arm\native\libopenal.so
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-arm64\native\libopenal.so
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-x64\native\libopenal.so
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-x86\native\libopenal.so
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\ios-arm64\native\libopenal.a
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-arm64\native\libopenal.a
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-x64\native\libopenal.a
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-arm64\native\libopenal.so
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libopenal.so
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libopenal.dylib
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\openal.dll
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libSDL2-2.0.0.dylib
-E:\vscp\Sprint2\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\SDL2.dll
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.AssemblyReference.cache
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.GeneratedMSBuildEditorConfig.editorconfig
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfoInputs.cache
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfo.cs
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.CoreCompileInputs.cache
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.sourcelink.json
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.Up2Date
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.dll
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\refint\Sprint2.dll
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.pdb
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.genruntimeconfig.cache
-E:\vscp\Sprint2\Sprint2\obj\Debug\net9.0\ref\Sprint2.dll
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Content\sprites\Link.xnb
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.exe
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.deps.json
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.runtimeconfig.json
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.dll
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\Sprint2.pdb
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\MonoGame.Framework.dll
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\NVorbis.dll
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-arm\native\libopenal.so
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-arm64\native\libopenal.so
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-x64\native\libopenal.so
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\android-x86\native\libopenal.so
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\ios-arm64\native\libopenal.a
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-arm64\native\libopenal.a
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-x64\native\libopenal.a
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-arm64\native\libopenal.so
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libopenal.so
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libopenal.dylib
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\openal.dll
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libSDL2-2.0.0.dylib
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\SDL2.dll
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\mgcb.tool.restore
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.AssemblyReference.cache
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfoInputs.cache
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfo.cs
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.CoreCompileInputs.cache
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.sourcelink.json
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.csproj.Up2Date
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.dll
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\refint\Sprint2.dll
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.pdb
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\Sprint2.genruntimeconfig.cache
-C:\Users\hsbj1\source\repos\CSE3902Sprint2\Sprint2\obj\Debug\net9.0\ref\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\Sprint2\bin\Debug\net9.0\Content\sprites\Link.xnb
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Sprint2.exe
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Sprint2.deps.json
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Sprint2.runtimeconfig.json
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Sprint2.pdb
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\MonoGame.Framework.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\NVorbis.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\android-arm\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\android-arm64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\android-x64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\android-x86\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\ios-arm64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-arm64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\iossimulator-x64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\linux-arm64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libopenal.dylib
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\openal.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\osx\native\libSDL2-2.0.0.dylib
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\runtimes\win-x64\native\SDL2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\mgcb.tool.restore
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.csproj.AssemblyReference.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfoInputs.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.AssemblyInfo.cs
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.csproj.CoreCompileInputs.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.sourcelink.json
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.csproj.Up2Date
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\refint\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.pdb
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\Sprint2.genruntimeconfig.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2\obj\Debug\net9.0\ref\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Content\Link.xnb
-C:\Users\seanp\MonoGame_Projects\Sprint2\bin\Debug\net9.0\Content\testsheet.xnb
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\Content\Link.xnb
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\Content\testsheet.xnb
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\Sprint2.exe
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\Sprint2.deps.json
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\Sprint2.runtimeconfig.json
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\Sprint2.pdb
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\MonoGame.Framework.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\NVorbis.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\android-arm\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\android-arm64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\android-x64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\android-x86\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\ios-arm64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\iossimulator-arm64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\iossimulator-x64\native\libopenal.a
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\linux-arm64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\linux-x64\native\libopenal.so
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\osx\native\libopenal.dylib
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\win-x64\native\openal.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\osx\native\libSDL2-2.0.0.dylib
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\bin\Debug\net9.0\runtimes\win-x64\native\SDL2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\mgcb.tool.restore
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.csproj.AssemblyReference.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.AssemblyInfoInputs.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.AssemblyInfo.cs
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.csproj.CoreCompileInputs.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.sourcelink.json
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.csproj.Up2Date
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\refint\Sprint2.dll
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.pdb
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\Sprint2.genruntimeconfig.cache
-C:\Users\seanp\MonoGame_Projects\Sprint2 - Backup\obj\Debug\net9.0\ref\Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.exe
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.deps.json
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.runtimeconfig.json
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.pdb
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/MonoGame.Framework.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/NVorbis.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-arm/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-arm64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-x64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-x86/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/ios-arm64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-arm64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-x64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-arm64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libopenal.dylib
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/openal.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libSDL2-2.0.so.0
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libSDL2-2.0.0.dylib
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/SDL2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/mgcb.tool.restore
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.AssemblyReference.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfoInputs.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfo.cs
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.CoreCompileInputs.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.sourcelink.json
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.Up2Date
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/refint/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.pdb
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.genruntimeconfig.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/obj/Debug/net9.0/ref/Sprint2.dll
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.exe
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.deps.json
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.runtimeconfig.json
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.dll
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.pdb
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/MonoGame.Framework.dll
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/NVorbis.dll
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-arm/native/libopenal.so
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-arm64/native/libopenal.so
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-x64/native/libopenal.so
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-x86/native/libopenal.so
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/ios-arm64/native/libopenal.a
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-arm64/native/libopenal.a
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-x64/native/libopenal.a
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-arm64/native/libopenal.so
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libopenal.so
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libopenal.dylib
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/openal.dll
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libSDL2-2.0.so.0
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libSDL2-2.0.0.dylib
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/SDL2.dll
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/mgcb.tool.restore
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.AssemblyReference.cache
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfoInputs.cache
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfo.cs
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.CoreCompileInputs.cache
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.sourcelink.json
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.Up2Date
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.dll
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/refint/Sprint2.dll
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.pdb
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.genruntimeconfig.cache
+C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/ref/Sprint2.dll
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.exe
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.deps.json
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.runtimeconfig.json
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.dll
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.pdb
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/MonoGame.Framework.dll
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/NVorbis.dll
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-arm/native/libopenal.so
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-arm64/native/libopenal.so
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-x64/native/libopenal.so
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-x86/native/libopenal.so
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/ios-arm64/native/libopenal.a
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-arm64/native/libopenal.a
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-x64/native/libopenal.a
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-arm64/native/libopenal.so
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libopenal.so
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libopenal.dylib
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/openal.dll
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libSDL2-2.0.so.0
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libSDL2-2.0.0.dylib
+E:/vscp/Sprint2/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/SDL2.dll
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.AssemblyReference.cache
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.GeneratedMSBuildEditorConfig.editorconfig
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfoInputs.cache
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfo.cs
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.CoreCompileInputs.cache
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.sourcelink.json
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.Up2Date
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.dll
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/refint/Sprint2.dll
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.pdb
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.genruntimeconfig.cache
+E:/vscp/Sprint2/Sprint2/obj/Debug/net9.0/ref/Sprint2.dll
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Content/sprites/Link.xnb
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.exe
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.deps.json
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.runtimeconfig.json
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.dll
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/Sprint2.pdb
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/MonoGame.Framework.dll
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/NVorbis.dll
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-arm/native/libopenal.so
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-arm64/native/libopenal.so
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-x64/native/libopenal.so
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/android-x86/native/libopenal.so
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/ios-arm64/native/libopenal.a
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-arm64/native/libopenal.a
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-x64/native/libopenal.a
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-arm64/native/libopenal.so
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libopenal.so
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libopenal.dylib
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/openal.dll
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libSDL2-2.0.so.0
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libSDL2-2.0.0.dylib
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/SDL2.dll
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/mgcb.tool.restore
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.AssemblyReference.cache
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfoInputs.cache
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfo.cs
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.CoreCompileInputs.cache
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.sourcelink.json
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.csproj.Up2Date
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.dll
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/refint/Sprint2.dll
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.pdb
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/Sprint2.genruntimeconfig.cache
+C:/Users/hsbj1/source/repos/CSE3902Sprint2/Sprint2/obj/Debug/net9.0/ref/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/Sprint2/bin/Debug/net9.0/Content/sprites/Link.xnb
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.exe
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.deps.json
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.runtimeconfig.json
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.pdb
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/MonoGame.Framework.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/NVorbis.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/android-arm/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/android-arm64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/android-x64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/android-x86/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/ios-arm64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-arm64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-x64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/linux-arm64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libopenal.dylib
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/openal.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libSDL2-2.0.so.0
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libSDL2-2.0.0.dylib
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/SDL2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/mgcb.tool.restore
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.csproj.AssemblyReference.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfoInputs.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfo.cs
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.csproj.CoreCompileInputs.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.sourcelink.json
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.csproj.Up2Date
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/refint/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.pdb
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.genruntimeconfig.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/ref/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/Link.xnb
+C:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/testsheet.xnb
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/Content/Link.xnb
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/Content/testsheet.xnb
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/Sprint2.exe
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/Sprint2.deps.json
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/Sprint2.runtimeconfig.json
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/Sprint2.pdb
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/MonoGame.Framework.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/NVorbis.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/android-arm/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/android-arm64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/android-x64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/android-x86/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/ios-arm64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/iossimulator-arm64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/iossimulator-x64/native/libopenal.a
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/linux-arm64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/linux-x64/native/libopenal.so
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/osx/native/libopenal.dylib
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/win-x64/native/openal.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/linux-x64/native/libSDL2-2.0.so.0
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/osx/native/libSDL2-2.0.0.dylib
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/bin/Debug/net9.0/runtimes/win-x64/native/SDL2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/mgcb.tool.restore
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.csproj.AssemblyReference.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.AssemblyInfoInputs.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.AssemblyInfo.cs
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.csproj.CoreCompileInputs.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.sourcelink.json
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.csproj.Up2Date
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/refint/Sprint2.dll
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.pdb
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/Sprint2.genruntimeconfig.cache
+C:/Users/seanp/MonoGame_Projects/Sprint2 - Backup/obj/Debug/net9.0/ref/Sprint2.dll
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/Link.xnb
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/testsheet.xnb
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.deps.json
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.runtimeconfig.json
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.dll
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Sprint2.pdb
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/MonoGame.Framework.dll
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/NVorbis.dll
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/android-arm/native/libopenal.so
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/android-arm64/native/libopenal.so
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/android-x64/native/libopenal.so
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/android-x86/native/libopenal.so
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/ios-arm64/native/libopenal.a
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-arm64/native/libopenal.a
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/iossimulator-x64/native/libopenal.a
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/linux-arm64/native/libopenal.so
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libopenal.so
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libopenal.dylib
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/openal.dll
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/linux-x64/native/libSDL2-2.0.so.0
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/osx/native/libSDL2-2.0.0.dylib
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/runtimes/win-x64/native/SDL2.dll
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/mgcb.tool.restore
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.csproj.AssemblyReference.cache
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfoInputs.cache
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.AssemblyInfo.cs
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.csproj.CoreCompileInputs.cache
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.sourcelink.json
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.csproj.Up2Date
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.dll
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/refint/Sprint2.dll
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.pdb
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/Sprint2.genruntimeconfig.cache
+/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/obj/Debug/net9.0/ref/Sprint2.dll

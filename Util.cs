@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using static Sprint2.Sprites.LinkSprite;
+using System.Linq;
+using System;
 
-namespace Util;
+namespace Sprint2;
 
-public class LinkConstant
+public static class LinkUtil
 {
     public const int linkDefaultXDirection = 1;
     public const int linkDefaultyDirection = 1;
@@ -30,16 +32,30 @@ public class LinkConstant
         };
         return LinkFramesMap;
     }
+
 }
 
-public class PlantConst
-{
-    public enum Species {grass, apple, pineapple};
-
-    public static Dictionary<Species, Rectangle> SpeciesSpriteRects = new Dictionary<Species, Rectangle>()
+public static class PlantUtil {
+    public static Dictionary<Plant.Species, Rectangle> SpeciesSpriteRects = new Dictionary<Plant.Species, Rectangle>()
     {
-        { Species.grass, new (0, 0, 16, 16) },
-        { Species.apple, new (16, 0, 16, 16) },
-        { Species.pineapple, new (32, 0, 16, 16) },
+        { Plant.Species.grass, new (0, 0, 16, 16) },
+        { Plant.Species.apple, new (16, 0, 16, 16) },
+        { Plant.Species.pineapple, new (32, 0, 16, 16) },
     };
+
+    public static List<(int, int)> growDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+
+    public static IEnumerable<(int, int)> ShuffledDirs()
+    {
+        foreach (int i in RandRange(growDirs.Count))
+        {
+            yield return growDirs[i];
+        }
+    }
+
+    //DO NOT USE FOR LARGE N
+    public static IEnumerable<int> RandRange(int n)
+    {
+        return Enumerable.Range(0, n).OrderBy(x => Random.Shared.Next());
+    }
 }
