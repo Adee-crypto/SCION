@@ -1,4 +1,0 @@
-Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"c:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/dcveovt-737d0eac-6895-4227-b7ac-a789ff421786-1335908830.png","c:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/bin/DesktopGL/dcveovt-737d0eac-6895-4227-b7ac-a789ff421786-1335908830.xnb","TextureProcessor","Texture2DContent",235737,835669,0.8134122
-"c:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/sprites/Link.png","c:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/bin/DesktopGL/sprites/Link.xnb","TextureProcessor","Texture2DContent",1719,24661,0.0155189
-"c:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/testsheet.png","c:/Users/seanp/MonoGame_Projects/Sprint2/bin/Debug/net9.0/Content/bin/DesktopGL/testsheet.xnb","TextureProcessor","Texture2DContent",235737,835669,0.5662988

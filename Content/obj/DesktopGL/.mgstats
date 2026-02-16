@@ -1,4 +1,0 @@
-Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/Link.png","C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/bin/DesktopGL/Link.xnb","TextureProcessor","Texture2DContent",1719,24661,0.1205416
-"C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/testsheet.png","C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/bin/DesktopGL/testsheet.xnb","TextureProcessor","Texture2DContent",235737,835669,0.0514544
-"C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/UIFont.spritefont","C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/bin/DesktopGL/UIFont.xnb","FontDescriptionProcessor","SpriteFontContent",2093,37914,0.086112
