@@ -16,12 +16,6 @@ public interface IController
     public void Update();
 }
 
-public interface IEntityStateMachine : IScreenObject
-{
-    public void ChangeDirection(int index);
-    public void Attack();
-}
-
 public interface IPlayer : IScreenObject
 {
     public void ChangeDirection(int index);

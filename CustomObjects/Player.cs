@@ -10,11 +10,7 @@ namespace Sprint2;
 
 public class Player : IPlayer
 {
-    private enum LinkMode
-    {
-        Still,
-        Moving
-    };
+    private enum LinkMode {Still, Moving, Attack};
     private LinkMode linkMode;
     private Vector2 currentDirection;
     private Vector2 currentPosition;
@@ -41,6 +37,7 @@ public class Player : IPlayer
 
     public Rectangle Hitbox => new((int)currentPosition.X, (int)currentPosition.Y, 16, 16);
 
+    //make these nicer/customized
     public void up()
     {
         ChangeDirection(0);
@@ -61,6 +58,7 @@ public class Player : IPlayer
 
     public void ChangeDirection(int index)
     {
+        linkMode = LinkMode.Moving;
         Vector2 direction = index switch
         {
             0 => new Vector2(0, -1),// up
@@ -83,7 +81,6 @@ public class Player : IPlayer
         // else
         // {
             currentDirection = direction;
-            linkMode = LinkMode.Moving;
             if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
             if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
             if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownRunning);
@@ -93,6 +90,7 @@ public class Player : IPlayer
 
     public void Attack()
     {
+        linkMode = LinkMode.Attack;
         if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
         if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
         if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownAttack);
@@ -105,8 +103,13 @@ public class Player : IPlayer
         {
             Vector2 movement = currentDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Collisions.ManageCollision(this, objects, movement);
-        } else
-        {
+        } else {
+            if (linkMode != LinkMode.Attack) {
+                if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
+                if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
+                if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
+                if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
+            }
             Collisions.ManageCollision(this, objects, Vector2.Zero);
         }
         linkSprite.Update(gameTime, objects);
