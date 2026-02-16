@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using static Sprint2.Sprites.LinkSprite;
@@ -6,7 +7,7 @@ namespace Interfaces;
 
 public interface IScreenObject
 {
-    public void Update(GameTime gameTime);
+    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects);
     public void Draw(SpriteBatch spriteBatch);
 }
 

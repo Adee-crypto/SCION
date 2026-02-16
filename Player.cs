@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Interfaces;
 using Sprint2.Sprites;
 using static Sprint2.Sprites.LinkSprite;
+using System.Collections.Generic;
 
 
 namespace Sprint2;
@@ -27,6 +28,18 @@ public class Player : IPlayer
         currentPosition = new Vector2(0, 0);
         speed = LinkUtil.linkSpeed;
     }
+
+    public Vector2 Position
+    {
+        get => currentPosition;
+        set
+        {
+            currentPosition = value;
+            linkSprite.Position = value;
+        }
+    }
+
+    public Rectangle Hitbox => new((int)currentPosition.X, (int)currentPosition.Y, 16, 16);
 
     public void ChangeDirection(int index)
     {
@@ -68,14 +81,14 @@ public class Player : IPlayer
         if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpAttack);
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
         if (linkMode == LinkMode.Moving)
         {
-            currentPosition += currentDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            linkSprite.Position = currentPosition;
+            Vector2 movement = currentDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Collisions.ManageCollision(this, objects, movement);
         }
-        linkSprite.Update(gameTime);
+        linkSprite.Update(gameTime, objects);
     }
 
     public void Draw(SpriteBatch spriteBatch)

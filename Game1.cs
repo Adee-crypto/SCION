@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Sprint2.Controllers;
 using Interfaces;
 using System.Dynamic;
+using System.Security.AccessControl;
 
 
 namespace Sprint2;
@@ -15,8 +16,11 @@ public class Game1 : Game
     private SpriteBatch spriteBatch;
     private IController keyboardController;
     // private IController mouseController; //this doesn't exist yet
-    public IPlayer player;
-    public Plant testPlant;
+    private IPlayer player;
+    public IPlayer Player => player;
+    private Plant testPlant;
+    private List<Rectangle> objects;
+
 
     public Game1()
     {
@@ -34,6 +38,7 @@ public class Game1 : Game
         // mouseController = new MouseController(this); //this doesn't exist yet
         player = new Player();
         testPlant = new(Plant.Species.grass, (20, 20));
+        objects = new List<Rectangle>();
 
         CommandUtil.keyCommandBindings = new()
         {
@@ -55,7 +60,9 @@ public class Game1 : Game
     {
         keyboardController.Update();
         // mouseController.Update();
-        player.Update(gameTime);
+
+        objects.Clear();
+
 
         //This is all for testing/display
         if (Keyboard.GetState().IsKeyDown(Keys.D1))
@@ -66,6 +73,11 @@ public class Game1 : Game
         {
             testPlant.ToggleSpecies();
         }
+
+        objects.AddRange(testPlant.GetPlantObjects());
+
+        player.Update(gameTime, objects);
+
         base.Update(gameTime);
     }
 

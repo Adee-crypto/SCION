@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Interfaces;
+using System.Collections.Generic;
 
 
 namespace Sprint2.Sprites
@@ -38,7 +39,7 @@ namespace Sprint2.Sprites
             currentFrameIndex = 0;
             timeSinceLastFrame = 0;
         }
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
         {
             timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
             if (timeSinceLastFrame >= LinkUtil.linkSecondsPerFrame)

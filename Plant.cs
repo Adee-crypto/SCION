@@ -34,6 +34,19 @@ public class Plant(Plant.Species species, (int, int) root)
         bud_cells = newGrowth; //this very possibly might not do what i want
     }
 
+    public IEnumerable<Rectangle> GetPlantObjects()
+    {
+        foreach (var (x, y) in stem_cells)
+        {
+            yield return new Rectangle(x * PlantUtil.cellWidth, y * PlantUtil.cellWidth, PlantUtil.cellWidth, PlantUtil.cellWidth);
+        }
+
+        foreach (var (x, y) in bud_cells)
+        {
+            yield return new Rectangle(x * PlantUtil.cellWidth, y * PlantUtil.cellWidth, PlantUtil.cellWidth, PlantUtil.cellWidth);
+        }
+    }
+
     public void Draw(SpriteBatch spriteBatch)
     {
         foreach ((int x, int y) in stem_cells)
