@@ -3,9 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Sprint2.Controllers;
+using Sprint2.UI;
 using Interfaces;
 using System.Dynamic;
 using System.Security.AccessControl;
+using System.Security.Cryptography;
+using System.ComponentModel.Design;
 
 
 namespace Sprint2;
@@ -18,6 +21,10 @@ public class Game1 : Game
     // private IController mouseController; //this doesn't exist yet
     private IPlayer player;
     public IPlayer Player => player;
+    private PauseMenu pauseMenu;
+    private SpriteFont uiFont;
+    private bool isPaused;
+    public bool IsPaused => isPaused;
     private Plant testPlant;
     private List<Rectangle> objects;
 
@@ -46,7 +53,8 @@ public class Game1 : Game
             {[Keys.Z, Keys.N], new Commands.LinkAttackCommand(this)},
             //{[Keys.D1], new Commands.LinkItemCommand(this)},
             //{[Keys.E], new Commands.LinkDamagedCommand(this)}
-            {[Keys.Q], new Commands.QuitCommand(this)}
+            {[Keys.Q], new Commands.QuitCommand(this)},
+            {[Keys.Escape], new Commands.PauseCommand(this)}
         };
     }
 
@@ -54,6 +62,13 @@ public class Game1 : Game
     {
         LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
+        uiFont = Content.Load<SpriteFont>("UIFont");
+        pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
+    }
+
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
     }
 
     protected override void Update(GameTime gameTime)
@@ -61,22 +76,25 @@ public class Game1 : Game
         keyboardController.Update();
         // mouseController.Update();
 
-        objects.Clear();
-
-
-        //This is all for testing/display
-        if (Keyboard.GetState().IsKeyDown(Keys.D1))
+        if (!isPaused)
         {
-            testPlant.Update(gameTime);
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.D2))
-        {
-            testPlant.ToggleSpecies();
-        }
+            objects.Clear();
 
-        objects.AddRange(testPlant.GetPlantObjects());
 
-        player.Update(gameTime, objects);
+            //This is all for testing/display
+            if (Keyboard.GetState().IsKeyDown(Keys.D1))
+            {
+                testPlant.Update(gameTime);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                testPlant.ToggleSpecies();
+            }
+
+            objects.AddRange(testPlant.GetPlantObjects());
+
+            player.Update(gameTime, objects);
+        }
 
         base.Update(gameTime);
     }
@@ -88,6 +106,11 @@ public class Game1 : Game
 
         testPlant.Draw(spriteBatch);
         player.Draw(spriteBatch);
+
+        if (isPaused)
+        {
+            pauseMenu.Draw(spriteBatch, GraphicsDevice);
+        }
 
         spriteBatch.End();
         base.Draw(gameTime);

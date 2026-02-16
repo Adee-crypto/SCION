@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using Sprint2.Commands;
 using Interfaces;
+using System.Security.Cryptography;
 
 
 namespace Sprint2.Controllers
@@ -15,6 +16,14 @@ namespace Sprint2.Controllers
 
             foreach ((Keys[] keySet, ICommand command) in CommandUtil.keyCommandBindings)
             {
+                bool pausePressed = currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape);
+
+                if (keySet.Length == 1 && keySet[0] == Keys.Escape)
+                {
+                    if (pausePressed) command.Execute(0);
+                    continue;
+                }
+
                 bool currentKeyPressed = false;
                 bool previousKeyPressed = false;
 
