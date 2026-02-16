@@ -14,29 +14,20 @@ namespace Sprint2.Controllers
         {
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
-            foreach ((Keys[] keySet, Action command) in CommandUtil.keyCommandBindings)
-            {
-                bool pausePressed = currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape);
-
-                if (keySet.Length == 1 && keySet[0] == Keys.Escape)
-                {
-                    if (pausePressed) command.Execute(0);
-                    continue;
-                }
-
-                bool currentKeyPressed = false;
-                bool previousKeyPressed = false;
-
-                foreach (Keys key in keySet)
-                {
-                    if (currentKeyboardState.IsKeyDown(key))
-                    {
-                        currentKeyPressed = true;
+            //Commands to execute while key held
+            foreach ((Keys[] keySet, Action command) in CommandUtil.holdKeyCommandBindings) {
+                foreach (Keys key in keySet){
+                    if (currentKeyboardState.IsKeyDown(key)) {
                         command();
                     }
-                    else if (previousKeyboardState.IsKeyDown(key))
-                    {
-                        previousKeyPressed = true;
+                }
+            }
+
+            //Comands to execute on key press
+            foreach ((Keys[] keySet, Action command) in CommandUtil.tapKeyCommandBindings) {
+                foreach (Keys key in keySet) {
+                    if (currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key)) {
+                        command();
                     }
                 }
             }

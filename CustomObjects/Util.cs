@@ -11,16 +11,21 @@ namespace Sprint2;
 
 public static class CommandUtil
 {
-    public static Dictionary<Keys[], Action> keyCommandBindings;
+    public static Dictionary<Keys[], Action> holdKeyCommandBindings;
+    public static Dictionary<Keys[], Action> tapKeyCommandBindings;
     
     public static void AttachCommandBindings(Game1 game) {
-        keyCommandBindings = new()
+        holdKeyCommandBindings = new()
         {
             {[Keys.Up, Keys.W], game.Player.up},
             {[Keys.Down, Keys.S], game.Player.down},
             {[Keys.Left, Keys.A], game.Player.left},
             {[Keys.Right, Keys.D], game.Player.right},
             {[Keys.Z, Keys.N], game.Player.Attack},
+        };
+        tapKeyCommandBindings = new()
+        {
+            {[Keys.P], game.TogglePause},
             {[Keys.Q], game.Exit}
         };
     }
