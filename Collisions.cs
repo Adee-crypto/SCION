@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace Sprint2;
 
@@ -24,6 +23,9 @@ public class Collisions
             } else if (movement.X < 0)
             {
                 currentPos.X = o.Right;
+            } else if (movement.X == 0)
+            {
+                currentPos.X = o.Right >= (o.Left - player.Hitbox.Width) ? (o.Left - player.Hitbox.Width) : o.Right;
             }
 
             player.Position = currentPos;
@@ -42,6 +44,9 @@ public class Collisions
             } else if (movement.Y < 0)
             {
                 currentPos.Y = o.Bottom;
+            } else if (movement.Y == 0)
+            {
+                currentPos.Y = o.Bottom >= (o.Top - player.Hitbox.Height) ? (o.Top - player.Hitbox.Height) : o.Bottom;
             }
 
             player.Position = currentPos;

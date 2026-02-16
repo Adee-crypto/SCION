@@ -87,6 +87,9 @@ public class Player : IPlayer
         {
             Vector2 movement = currentDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Collisions.ManageCollision(this, objects, movement);
+        } else
+        {
+            Collisions.ManageCollision(this, objects, Vector2.Zero);
         }
         linkSprite.Update(gameTime, objects);
     }
