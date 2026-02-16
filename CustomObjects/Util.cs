@@ -11,7 +11,19 @@ namespace Sprint2;
 
 public static class CommandUtil
 {
-    public static Dictionary<Keys[], ICommand> keyCommandBindings;
+    public static Dictionary<Keys[], Action> keyCommandBindings;
+    
+    public static void AttachCommandBindings(Game1 game) {
+        keyCommandBindings = new()
+        {
+            {[Keys.Up, Keys.W], game.Player.up},
+            {[Keys.Down, Keys.S], game.Player.down},
+            {[Keys.Left, Keys.A], game.Player.left},
+            {[Keys.Right, Keys.D], game.Player.right},
+            {[Keys.Z, Keys.N], game.Player.Attack},
+            {[Keys.Q], game.Exit}
+        };
+    }
 }
 
 public static class LinkUtil

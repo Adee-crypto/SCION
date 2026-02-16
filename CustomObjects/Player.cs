@@ -41,9 +41,27 @@ public class Player : IPlayer
 
     public Rectangle Hitbox => new((int)currentPosition.X, (int)currentPosition.Y, 16, 16);
 
+    public void up()
+    {
+        ChangeDirection(0);
+    }
+
+    public void down()
+    {
+        ChangeDirection(1);
+    }
+    public void left()
+    {
+        ChangeDirection(2);
+    }
+    public void right()
+    {
+        ChangeDirection(3);
+    }
+
     public void ChangeDirection(int index)
     {
-        Vector2 direction = (index%4) switch
+        Vector2 direction = index switch
         {
             0 => new Vector2(0, -1),// up
             1 => new Vector2(0, 1),// down
@@ -53,24 +71,24 @@ public class Player : IPlayer
         };
 
         // If stopped moving
-        if (direction.X == 0 && direction.Y == 0)
-        {
-            linkMode = LinkMode.Still;
-            if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
-            if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
-            if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
-            if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
-        }
+        // if (direction.X == 0 && direction.Y == 0)
+        // {
+        //     linkMode = LinkMode.Still;
+        //     if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
+        //     if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
+        //     if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
+        //     if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
+        // }
         //If changing direciton
-        else
-        {
+        // else
+        // {
             currentDirection = direction;
             linkMode = LinkMode.Moving;
             if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
             if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
             if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownRunning);
             if (direction.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpRunning);
-        }
+        // }
     }
 
     public void Attack()
@@ -92,6 +110,7 @@ public class Player : IPlayer
             Collisions.ManageCollision(this, objects, Vector2.Zero);
         }
         linkSprite.Update(gameTime, objects);
+        linkMode = LinkMode.Still;
     }
 
     public void Draw(SpriteBatch spriteBatch)

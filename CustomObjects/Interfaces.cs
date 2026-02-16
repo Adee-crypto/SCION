@@ -11,12 +11,6 @@ public interface IScreenObject
     public void Draw(SpriteBatch spriteBatch);
 }
 
-public interface ICommand
-{
-    public void Execute(int index);
-    public void Unexecute();
-}
-
 public interface IController
 {
     public void Update();

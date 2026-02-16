@@ -19,8 +19,8 @@ public class Game1 : Game
     private SpriteBatch spriteBatch;
     private IController keyboardController;
     // private IController mouseController; //this doesn't exist yet
-    private IPlayer player;
-    public IPlayer Player => player;
+    private Player player; //SWITCH THESE TO IPlayer LATER
+    public Player Player => player;
     private PauseMenu pauseMenu;
     private SpriteFont uiFont;
     private bool isPaused;
@@ -45,17 +45,9 @@ public class Game1 : Game
         // mouseController = new MouseController(this); //this doesn't exist yet
         player = new Player();
         testPlant = new(Plant.Species.grass, (20, 20));
-        objects = new List<Rectangle>();
+        objects = [];
 
-        CommandUtil.keyCommandBindings = new()
-        {
-            {[Keys.Up, Keys.Down, Keys.Left, Keys.Right, Keys.W, Keys.S, Keys.A, Keys.D], new Commands.LinkMoveCommand(this)},
-            {[Keys.Z, Keys.N], new Commands.LinkAttackCommand(this)},
-            //{[Keys.D1], new Commands.LinkItemCommand(this)},
-            //{[Keys.E], new Commands.LinkDamagedCommand(this)}
-            {[Keys.Q], new Commands.QuitCommand(this)},
-            {[Keys.Escape], new Commands.PauseCommand(this)}
-        };
+        CommandUtil.AttachCommandBindings(this);
     }
 
     protected override void LoadContent()
