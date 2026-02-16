@@ -1,3 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/Content/Link.png","/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/Content/bin/DesktopGL/Content/Link.xnb","TextureProcessor","Texture2DContent",1719,24661,0.1778654
-"/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/Content/testsheet.png","/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/Content/bin/DesktopGL/Content/testsheet.xnb","TextureProcessor","Texture2DContent",235737,835669,0.1091034
+"C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/Link.png","C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/bin/DesktopGL/Content/Link.xnb","TextureProcessor","Texture2DContent",1719,24661,0.3192699
+"C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/testsheet.png","C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/bin/DesktopGL/Content/testsheet.xnb","TextureProcessor","Texture2DContent",235737,835669,0.1012438
+"C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/UIFont.spritefont","C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/bin/DesktopGL/Content/UIFont.xnb","FontDescriptionProcessor","SpriteFontContent",2093,37914,0.21498

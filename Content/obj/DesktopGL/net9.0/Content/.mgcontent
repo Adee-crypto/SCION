@@ -4,10 +4,12 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/Content/Link.png</File>
-    <File>/mnt/c/Users/seanp/MonoGame_Projects/Sprint2/Content/testsheet.png</File>
+    <File>C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/Link.png</File>
+    <File>C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/testsheet.png</File>
+    <File>C:/Users/jjkps/CSE3902/Sprint2/CSE3902Sprint2/Content/UIFont.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
