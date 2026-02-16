@@ -36,7 +36,8 @@ public static class LinkUtil
     public const int linkDefaultXDirection = 1;
     public const int linkDefaultyDirection = 1;
     public const float linkSecondsPerFrame = 0.25f;
-    public const float linkSpeed = 100;
+    public const float walkSpeed = 100f;
+    public const float gravity = 1f;
 
     public static Texture2D linkTexture; // Set in Game1.LoadContent
 

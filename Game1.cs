@@ -43,7 +43,7 @@ public class Game1 : Game
 
         keyboardController = new KeyBoardController();
         // mouseController = new MouseController(this); //this doesn't exist yet
-        player = new Player();
+        player = new Player((20, 0));
         testPlant = new(Plant.Species.grass, (20, 20));
         objects = [];
 

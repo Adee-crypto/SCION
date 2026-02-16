@@ -8,58 +8,50 @@ using System.Collections.Generic;
 
 namespace Sprint2;
 
-public class Player : IPlayer
+public class Player((int, int) position)// : IPlayer UNCOMMENT THIS
 {
     private enum LinkMode {Still, Moving, Attack};
-    private LinkMode linkMode;
-    private Vector2 currentDirection;
-    private Vector2 currentPosition;
+    private LinkMode linkMode = LinkMode.Still;
+    private Vector2 direction = new Vector2(LinkUtil.linkDefaultXDirection, 0);
+    private Vector2 position = PlantUtil.cellWidth * new Vector2(position.Item1, position.Item2);
+    private Vector2 velocity;
     private LinkSprite linkSprite = new LinkSprite();
-    private float speed;
-
-    public Player()
-    {
-        linkMode = LinkMode.Still;
-        currentDirection = new Vector2(LinkUtil.linkDefaultXDirection, 0);
-        currentPosition = new Vector2(0, 0);
-        speed = LinkUtil.linkSpeed;
-    }
 
     public Vector2 Position
     {
-        get => currentPosition;
+        get => position;
         set
         {
-            currentPosition = value;
+            position = value;
             linkSprite.Position = value;
         }
     }
 
-    public Rectangle Hitbox => new((int)currentPosition.X, (int)currentPosition.Y, 16, 16);
+    public Rectangle Hitbox => new((int)position.X, (int)position.Y, 16, 16);
 
     //make these nicer/customized
+    //e.g. make down break the block below you, make up jump, etc.
     public void up()
     {
-        ChangeDirection(0);
+        Move(0);
     }
-
     public void down()
     {
-        ChangeDirection(1);
+        Move(1);
     }
     public void left()
     {
-        ChangeDirection(2);
+        Move(2);
     }
     public void right()
     {
-        ChangeDirection(3);
+        Move(3);
     }
 
-    public void ChangeDirection(int index)
+    public void Move(int index)
     {
         linkMode = LinkMode.Moving;
-        Vector2 direction = index switch
+        direction = index switch
         {
             0 => new Vector2(0, -1),// up
             1 => new Vector2(0, 1),// down
@@ -67,6 +59,7 @@ public class Player : IPlayer
             3 => new Vector2(1, 0),// right
             _ => new Vector2(0, 0),// never happen
         };
+        velocity = LinkUtil.walkSpeed * direction;
 
         // If stopped moving
         // if (direction.X == 0 && direction.Y == 0)
@@ -80,7 +73,6 @@ public class Player : IPlayer
         //If changing direciton
         // else
         // {
-            currentDirection = direction;
             if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
             if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
             if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownRunning);
@@ -91,24 +83,24 @@ public class Player : IPlayer
     public void Attack()
     {
         linkMode = LinkMode.Attack;
-        if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
-        if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
-        if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownAttack);
-        if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpAttack);
+        if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
+        if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
+        if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownAttack);
+        if (direction.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpAttack);
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
-        if (linkMode == LinkMode.Moving)
-        {
-            Vector2 movement = currentDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        if (linkMode == LinkMode.Moving) {
+            //This will attempt a movement given by velocity, colliding with objects
+            Vector2 movement = velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Collisions.ManageCollision(this, objects, movement);
         } else {
             if (linkMode != LinkMode.Attack) {
-                if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
-                if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
-                if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
-                if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
+                if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
+                if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
+                if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
+                if (direction.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
             }
             Collisions.ManageCollision(this, objects, Vector2.Zero);
         }
@@ -116,8 +108,7 @@ public class Player : IPlayer
         linkMode = LinkMode.Still;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
-    {
+    public void Draw(SpriteBatch spriteBatch) {
         linkSprite.Draw(spriteBatch);
     }
 }
