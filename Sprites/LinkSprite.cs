@@ -5,7 +5,7 @@ using Interfaces;
 
 namespace Sprint2.Sprites
 {
-    public class LinkSprite() : ISprite
+    public class LinkSprite : ISprite
     {
         public enum LinkAnimationState
         {

@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Sprint2.Controllers;
-using Sprint2.Player;
 using Interfaces;
 using System.Dynamic;
 
@@ -33,7 +32,7 @@ public class Game1 : Game
 
         keyboardController = new KeyBoardController();
         // mouseController = new MouseController(this); //this doesn't exist yet
-        player = new Link();
+        player = new Player();
         testPlant = new(Plant.Species.grass, (20, 20));
 
         CommandUtil.keyCommandBindings = new()
@@ -57,6 +56,8 @@ public class Game1 : Game
         keyboardController.Update();
         // mouseController.Update();
         player.Update(gameTime);
+
+        //This is all for testing/display
         if (Keyboard.GetState().IsKeyDown(Keys.D1))
         {
             testPlant.Update(gameTime);
