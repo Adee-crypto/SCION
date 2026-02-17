@@ -17,13 +17,13 @@ public static class CommandUtil
     public static void AttachCommandBindings(Game1 game) {
         holdKeyCommandBindings = new()
         {
-            {[Keys.Left, Keys.A], game.Player.left},
-            {[Keys.Right, Keys.D], game.Player.right},
+            {[Keys.Left, Keys.A], game.Player.MoveLeft},
+            {[Keys.Right, Keys.D], game.Player.MoveRight},
             {[Keys.Z, Keys.N], game.Player.Attack},
         };
         tapKeyCommandBindings = new()
         {
-            {[Keys.Up, Keys.W], game.Player.jump},
+            {[Keys.Up, Keys.W], game.Player.Jump},
             {[Keys.P], game.TogglePause},
             {[Keys.Q], game.Exit}
         };
@@ -34,7 +34,7 @@ public static class LinkUtil
 {
     public const float secondsPerFrame = 0.005f;
     public const float horizontalSpeed = 10f;
-    public const float jumpSpeed = -600f;
+    public const float jumpSpeed = -650f;
     public const float gravity = 980f;
 
     public static Texture2D texture; // Set in Game1.LoadContent

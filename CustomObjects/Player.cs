@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Sprites;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Sprint2;
 
-public class Player// : IPlayer UNCOMMENT THIS
+public class Player : IPlayer
 {
     private enum LinkMode {Still, Moving, Attack};
     private const int HitboxSize = 16;
@@ -24,7 +25,7 @@ public class Player// : IPlayer UNCOMMENT THIS
         linkSprite = new LinkSprite();
         position = new Vector2(20, 0);
         linkSprite.Position = position;
-        velocity = new Vector2(LinkUtil.horizontalSpeed, 1f);
+        velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
         isGrounded = false;
     }
 
@@ -35,36 +36,6 @@ public class Player// : IPlayer UNCOMMENT THIS
     }
 
     public Rectangle Hitbox => new((int)position.X, (int)position.Y, HitboxSize, HitboxSize);
-
-    //make these nicer/customized
-    //e.g. make down break the block below you, make up jump, etc.
-    public void left()
-    {
-        Move(0);
-    }
-    public void right()
-    {
-        Move(1);
-    }
-
-    public void jump()
-    {
-        if (isGrounded)
-        {
-            velocity.Y = LinkUtil.jumpSpeed;
-            isGrounded = false;
-        }
-    }
-
-    public void breakBlock()
-    {
-        //
-    }
-
-    public void plantSeed()
-    {
-        // 
-    }
 
     public void Move(int index)
     {
@@ -77,6 +48,34 @@ public class Player// : IPlayer UNCOMMENT THIS
         };
         if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
         if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
+    }
+
+    public void MoveLeft()
+    {
+        Move(0);
+    }
+    public void MoveRight()
+    {
+        Move(1);
+    }
+
+    public void Jump()
+    {
+        if (isGrounded)
+        {
+            velocity.Y = LinkUtil.jumpSpeed;
+            isGrounded = false;
+        }
+    }
+
+    public void BreakBlock()
+    {
+        //
+    }
+
+    public void PlantSeed()
+    {
+        // 
     }
 
     public void Attack()

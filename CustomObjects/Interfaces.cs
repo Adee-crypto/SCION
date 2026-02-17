@@ -1,6 +1,8 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2;
+using Sprint2.Sprites;
+using System.Collections.Generic;
 using static Sprint2.Sprites.LinkSprite;
 
 namespace Interfaces;
@@ -18,7 +20,14 @@ public interface IController
 
 public interface IPlayer : IScreenObject
 {
-    public void ChangeDirection(int index);
+    public void Move(int index);
+
+    public void Jump();
+
+    public void BreakBlock();
+
+    public void PlantSeed();
+
     public void Attack();
 }
 
