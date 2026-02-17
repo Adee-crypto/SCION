@@ -9,6 +9,7 @@ using System.Dynamic;
 using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.ComponentModel.Design;
+using System.Linq;
 
 
 namespace Sprint2;
@@ -27,6 +28,7 @@ public class Game1 : Game
     public bool IsPaused => isPaused;
     private Plant testPlant;
     private List<Rectangle> objects;
+    private List<Platform> platforms;
 
 
     public Game1()
@@ -46,6 +48,8 @@ public class Game1 : Game
         player = new Player();
         testPlant = new(Plant.Species.grass, (20, 20));
         objects = [];
+        platforms = new();
+        platforms.Add(new Platform(Platform.Type.stonebrick, 0, 16*25, 40, 1));
 
         CommandUtil.AttachCommandBindings(this);
     }
@@ -54,6 +58,7 @@ public class Game1 : Game
     {
         LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
+        PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         uiFont = Content.Load<SpriteFont>("UIFont");
         pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
     }
@@ -84,6 +89,7 @@ public class Game1 : Game
             }
 
             objects.AddRange(testPlant.GetPlantObjects());
+            objects.AddRange(platforms.Select(p => p.Bounds));
 
             player.Update(gameTime, objects);
         }
@@ -98,6 +104,8 @@ public class Game1 : Game
 
         testPlant.Draw(spriteBatch);
         player.Draw(spriteBatch);
+
+        foreach (var p in platforms) p.Draw(spriteBatch);
 
         if (isPaused)
         {

@@ -90,3 +90,16 @@ public static class PlantUtil {
         return Enumerable.Range(0, n).OrderBy(x => Random.Shared.Next());
     }
 }
+
+public static class PlatformUtil {
+    public const int platformWidth = 16; 
+
+    public static Texture2D spritesheet; // Set in Game1.LoadContent
+
+    public static Dictionary<Platform.Type, Rectangle> PlatformSpriteRects = new()
+    {
+        { Platform.Type.stone, new (platformWidth, 0, platformWidth, platformWidth) },
+        { Platform.Type.stonebrick, new (6*platformWidth, 3*platformWidth, platformWidth, platformWidth) },
+        { Platform.Type.cracked_stonebrick, new (5*platformWidth, 6*platformWidth, platformWidth, platformWidth) },
+    };
+}

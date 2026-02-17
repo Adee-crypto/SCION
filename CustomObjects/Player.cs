@@ -16,6 +16,12 @@ public class Player : IPlayer
     private Vector2 currentPosition;
     private LinkSprite linkSprite = new LinkSprite();
     private float speed;
+    private const float Gravity = 1800f;
+    private const float MaxFallSpeed = 3600f;
+    private const int HitboxSize = 16;
+    private float velocityY = 0f;
+    private bool isOnPlatform;
+
 
     public Player()
     {
@@ -35,7 +41,7 @@ public class Player : IPlayer
         }
     }
 
-    public Rectangle Hitbox => new((int)currentPosition.X, (int)currentPosition.Y, 16, 16);
+    public Rectangle Hitbox => new((int)currentPosition.X, (int)currentPosition.Y, HitboxSize, HitboxSize);
 
     //make these nicer/customized
     public void up()
@@ -99,10 +105,13 @@ public class Player : IPlayer
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
+        float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        Vector2 horizontalMove = Vector2.Zero;
         if (linkMode == LinkMode.Moving)
         {
-            Vector2 movement = currentDirection * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Collisions.ManageCollision(this, objects, movement);
+            horizontalMove = new Vector2(currentDirection.X, 0) * speed * time;
+            Collisions.ManageCollision(this, objects, horizontalMove);
         } else {
             if (linkMode != LinkMode.Attack) {
                 if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
@@ -112,6 +121,38 @@ public class Player : IPlayer
             }
             Collisions.ManageCollision(this, objects, Vector2.Zero);
         }
+
+        velocityY += Gravity * time;
+        if (velocityY > MaxFallSpeed) velocityY = MaxFallSpeed;
+
+        isOnPlatform = false;
+
+        float oldY = currentPosition.Y;
+        currentPosition.Y += velocityY * time;
+
+        linkSprite.Position = currentPosition;
+
+        Rectangle newRect = Hitbox;
+        Rectangle oldRect = new Rectangle(newRect.X, (int)oldY, newRect.Width, newRect.Height);
+
+        foreach (Rectangle platform in objects)
+        {
+            if (!newRect.Intersects(platform)) continue;
+
+            bool falling = velocityY > 0;
+            bool wasAbove = oldRect.Bottom <= platform.Top;
+
+            if (falling && wasAbove)
+            {
+                currentPosition.Y = platform.Top - newRect.Height;
+                velocityY = 0;
+                isOnPlatform = true;
+
+                linkSprite.Position = currentPosition;
+                newRect = Hitbox;
+            }
+        }
+
         linkSprite.Update(gameTime, objects);
         linkMode = LinkMode.Still;
     }
