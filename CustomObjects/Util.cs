@@ -23,6 +23,7 @@ public static class CommandUtil
         };
         tapKeyCommandBindings = new()
         {
+            {[Keys.Up, Keys.W], game.Player.jump},
             {[Keys.P], game.TogglePause},
             {[Keys.Q], game.Exit}
         };
@@ -33,8 +34,8 @@ public static class LinkUtil
 {
     public const float secondsPerFrame = 0.005f;
     public const float horizontalSpeed = 10f;
-    public const float gravity = 1800f;
-    public const float maxFallSpeed = 3600f;
+    public const float jumpSpeed = -600f;
+    public const float gravity = 980f;
 
     public static Texture2D texture; // Set in Game1.LoadContent
 

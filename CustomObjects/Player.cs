@@ -16,6 +16,7 @@ public class Player// : IPlayer UNCOMMENT THIS
 
     private Vector2 position;
     private Vector2 velocity;
+    private bool isGrounded;
 
     public Player()
     {
@@ -23,7 +24,8 @@ public class Player// : IPlayer UNCOMMENT THIS
         linkSprite = new LinkSprite();
         position = new Vector2(20, 0);
         linkSprite.Position = position;
-        velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
+        velocity = new Vector2(LinkUtil.horizontalSpeed, 1f);
+        isGrounded = false;
     }
 
     public Vector2 Position
@@ -47,7 +49,11 @@ public class Player// : IPlayer UNCOMMENT THIS
 
     public void jump()
     {
-        //
+        if (isGrounded)
+        {
+            velocity.Y = LinkUtil.jumpSpeed;
+            isGrounded = false;
+        }
     }
 
     public void breakBlock()
@@ -65,7 +71,7 @@ public class Player// : IPlayer UNCOMMENT THIS
         linkMode = LinkMode.Moving;
         velocity = index switch
         {
-            0 => new Vector2(LinkUtil.horizontalSpeed * -1, velocity.Y), // left
+            0 => new Vector2(LinkUtil.horizontalSpeed * -1f, velocity.Y), // left
             1 => new Vector2(LinkUtil.horizontalSpeed, velocity.Y), // right
             _ => new Vector2(0, 0), // never happen
         };
@@ -84,25 +90,24 @@ public class Player// : IPlayer UNCOMMENT THIS
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        Vector2 horizontalMove = Vector2.Zero;
         if (linkMode == LinkMode.Moving)
         {
-            horizontalMove = new Vector2(velocity.X, 0) * LinkUtil.horizontalSpeed * time;
+            Vector2 horizontalMove = new Vector2(velocity.X, 0) * LinkUtil.horizontalSpeed * time;
             Collisions.ManageCollision(this, objects, horizontalMove);
-        } else {
-            if (linkMode != LinkMode.Attack) {
+        }
+        else
+        {
+            if (linkMode != LinkMode.Attack)
+            {
                 if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
                 if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
             }
             Collisions.ManageCollision(this, objects, Vector2.Zero);
         }
 
-        velocity.Y += LinkUtil.gravity * time;
-        if (velocity.Y > LinkUtil.maxFallSpeed) velocity.Y = LinkUtil.maxFallSpeed;
-
         float oldY = position.Y;
+        velocity.Y += LinkUtil.gravity * time;
         position.Y += 0.5f * velocity.Y * time;
-
         linkSprite.Position = position;
 
         Rectangle newRect = Hitbox;
@@ -111,18 +116,19 @@ public class Player// : IPlayer UNCOMMENT THIS
         foreach (Rectangle platform in objects)
         {
             if (!newRect.Intersects(platform)) continue;
-
-            bool falling = velocity.Y > 0;
-            bool wasAbove = oldRect.Bottom <= platform.Top;
-
-            if (falling && wasAbove)
+            if (oldRect.Bottom <= platform.Top)
             {
+                isGrounded = true;
                 position.Y = platform.Top - newRect.Height;
                 velocity.Y = 0;
-
-                linkSprite.Position = position;
-                newRect = Hitbox;
             }
+            else if (oldRect.Top >= platform.Bottom)
+            {
+                position.Y = platform.Bottom;
+                velocity.Y = 0;
+            }
+            linkSprite.Position = position;
+            newRect = Hitbox;
         }
 
         linkSprite.Update(gameTime, objects);
