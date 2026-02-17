@@ -8,12 +8,12 @@ using System.Collections.Generic;
 
 namespace Sprint2;
 
-public class Player((int, int) position)// : IPlayer UNCOMMENT THIS
+public class Player// : IPlayer UNCOMMENT THIS
 {
     private enum LinkMode {Still, Moving, Attack};
     private LinkMode linkMode = LinkMode.Still;
     private Vector2 direction = new Vector2(LinkUtil.linkDefaultXDirection, 0);
-    private Vector2 position = PlantUtil.cellWidth * new Vector2(position.Item1, position.Item2);
+    private Vector2 position;
     private Vector2 velocity;
     private LinkSprite linkSprite = new LinkSprite();
     private float speed;
@@ -21,15 +21,15 @@ public class Player((int, int) position)// : IPlayer UNCOMMENT THIS
     private const float MaxFallSpeed = 3600f;
     private const int HitboxSize = 16;
     private float velocityY = 0f;
-    private bool isOnPlatform;
 
 
-    public Player()
+    public Player((int, int) startPos)
     {
         linkMode = LinkMode.Still;
-        currentDirection = new Vector2(LinkUtil.linkDefaultXDirection, 0);
-        currentPosition = new Vector2(0, 0);
-        speed = LinkUtil.linkSpeed;
+        direction = new Vector2(LinkUtil.linkDefaultXDirection, 0);
+        position = new Vector2(startPos.Item1, startPos.Item2);
+        linkSprite.Position = position;
+        speed = LinkUtil.walkSpeed;
     }
 
     public Vector2 Position
@@ -111,7 +111,7 @@ public class Player((int, int) position)// : IPlayer UNCOMMENT THIS
         Vector2 horizontalMove = Vector2.Zero;
         if (linkMode == LinkMode.Moving)
         {
-            horizontalMove = new Vector2(currentDirection.X, 0) * speed * time;
+            horizontalMove = new Vector2(direction.X, 0) * speed * time;
             Collisions.ManageCollision(this, objects, horizontalMove);
         } else {
             if (linkMode != LinkMode.Attack) {
@@ -126,12 +126,10 @@ public class Player((int, int) position)// : IPlayer UNCOMMENT THIS
         velocityY += Gravity * time;
         if (velocityY > MaxFallSpeed) velocityY = MaxFallSpeed;
 
-        isOnPlatform = false;
+        float oldY = position.Y;
+        position.Y += velocityY * time;
 
-        float oldY = currentPosition.Y;
-        currentPosition.Y += velocityY * time;
-
-        linkSprite.Position = currentPosition;
+        linkSprite.Position = position;
 
         Rectangle newRect = Hitbox;
         Rectangle oldRect = new Rectangle(newRect.X, (int)oldY, newRect.Width, newRect.Height);
@@ -145,11 +143,10 @@ public class Player((int, int) position)// : IPlayer UNCOMMENT THIS
 
             if (falling && wasAbove)
             {
-                currentPosition.Y = platform.Top - newRect.Height;
+                position.Y = platform.Top - newRect.Height;
                 velocityY = 0;
-                isOnPlatform = true;
 
-                linkSprite.Position = currentPosition;
+                linkSprite.Position = position;
                 newRect = Hitbox;
             }
         }
