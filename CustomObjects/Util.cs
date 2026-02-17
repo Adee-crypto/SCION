@@ -31,15 +31,14 @@ public static class CommandUtil
 
 public static class LinkUtil
 {
-    public const int linkDefaultXDirection = 1;
-    public const int linkDefaultyDirection = 1;
-    public const float linkSecondsPerFrame = 0.25f;
-    public const float walkSpeed = 100f;
-    public const float gravity = 1f;
+    public const float secondsPerFrame = 0.005f;
+    public const float horizontalSpeed = 10f;
+    public const float gravity = 1800f;
+    public const float maxFallSpeed = 3600f;
 
-    public static Texture2D linkTexture; // Set in Game1.LoadContent
+    public static Texture2D texture; // Set in Game1.LoadContent
 
-    public static Dictionary<LinkAnimationState, Rectangle[]> GetLinkFrames()
+    public static Dictionary<LinkAnimationState, Rectangle[]> GetFrames()
     {
         Dictionary<LinkAnimationState, Rectangle[]> LinkFramesMap = new()
         {
@@ -52,7 +51,6 @@ public static class LinkUtil
         };
         return LinkFramesMap;
     }
-
 }
 
 public static class PlantUtil {

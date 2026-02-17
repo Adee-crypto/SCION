@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Interfaces;
 using Sprint2.Sprites;
-using static Sprint2.Sprites.LinkSprite;
 using System.Collections.Generic;
 
 
@@ -11,35 +9,27 @@ namespace Sprint2;
 public class Player// : IPlayer UNCOMMENT THIS
 {
     private enum LinkMode {Still, Moving, Attack};
-    private LinkMode linkMode = LinkMode.Still;
-    private Vector2 direction = new Vector2(LinkUtil.linkDefaultXDirection, 0);
+    private const int HitboxSize = 16;
+
+    private LinkMode linkMode;
+    private LinkSprite linkSprite;
+
     private Vector2 position;
     private Vector2 velocity;
-    private LinkSprite linkSprite = new LinkSprite();
-    private float speed;
-    private const float Gravity = 1800f;
-    private const float MaxFallSpeed = 3600f;
-    private const int HitboxSize = 16;
-    private float velocityY = 0f;
 
-
-    public Player((int, int) startPos)
+    public Player()
     {
         linkMode = LinkMode.Still;
-        direction = new Vector2(LinkUtil.linkDefaultXDirection, 0);
-        position = new Vector2(startPos.Item1, startPos.Item2);
+        linkSprite = new LinkSprite();
+        position = new Vector2(20, 0);
         linkSprite.Position = position;
-        speed = LinkUtil.walkSpeed;
+        velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
     }
 
     public Vector2 Position
     {
         get => position;
-        set
-        {
-            position = value;
-            linkSprite.Position = value;
-        }
+        set { position = value; linkSprite.Position = value; }
     }
 
     public Rectangle Hitbox => new((int)position.X, (int)position.Y, HitboxSize, HitboxSize);
@@ -55,26 +45,39 @@ public class Player// : IPlayer UNCOMMENT THIS
         Move(1);
     }
 
+    public void jump()
+    {
+        //
+    }
+
+    public void breakBlock()
+    {
+        //
+    }
+
+    public void plantSeed()
+    {
+        // 
+    }
+
     public void Move(int index)
     {
         linkMode = LinkMode.Moving;
-        direction = index switch
+        velocity = index switch
         {
-            0 => new Vector2(-1, 0),// left
-            1 => new Vector2(1, 0),// right
-            _ => new Vector2(0, 0),// never happen
+            0 => new Vector2(LinkUtil.horizontalSpeed * -1, velocity.Y), // left
+            1 => new Vector2(LinkUtil.horizontalSpeed, velocity.Y), // right
+            _ => new Vector2(0, 0), // never happen
         };
-        velocity = LinkUtil.walkSpeed * direction;
-
-        if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
-        if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
+        if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
+        if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
     }
 
     public void Attack()
     {
         linkMode = LinkMode.Attack;
-        if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
-        if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
+        if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
+        if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
@@ -84,21 +87,21 @@ public class Player// : IPlayer UNCOMMENT THIS
         Vector2 horizontalMove = Vector2.Zero;
         if (linkMode == LinkMode.Moving)
         {
-            horizontalMove = new Vector2(direction.X, 0) * speed * time;
+            horizontalMove = new Vector2(velocity.X, 0) * LinkUtil.horizontalSpeed * time;
             Collisions.ManageCollision(this, objects, horizontalMove);
         } else {
             if (linkMode != LinkMode.Attack) {
-                if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
-                if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
+                if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
+                if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
             }
             Collisions.ManageCollision(this, objects, Vector2.Zero);
         }
 
-        velocityY += Gravity * time;
-        if (velocityY > MaxFallSpeed) velocityY = MaxFallSpeed;
+        velocity.Y += LinkUtil.gravity * time;
+        if (velocity.Y > LinkUtil.maxFallSpeed) velocity.Y = LinkUtil.maxFallSpeed;
 
         float oldY = position.Y;
-        position.Y += 0.5f * velocityY * time;
+        position.Y += 0.5f * velocity.Y * time;
 
         linkSprite.Position = position;
 
@@ -109,13 +112,13 @@ public class Player// : IPlayer UNCOMMENT THIS
         {
             if (!newRect.Intersects(platform)) continue;
 
-            bool falling = velocityY > 0;
+            bool falling = velocity.Y > 0;
             bool wasAbove = oldRect.Bottom <= platform.Top;
 
             if (falling && wasAbove)
             {
                 position.Y = platform.Top - newRect.Height;
-                velocityY = 0;
+                velocity.Y = 0;
 
                 linkSprite.Position = position;
                 newRect = Hitbox;

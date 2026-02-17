@@ -18,15 +18,21 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
+
     private IController keyboardController;
     // private IController mouseController; //this doesn't exist yet
+
     private Player player; //SWITCH THESE TO IPlayer LATER
     public Player Player => player;
+
     private PauseMenu pauseMenu;
     private SpriteFont uiFont;
+
     private bool isPaused;
     public bool IsPaused => isPaused;
+
     private Plant testPlant;
+
     private List<Rectangle> objects;
     private List<Platform> platforms;
 
@@ -45,7 +51,7 @@ public class Game1 : Game
 
         keyboardController = new KeyBoardController();
         // mouseController = new MouseController(this); //this doesn't exist yet
-        player = new Player((20, 0));
+        player = new Player();
         testPlant = new(Plant.Species.grass, (20, 20));
         objects = [];
         platforms = new();
@@ -56,7 +62,7 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
+        LinkUtil.texture = Content.Load<Texture2D>("Link");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         uiFont = Content.Load<SpriteFont>("UIFont");
