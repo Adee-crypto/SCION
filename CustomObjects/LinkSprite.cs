@@ -10,16 +10,10 @@ namespace Sprint2.Sprites
     {
         public enum LinkAnimationState
         {
-            UpFacing,
-            UpRunning,
-            DownFacing,
-            DownRunning,
             LeftFacing,
             LeftRunning,
             RightFacing,
             RightRunning,
-            UpAttack,
-            DownAttack,
             LeftAttack,
             RightAttack
         };

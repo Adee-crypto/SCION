@@ -17,8 +17,6 @@ public static class CommandUtil
     public static void AttachCommandBindings(Game1 game) {
         holdKeyCommandBindings = new()
         {
-            {[Keys.Up, Keys.W], game.Player.up},
-            {[Keys.Down, Keys.S], game.Player.down},
             {[Keys.Left, Keys.A], game.Player.left},
             {[Keys.Right, Keys.D], game.Player.right},
             {[Keys.Z, Keys.N], game.Player.Attack},
@@ -45,16 +43,10 @@ public static class LinkUtil
     {
         Dictionary<LinkAnimationState, Rectangle[]> LinkFramesMap = new()
         {
-            { LinkAnimationState.UpFacing, [new (16, 16, 16, 16)] },
-            { LinkAnimationState.UpRunning, [new (0, 16, 16, 16), new(16, 16, 16, 16)] },
-            { LinkAnimationState.DownFacing, [new (32, 16, 16, 16)] },
-            { LinkAnimationState.DownRunning, [new(32, 16, 16, 16), new(48, 16, 16, 16)] },
             { LinkAnimationState.LeftFacing, [new (32, 0, 16, 16)] },
             { LinkAnimationState.LeftRunning, [new(32, 0, 16, 16), new(48, 0, 16, 16)] },
             { LinkAnimationState.RightFacing, [new (0, 0, 16, 16)] },
             { LinkAnimationState.RightRunning, [new(0, 0, 16, 16), new(16, 0, 16, 16)] },
-            { LinkAnimationState.UpAttack, [new(32, 32, 16, 16)]},
-            { LinkAnimationState.DownAttack, [new(48, 32, 16, 16)]},
             { LinkAnimationState.LeftAttack, [new(16, 32, 16, 16)]},
             { LinkAnimationState.RightAttack, [new(0, 32, 16, 16)]},
         };

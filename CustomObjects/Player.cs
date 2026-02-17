@@ -46,21 +46,13 @@ public class Player// : IPlayer UNCOMMENT THIS
 
     //make these nicer/customized
     //e.g. make down break the block below you, make up jump, etc.
-    public void up()
+    public void left()
     {
         Move(0);
     }
-    public void down()
-    {
-        Move(1);
-    }
-    public void left()
-    {
-        Move(2);
-    }
     public void right()
     {
-        Move(3);
+        Move(1);
     }
 
     public void Move(int index)
@@ -68,31 +60,14 @@ public class Player// : IPlayer UNCOMMENT THIS
         linkMode = LinkMode.Moving;
         direction = index switch
         {
-            0 => new Vector2(0, -1),// up
-            1 => new Vector2(0, 1),// down
-            2 => new Vector2(-1, 0),// left
-            3 => new Vector2(1, 0),// right
+            0 => new Vector2(-1, 0),// left
+            1 => new Vector2(1, 0),// right
             _ => new Vector2(0, 0),// never happen
         };
         velocity = LinkUtil.walkSpeed * direction;
 
-        // If stopped moving
-        // if (direction.X == 0 && direction.Y == 0)
-        // {
-        //     linkMode = LinkMode.Still;
-        //     if (currentDirection.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
-        //     if (currentDirection.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
-        //     if (currentDirection.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
-        //     if (currentDirection.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
-        // }
-        //If changing direciton
-        // else
-        // {
-            if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
-            if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
-            if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownRunning);
-            if (direction.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpRunning);
-        // }
+        if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
+        if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
     }
 
     public void Attack()
@@ -100,8 +75,6 @@ public class Player// : IPlayer UNCOMMENT THIS
         linkMode = LinkMode.Attack;
         if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
         if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
-        if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownAttack);
-        if (direction.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpAttack);
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
@@ -117,8 +90,6 @@ public class Player// : IPlayer UNCOMMENT THIS
             if (linkMode != LinkMode.Attack) {
                 if (direction.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
                 if (direction.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
-                if (direction.Y > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.DownFacing);
-                if (direction.Y < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.UpFacing);
             }
             Collisions.ManageCollision(this, objects, Vector2.Zero);
         }
@@ -127,7 +98,7 @@ public class Player// : IPlayer UNCOMMENT THIS
         if (velocityY > MaxFallSpeed) velocityY = MaxFallSpeed;
 
         float oldY = position.Y;
-        position.Y += velocityY * time;
+        position.Y += 0.5f * velocityY * time;
 
         linkSprite.Position = position;
 
