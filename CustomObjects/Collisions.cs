@@ -39,7 +39,7 @@ public class Collisions
             }
             else // Pushed upward
             {
-                currentPosition.Y = obj.Bottom >= (obj.Top - player.Hitbox.Height) ? (obj.Top - player.Hitbox.Height) : obj.Bottom;
+                currentPosition.Y = obj.Top - player.Hitbox.Height;
             }
         }
 
