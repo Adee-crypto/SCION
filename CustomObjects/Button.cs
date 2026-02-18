@@ -21,8 +21,8 @@ public class Button
         texture = buttonTexture;
         text = buttonText;
         onClick = command;
-        bounds = new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
-        textPos = new Vector2(pos.X + (size.X - font.MeasureString(buttonText).X) / 2, pos.Y + (size.Y - font.MeasureString(buttonText).Y) / 2);
+        bounds = new ((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
+        textPos = new (pos.X + (size.X - font.MeasureString(buttonText).X) / 2, pos.Y + (size.Y - font.MeasureString(buttonText).Y) / 2);
     }
 
     public void Update(MouseState mouse, MouseState prevMouse)
