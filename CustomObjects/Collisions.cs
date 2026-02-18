@@ -8,14 +8,12 @@ public class Collisions
     public static void ManageCollision(Player player, IEnumerable<Rectangle> objects, Vector2 movement, ref bool isGrounded, ref Vector2 velocity)
     {
         Vector2 currentPos = player.Position;
-        float oldY = currentPos.Y;
         currentPos.X += movement.X;
         player.Position = currentPos;
 
         foreach (var o in objects)
         {
             if (!player.Hitbox.Intersects(o)) continue;
-
             if (movement.X > 0)
             {
                 currentPos.X = o.Left - player.Hitbox.Width;
@@ -24,14 +22,10 @@ public class Collisions
             {
                 currentPos.X = o.Right;
             }
-            else
-            {
-                currentPos.X = o.Right >= (o.Left - player.Hitbox.Width) ? (o.Left - player.Hitbox.Width) : o.Right;
-            }
-
             player.Position = currentPos;
         }
 
+        float oldY = currentPos.Y;
         currentPos.Y += movement.Y;
         player.Position = currentPos;
         Rectangle newRect = player.Hitbox;
@@ -41,16 +35,14 @@ public class Collisions
         {
             if (!newRect.Intersects(o)) continue;
 
-            if (oldRect.Bottom <= o.Top)
+            if (oldRect.Bottom <= o.Top) // Landing on top
             {
-                // Landing on top
                 isGrounded = true;
                 currentPos.Y = o.Top - newRect.Height;
                 velocity.Y = 0;
             }
-            else if (oldRect.Top >= o.Bottom)
+            else if (oldRect.Top >= o.Bottom) // Hitting ceiling
             {
-                // Hitting ceiling
                 currentPos.Y = o.Bottom;
                 velocity.Y = 0;
             }
@@ -61,10 +53,6 @@ public class Collisions
             else if (movement.Y < 0)
             {
                 currentPos.Y = o.Bottom;
-            }
-            else
-            {
-                currentPos.Y = o.Bottom >= (o.Top - newRect.Height) ? (o.Top - newRect.Height) : o.Bottom;
             }
 
             player.Position = currentPos;

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Sprites;
-using System;
 using System.Collections.Generic;
 
 
@@ -44,7 +43,7 @@ public class Player : IPlayer
         velocity = index switch
         {
             0 => new Vector2(LinkUtil.horizontalSpeed * -1f, velocity.Y), // left
-            1 => new Vector2(LinkUtil.horizontalSpeed, velocity.Y),       // right
+            1 => new Vector2(LinkUtil.horizontalSpeed, velocity.Y), // right
             _ => new Vector2(0, 0), // never happen
         };
         if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
@@ -84,13 +83,13 @@ public class Player : IPlayer
             if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
         }
 
-        Vector2 horizontalMove = Vector2.Zero;
-        if (linkMode == LinkMode.Moving) horizontalMove = new Vector2(velocity.X * time, 0);
-
-        if (!isGrounded) velocity.Y += LinkUtil.gravity * time;
-        Vector2 verticalMove = new Vector2(0, 0.5f * velocity.Y * time);
-
-        Vector2 movement = horizontalMove + verticalMove;
+        Vector2 movement = Vector2.Zero;
+        if (linkMode == LinkMode.Moving) movement.X = velocity.X * time;
+        if (!isGrounded)
+        {
+            velocity.Y += LinkUtil.gravity * time;
+            movement.Y = 0.5f * velocity.Y * time;
+        }
         Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
 
         linkSprite.Position = position;
