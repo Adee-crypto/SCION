@@ -9,7 +9,7 @@ public class PauseMenu
 {
     private readonly SpriteFont font;
     private readonly Texture2D overlay;
-    private readonly List<Button> buttons = new();
+    private readonly List<Button> buttons = [];
 
     public PauseMenu(SpriteFont font, GraphicsDevice graphicsDevice)
     {
@@ -23,27 +23,21 @@ public class PauseMenu
 
     public void Update(IMouseController mouseController)
     {
-        foreach (var button in buttons)
-        {
-            button.Update(mouseController);
-        }
+        buttons.ForEach(b => b.Update(mouseController));
     }
 
-    public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
+    public void Draw(SpriteBatch spriteBatch, (int w, int h) screenSize)
     {
         string pauseText = "GAME PAUSED";
 
         Vector2 textSize = font.MeasureString(pauseText);
-        Vector2 center = new Vector2((graphicsDevice.Viewport.Width - textSize.X) / 2, (graphicsDevice.Viewport.Height - textSize.Y) / 2);
+        Vector2 center = new((screenSize.w - textSize.X) / 2, (screenSize.h - textSize.Y) / 2);
         
-        spriteBatch.Draw(overlay, new Rectangle(0, 0, graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height), Color.Black * 0.5f);
+        spriteBatch.Draw(overlay, new Rectangle(0, 0, screenSize.w, screenSize.h), Color.Black * 0.5f);
 
-        Vector2 textPosition = new Vector2(center.X, center.Y / 4);
+        Vector2 textPosition = new(center.X, center.Y / 4);
         spriteBatch.DrawString(font, pauseText, textPosition, Color.Black);
 
-        foreach (var b in buttons)
-        {
-            b.Draw(spriteBatch);
-        }
+        buttons.ForEach(b => b.Draw(spriteBatch));
     }
 }

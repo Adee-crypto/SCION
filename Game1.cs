@@ -17,27 +17,31 @@ public class Game1 : Game
 
     private IController keyboardController;
     private IMouseController mouseController;
-
-    private IPlayer player;
-    public IPlayer Player => player;
-
-    private PauseMenu pauseMenu;
-    private SpriteFont uiFont;
+    private (int w, int h) screenSize = ScreenUtil.defaultScreenSize;
 
     private bool isPaused;
     public bool IsPaused => isPaused;
 
+    private PauseMenu pauseMenu;
+    private SpriteFont uiFont;
+
+
+    public Player Player0 {get;set;}
     private List<Rectangle> objects;
     private List<Platform> platforms;
 
+    //for testing
     private Plant testPlant;
-    private Texture2D arrowTexture;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+
+        _graphics.PreferredBackBufferWidth = screenSize.w;
+        _graphics.PreferredBackBufferHeight = screenSize.h;
+        _graphics.ApplyChanges();
     }
 
     protected override void Initialize()
@@ -65,33 +69,24 @@ public class Game1 : Game
         uiFont = Content.Load<SpriteFont>("UIFont");
         pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
 
-        Vector2 resumePosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 60);
-        Vector2 quitPosition = new Vector2(resumePosition.X, resumePosition.Y + 60);
-        Vector2 resetPosition = new Vector2(16, 16);
+        Vector2 resumePosition = new(screenSize.w / 2 - 100, screenSize.h / 2 - 60);
+        Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
+        Vector2 resetPosition = new(16, 16);
 
         pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
         pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
         pauseMenu.AddButton(new Button(uiFont, ButtonUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
     }
 
-    public void TogglePause()
-    {
-        isPaused = !isPaused;
-    }
+    public void TogglePause() => isPaused = !isPaused;
 
-    private void ResetLevel()
+    public void ResetLevel()
     {
-        player = new Player();
-        testPlant = new(Plant.Species.grass, (20, 20));
-        objects = new List<Rectangle>();
-        platforms = new();
-        platforms.Add(new Platform(Platform.Type.stonebrick, 0, 16*25, 40, 1));
-        if (isPaused) TogglePause();
-    }
-
-    public void RestartLevel()
-    {
-        ResetLevel();
+        Player0 = new(); //ADD RESET METHOD TO PLAYER
+        testPlant = new(Plant.Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
+        objects = [];
+        platforms = [new(Platform.Type.stonebrick, 0, 16*25, 40, 1)];
+        isPaused = false;
     }
 
     protected override void Update(GameTime gameTime)
@@ -99,9 +94,11 @@ public class Game1 : Game
         mouseController.Update();
         keyboardController.IsPaused = isPaused;
         keyboardController.Update();
+        screenSize = (GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
-        if (!isPaused)
-        {
+        if (isPaused) {
+            pauseMenu.Update(mouseController);
+        } else {
             objects.Clear();
 
             //This is all for testing/display
@@ -117,12 +114,9 @@ public class Game1 : Game
             objects.AddRange(testPlant.GetPlantObjects());
             objects.AddRange(platforms.Select(p => p.Bounds));
 
-            player.Update(gameTime, objects);
+            Player0.Update(gameTime, objects);
 
-            if (player.Position.Y > GraphicsDevice.Viewport.Height) ResetLevel();
-        } else
-        {
-            pauseMenu.Update(mouseController);
+            if (Player0.Position.Y > screenSize.h) ResetLevel();
         }
 
         base.Update(gameTime);
@@ -133,14 +127,11 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
 
-        player.Draw(spriteBatch);
+        Player0.Draw(spriteBatch);
         testPlant.Draw(spriteBatch);
-        foreach (var p in platforms) p.Draw(spriteBatch);
+        platforms.ForEach(p => p.Draw(spriteBatch));
 
-        if (isPaused)
-        {
-            pauseMenu.Draw(spriteBatch, GraphicsDevice);
-        }
+        if (isPaused) pauseMenu.Draw(spriteBatch, screenSize);
 
         spriteBatch.End();
         base.Draw(gameTime);

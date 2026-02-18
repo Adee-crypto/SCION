@@ -5,35 +5,27 @@ using System;
 
 namespace Sprint2;
 
-public class Aimer
+public class Aimer(float distanceFromPlayer = 20f)
 {
-    private readonly Texture2D texture;
-    public Vector2 Direction { get; set; } = new Vector2(1, 0); // Default aim to the right
+    public Vector2 Direction { get; set; } = new(1, 0); // Default aim to the right
     public float Angle { get; set; } = 0f; // Angle in radians
-    public float DistanceFromPlayer { get; set; }
-
-    public Aimer(Texture2D aimerTexture, float distanceFromPlayer = 20f)
-    {
-        texture = aimerTexture;
-        DistanceFromPlayer = distanceFromPlayer;
-    }
+    public float DistanceFromPlayer { get; set; } = distanceFromPlayer;
 
     public void Update(Vector2 playerCenter, MouseState mouse)
     {
-        Vector2 mousePos = new Vector2(mouse.X, mouse.Y);
+        Vector2 mousePos = new (mouse.X, mouse.Y);
         Vector2 aimerPos = mousePos - playerCenter;
         
         if (aimerPos.LengthSquared() > 0.0001f) Direction = Vector2.Normalize(aimerPos);
 
-        Angle = (float)Math.Atan2(Direction.Y, Direction.X);
+        Angle = (float) Math.Atan2(Direction.Y, Direction.X);
     }
 
     public void Draw(SpriteBatch spriteBatch, Vector2 playerCenter)
     {
         Vector2 position = playerCenter + Direction * DistanceFromPlayer;
+        Vector2 origin = new (0, LinkUtil.arrowTexture.Height / 2f);
 
-        Vector2 origin = new Vector2(0, texture.Height / 2f);
-
-        spriteBatch.Draw(texture, position, null, Color.White, Angle, origin, 1f, SpriteEffects.None, 0f);
+        spriteBatch.Draw(LinkUtil.arrowTexture, position, null, Color.White, Angle, origin, 1f, SpriteEffects.None, 0f);
     }
 }

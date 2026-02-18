@@ -23,7 +23,7 @@ public class Player : IPlayer
     {
         linkAction = LinkUtil.LinkAction.Still;
         linkSprite = new LinkSprite();
-        aimer = new Aimer(LinkUtil.arrowTexture, 10f);
+        aimer = new Aimer(10f);
         center = Vector2.Zero;
         position = new Vector2(16, 16);
         linkSprite.Position = position;

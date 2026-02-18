@@ -16,16 +16,16 @@ public static class CommandUtil
     public static void AttachCommandBindings(Game1 game) {
         holdKeyCommandBindings = new()
         {
-            {new[] {Keys.Left, Keys.A}, () => game.Player.MoveLeft()},
-            {new[] {Keys.Right, Keys.D}, () => game.Player.MoveRight()},
-            {new[] {Keys.Up, Keys.W}, () => game.Player.Jump()},
-            {new[] {Keys.Z, Keys.N}, () => game.Player.Attack()},
+            {new[] {Keys.Left, Keys.A}, () => game.Player0.MoveLeft()},
+            {new[] {Keys.Right, Keys.D}, () => game.Player0.MoveRight()},
+            {new[] {Keys.Up, Keys.W}, () => game.Player0.Jump()},
+            {new[] {Keys.Z, Keys.N}, () => game.Player0.Attack()},
         };
         tapKeyCommandBindings = new()
         {
             {new[] {Keys.Escape}, () => game.TogglePause()},
             {new[] {Keys.Q}, () => game.Exit()},
-            {new[] {Keys.R}, () => game.RestartLevel()}
+            {new[] {Keys.R}, () => game.ResetLevel()}
         };
     }
 }
@@ -105,4 +105,9 @@ public static class ButtonUtil
 {
     public static Texture2D buttonTexture; // Set in Game1.LoadContent
     public static Texture2D resetTexture; // Set in Game1.LoadContent
+}
+
+public static class ScreenUtil
+{
+    public static (int w, int h) defaultScreenSize = (1000, 800);
 }
