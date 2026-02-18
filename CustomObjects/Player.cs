@@ -89,11 +89,10 @@ public class Player : IPlayer
 
         Vector2 movement = Vector2.Zero;
         if (linkMode == LinkMode.Moving) movement.X = velocity.X * time;
-        isGrounded = Collisions.CheckGrounded(this, objects);
+        isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
         if (isGrounded && velocity.Y > 0)
         {
             velocity.Y = 0;
-            movement.Y = 1f;
         }
         else
         {
