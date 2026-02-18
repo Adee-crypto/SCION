@@ -13,6 +13,7 @@ namespace Sprint2.UI
         private readonly Action onClick;
         private readonly Rectangle bounds;
         private readonly Vector2 textPos;
+        private bool hover;
 
         public Button(SpriteFont textFont, Texture2D buttonTexture, string buttonText, Action command, Vector2 size, Vector2 pos)
         {
@@ -26,7 +27,7 @@ namespace Sprint2.UI
 
         public void Update(MouseState mouse, MouseState prevMouse)
         {
-            bool hover = bounds.Contains(mouse.Position);
+            hover = bounds.Contains(mouse.Position);
             bool click = hover && mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released;
 
             if (click)
@@ -37,7 +38,8 @@ namespace Sprint2.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, bounds, Color.White);
+            Color highlight = hover ? Color.LightGray : Color.White;
+            spriteBatch.Draw(texture, bounds, highlight);
             spriteBatch.DrawString(font, text, textPos, Color.Black);
         }
     }
