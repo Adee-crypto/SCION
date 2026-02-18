@@ -25,7 +25,7 @@ public class Collisions
         foreach (var obj in objects)
         {
             if (!player.Hitbox.Intersects(obj)) continue;
-            if (player.Hitbox.Bottom - (int)movement.Y < obj.Top) // Landing on top
+            if (player.Hitbox.Bottom - (int)movement.Y <= obj.Top) // Landing on top
             {
                 isGrounded = true;
                 currentPosition.Y = obj.Top - player.Hitbox.Height;
