@@ -30,10 +30,7 @@ public class Button
         hover = bounds.Contains(mouse.Position);
         bool click = hover && mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released;
 
-        if (click)
-        {
-            onClick?.Invoke();
-        }
+        if (click) onClick?.Invoke();
     }
 
     public void Draw(SpriteBatch spriteBatch)
