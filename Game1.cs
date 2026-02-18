@@ -16,10 +16,10 @@ public class Game1 : Game
     private SpriteBatch spriteBatch;
 
     private IController keyboardController;
-    // private IController mouseController; //this doesn't exist yet
+    //private IController mouseController; /* this doesn't exist yet */
 
-    private Player player; //SWITCH THESE TO IPlayer LATER
-    public Player Player => player;
+    private IPlayer player;
+    public IPlayer Player => player;
 
     private PauseMenu pauseMenu;
     private SpriteFont uiFont;
@@ -31,7 +31,6 @@ public class Game1 : Game
 
     private List<Rectangle> objects;
     private List<Platform> platforms;
-
 
     public Game1()
     {
@@ -46,7 +45,7 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
         keyboardController = new KeyBoardController();
-        // mouseController = new MouseController(this); //this doesn't exist yet
+        // mouseController = new MouseController(this); /* this doesn't exist yet */
         player = new Player();
         testPlant = new(Plant.Species.grass, (20, 20));
         objects = [];
@@ -74,12 +73,11 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         keyboardController.Update();
-        // mouseController.Update();
+        // mouseController.Update(); /* this doesn't exist yet */
 
         if (!isPaused)
         {
             objects.Clear();
-
 
             //This is all for testing/display
             if (Keyboard.GetState().IsKeyDown(Keys.D1))
@@ -105,9 +103,8 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
 
-        testPlant.Draw(spriteBatch);
         player.Draw(spriteBatch);
-
+        testPlant.Draw(spriteBatch);
         foreach (var p in platforms) p.Draw(spriteBatch);
 
         if (isPaused)

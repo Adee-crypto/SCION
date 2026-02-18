@@ -20,6 +20,10 @@ public interface IPlayer : IScreenObject
 {
     public void Move(int index);
 
+    public void MoveLeft();
+
+    public void MoveRight();
+
     public void Jump();
 
     public void BreakBlock();
