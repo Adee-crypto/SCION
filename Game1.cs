@@ -19,7 +19,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
     private IController keyboardController;
-    // private IController mouseController; //this doesn't exist yet
+    private MouseController mouseController;
     private Player player; //SWITCH THESE TO IPlayer LATER
     public Player Player => player;
     private PauseMenu pauseMenu;
@@ -44,7 +44,7 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
         keyboardController = new KeyBoardController();
-        // mouseController = new MouseController(this); //this doesn't exist yet
+        mouseController = new MouseController();
         player = new Player((20, 0));
         testPlant = new(Plant.Species.grass, (20, 20));
         objects = [];
@@ -59,8 +59,14 @@ public class Game1 : Game
         LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
+        ButtonUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
         uiFont = Content.Load<SpriteFont>("UIFont");
         pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
+
+        Vector2 resumePosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 60);
+        Vector2 quitPosition = new Vector2(resumePosition.X, resumePosition.Y + 60);
+        pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
+        pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
     }
 
     public void TogglePause()
@@ -70,11 +76,11 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        keyboardController.Update();
-        // mouseController.Update();
+        mouseController.Update();
 
         if (!isPaused)
         {
+            keyboardController.Update();
             objects.Clear();
 
 
@@ -92,6 +98,9 @@ public class Game1 : Game
             objects.AddRange(platforms.Select(p => p.Bounds));
 
             player.Update(gameTime, objects);
+        } else
+        {
+            pauseMenu.Update(mouseController.Current, mouseController.Previous);
         }
 
         base.Update(gameTime);

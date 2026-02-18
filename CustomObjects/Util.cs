@@ -25,7 +25,7 @@ public static class CommandUtil
         };
         tapKeyCommandBindings = new()
         {
-            {[Keys.P], game.TogglePause},
+            {[Keys.Escape], game.TogglePause},
             {[Keys.Q], game.Exit}
         };
     }
@@ -103,4 +103,11 @@ public static class PlatformUtil {
         { Platform.Type.stonebrick, new (6*platformWidth, 3*platformWidth, platformWidth, platformWidth) },
         { Platform.Type.cracked_stonebrick, new (5*platformWidth, 6*platformWidth, platformWidth, platformWidth) },
     };
+}
+
+public static class ButtonUtil
+{
+    public const int buttonWidth = 200;
+    public const int buttonHeight = 50;
+    public static Texture2D buttonTexture; // Set in Game1.LoadContent
 }
