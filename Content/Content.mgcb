@@ -37,7 +37,7 @@
 /processorParam:TextureFormat=Color
 /build:Link.png
 
-#begin Restart_Button.png
+#begin ResetButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -47,7 +47,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Restart_Button.png
+/build:ResetButton.png
 
 #begin testsheet.png
 /importer:TextureImporter

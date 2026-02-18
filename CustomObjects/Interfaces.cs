@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using static Sprint2.Sprites.LinkSprite;
+using System;
 
 namespace Interfaces;
 
@@ -13,11 +14,15 @@ public interface IScreenObject
 
 public interface IController
 {
+    public bool IsPaused { get; set; } 
     public void Update();
 }
 
 public interface IPlayer : IScreenObject
 {
+    public Vector2 Position { get; set; }
+    public Rectangle Hitbox { get; }
+
     public void Move(int index);
 
     public void MoveLeft();
