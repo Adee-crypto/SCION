@@ -5,10 +5,6 @@ using System.Collections.Generic;
 using Sprint2.Controllers;
 using Sprint2.UI;
 using Interfaces;
-using System.Dynamic;
-using System.Security.AccessControl;
-using System.Security.Cryptography;
-using System.ComponentModel.Design;
 using System.Linq;
 
 
@@ -18,18 +14,21 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
+
     private IController keyboardController;
     private MouseController mouseController;
-    private Player player; //SWITCH THESE TO IPlayer LATER
-    public Player Player => player;
+    private IPlayer player;
+    public IPlayer Player => player;
     private PauseMenu pauseMenu;
     private SpriteFont uiFont;
+
     private bool isPaused;
     public bool IsPaused => isPaused;
+
     private Plant testPlant;
+
     private List<Rectangle> objects;
     private List<Platform> platforms;
-
 
     public Game1()
     {
@@ -45,7 +44,7 @@ public class Game1 : Game
 
         keyboardController = new KeyBoardController();
         mouseController = new MouseController();
-        player = new Player((20, 0));
+        player = new Player();
         testPlant = new(Plant.Species.grass, (20, 20));
         objects = [];
         platforms = new();
@@ -56,7 +55,8 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
+        //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
+        LinkUtil.texture = Content.Load<Texture2D>("Link");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         ButtonUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
@@ -82,7 +82,6 @@ public class Game1 : Game
         {
             keyboardController.Update();
             objects.Clear();
-
 
             //This is all for testing/display
             if (Keyboard.GetState().IsKeyDown(Keys.D1))
@@ -111,9 +110,8 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
 
-        testPlant.Draw(spriteBatch);
         player.Draw(spriteBatch);
-
+        testPlant.Draw(spriteBatch);
         foreach (var p in platforms) p.Draw(spriteBatch);
 
         if (isPaused)
