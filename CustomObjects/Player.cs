@@ -9,7 +9,7 @@ namespace Sprint2;
 
 public class Player : IPlayer
 {
-    private enum LinkMode { Still, Moving, Attack };
+    private enum LinkMode { Still, Moving };
     private const int HitboxSize = 16;
 
     private LinkMode linkMode;
@@ -78,7 +78,6 @@ public class Player : IPlayer
 
     public void Attack()
     {
-        linkMode = LinkMode.Attack;
         if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
         if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
     }
