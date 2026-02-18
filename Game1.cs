@@ -5,10 +5,6 @@ using System.Collections.Generic;
 using Sprint2.Controllers;
 using Sprint2.UI;
 using Interfaces;
-using System.Dynamic;
-using System.Security.AccessControl;
-using System.Security.Cryptography;
-using System.ComponentModel.Design;
 using System.Linq;
 
 
@@ -62,6 +58,7 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
+        //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
         LinkUtil.texture = Content.Load<Texture2D>("Link");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");

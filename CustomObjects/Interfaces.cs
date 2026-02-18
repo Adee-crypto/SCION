@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2;
-using Sprint2.Sprites;
 using System.Collections.Generic;
 using static Sprint2.Sprites.LinkSprite;
 

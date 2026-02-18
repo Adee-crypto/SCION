@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System;
 using Interfaces;
-using System.Security.Cryptography;
 
 
 namespace Sprint2.Controllers

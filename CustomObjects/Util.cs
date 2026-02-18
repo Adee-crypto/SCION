@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Input;
 using static Sprint2.Sprites.LinkSprite;
 using System.Linq;
 using System;
-using Interfaces;
 
 namespace Sprint2;
 
@@ -19,11 +18,11 @@ public static class CommandUtil
         {
             {[Keys.Left, Keys.A], game.Player.MoveLeft},
             {[Keys.Right, Keys.D], game.Player.MoveRight},
+            {[Keys.Up, Keys.W], game.Player.Jump},
             {[Keys.Z, Keys.N], game.Player.Attack},
         };
         tapKeyCommandBindings = new()
         {
-            {[Keys.Up, Keys.W], game.Player.Jump},
             {[Keys.P], game.TogglePause},
             {[Keys.Q], game.Exit}
         };
