@@ -26,7 +26,12 @@ public class Collisions
         }
 
         float oldY = currentPos.Y;
-        currentPos.Y += movement.Y;
+        float movementY = movement.Y;
+        if (movementY == 0f && velocity.Y >= 0f)
+        {
+            movementY = 1f;
+        }
+        currentPos.Y += movementY;
         player.Position = currentPos;
         Rectangle newRect = player.Hitbox;
         Rectangle oldRect = new Rectangle(newRect.X, (int)oldY, newRect.Width, newRect.Height);
@@ -58,5 +63,16 @@ public class Collisions
             player.Position = currentPos;
             newRect = player.Hitbox;
         }
+    }
+
+    public static bool CheckGrounded(Player player, IEnumerable<Rectangle> objects)
+    {
+        Rectangle onePixelBelow = player.Hitbox;
+        onePixelBelow.Y += 1;
+        foreach (var o in objects)
+        {
+            if (onePixelBelow.Intersects(o)) return true;
+        }
+        return false;
     }
 }

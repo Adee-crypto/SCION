@@ -75,7 +75,6 @@ public class Player : IPlayer
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        isGrounded = false;
 
         if (linkMode == LinkMode.Still)
         {
@@ -83,13 +82,14 @@ public class Player : IPlayer
             if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
         }
 
-        Vector2 movement = Vector2.Zero;
+        isGrounded = Collisions.CheckGrounded(this, objects);
+
+        if (isGrounded && velocity.Y > 0) velocity.Y = 0;
+        if (!isGrounded) velocity.Y += LinkUtil.gravity * time;
+
+        Vector2 movement = new Vector2(0, 0.5f * velocity.Y * time);
         if (linkMode == LinkMode.Moving) movement.X = velocity.X * time;
-        if (!isGrounded)
-        {
-            velocity.Y += LinkUtil.gravity * time;
-            movement.Y = 0.5f * velocity.Y * time;
-        }
+
         Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
 
         linkSprite.Position = position;
