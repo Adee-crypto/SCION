@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.Controllers;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Interfaces;
 
 namespace Sprint2.UI;
 
@@ -20,13 +19,13 @@ public class PauseMenu
         overlay.SetData(new[] { Color.White });
     }
 
-    public void AddButton(Button b) => buttons.Add(b);
+    public void AddButton(Button button) => buttons.Add(button);
 
-    public void Update(MouseState mouse, MouseState prevMouse)
+    public void Update(IMouseController mouseController)
     {
-        foreach (var b in buttons)
+        foreach (var button in buttons)
         {
-            b.Update(mouse, prevMouse);
+            button.Update(mouseController);
         }
     }
 

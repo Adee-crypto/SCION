@@ -1,7 +1,7 @@
-using System;
+using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Sprint2.UI;
 
@@ -25,11 +25,10 @@ public class Button
         textPos = new (pos.X + (size.X - font.MeasureString(buttonText).X) / 2, pos.Y + (size.Y - font.MeasureString(buttonText).Y) / 2);
     }
 
-    public void Update(MouseState mouse, MouseState prevMouse)
+    public void Update(IMouseController mouseController)
     {
-        hover = bounds.Contains(mouse.Position);
-        bool click = hover && mouse.LeftButton == ButtonState.Pressed && prevMouse.LeftButton == ButtonState.Released;
-
+        hover = bounds.Contains(mouseController.CurrentMouseState.Position);
+        bool click = hover && mouseController.IsLeftClick();
         if (click) onClick?.Invoke();
     }
 

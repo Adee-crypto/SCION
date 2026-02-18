@@ -1,8 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using static Sprint2.Sprites.LinkSprite;
-using System;
 
 namespace Interfaces;
 
@@ -16,6 +17,15 @@ public interface IController
 {
     public bool IsPaused { get; set; } 
     public void Update();
+}
+
+public interface IMouseController : IController
+{
+    public MouseState CurrentMouseState { get; }
+
+    public bool IsLeftClick();
+
+    public bool IsRightClick();
 }
 
 public interface IPlayer : IScreenObject

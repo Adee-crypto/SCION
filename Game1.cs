@@ -6,7 +6,6 @@ using Sprint2.Controllers;
 using Sprint2.UI;
 using Interfaces;
 using System.Linq;
-using System.Security;
 
 
 namespace Sprint2;
@@ -17,7 +16,7 @@ public class Game1 : Game
     private SpriteBatch spriteBatch;
 
     private IController keyboardController;
-    private MouseController mouseController;
+    private IMouseController mouseController;
 
     private IPlayer player;
     public IPlayer Player => player;
@@ -121,7 +120,7 @@ public class Game1 : Game
             if (player.Position.Y > GraphicsDevice.Viewport.Height) ResetLevel();
         } else
         {
-            pauseMenu.Update(mouseController.Current, mouseController.Previous);
+            pauseMenu.Update(mouseController);
         }
 
         base.Update(gameTime);

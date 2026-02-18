@@ -1,11 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using Interfaces;
-using System.Numerics;
 
 
 namespace Sprint2.Controllers;
 
-public class MouseController : IController // To be adjusted later.
+public class MouseController : IMouseController
 {
     private MouseState currentMouseState = new MouseState();
     private MouseState previousMouseState = new MouseState();
@@ -19,10 +18,7 @@ public class MouseController : IController // To be adjusted later.
         currentMouseState = Mouse.GetState();
     }
 
-    public Vector2 MousePosition()
-    {
-        return new Vector2(currentMouseState.X, currentMouseState.Y);
-    }
+    public MouseState CurrentMouseState { get => currentMouseState; }
 
     public bool IsLeftClick()
     {
