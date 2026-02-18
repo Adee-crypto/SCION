@@ -1,3 +1,4 @@
+using Interfaces;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -5,7 +6,7 @@ namespace Sprint2;
 
 public class Collisions
 {
-    public static void ManageCollision(Player player, IEnumerable<Rectangle> objects, Vector2 movement, ref bool isGrounded, ref Vector2 velocity)
+    public static void ManageCollision(IPlayer player, IEnumerable<Rectangle> objects, Vector2 movement, ref bool isGrounded, ref Vector2 velocity)
     {
         Vector2 currentPosition = player.Position;
 
@@ -45,13 +46,17 @@ public class Collisions
         player.Position = currentPosition;
     }
 
-    public static bool CheckGrounded(Player player, IEnumerable<Rectangle> objects)
+    public static bool CheckGrounded(IPlayer player, IEnumerable<Rectangle> objects, ref Vector2 movement)
     {
         Rectangle onePixelBelow = player.Hitbox;
         onePixelBelow.Y += 1;
-        foreach (var o in objects)
+        foreach (var obj in objects)
         {
-            if (onePixelBelow.Intersects(o)) return true;
+            if (onePixelBelow.Intersects(obj))
+            {
+                movement.Y = obj.Top - player.Hitbox.Bottom;
+                return true; 
+            }
         }
         return false;
     }
