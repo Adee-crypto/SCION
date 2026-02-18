@@ -60,7 +60,7 @@ public class Game1 : Game
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         ButtonUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
-        Texture2D resetTexture = Content.Load<Texture2D>("ResetButton");
+        ButtonUtil.resetTexture = Content.Load<Texture2D>("ResetButton");
         uiFont = Content.Load<SpriteFont>("UIFont");
         pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
 
@@ -70,7 +70,7 @@ public class Game1 : Game
 
         pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
         pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
-        pauseMenu.AddButton(new Button(uiFont, resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
+        pauseMenu.AddButton(new Button(uiFont, ButtonUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
     }
 
     public void TogglePause()

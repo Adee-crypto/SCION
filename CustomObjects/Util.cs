@@ -100,4 +100,5 @@ public static class ButtonUtil
     public const int buttonWidth = 200;
     public const int buttonHeight = 50;
     public static Texture2D buttonTexture; // Set in Game1.LoadContent
+    public static Texture2D resetTexture; // Set in Game1.LoadContent
 }
