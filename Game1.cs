@@ -31,6 +31,7 @@ public class Game1 : Game
     private List<Platform> platforms;
 
     private Plant testPlant;
+    private Texture2D arrowTexture;
 
     public Game1()
     {
@@ -62,6 +63,7 @@ public class Game1 : Game
         ButtonUtil.resetTexture = Content.Load<Texture2D>("ResetButton");
         uiFont = Content.Load<SpriteFont>("UIFont");
         pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
+        arrowTexture = Content.Load<Texture2D>("AimerArrow");
 
         Vector2 resumePosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 60);
         Vector2 quitPosition = new Vector2(resumePosition.X, resumePosition.Y + 60);
@@ -80,6 +82,7 @@ public class Game1 : Game
     private void ResetLevel()
     {
         player = new Player();
+        player.InitializeAimer(arrowTexture);
         testPlant = new(Plant.Species.grass, (20, 20));
         objects = new List<Rectangle>();
         platforms = new();

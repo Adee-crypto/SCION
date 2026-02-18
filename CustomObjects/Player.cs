@@ -1,9 +1,11 @@
 ﻿using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Sprint2.Sprites;
 using System.Collections.Generic;
-
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Sprint2;
 
@@ -11,6 +13,7 @@ public class Player : IPlayer
 {
     private enum LinkAction { Still, Attack, PlantSeed, BreakBlock };
     private const int HitboxSize = 16;
+    private Aimer aimer;
 
     private LinkAction linkAction; // Still, Attack, PlantSeed, BreakBlock
     private LinkSprite linkSprite;
@@ -19,6 +22,8 @@ public class Player : IPlayer
     private Vector2 velocity;
     private bool isGrounded;
     private bool isMoving;
+    public Vector2 AimDirection => aimer.Direction;
+    public float AimAngle => aimer.Angle;
 
     public Player()
     {
@@ -38,6 +43,11 @@ public class Player : IPlayer
     }
 
     public Rectangle Hitbox => new((int)position.X, (int)position.Y, HitboxSize, HitboxSize);
+
+    public void InitializeAimer(Texture2D aimerTexture)
+    {
+        aimer = new Aimer(aimerTexture, 10f);
+    }
 
     public void Move(int index)
     {
@@ -80,6 +90,7 @@ public class Player : IPlayer
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+
         Vector2 movement = Vector2.Zero;
         if (isMoving) movement.X = velocity.X * time;
         isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
@@ -107,10 +118,16 @@ public class Player : IPlayer
 
         isMoving = false;
         linkAction = LinkAction.Still;
+
+        Vector2 center = new Vector2(position.X + HitboxSize / 2f, position.Y + HitboxSize / 2f);
+        aimer?.Update(center, Mouse.GetState());
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         linkSprite.Draw(spriteBatch);
+        
+        Vector2 center = new Vector2(position.X + HitboxSize / 2f, position.Y + HitboxSize / 2f);
+        aimer?.Draw(spriteBatch, center);
     }
 }

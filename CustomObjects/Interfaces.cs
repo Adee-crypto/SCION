@@ -32,6 +32,8 @@ public interface IPlayer : IScreenObject
 {
     public Vector2 Position { get; set; }
     public Rectangle Hitbox { get; }
+    
+    public void InitializeAimer(Texture2D aimerTexture);
 
     public void Move(int index);
 
