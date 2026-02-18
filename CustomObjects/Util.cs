@@ -16,15 +16,15 @@ public static class CommandUtil
     public static void AttachCommandBindings(Game1 game) {
         holdKeyCommandBindings = new()
         {
-            {[Keys.Left, Keys.A], game.Player.MoveLeft},
-            {[Keys.Right, Keys.D], game.Player.MoveRight},
-            {[Keys.Up, Keys.W], game.Player.Jump},
-            {[Keys.Z, Keys.N], game.Player.Attack},
+            {new[] {Keys.Left, Keys.A}, () => game.Player.MoveLeft()},
+            {new[] {Keys.Right, Keys.D}, () => game.Player.MoveRight()},
+            {new[] {Keys.Up, Keys.W}, () => game.Player.Jump()},
+            {new[] {Keys.Z, Keys.N}, () => game.Player.Attack()},
         };
         tapKeyCommandBindings = new()
         {
-            {[Keys.Escape], game.TogglePause},
-            {[Keys.Q], game.Exit}
+            {new[] {Keys.Escape}, () => game.TogglePause()},
+            {new[] {Keys.Q}, () => game.Exit()}
         };
     }
 }

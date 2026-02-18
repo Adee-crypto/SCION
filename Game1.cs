@@ -6,6 +6,7 @@ using Sprint2.Controllers;
 using Sprint2.UI;
 using Interfaces;
 using System.Linq;
+using System.Security;
 
 
 namespace Sprint2;
@@ -46,11 +47,9 @@ public class Game1 : Game
 
         keyboardController = new KeyBoardController();
         mouseController = new MouseController();
-        player = new Player();
-        testPlant = new(Plant.Species.grass, (20, 20));
-        objects = [];
-        platforms = new();
-        platforms.Add(new Platform(Platform.Type.stonebrick, 0, 16*25, 40, 1));
+
+        ResetLevel();
+
         CommandUtil.AttachCommandBindings(this);
     }
 
@@ -61,13 +60,17 @@ public class Game1 : Game
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         ButtonUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
+        Texture2D resetTexture = Content.Load<Texture2D>("ResetButton");
         uiFont = Content.Load<SpriteFont>("UIFont");
         pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
 
         Vector2 resumePosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 60);
         Vector2 quitPosition = new Vector2(resumePosition.X, resumePosition.Y + 60);
+        Vector2 resetPosition = new Vector2(16, 16);
+
         pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
         pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
+        pauseMenu.AddButton(new Button(uiFont, resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
     }
 
     public void TogglePause()
@@ -75,13 +78,24 @@ public class Game1 : Game
         isPaused = !isPaused;
     }
 
+    private void ResetLevel()
+    {
+        player = new Player();
+        testPlant = new(Plant.Species.grass, (20, 20));
+        objects = new List<Rectangle>();
+        platforms = new();
+        platforms.Add(new Platform(Platform.Type.stonebrick, 0, 16*25, 40, 1));
+        if (isPaused) TogglePause();
+    }
+
     protected override void Update(GameTime gameTime)
     {
         mouseController.Update();
+        keyboardController.IsPaused = isPaused;
+        keyboardController.Update();
 
         if (!isPaused)
         {
-            keyboardController.Update();
             objects.Clear();
 
             //This is all for testing/display
@@ -98,6 +112,8 @@ public class Game1 : Game
             objects.AddRange(platforms.Select(p => p.Bounds));
 
             player.Update(gameTime, objects);
+
+            if (player.Position.Y > GraphicsDevice.Viewport.Height) ResetLevel();
         } else
         {
             pauseMenu.Update(mouseController.Current, mouseController.Previous);
