@@ -9,24 +9,26 @@ namespace Sprint2;
 
 public class Player : IPlayer
 {
-    private enum LinkMode { Still, Moving };
+    private enum LinkAction { Still, Attack, PlantSeed, BreakBlock };
     private const int HitboxSize = 16;
 
-    private LinkMode linkMode;
+    private LinkAction linkAction; // Still, Attack, PlantSeed, BreakBlock
     private LinkSprite linkSprite;
 
     private Vector2 position;
     private Vector2 velocity;
     private bool isGrounded;
+    private bool isMoving;
 
     public Player()
     {
-        linkMode = LinkMode.Still;
+        linkAction = LinkAction.Still;
         linkSprite = new LinkSprite();
-        position = new Vector2(20, 0);
+        position = new Vector2(16, 16);
         linkSprite.Position = position;
         velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
         isGrounded = false;
+        isMoving = false;
     }
 
     public Vector2 Position
@@ -39,7 +41,7 @@ public class Player : IPlayer
 
     public void Move(int index)
     {
-        linkMode = LinkMode.Moving;
+        isMoving = true;
         velocity = index switch
         {
             0 => new Vector2(LinkUtil.horizontalSpeed * -1f, velocity.Y), // left
@@ -67,8 +69,8 @@ public class Player : IPlayer
     {
         if (isGrounded)
         {
-            velocity.Y = LinkUtil.jumpSpeed;
             isGrounded = false;
+            velocity.Y = LinkUtil.jumpSpeed;
         }
     }
 
@@ -78,6 +80,7 @@ public class Player : IPlayer
 
     public void Attack()
     {
+        linkAction = LinkAction.Attack;
         if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
         if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
     }
@@ -87,7 +90,7 @@ public class Player : IPlayer
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         Vector2 movement = Vector2.Zero;
-        if (linkMode == LinkMode.Moving) movement.X = velocity.X * time;
+        if (isMoving) movement.X = velocity.X * time;
         isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
         if (isGrounded && velocity.Y > 0)
         {
@@ -98,18 +101,18 @@ public class Player : IPlayer
             movement.Y = 0.5f * (2f * velocity.Y + LinkUtil.gravity * time) * time;
             velocity.Y += LinkUtil.gravity * time;
         }
-
         Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
-
         linkSprite.Position = position;
-        linkSprite.Update(gameTime, objects);
-        if (linkMode == LinkMode.Still)
+
+        if (!isMoving && linkAction == LinkAction.Still)
         {
             if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
             if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
         }
+        linkSprite.Update(gameTime, objects);
 
-        linkMode = LinkMode.Still;
+        isMoving = false;
+        linkAction = LinkAction.Still;
     }
 
     public void Draw(SpriteBatch spriteBatch)
