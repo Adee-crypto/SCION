@@ -46,12 +46,10 @@ public class Collisions
                 currentPos.Y = o.Bottom;
                 velocity.Y = 0;
             }
-            else if (movement.Y > 0)
-                currentPos.Y = o.Top - newRect.Height;
-            else if (movement.Y < 0)
-                currentPos.Y = o.Bottom;
-            else
+            else // Pushed upward
+            {
                 currentPos.Y = o.Bottom >= (o.Top - newRect.Height) ? (o.Top - newRect.Height) : o.Bottom;
+            }
             player.Position = currentPos;
             newRect = player.Hitbox;
         }
