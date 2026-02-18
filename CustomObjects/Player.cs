@@ -85,7 +85,7 @@ public class Player : IPlayer
         }
 
         Vector2 horizontalMove = Vector2.Zero;
-        if (linkMode == LinkMode.Moving) horizontalMove = new Vector2(velocity.X * LinkUtil.horizontalSpeed * time, 0);
+        if (linkMode == LinkMode.Moving) horizontalMove = new Vector2(velocity.X * time, 0);
 
         if (!isGrounded) velocity.Y += LinkUtil.gravity * time;
         Vector2 verticalMove = new Vector2(0, 0.5f * velocity.Y * time);

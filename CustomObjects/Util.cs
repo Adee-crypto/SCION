@@ -32,7 +32,7 @@ public static class CommandUtil
 public static class LinkUtil
 {
     public const float secondsPerFrame = 0.005f;
-    public const float horizontalSpeed = 10f;
+    public const float horizontalSpeed = 100f;
     public const float jumpSpeed = -650f;
     public const float gravity = 980f;
 
