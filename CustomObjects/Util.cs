@@ -31,7 +31,7 @@ public static class CommandUtil
 
 public static class LinkUtil
 {
-    public const float secondsPerFrame = 0.005f;
+    public const float secondsPerFrame = 0.2f;
     public const float horizontalSpeed = 100f;
     public const float jumpSpeed = -650f;
     public const float gravity = 980f;
@@ -48,6 +48,8 @@ public static class LinkUtil
             { LinkAnimationState.RightRunning, [new(0, 0, 16, 16), new(16, 0, 16, 16)] },
             { LinkAnimationState.LeftAttack, [new(16, 32, 16, 16)]},
             { LinkAnimationState.RightAttack, [new(0, 32, 16, 16)]},
+            { LinkAnimationState.LeftFalling, [new(48, 0, 16, 16)] },
+            { LinkAnimationState.RightFalling, [new(16, 0, 16, 16)] }
         };
         return LinkFramesMap;
     }
@@ -55,8 +57,8 @@ public static class LinkUtil
 
 public static class PlantUtil {
     public const int cellWidth = 16; 
-
     public static Texture2D spritesheet; // Set in Game1.LoadContent
+    public static List<(int, int)> growDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
     public static Dictionary<Plant.Species, Rectangle> SpeciesSpriteRects = new()
     {
@@ -64,8 +66,6 @@ public static class PlantUtil {
         { Plant.Species.apple, new (cellWidth, 0, cellWidth, cellWidth) },
         { Plant.Species.pineapple, new (2*cellWidth, 0, cellWidth, cellWidth) },
     };
-
-    public static List<(int, int)> growDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
     public static IEnumerable<(int, int)> ShuffledDirs()
     {
@@ -83,8 +83,7 @@ public static class PlantUtil {
 }
 
 public static class PlatformUtil {
-    public const int platformWidth = 16; 
-
+    public const int platformWidth = 16;
     public static Texture2D spritesheet; // Set in Game1.LoadContent
 
     public static Dictionary<Platform.Type, Rectangle> PlatformSpriteRects = new()

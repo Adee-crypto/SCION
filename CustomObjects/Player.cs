@@ -46,11 +46,21 @@ public class Player : IPlayer
             1 => new Vector2(LinkUtil.horizontalSpeed, velocity.Y), // right
             _ => new Vector2(0, 0), // never happen
         };
-        if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
-        if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
+
+        if (!isGrounded)
+        {
+            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFalling);
+            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFalling);
+        }
+        else
+        {
+            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
+            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
+        }
     }
 
     public void MoveLeft() => Move(0);
+
     public void MoveRight() => Move(1);
 
     public void Jump()
@@ -63,6 +73,7 @@ public class Player : IPlayer
     }
 
     public void BreakBlock() { }
+
     public void PlantSeed() { }
 
     public void Attack()
@@ -76,17 +87,9 @@ public class Player : IPlayer
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (linkMode == LinkMode.Still)
-        {
-            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
-            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
-        }
-
         isGrounded = Collisions.CheckGrounded(this, objects);
-
         if (isGrounded && velocity.Y > 0) velocity.Y = 0;
         if (!isGrounded) velocity.Y += LinkUtil.gravity * time;
-
         Vector2 movement = new Vector2(0, 0.5f * velocity.Y * time);
         if (linkMode == LinkMode.Moving) movement.X = velocity.X * time;
 
@@ -94,6 +97,12 @@ public class Player : IPlayer
 
         linkSprite.Position = position;
         linkSprite.Update(gameTime, objects);
+        if (linkMode == LinkMode.Still)
+        {
+            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
+            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
+        }
+
         linkMode = LinkMode.Still;
     }
 
