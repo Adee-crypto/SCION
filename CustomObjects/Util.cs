@@ -32,12 +32,16 @@ public static class CommandUtil
 
 public static class LinkUtil
 {
+    public enum LinkAction { Still, Attack, PlantSeed, BreakBlock };
+
+    public const int hitboxSize = 16;
     public const float secondsPerFrame = 0.2f;
     public const float horizontalSpeed = 150f;
     public const float jumpSpeed = -450f;
     public const float gravity = 980f;
 
-    public static Texture2D texture; // Set in Game1.LoadContent
+    public static Texture2D linkTexture; // Set in Game1.LoadContent
+    public static Texture2D arrowTexture; // Set in Game1.LoadContent
 
     public static Dictionary<LinkAnimationState, Rectangle[]> GetFrames()
     {

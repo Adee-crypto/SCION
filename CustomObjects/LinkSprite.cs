@@ -60,6 +60,6 @@ public class LinkSprite : ISprite
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(LinkUtil.texture, position, frames[currentFrameIndex], Color.White);
+        spriteBatch.Draw(LinkUtil.linkTexture, position, frames[currentFrameIndex], Color.White);
     }
 }

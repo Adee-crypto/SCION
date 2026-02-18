@@ -56,14 +56,14 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
-        LinkUtil.texture = Content.Load<Texture2D>("Link");
+        LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
+        LinkUtil.arrowTexture = Content.Load<Texture2D>("AimerArrow");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         ButtonUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
         ButtonUtil.resetTexture = Content.Load<Texture2D>("ResetButton");
         uiFont = Content.Load<SpriteFont>("UIFont");
         pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
-        arrowTexture = Content.Load<Texture2D>("AimerArrow");
 
         Vector2 resumePosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 60);
         Vector2 quitPosition = new Vector2(resumePosition.X, resumePosition.Y + 60);
@@ -82,7 +82,6 @@ public class Game1 : Game
     private void ResetLevel()
     {
         player = new Player();
-        player.InitializeAimer(arrowTexture);
         testPlant = new(Plant.Species.grass, (20, 20));
         objects = new List<Rectangle>();
         platforms = new();
