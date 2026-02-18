@@ -5,9 +5,10 @@ namespace Sprint2;
 
 public class Collisions
 {
-    public static void ManageCollision(Player player, IEnumerable<Rectangle> objects, Vector2 movement, float oldY, ref bool isGrounded, ref Vector2 velocity)
+    public static void ManageCollision(Player player, IEnumerable<Rectangle> objects, Vector2 movement, ref bool isGrounded, ref Vector2 velocity)
     {
         Vector2 currentPos = player.Position;
+        float oldY = currentPos.Y;
         currentPos.X += movement.X;
         player.Position = currentPos;
 

@@ -76,6 +76,7 @@ public class Player : IPlayer
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        isGrounded = false;
 
         if (linkMode == LinkMode.Still)
         {
@@ -86,12 +87,11 @@ public class Player : IPlayer
         Vector2 horizontalMove = Vector2.Zero;
         if (linkMode == LinkMode.Moving) horizontalMove = new Vector2(velocity.X * LinkUtil.horizontalSpeed * time, 0);
 
-        float oldY = position.Y;
         if (!isGrounded) velocity.Y += LinkUtil.gravity * time;
         Vector2 verticalMove = new Vector2(0, 0.5f * velocity.Y * time);
 
         Vector2 movement = horizontalMove + verticalMove;
-        Collisions.ManageCollision(this, objects, movement, oldY, ref isGrounded, ref velocity);
+        Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
 
         linkSprite.Position = position;
         linkSprite.Update(gameTime, objects);
