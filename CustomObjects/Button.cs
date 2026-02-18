@@ -40,6 +40,8 @@ public class Button
     {
         Color highlight = hover ? Color.LightGray : Color.White;
         spriteBatch.Draw(texture, bounds, highlight);
+        Rectangle hoverBounds = hover ? new Rectangle(bounds.X - 2, bounds.Y - 2, bounds.Width + 4, bounds.Height + 4) : bounds;
+        spriteBatch.Draw(texture, hoverBounds, highlight);
         spriteBatch.DrawString(font, text, textPos, Color.Black);
     }
 }
