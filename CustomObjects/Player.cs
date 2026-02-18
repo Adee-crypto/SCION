@@ -48,17 +48,8 @@ public class Player : IPlayer
             1 => new Vector2(LinkUtil.horizontalSpeed, velocity.Y), // right
             _ => new Vector2(0, 0), // never happen
         };
-
-        if (!isGrounded)
-        {
-            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFalling);
-            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFalling);
-        }
-        else
-        {
-            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
-            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
-        }
+        if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
+        if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
     }
 
     public void MoveLeft() => Move(0);
@@ -93,9 +84,7 @@ public class Player : IPlayer
         if (isMoving) movement.X = velocity.X * time;
         isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
         if (isGrounded && velocity.Y > 0)
-        {
             velocity.Y = 0;
-        }
         else
         {
             movement.Y = 0.5f * (2f * velocity.Y + LinkUtil.gravity * time) * time;
@@ -104,10 +93,15 @@ public class Player : IPlayer
         Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
         linkSprite.Position = position;
 
-        if (!isMoving && linkAction == LinkAction.Still)
+        if (!isMoving && isGrounded && linkAction == LinkAction.Still)
         {
             if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
             if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
+        }
+        else if (!isGrounded && linkAction == LinkAction.Still)
+        {
+            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFalling);
+            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFalling);
         }
         linkSprite.Update(gameTime, objects);
 
