@@ -56,7 +56,8 @@ public static class LinkUtil
     }
 }
 
-public static class PlantUtil {
+public static class PlantUtil 
+{
     public const int cellWidth = 16; 
     public static Texture2D spritesheet; // Set in Game1.LoadContent
     public static List<(int, int)> growDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
@@ -83,7 +84,8 @@ public static class PlantUtil {
     }
 }
 
-public static class PlatformUtil {
+public static class PlatformUtil 
+{
     public const int platformWidth = 16;
     public static Texture2D spritesheet; // Set in Game1.LoadContent
 
@@ -97,8 +99,6 @@ public static class PlatformUtil {
 
 public static class ButtonUtil
 {
-    public const int buttonWidth = 200;
-    public const int buttonHeight = 50;
     public static Texture2D buttonTexture; // Set in Game1.LoadContent
     public static Texture2D resetTexture; // Set in Game1.LoadContent
 }
