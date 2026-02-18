@@ -15,13 +15,23 @@ namespace Sprint2.Sprites
             RightFacing,
             RightRunning,
             LeftAttack,
-            RightAttack
+            RightAttack,
+            LeftFalling,
+            RightFalling
         };
-
-        private Rectangle[] frames = LinkUtil.GetFrames()[LinkAnimationState.RightFacing];
-        private int currentFrameIndex = 0;
-        private double timeSinceLastFrame = 0;
+        private LinkAnimationState currentState;
+        private Rectangle[] frames;
+        private int currentFrameIndex;
+        private double timeSinceLastFrame;
         private Vector2 position;
+
+        public LinkSprite()
+        {
+            currentState = LinkAnimationState.RightFacing;
+            frames = LinkUtil.GetFrames()[LinkAnimationState.RightFacing];
+            currentFrameIndex = 0;
+            timeSinceLastFrame = 0;
+        }
 
         public Vector2 Position
         {
@@ -31,10 +41,13 @@ namespace Sprint2.Sprites
 
         public void SetFrames(LinkAnimationState linkAnimationState)
         {
+            if (linkAnimationState == currentState) return;
+            currentState = linkAnimationState;
             frames = LinkUtil.GetFrames()[linkAnimationState];
             currentFrameIndex = 0;
             timeSinceLastFrame = 0;
         }
+
         public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
         {
             timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;

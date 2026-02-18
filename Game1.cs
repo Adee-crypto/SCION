@@ -18,18 +18,20 @@ public class Game1 : Game
 
     private IController keyboardController;
     private MouseController mouseController;
+
     private IPlayer player;
     public IPlayer Player => player;
+
     private PauseMenu pauseMenu;
     private SpriteFont uiFont;
 
     private bool isPaused;
     public bool IsPaused => isPaused;
 
-    private Plant testPlant;
-
     private List<Rectangle> objects;
     private List<Platform> platforms;
+
+    private Plant testPlant;
 
     public Game1()
     {
