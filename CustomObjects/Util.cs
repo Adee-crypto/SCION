@@ -24,7 +24,8 @@ public static class CommandUtil
         tapKeyCommandBindings = new()
         {
             {new[] {Keys.Escape}, () => game.TogglePause()},
-            {new[] {Keys.Q}, () => game.Exit()}
+            {new[] {Keys.Q}, () => game.Exit()},
+            {new[] {Keys.R}, () => game.RestartLevel()}
         };
     }
 }

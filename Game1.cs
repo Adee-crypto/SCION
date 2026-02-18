@@ -86,6 +86,11 @@ public class Game1 : Game
         if (isPaused) TogglePause();
     }
 
+    public void RestartLevel()
+    {
+        ResetLevel();
+    }
+
     protected override void Update(GameTime gameTime)
     {
         mouseController.Update();
