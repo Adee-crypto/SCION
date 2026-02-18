@@ -87,11 +87,16 @@ public class Player : IPlayer
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        isGrounded = Collisions.CheckGrounded(this, objects);
-        if (isGrounded && velocity.Y > 0) velocity.Y = 0;
-        if (!isGrounded) velocity.Y += LinkUtil.gravity * time;
-        Vector2 movement = new Vector2(0, 0.5f * velocity.Y * time);
+        Vector2 movement = Vector2.Zero;
         if (linkMode == LinkMode.Moving) movement.X = velocity.X * time;
+        isGrounded = Collisions.CheckGrounded(this, objects);
+        if (isGrounded && velocity.Y > 0) 
+            velocity.Y = 0;
+        else
+        {
+            movement.Y = 0.5f * (2f * velocity.Y + LinkUtil.gravity * time) * time;
+            velocity.Y += LinkUtil.gravity * time;
+        }
 
         Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
 
