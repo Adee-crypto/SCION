@@ -4,8 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Sprites;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Sprint2;
 
@@ -89,7 +87,6 @@ public class Player : IPlayer
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
 
         Vector2 movement = Vector2.Zero;
         if (isMoving) movement.X = velocity.X * time;

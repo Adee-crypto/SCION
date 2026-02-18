@@ -2,6 +2,7 @@ using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Microsoft.Xna.Framework.Input;
 
 namespace Sprint2.UI;
 
@@ -27,7 +28,7 @@ public class Button
 
     public void Update(IMouseController mouseController)
     {
-        hover = bounds.Contains(mouseController.CurrentMouseState.Position);
+        hover = bounds.Contains(Mouse.GetState().Position);
         bool click = hover && mouseController.IsLeftClick();
         if (click) onClick?.Invoke();
     }

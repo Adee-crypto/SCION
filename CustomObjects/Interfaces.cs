@@ -21,8 +21,6 @@ public interface IController
 
 public interface IMouseController : IController
 {
-    public MouseState CurrentMouseState { get; }
-
     public bool IsLeftClick();
 
     public bool IsRightClick();

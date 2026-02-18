@@ -8,8 +8,7 @@ public class MouseController : IMouseController
 {
     private MouseState currentMouseState = new MouseState();
     private MouseState previousMouseState = new MouseState();
-    public MouseState Current => currentMouseState;
-    public MouseState Previous => previousMouseState;
+
     public bool IsPaused { get; set; } 
 
     public void Update()
@@ -17,8 +16,6 @@ public class MouseController : IMouseController
         previousMouseState = currentMouseState;
         currentMouseState = Mouse.GetState();
     }
-
-    public MouseState CurrentMouseState { get => currentMouseState; }
 
     public bool IsLeftClick()
     {
