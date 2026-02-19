@@ -8,7 +8,7 @@ namespace Sprint2.Controllers;
 public class KeyBoardController : IController
 {
     private KeyboardState previousKeyboardState = new KeyboardState();
-    public bool IsPaused { get; set; }
+    public bool IsPaused { get; set; } = false;
 
     public void Update()
     {
