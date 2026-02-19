@@ -8,10 +8,25 @@ using static Sprint2.Sprites.LinkSprite;
 
 namespace Interfaces;
 
-public interface IScreenObject
+public interface IDrawableObject
+{
+    public void Draw(SpriteBatch spriteBatch);
+}
+
+public interface IUpdatable
+{
+    public void Update(GameTime gameTime);
+}
+
+public interface IUpdatableObject
 {
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects);
-    public void Draw(SpriteBatch spriteBatch);
+}
+
+public interface IPhysicsObject
+{
+    Vector2 Position { get; set; }
+    Rectangle Hitbox { get; }
 }
 
 public interface IController
@@ -27,12 +42,8 @@ public interface IMouseController : IController
     public bool IsRightClick();
 }
 
-public interface IPlayer : IScreenObject
+public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject
 {
-    public Vector2 Position { get; set; }
-
-    public Rectangle Hitbox { get; }
-
     public void Reset();
 
     public void Move(int index);
@@ -50,7 +61,7 @@ public interface IPlayer : IScreenObject
     public void Attack();
 }
 
-internal interface ISprite : IScreenObject
+internal interface ISprite : IDrawableObject, IUpdatable
 {
     public void SetFrames(LinkAnimationState linkAnimationState);
 }

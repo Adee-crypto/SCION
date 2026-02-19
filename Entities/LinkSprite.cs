@@ -43,7 +43,7 @@ public class LinkSprite : ISprite
         }
     }
 
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
+    public void Update(GameTime gameTime)
     {
         timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
         if (timeSinceLastFrame >= LinkUtil.secondsPerFrame){

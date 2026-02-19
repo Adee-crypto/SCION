@@ -115,7 +115,7 @@ public class Player : IPlayer
             if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFalling);
             if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFalling);
         }
-        linkSprite.Update(gameTime, objects);
+        linkSprite.Update(gameTime);
 
         isMoving = false;
         linkAction = LinkUtil.LinkAction.Still;
