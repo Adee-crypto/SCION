@@ -26,7 +26,6 @@ public class Player : IPlayer
         aimer = new Aimer(10f);
         center = Vector2.Zero;
         position = new Vector2(16, 16);
-        linkSprite.Position = position;
         velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
         isGrounded = false;
         isMoving = false;
@@ -39,6 +38,18 @@ public class Player : IPlayer
     }
 
     public Rectangle Hitbox => new((int)position.X, (int)position.Y, LinkUtil.hitboxSize, LinkUtil.hitboxSize);
+
+    public void Reset()
+    {
+        linkAction = LinkUtil.LinkAction.Still;
+        linkSprite = new LinkSprite();
+        aimer = new Aimer(10f);
+        center = Vector2.Zero;
+        position = new Vector2(16, 16);
+        velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
+        isGrounded = false;
+        isMoving = false;
+    }
 
     public void Move(int index)
     {

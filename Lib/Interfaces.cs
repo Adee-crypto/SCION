@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2;
 using System;
 using System.Collections.Generic;
 using static Sprint2.Sprites.LinkSprite;
@@ -31,6 +32,8 @@ public interface IPlayer : IScreenObject
     public Vector2 Position { get; set; }
 
     public Rectangle Hitbox { get; }
+
+    public void Reset();
 
     public void Move(int index);
 

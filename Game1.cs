@@ -17,7 +17,7 @@ public class Game1 : Game
 
     private IController keyboardController;
     private IMouseController mouseController;
-    private (int w, int h) screenSize = ScreenUtil.defaultScreenSize;
+    private (int w, int h) screenSize;
 
     private bool isPaused;
     public bool IsPaused => isPaused;
@@ -25,8 +25,7 @@ public class Game1 : Game
     private PauseMenu pauseMenu;
     private SpriteFont uiFont;
 
-
-    public Player Player0 {get;set;}
+    public Player player0;
     private List<Rectangle> objects;
     private List<Platform> platforms;
 
@@ -39,6 +38,7 @@ public class Game1 : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
 
+        screenSize = ScreenUtil.defaultScreenSize;
         _graphics.PreferredBackBufferWidth = screenSize.w;
         _graphics.PreferredBackBufferHeight = screenSize.h;
         _graphics.ApplyChanges();
@@ -51,10 +51,13 @@ public class Game1 : Game
 
         keyboardController = new KeyBoardController();
         mouseController = new MouseController();
-
-        ResetLevel();
-
         CommandUtil.AttachCommandBindings(this);
+
+        player0 = new Player();
+        testPlant = new(Plant.Species.grass, (20, 20));
+        objects = [];
+        platforms = [new(Platform.Type.stonebrick, 0, 16 * 25, 40, 1)];
+        isPaused = false;
     }
 
     protected override void LoadContent()
@@ -64,8 +67,8 @@ public class Game1 : Game
         LinkUtil.arrowTexture = Content.Load<Texture2D>("AimerArrow");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
-        ButtonUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
-        ButtonUtil.resetTexture = Content.Load<Texture2D>("ResetButton");
+        UIUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
+        UIUtil.resetTexture = Content.Load<Texture2D>("ResetButton");
         uiFont = Content.Load<SpriteFont>("UIFont");
         pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
 
@@ -73,16 +76,16 @@ public class Game1 : Game
         Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
         Vector2 resetPosition = new(16, 16);
 
-        pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
-        pauseMenu.AddButton(new Button(uiFont, ButtonUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
-        pauseMenu.AddButton(new Button(uiFont, ButtonUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
+        pauseMenu.AddButton(new Button(uiFont, UIUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
+        pauseMenu.AddButton(new Button(uiFont, UIUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
+        pauseMenu.AddButton(new Button(uiFont, UIUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
     }
 
     public void TogglePause() => isPaused = !isPaused;
 
     public void ResetLevel()
     {
-        Player0 = new(); //ADD RESET METHOD TO PLAYER
+        player0.Reset();
         testPlant = new(Plant.Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
         objects = [];
         platforms = [new(Platform.Type.stonebrick, 0, 16*25, 40, 1)];
@@ -114,9 +117,9 @@ public class Game1 : Game
             objects.AddRange(testPlant.GetPlantObjects());
             objects.AddRange(platforms.Select(p => p.Bounds));
 
-            Player0.Update(gameTime, objects);
+            player0.Update(gameTime, objects);
 
-            if (Player0.Position.Y > screenSize.h) ResetLevel();
+            if (player0.Position.Y > screenSize.h) ResetLevel();
         }
 
         base.Update(gameTime);
@@ -127,7 +130,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
 
-        Player0.Draw(spriteBatch);
+        player0.Draw(spriteBatch);
         testPlant.Draw(spriteBatch);
         platforms.ForEach(p => p.Draw(spriteBatch));
 
