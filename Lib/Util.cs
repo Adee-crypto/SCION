@@ -16,28 +16,32 @@ public static class CommandUtil
     public static void AttachCommandBindings(Game1 game) {
         holdKeyCommandBindings = new()
         {
-            {new[] {Keys.Left, Keys.A}, () => game.Player.MoveLeft()},
-            {new[] {Keys.Right, Keys.D}, () => game.Player.MoveRight()},
-            {new[] {Keys.Up, Keys.W}, () => game.Player.Jump()},
-            {new[] {Keys.Z, Keys.N}, () => game.Player.Attack()},
+            {new[] {Keys.Left, Keys.A}, () => game.player0.MoveLeft()},
+            {new[] {Keys.Right, Keys.D}, () => game.player0.MoveRight()},
+            {new[] {Keys.Up, Keys.W}, () => game.player0.Jump()},
+            {new[] {Keys.Z, Keys.N}, () => game.player0.Attack()},
         };
         tapKeyCommandBindings = new()
         {
             {new[] {Keys.Escape}, () => game.TogglePause()},
             {new[] {Keys.Q}, () => game.Exit()},
-            {new[] {Keys.R}, () => game.RestartLevel()}
+            {new[] {Keys.R}, () => game.ResetLevel()}
         };
     }
 }
 
 public static class LinkUtil
 {
+    public enum LinkAction { Still, Attack, PlantSeed, BreakBlock };
+
+    public const int hitboxSize = 16;
     public const float secondsPerFrame = 0.2f;
     public const float horizontalSpeed = 150f;
     public const float jumpSpeed = -450f;
     public const float gravity = 980f;
 
-    public static Texture2D texture; // Set in Game1.LoadContent
+    public static Texture2D linkTexture; // Set in Game1.LoadContent
+    public static Texture2D arrowTexture; // Set in Game1.LoadContent
 
     public static Dictionary<LinkAnimationState, Rectangle[]> GetFrames()
     {
@@ -97,8 +101,14 @@ public static class PlatformUtil
     };
 }
 
-public static class ButtonUtil
+public static class UIUtil
 {
     public static Texture2D buttonTexture; // Set in Game1.LoadContent
     public static Texture2D resetTexture; // Set in Game1.LoadContent
+    public static SpriteFont uiFont; // Set in Game1.LoadContent
+}
+
+public static class ScreenUtil
+{
+    public static (int w, int h) defaultScreenSize = (1000, 800);
 }

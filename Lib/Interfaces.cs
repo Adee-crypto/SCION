@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2;
 using System;
 using System.Collections.Generic;
 using static Sprint2.Sprites.LinkSprite;
@@ -21,8 +22,6 @@ public interface IController
 
 public interface IMouseController : IController
 {
-    public MouseState CurrentMouseState { get; }
-
     public bool IsLeftClick();
 
     public bool IsRightClick();
@@ -31,9 +30,10 @@ public interface IMouseController : IController
 public interface IPlayer : IScreenObject
 {
     public Vector2 Position { get; set; }
+
     public Rectangle Hitbox { get; }
-    
-    public void InitializeAimer(Texture2D aimerTexture);
+
+    public void Reset();
 
     public void Move(int index);
 

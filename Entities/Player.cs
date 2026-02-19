@@ -4,33 +4,28 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Sprites;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Sprint2;
 
 public class Player : IPlayer
 {
-    private enum LinkAction { Still, Attack, PlantSeed, BreakBlock };
-    private const int HitboxSize = 16;
-    private Aimer aimer;
-
-    private LinkAction linkAction; // Still, Attack, PlantSeed, BreakBlock
+    private LinkUtil.LinkAction linkAction; // Still, Attack, PlantSeed, BreakBlock
     private LinkSprite linkSprite;
+    private Aimer aimer;
+    private Vector2 center;
 
     private Vector2 position;
     private Vector2 velocity;
     private bool isGrounded;
     private bool isMoving;
-    public Vector2 AimDirection => aimer.Direction;
-    public float AimAngle => aimer.Angle;
 
     public Player()
     {
-        linkAction = LinkAction.Still;
+        linkAction = LinkUtil.LinkAction.Still;
         linkSprite = new LinkSprite();
+        aimer = new Aimer(10f);
+        center = Vector2.Zero;
         position = new Vector2(16, 16);
-        linkSprite.Position = position;
         velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
         isGrounded = false;
         isMoving = false;
@@ -42,11 +37,18 @@ public class Player : IPlayer
         set { position = value; linkSprite.Position = value; }
     }
 
-    public Rectangle Hitbox => new((int)position.X, (int)position.Y, HitboxSize, HitboxSize);
+    public Rectangle Hitbox => new((int)position.X, (int)position.Y, LinkUtil.hitboxSize, LinkUtil.hitboxSize);
 
-    public void InitializeAimer(Texture2D aimerTexture)
+    public void Reset()
     {
-        aimer = new Aimer(aimerTexture, 10f);
+        linkAction = LinkUtil.LinkAction.Still;
+        linkSprite = new LinkSprite();
+        aimer = new Aimer(10f);
+        center = Vector2.Zero;
+        position = new Vector2(16, 16);
+        velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
+        isGrounded = false;
+        isMoving = false;
     }
 
     public void Move(int index)
@@ -81,7 +83,7 @@ public class Player : IPlayer
 
     public void Attack()
     {
-        linkAction = LinkAction.Attack;
+        linkAction = LinkUtil.LinkAction.Attack;
         if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
         if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
     }
@@ -89,7 +91,6 @@ public class Player : IPlayer
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
 
         Vector2 movement = Vector2.Zero;
         if (isMoving) movement.X = velocity.X * time;
@@ -104,12 +105,12 @@ public class Player : IPlayer
         Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
         linkSprite.Position = position;
 
-        if (!isMoving && isGrounded && linkAction == LinkAction.Still)
+        if (!isMoving && isGrounded && linkAction == LinkUtil.LinkAction.Still)
         {
             if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
             if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
         }
-        else if (!isGrounded && linkAction == LinkAction.Still)
+        else if (!isGrounded && linkAction == LinkUtil.LinkAction.Still)
         {
             if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFalling);
             if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFalling);
@@ -117,17 +118,15 @@ public class Player : IPlayer
         linkSprite.Update(gameTime, objects);
 
         isMoving = false;
-        linkAction = LinkAction.Still;
+        linkAction = LinkUtil.LinkAction.Still;
 
-        Vector2 center = new Vector2(position.X + HitboxSize / 2f, position.Y + HitboxSize / 2f);
+        center = new Vector2(position.X + LinkUtil.hitboxSize / 2f, position.Y + LinkUtil.hitboxSize / 2f);
         aimer?.Update(center, Mouse.GetState());
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         linkSprite.Draw(spriteBatch);
-        
-        Vector2 center = new Vector2(position.X + HitboxSize / 2f, position.Y + HitboxSize / 2f);
         aimer?.Draw(spriteBatch, center);
     }
 }
