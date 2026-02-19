@@ -69,16 +69,16 @@ public class Game1 : Game
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         UIUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
         UIUtil.resetTexture = Content.Load<Texture2D>("ResetButton");
-        uiFont = Content.Load<SpriteFont>("UIFont");
-        pauseMenu = new PauseMenu(uiFont, GraphicsDevice);
+        UIUtil.uiFont = Content.Load<SpriteFont>("UIFont");
+        pauseMenu = new PauseMenu(UIUtil.uiFont, GraphicsDevice);
 
         Vector2 resumePosition = new(screenSize.w / 2 - 100, screenSize.h / 2 - 60);
         Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
         Vector2 resetPosition = new(16, 16);
 
-        pauseMenu.AddButton(new Button(uiFont, UIUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
-        pauseMenu.AddButton(new Button(uiFont, UIUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
-        pauseMenu.AddButton(new Button(uiFont, UIUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
+        pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
+        pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
+        pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
     }
 
     public void TogglePause() => isPaused = !isPaused;

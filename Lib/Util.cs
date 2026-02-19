@@ -105,6 +105,7 @@ public static class UIUtil
 {
     public static Texture2D buttonTexture; // Set in Game1.LoadContent
     public static Texture2D resetTexture; // Set in Game1.LoadContent
+    public static SpriteFont uiFont; // Set in Game1.LoadContent
 }
 
 public static class ScreenUtil
