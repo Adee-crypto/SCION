@@ -23,7 +23,6 @@ public class Game1 : Game
     public bool IsPaused => isPaused;
 
     private PauseMenu pauseMenu;
-    private SpriteFont uiFont;
 
     public Player player0;
     private List<Rectangle> objects;
@@ -54,10 +53,7 @@ public class Game1 : Game
         CommandUtil.AttachCommandBindings(this);
 
         player0 = new Player();
-        testPlant = new(Plant.Species.grass, (20, 20));
-        objects = [];
-        platforms = [new(Platform.Type.stonebrick, 0, 16 * 25, 40, 1)];
-        isPaused = false;
+        ResetLevel();
     }
 
     protected override void LoadContent()
