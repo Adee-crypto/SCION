@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using static Sprint2.Sprites.LinkSprite;
+using static Sprint2.Sprites.PlayerSprite;
 using System.Linq;
 using System;
 
@@ -30,9 +30,27 @@ public static class CommandUtil
     }
 }
 
-public static class LinkUtil
+public static class PlayerUtil
 {
-    public enum LinkAction { Still, Attack, PlantSeed, BreakBlock };
+    public enum PlayerAction
+    {
+        None,
+        Attack,
+        PlantSeed,
+        BreakBlock 
+    };
+
+    public enum PlayerAnimation
+    {
+        LeftFacing,
+        LeftRunning,
+        RightFacing,
+        RightRunning,
+        LeftAttack,
+        RightAttack,
+        LeftFalling,
+        RightFalling
+    };
 
     public const int hitboxSize = 16;
     public const float secondsPerFrame = 0.2f;
@@ -40,23 +58,23 @@ public static class LinkUtil
     public const float jumpSpeed = -450f;
     public const float gravity = 980f;
 
-    public static Texture2D linkTexture; // Set in Game1.LoadContent
+    public static Texture2D playerTexture; // Set in Game1.LoadContent
     public static Texture2D arrowTexture; // Set in Game1.LoadContent
 
-    public static Dictionary<LinkAnimationState, Rectangle[]> GetFrames()
+    public static Dictionary<PlayerAnimation, Rectangle[]> GetFrames()
     {
-        Dictionary<LinkAnimationState, Rectangle[]> LinkFramesMap = new()
+        Dictionary<PlayerAnimation, Rectangle[]> framesMap = new()
         {
-            { LinkAnimationState.LeftFacing, [new (32, 0, 16, 16)] },
-            { LinkAnimationState.LeftRunning, [new(32, 0, 16, 16), new(48, 0, 16, 16)] },
-            { LinkAnimationState.RightFacing, [new (0, 0, 16, 16)] },
-            { LinkAnimationState.RightRunning, [new(0, 0, 16, 16), new(16, 0, 16, 16)] },
-            { LinkAnimationState.LeftAttack, [new(16, 32, 16, 16)]},
-            { LinkAnimationState.RightAttack, [new(0, 32, 16, 16)]},
-            { LinkAnimationState.LeftFalling, [new(48, 0, 16, 16)] },
-            { LinkAnimationState.RightFalling, [new(16, 0, 16, 16)] }
+            { PlayerAnimation.LeftFacing, [new (32, 0, 16, 16)] },
+            { PlayerAnimation.LeftRunning, [new(32, 0, 16, 16), new(48, 0, 16, 16)] },
+            { PlayerAnimation.RightFacing, [new (0, 0, 16, 16)] },
+            { PlayerAnimation.RightRunning, [new(0, 0, 16, 16), new(16, 0, 16, 16)] },
+            { PlayerAnimation.LeftAttack, [new(16, 32, 16, 16)]},
+            { PlayerAnimation.RightAttack, [new(0, 32, 16, 16)]},
+            { PlayerAnimation.LeftFalling, [new(48, 0, 16, 16)] },
+            { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] }
         };
-        return LinkFramesMap;
+        return framesMap;
     }
 }
 

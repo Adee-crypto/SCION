@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Sprint2;
 using System;
 using System.Collections.Generic;
-using static Sprint2.Sprites.LinkSprite;
+using static Sprint2.Sprites.PlayerSprite;
 
 namespace Interfaces;
 
@@ -63,5 +63,5 @@ public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject
 
 internal interface ISprite : IDrawableObject, IUpdatable
 {
-    public void SetFrames(LinkAnimationState linkAnimationState);
+    public void SetFrames(PlayerUtil.PlayerAction linkAction, Vector2 direction, Vector2 velocity);
 }

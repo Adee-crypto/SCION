@@ -59,8 +59,8 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
-        LinkUtil.linkTexture = Content.Load<Texture2D>("Link");
-        LinkUtil.arrowTexture = Content.Load<Texture2D>("AimerArrow");
+        PlayerUtil.playerTexture = Content.Load<Texture2D>("Link");
+        PlayerUtil.arrowTexture = Content.Load<Texture2D>("AimerArrow");
         PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
         UIUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");

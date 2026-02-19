@@ -9,62 +9,48 @@ namespace Sprint2;
 
 public class Player : IPlayer
 {
-    private LinkUtil.LinkAction linkAction; // Still, Attack, PlantSeed, BreakBlock
-    private LinkSprite linkSprite;
+    private PlayerUtil.PlayerAction PlayerAction;
+    private PlayerSprite playerSprite;
     private Aimer aimer;
     private Vector2 center;
 
     private Vector2 position;
     private Vector2 velocity;
+    private Vector2 direction;
     private bool isGrounded;
-    private bool isMoving;
 
     public Player()
     {
-        linkAction = LinkUtil.LinkAction.Still;
-        linkSprite = new LinkSprite();
-        aimer = new Aimer(10f);
-        center = Vector2.Zero;
-        position = new Vector2(16, 16);
-        velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
-        isGrounded = false;
-        isMoving = false;
+        Reset();
     }
 
     public Vector2 Position
     {
         get => position;
-        set { position = value; linkSprite.Position = value; }
+        set { position = value; playerSprite.Position = value; }
     }
 
-    public Rectangle Hitbox => new((int)position.X, (int)position.Y, LinkUtil.hitboxSize, LinkUtil.hitboxSize);
+    public Rectangle Hitbox => new((int)position.X, (int)position.Y, PlayerUtil.hitboxSize, PlayerUtil.hitboxSize);
 
     public void Reset()
     {
-        linkAction = LinkUtil.LinkAction.Still;
-        linkSprite = new LinkSprite();
+        PlayerAction = PlayerUtil.PlayerAction.None;
+        playerSprite = new PlayerSprite();
         aimer = new Aimer(10f);
         center = Vector2.Zero;
         position = new Vector2(16, 16);
-        velocity = new Vector2(LinkUtil.horizontalSpeed, 0);
+        velocity = Vector2.Zero;
+        direction = new Vector2(1, 0);
         isGrounded = false;
-        isMoving = false;
     }
 
-    public void Move(int index)
+    public void Move(int direction)
     {
-        isMoving = true;
-        velocity = index switch
-        {
-            0 => new Vector2(LinkUtil.horizontalSpeed * -1f, velocity.Y), // left
-            1 => new Vector2(LinkUtil.horizontalSpeed, velocity.Y), // right
-            _ => new Vector2(0, 0), // never happen
-        };
-        if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightRunning);
-        if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftRunning);
+        this.direction.X = direction;
+        velocity.X = PlayerUtil.horizontalSpeed * direction;
     }
 
-    public void MoveLeft() => Move(0);
+    public void MoveLeft() => Move(-1);
 
     public void MoveRight() => Move(1);
 
@@ -73,7 +59,7 @@ public class Player : IPlayer
         if (isGrounded)
         {
             isGrounded = false;
-            velocity.Y = LinkUtil.jumpSpeed;
+            velocity.Y = PlayerUtil.jumpSpeed;
         }
     }
 
@@ -83,9 +69,7 @@ public class Player : IPlayer
 
     public void Attack()
     {
-        linkAction = LinkUtil.LinkAction.Attack;
-        if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightAttack);
-        if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftAttack);
+        PlayerAction = PlayerUtil.PlayerAction.Attack;
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
@@ -93,40 +77,31 @@ public class Player : IPlayer
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         Vector2 movement = Vector2.Zero;
-        if (isMoving) movement.X = velocity.X * time;
+        if (velocity.X != 0) movement.X = velocity.X * time;
         isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
-        if (isGrounded && velocity.Y > 0)
-            velocity.Y = 0;
+        if (isGrounded && velocity.Y >= 0) 
+            velocity.Y = 0;        
         else
         {
-            movement.Y = 0.5f * (2f * velocity.Y + LinkUtil.gravity * time) * time;
-            velocity.Y += LinkUtil.gravity * time;
+            movement.Y = 0.5f * (2f * velocity.Y + PlayerUtil.gravity * time) * time;
+            velocity.Y += PlayerUtil.gravity * time;
         }
         Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
-        linkSprite.Position = position;
 
-        if (!isMoving && isGrounded && linkAction == LinkUtil.LinkAction.Still)
-        {
-            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFacing);
-            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFacing);
-        }
-        else if (!isGrounded && linkAction == LinkUtil.LinkAction.Still)
-        {
-            if (velocity.X > 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.RightFalling);
-            if (velocity.X < 0) linkSprite.SetFrames(LinkSprite.LinkAnimationState.LeftFalling);
-        }
-        linkSprite.Update(gameTime);
+        playerSprite.Position = position;
+        playerSprite.SetFrames(PlayerAction, direction, velocity);
+        playerSprite.Update(gameTime);
 
-        isMoving = false;
-        linkAction = LinkUtil.LinkAction.Still;
+        velocity.X = 0;
+        PlayerAction = PlayerUtil.PlayerAction.None;
 
-        center = new Vector2(position.X + LinkUtil.hitboxSize / 2f, position.Y + LinkUtil.hitboxSize / 2f);
+        center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
         aimer?.Update(center, Mouse.GetState());
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        linkSprite.Draw(spriteBatch);
+        playerSprite.Draw(spriteBatch);
         aimer?.Draw(spriteBatch, center);
     }
 }
