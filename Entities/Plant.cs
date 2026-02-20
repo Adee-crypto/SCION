@@ -80,4 +80,48 @@ public class Plant(Plant.Species species, (int, int) root)
             _ => species, // never happen
         };
     }
+
+    /// test
+
+    public (int, int)? FindClosestCellBelow(Vector2 position)
+    {
+        int gridX = (int)(position.X / PlantUtil.cellWidth);
+        int gridY = (int)(position.Y / PlantUtil.cellWidth);
+
+        (int, int)? best = null;
+        int bestDist = int.MaxValue;
+
+        foreach ((int cx, int cy) in stem_cells)
+        {
+            if (cx == gridX && cy >= gridY)
+            {
+                int dist = cy - gridY;
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = (cx, cy);
+                }
+            }
+        }
+        foreach ((int cx, int cy) in bud_cells)
+        {
+            if (cx == gridX && cy >= gridY)
+            {
+                int dist = cy - gridY;
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = (cx, cy);
+                }
+            }
+        }
+        return best;
+    }
+
+    public bool RemoveBlock(int cellX, int cellY)
+    {
+        if (stem_cells.Remove((cellX, cellY))) return true;
+        if (bud_cells.Remove((cellX, cellY))) return true;
+        return false;
+    }
 }

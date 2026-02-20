@@ -18,6 +18,26 @@ public class Player : IPlayer
     private Vector2 velocity;
     private bool isGrounded;
 
+    /// 
+
+    private float holdTimer = 0f;
+    private const float holdDuration = 2f;
+    private bool isBreakabke = false;
+    public bool IsBreakable
+    {
+        get
+        {
+            if (isBreakabke)
+            {
+                isBreakabke = false;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    ///
+
     public Player()
     {
         Reset();
@@ -62,7 +82,10 @@ public class Player : IPlayer
         }
     }
 
-    public void BreakBlock() { }
+    public void BreakBlock() 
+    {
+        playerAction = PlayerUtil.PlayerAction.BreakBlock;
+    }
 
     public void PlantSeed() { }
 
@@ -91,6 +114,25 @@ public class Player : IPlayer
         playerSprite.Update(gameTime);
 
         velocity.X = 0;
+
+        ///
+
+        if (playerAction == PlayerUtil.PlayerAction.BreakBlock)
+        {
+            holdTimer += time;
+            if (holdTimer >= holdDuration)
+            {
+                holdTimer = 0f;
+                isBreakabke = true;
+            }
+        }
+        else
+        {
+            holdTimer = 0f;
+        }
+
+        ///
+
         playerAction = PlayerUtil.PlayerAction.None;
 
         center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);

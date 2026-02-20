@@ -20,6 +20,7 @@ public static class CommandUtil
             {new[] {Keys.Right, Keys.D}, () => game.player0.MoveRight()},
             {new[] {Keys.Up, Keys.W}, () => game.player0.Jump()},
             {new[] {Keys.Z, Keys.N}, () => game.player0.Attack()},
+            {new[] {Keys.Down, Keys.S}, () => game.player0.BreakBlock()} // test
         };
         tapKeyCommandBindings = new()
         {
