@@ -9,19 +9,30 @@ namespace Sprint2;
 
 public class Player : IPlayer
 {
-    private PlayerUtil.PlayerAction PlayerAction;
+    private PlayerUtil.PlayerAction playerAction;
     private PlayerSprite playerSprite;
     private Aimer aimer;
-    private Vector2 center;
-
     private Vector2 position;
-    private Vector2 velocity;
+    private Vector2 center;
     private Vector2 direction;
+    private Vector2 velocity;
     private bool isGrounded;
 
     public Player()
     {
         Reset();
+    }
+
+    public void Reset()
+    {
+        playerAction = PlayerUtil.PlayerAction.None;
+        playerSprite = new PlayerSprite();
+        aimer = new Aimer(10f);
+        position = new Vector2(16, 16);
+        center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
+        direction = new Vector2(1, 0);
+        velocity = Vector2.Zero;
+        isGrounded = false;
     }
 
     public Vector2 Position
@@ -31,18 +42,6 @@ public class Player : IPlayer
     }
 
     public Rectangle Hitbox => new((int)position.X, (int)position.Y, PlayerUtil.hitboxSize, PlayerUtil.hitboxSize);
-
-    public void Reset()
-    {
-        PlayerAction = PlayerUtil.PlayerAction.None;
-        playerSprite = new PlayerSprite();
-        aimer = new Aimer(10f);
-        center = Vector2.Zero;
-        position = new Vector2(16, 16);
-        velocity = Vector2.Zero;
-        direction = new Vector2(1, 0);
-        isGrounded = false;
-    }
 
     public void Move(int direction)
     {
@@ -69,7 +68,7 @@ public class Player : IPlayer
 
     public void Attack()
     {
-        PlayerAction = PlayerUtil.PlayerAction.Attack;
+        playerAction = PlayerUtil.PlayerAction.Attack;
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
@@ -79,7 +78,7 @@ public class Player : IPlayer
         Vector2 movement = Vector2.Zero;
         if (velocity.X != 0) movement.X = velocity.X * time;
         isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
-        if (isGrounded && velocity.Y >= 0) 
+        if (isGrounded && velocity.Y >= 0)
             velocity.Y = 0;        
         else
         {
@@ -89,11 +88,11 @@ public class Player : IPlayer
         Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
 
         playerSprite.Position = position;
-        playerSprite.SetFrames(PlayerAction, direction, velocity);
+        playerSprite.SetFrames(playerAction, direction, velocity);
         playerSprite.Update(gameTime);
 
         velocity.X = 0;
-        PlayerAction = PlayerUtil.PlayerAction.None;
+        playerAction = PlayerUtil.PlayerAction.None;
 
         center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
         aimer?.Update(center, Mouse.GetState());

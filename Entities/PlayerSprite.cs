@@ -28,7 +28,6 @@ public class PlayerSprite : ISprite
         {
             if (velocity.Y != 0)
                 newState = direction.X == 1 ? PlayerUtil.PlayerAnimation.RightFalling : PlayerUtil.PlayerAnimation.LeftFalling;
-                
             else if (velocity.X != 0)
                 newState = direction.X == 1 ? PlayerUtil.PlayerAnimation.RightRunning : PlayerUtil.PlayerAnimation.LeftRunning;
             else
