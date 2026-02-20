@@ -1,2 +1,13 @@
+# Visual Studio
+.vs/
 bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# OS files
+.DS_Store
+Thumbs.dbbin/
 obj/
