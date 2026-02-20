@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input; //FOR TESTING, DELETE THIS
 
 namespace Sprint2;
 
@@ -11,8 +13,19 @@ public class Plant(Plant.Species species, (int, int) root)
     private Species species = species;
     private HashSet<(int, int)> bud_cells = [root];
     private HashSet<(int, int)> stem_cells = [];
+    private float timeGrown = 0f;
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime) {
+        if (Keyboard.GetState().IsKeyDown(Keys.D1)) { //FOR TESTING
+            timeGrown += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            while (timeGrown >= PlantUtil.SpeciesGrowTimes[species]) {
+                timeGrown -= PlantUtil.SpeciesGrowTimes[species];
+                Grow();
+            }
+        }
+    }
+
+    private void Grow()
     {
         HashSet<(int, int)> newGrowth = [];
         foreach ((int x, int y) in bud_cells)
@@ -67,5 +80,21 @@ public class Plant(Plant.Species species, (int, int) root)
             Species.pineapple => Species.grass,
             _ => species, // never happen
         };
+    }
+
+    public void RemoveCellBelow(Vector2 bottomCenter)
+    {
+        int cellX = (int)(bottomCenter.X / PlantUtil.cellWidth);
+        int cellY = (int)(bottomCenter.Y / PlantUtil.cellWidth);
+        if (stem_cells.Contains((cellX, cellY))) stem_cells.Remove((cellX, cellY));
+        else if (stem_cells.Contains((cellX - 1, cellY)) || stem_cells.Contains((cellX + 1, cellY)))
+        {
+            float leftCenterX = (cellX - 1) * PlantUtil.cellWidth + PlantUtil.cellWidth / 2f;
+            float rightCenterX = (cellX + 1) * PlantUtil.cellWidth + PlantUtil.cellWidth / 2f;
+            float leftDist = Math.Abs(bottomCenter.X - leftCenterX);
+            float rightDist = Math.Abs(bottomCenter.X - rightCenterX);
+            if (leftDist < rightDist) stem_cells.Remove((cellX - 1, cellY));
+            else stem_cells.Remove((cellX + 1, cellY));
+        }
     }
 }

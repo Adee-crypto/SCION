@@ -3,52 +3,16 @@
   "WorkspaceRootPath": "E:\\vsp\\CSE3902Sprint2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\entities\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:entities\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\lib\\collisions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:lib\\collisions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\util.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\util.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\pausemenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\pausemenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\mousecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\mousecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\linksprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\linksprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\keyboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\keyboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\interfaces.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\interfaces.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\plant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\plant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\platform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\platform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\button.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\button.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|e:\\vsp\\cse3902sprint2\\customobjects\\collisions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6906063-E0E2-C48D-7E9F-201F880D65D8}|Sprint2.csproj|solutionrelative:customobjects\\collisions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,166 +22,53 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Util.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Util.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\Util.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Util.cs",
-              "RelativeToolTip": "CustomObjects\\Util.cs",
-              "ViewState": "AgIAAEwAAAAAAAAAAAAcwFUAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:40:05.826Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Player.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Player.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\Player.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Player.cs",
-              "RelativeToolTip": "CustomObjects\\Player.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:39:56.506Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Platform.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Platform.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\Platform.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Platform.cs",
-              "RelativeToolTip": "CustomObjects\\Platform.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:39:55.675Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Plant.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Plant.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\Plant.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Plant.cs",
-              "RelativeToolTip": "CustomObjects\\Plant.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:10:04.249Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "PauseMenu.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\PauseMenu.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\PauseMenu.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\PauseMenu.cs",
-              "RelativeToolTip": "CustomObjects\\PauseMenu.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:39:48.712Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MouseController.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\MouseController.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\MouseController.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\MouseController.cs",
-              "RelativeToolTip": "CustomObjects\\MouseController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:39:39.132Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LinkSprite.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\LinkSprite.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\LinkSprite.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\LinkSprite.cs",
-              "RelativeToolTip": "CustomObjects\\LinkSprite.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwCgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:37:20.986Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "KeyboardController.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\KeyboardController.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\KeyboardController.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\KeyboardController.cs",
-              "RelativeToolTip": "CustomObjects\\KeyboardController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:37:18.935Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Interfaces.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Interfaces.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\Interfaces.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Interfaces.cs",
-              "RelativeToolTip": "CustomObjects\\Interfaces.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAmwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:37:12.343Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Collisions.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Collisions.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\Collisions.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Collisions.cs",
-              "RelativeToolTip": "CustomObjects\\Collisions.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:37:05.178Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Button.cs",
-              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Button.cs",
-              "RelativeDocumentMoniker": "CustomObjects\\Button.cs",
-              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\CustomObjects\\Button.cs",
-              "RelativeToolTip": "CustomObjects\\Button.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:36:39.672Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "Game1.cs",
               "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\Game1.cs",
               "RelativeDocumentMoniker": "Game1.cs",
               "ToolTip": "E:\\vsp\\CSE3902Sprint2\\Game1.cs",
               "RelativeToolTip": "Game1.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAApwDoAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAmwDwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-18T04:32:15.601Z",
+              "WhenOpened": "2026-02-20T02:17:50.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Collisions.cs",
+              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\Lib\\Collisions.cs",
+              "RelativeDocumentMoniker": "Lib\\Collisions.cs",
+              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\Lib\\Collisions.cs",
+              "RelativeToolTip": "Lib\\Collisions.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T02:15:52.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Player.cs",
+              "DocumentMoniker": "E:\\vsp\\CSE3902Sprint2\\Entities\\Player.cs",
+              "RelativeDocumentMoniker": "Entities\\Player.cs",
+              "ToolTip": "E:\\vsp\\CSE3902Sprint2\\Entities\\Player.cs",
+              "RelativeToolTip": "Entities\\Player.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAA7wEIAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-20T02:14:55.691Z",
               "EditorCaption": ""
             }
           ]

@@ -1,6 +1,7 @@
 ﻿using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.ComponentModel.Design;
 
 namespace Sprint2.Sprites;
 
@@ -33,9 +34,13 @@ public class PlayerSprite : IPlayerSprite
             else
                 newState = direction.X == 1 ? PlayerUtil.PlayerAnimation.RightFacing : PlayerUtil.PlayerAnimation.LeftFacing;
         }
-        else
+        else if (linkAction == PlayerUtil.PlayerAction.Attack)
         {
             newState = direction.X == 1 ? PlayerUtil.PlayerAnimation.RightAttack : PlayerUtil.PlayerAnimation.LeftAttack;
+        }
+        else
+        {
+            newState = PlayerUtil.PlayerAnimation.BlockBreaking;
         }
 
         if (currentState != newState)

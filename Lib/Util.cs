@@ -16,16 +16,18 @@ public static class CommandUtil
     public static void AttachCommandBindings(Game1 game) {
         holdKeyCommandBindings = new()
         {
-            {new[] {Keys.Left, Keys.A}, () => game.player0.MoveLeft()},
-            {new[] {Keys.Right, Keys.D}, () => game.player0.MoveRight()},
+            {new[] {Keys.Left, Keys.A}, () => game.player0.Move(-1)},
+            {new[] {Keys.Right, Keys.D}, () => game.player0.Move(1)},
             {new[] {Keys.Up, Keys.W}, () => game.player0.Jump()},
             {new[] {Keys.Z, Keys.N}, () => game.player0.Attack()},
+            {new[] {Keys.Down, Keys.S}, () => game.player0.BreakBlock()}
         };
         tapKeyCommandBindings = new()
         {
             {new[] {Keys.Escape}, () => game.TogglePause()},
             {new[] {Keys.Q}, () => game.Exit()},
-            {new[] {Keys.R}, () => game.ResetLevel()}
+            {new[] {Keys.R}, () => game.ResetLevel()},
+            {new[] {Keys.D2}, () => game.testPlant.ToggleSpecies()} //for testing
         };
     }
 }
@@ -49,9 +51,10 @@ public static class PlayerUtil
         LeftAttack,
         RightAttack,
         LeftFalling,
-        RightFalling
+        RightFalling,
+        BlockBreaking
     };
-
+    public const float breakDuration = 1f;
     public const int hitboxSize = 16;
     public const float secondsPerFrame = 0.2f;
     public const float horizontalSpeed = 150f;
@@ -72,7 +75,8 @@ public static class PlayerUtil
             { PlayerAnimation.LeftAttack, [new(16, 32, 16, 16)]},
             { PlayerAnimation.RightAttack, [new(0, 32, 16, 16)]},
             { PlayerAnimation.LeftFalling, [new(48, 0, 16, 16)] },
-            { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] }
+            { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] },
+            { PlayerAnimation.BlockBreaking, [new(16, 80, 16, 16)] }
         };
         return framesMap;
     }
@@ -86,9 +90,16 @@ public static class PlantUtil
 
     public static Dictionary<Plant.Species, Rectangle> SpeciesSpriteRects = new()
     {
-        { Plant.Species.grass, new (0, 0, cellWidth, cellWidth) },
-        { Plant.Species.apple, new (cellWidth, 0, cellWidth, cellWidth) },
-        { Plant.Species.pineapple, new (2*cellWidth, 0, cellWidth, cellWidth) },
+        { Plant.Species.grass, new (2*cellWidth, 9*cellWidth, cellWidth, cellWidth) },
+        { Plant.Species.apple, new (2*cellWidth, 10*cellWidth, cellWidth, cellWidth) },
+        { Plant.Species.pineapple, new (2*cellWidth, 11*cellWidth, cellWidth, cellWidth) },
+    };
+
+    public static Dictionary<Plant.Species, float> SpeciesGrowTimes = new()
+    {
+        { Plant.Species.grass, 0.2f },
+        { Plant.Species.apple, 0.5f },
+        { Plant.Species.pineapple, 1.0f },
     };
 
     public static IEnumerable<(int, int)> ShuffledDirs()
@@ -119,14 +130,12 @@ public static class PlatformUtil
     };
 }
 
-public static class UIUtil
-{
+public static class UIUtil {
     public static Texture2D buttonTexture; // Set in Game1.LoadContent
     public static Texture2D resetTexture; // Set in Game1.LoadContent
     public static SpriteFont uiFont; // Set in Game1.LoadContent
 }
 
-public static class ScreenUtil
-{
+public static class ScreenUtil {
     public static (int w, int h) defaultScreenSize = (1000, 800);
 }

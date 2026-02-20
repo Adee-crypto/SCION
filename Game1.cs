@@ -1,6 +1,5 @@
-﻿﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Sprint2.Controllers;
 using Sprint2.UI;
@@ -31,7 +30,7 @@ public class Game1 : Game
     private ProjectileManager projectileManager;
 
     //for testing
-    private Plant testPlant;
+    public Plant testPlant;
 
     public Game1()
     {
@@ -107,21 +106,19 @@ public class Game1 : Game
         } else {
             objects.Clear();
 
-            //This is all for testing/display
-            if (Keyboard.GetState().IsKeyDown(Keys.D1))
-            {
-                testPlant.Update(gameTime);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.D2))
-            {
-                testPlant.ToggleSpecies();
-            }
-
             objects.AddRange(testPlant.GetPlantObjects());
             objects.AddRange(platforms.Select(p => p.Bounds));
 
             player0.Update(gameTime, objects);
             projectileManager.Update(gameTime, objects);
+
+            if (player0.IsBreakable)
+            {
+                testPlant.RemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom));
+                player0.IsBreakable = false;
+            }
+
+            testPlant.Update(gameTime);
 
             if (player0.Position.Y > screenSize.h) ResetLevel();
         }

@@ -47,11 +47,7 @@ public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject, IA
 {
     void Reset();
 
-    void Move(int index);
-
-    void MoveLeft();
-
-    void MoveRight();
+    void Move(int direction);
 
     void Jump();
 
