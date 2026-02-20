@@ -9,7 +9,7 @@ public class MouseController : IMouseController
     private MouseState currentMouseState = new MouseState();
     private MouseState previousMouseState = new MouseState();
 
-    public bool IsPaused { get; set; } 
+    public bool IsPaused { get; set; } = false;
 
     public void Update()
     {
@@ -19,11 +19,21 @@ public class MouseController : IMouseController
 
     public bool IsLeftClick()
     {
-        return previousMouseState.LeftButton == ButtonState.Pressed && currentMouseState.LeftButton == ButtonState.Pressed;
+        return currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released;
     }
 
     public bool IsRightClick()
     {
-        return previousMouseState.RightButton == ButtonState.Pressed && currentMouseState.RightButton == ButtonState.Pressed;
+        return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released;
+    }
+
+    public bool IsLeftClickHeld()
+    {
+        return currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Pressed;
+    }
+
+    public bool IsRightClickHeld()
+    {
+        return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Pressed;
     }
 }

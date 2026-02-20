@@ -1,9 +1,10 @@
+using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Sprint2;
 
-public class Platform
+public class Platform : IDrawableObject
 {
     public enum Type
     {

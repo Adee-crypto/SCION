@@ -27,6 +27,8 @@ public class Game1 : Game
     public Player player0;
     private List<Rectangle> objects;
     private List<Platform> platforms;
+    private ProjectileDef def;
+    private ProjectileManager projectileManager;
 
     //for testing
     private Plant testPlant;
@@ -45,7 +47,6 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        base.Initialize();
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
         keyboardController = new KeyBoardController();
@@ -53,6 +54,8 @@ public class Game1 : Game
         CommandUtil.AttachCommandBindings(this);
 
         player0 = new Player();
+
+        base.Initialize();
         ResetLevel();
     }
 
@@ -75,6 +78,9 @@ public class Game1 : Game
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
+
+        def = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 1000f, 200f, 98f);
+        projectileManager = new ProjectileManager(mouseController, player0, def);
     }
 
     public void TogglePause() => isPaused = !isPaused;
@@ -82,6 +88,7 @@ public class Game1 : Game
     public void ResetLevel()
     {
         player0.Reset();
+        projectileManager.Reset();
         testPlant = new(Plant.Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
         objects = [];
         platforms = [new(Platform.Type.stonebrick, 0, 16*25, 40, 1)];
@@ -114,6 +121,7 @@ public class Game1 : Game
             objects.AddRange(platforms.Select(p => p.Bounds));
 
             player0.Update(gameTime, objects);
+            projectileManager.Update(gameTime, objects);
 
             if (player0.Position.Y > screenSize.h) ResetLevel();
         }
@@ -128,6 +136,7 @@ public class Game1 : Game
 
         player0.Draw(spriteBatch);
         testPlant.Draw(spriteBatch);
+        projectileManager.Draw(spriteBatch);
         platforms.ForEach(p => p.Draw(spriteBatch));
 
         if (isPaused) pauseMenu.Draw(spriteBatch, screenSize);

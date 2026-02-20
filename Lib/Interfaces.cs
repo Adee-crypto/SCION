@@ -37,9 +37,13 @@ public interface IMouseController : IController
     bool IsLeftClick();
 
     bool IsRightClick();
+
+    bool IsLeftClickHeld();
+
+    bool IsRightClickHeld();
 }
 
-public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject
+public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject, IAim
 {
     void Reset();
 
@@ -56,6 +60,11 @@ public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject
     void PlantSeed();
 
     void Attack();
+}
+
+public interface IAim
+{
+    Vector2 AimDirection { get; }
 }
 
 public interface IProjectile : IDrawableObject, IUpdatableObject, IPhysicsObject

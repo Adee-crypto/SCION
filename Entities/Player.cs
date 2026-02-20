@@ -17,6 +17,8 @@ public class Player : IPlayer
     private Vector2 direction;
     private Vector2 velocity;
     private bool isGrounded;
+    public Vector2 AimDirection => aimer.Direction;
+    public Vector2 Center => center;
 
     public Player()
     {
