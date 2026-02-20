@@ -72,7 +72,7 @@ public class Player : IPlayer
 
     public void BreakBlock() 
     {
-        playerAction = PlayerUtil.PlayerAction.BreakBlock;
+        if (isGrounded && velocity.X == 0) playerAction = PlayerUtil.PlayerAction.BreakBlock;
     }
 
     public void PlantSeed() { }
