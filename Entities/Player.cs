@@ -17,7 +17,7 @@ public class Player : IPlayer
     private Vector2 direction;
     private Vector2 velocity;
     private bool isGrounded;
-    private bool isBreakabke;
+    private bool isBreakable;
     private float breakTimer;
 
     public Player()
@@ -35,14 +35,14 @@ public class Player : IPlayer
         direction = new Vector2(1, 0);
         velocity = Vector2.Zero;
         isGrounded = false;
-        isBreakabke = false;
+        isBreakable = false;
         breakTimer = 0f;
     }
 
     public bool IsBreakable
     {
-        get => isBreakabke;
-        set { isBreakabke = value; }
+        get => isBreakable;
+        set { isBreakable = value; }
     }
 
     public Vector2 Position
@@ -58,10 +58,6 @@ public class Player : IPlayer
         this.direction.X = direction;
         velocity.X = PlayerUtil.horizontalSpeed * direction;
     }
-
-    public void MoveLeft() => Move(-1);
-
-    public void MoveRight() => Move(1);
 
     public void Jump()
     {
@@ -112,7 +108,7 @@ public class Player : IPlayer
             if (breakTimer >= PlayerUtil.breakDuration)
             {
                 breakTimer = 0f;
-                isBreakabke = true;
+                isBreakable = true;
             }
         }
         else breakTimer = 0f;

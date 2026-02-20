@@ -84,14 +84,10 @@ public class Plant(Plant.Species species, (int, int) root)
 
     public void RemoveCellBelow(Vector2 bottomCenter)
     {
-        int gridX = (int)(bottomCenter.X / PlantUtil.cellWidth);
-        int gridY = (int)(bottomCenter.Y / PlantUtil.cellWidth);
-
-        (int, int)? cellBelow = null;
-        foreach ((int cellX, int cellY) in stem_cells)
-            if (cellX == gridX && cellY == gridY)
-                cellBelow = (cellX, cellY);
-
-        if (cellBelow.HasValue) stem_cells.Remove(cellBelow.Value);
+        int cellX = (int)(bottomCenter.X / PlantUtil.cellWidth);
+        int cellY = (int)(bottomCenter.Y / PlantUtil.cellWidth);
+        if (stem_cells.Contains((cellX, cellY))) stem_cells.Remove((cellX, cellY));
+        else if (stem_cells.Contains((cellX + 1, cellY))) stem_cells.Remove((cellX + 1, cellY));
+        else if (stem_cells.Contains((cellX - 1, cellY))) stem_cells.Remove((cellX - 1, cellY));
     }
 }

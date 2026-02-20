@@ -16,8 +16,8 @@ public static class CommandUtil
     public static void AttachCommandBindings(Game1 game) {
         holdKeyCommandBindings = new()
         {
-            {new[] {Keys.Left, Keys.A}, () => game.player0.MoveLeft()},
-            {new[] {Keys.Right, Keys.D}, () => game.player0.MoveRight()},
+            {new[] {Keys.Left, Keys.A}, () => game.player0.Move(-1)},
+            {new[] {Keys.Right, Keys.D}, () => game.player0.Move(1)},
             {new[] {Keys.Up, Keys.W}, () => game.player0.Jump()},
             {new[] {Keys.Z, Keys.N}, () => game.player0.Attack()},
             {new[] {Keys.Down, Keys.S}, () => game.player0.BreakBlock()}
