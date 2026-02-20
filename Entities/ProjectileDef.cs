@@ -13,7 +13,7 @@ public class ProjectileDef
     public float MaxLifetimeSeconds { get; }
     public Vector2 Origin { get; }
 
-    public ProjectileDef(string projectileID, Texture2D projectileTexture, Vector2 projectileSize, float projectileMaxTime = 900f, float projectileLaunchSpeed = 100f, float projectileGravity = 90f)
+    public ProjectileDef(string projectileID, Texture2D projectileTexture, Vector2 projectileSize, float projectileMaxTime = 5f, float projectileLaunchSpeed = 200f, float projectileGravity = 98f)
     {
         Id = projectileID;
         Texture = projectileTexture;

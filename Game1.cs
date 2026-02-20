@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Sprint2.Controllers;
@@ -78,7 +78,7 @@ public class Game1 : Game
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
 
-        def = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 1000f, 200f, 98f);
+        def = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 5f, 200f, 98f);
         projectileManager = new ProjectileManager(mouseController, player0, def);
     }
 
