@@ -15,7 +15,8 @@ public class Collisions
         foreach (var obj in objects)
         {
             if (!player.Hitbox.Intersects(obj)) continue;
-            currentPosition.X = (movement.X > 0) ? obj.Left - player.Hitbox.Width : obj.Right;
+            if (movement.X > 0) currentPosition.X = obj.Left - player.Hitbox.Width;
+            else if (movement.X < 0) currentPosition.X = obj.Right;
         }
 
         currentPosition.Y += movement.Y;
