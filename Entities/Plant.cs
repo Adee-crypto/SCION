@@ -82,25 +82,16 @@ public class Plant(Plant.Species species, (int, int) root)
         };
     }
 
-    public (int, int)? FindCellBelow(Vector2 bottomCenter)
+    public void RemoveCellBelow(Vector2 bottomCenter)
     {
         int gridX = (int)(bottomCenter.X / PlantUtil.cellWidth);
         int gridY = (int)(bottomCenter.Y / PlantUtil.cellWidth);
 
         (int, int)? cellBelow = null;
-
         foreach ((int cellX, int cellY) in stem_cells)
-        {
             if (cellX == gridX && cellY == gridY)
-            {
                 cellBelow = (cellX, cellY);
-            }
-        }
-        return cellBelow;
-    }
 
-    public void RemoveBlock(int cellX, int cellY)
-    {
-        stem_cells.Remove((cellX, cellY));
+        if (cellBelow.HasValue) stem_cells.Remove(cellBelow.Value);
     }
 }

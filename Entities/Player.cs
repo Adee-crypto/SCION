@@ -17,18 +17,8 @@ public class Player : IPlayer
     private Vector2 direction;
     private Vector2 velocity;
     private bool isGrounded;
-
-    /// 
-
-    private float breakTimer = 0f;
-    private bool isBreakabke = false;
-    public bool IsBreakable
-    {
-        get => isBreakabke;
-        set { isBreakabke = value;}
-    }
-
-    ///
+    private bool isBreakabke;
+    private float breakTimer;
 
     public Player()
     {
@@ -45,6 +35,14 @@ public class Player : IPlayer
         direction = new Vector2(1, 0);
         velocity = Vector2.Zero;
         isGrounded = false;
+        isBreakabke = false;
+        breakTimer = 0f;
+    }
+
+    public bool IsBreakable
+    {
+        get => isBreakabke;
+        set { isBreakabke = value; }
     }
 
     public Vector2 Position
@@ -105,9 +103,8 @@ public class Player : IPlayer
         playerSprite.SetFrames(playerAction, direction, velocity);
         playerSprite.Update(gameTime);
 
-        velocity.X = 0;
-
-        ///
+        center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
+        aimer?.Update(center, Mouse.GetState());
 
         if (playerAction == PlayerUtil.PlayerAction.BreakBlock)
         {
@@ -120,13 +117,8 @@ public class Player : IPlayer
         }
         else breakTimer = 0f;
 
-
-        ///
-
+        velocity.X = 0;
         playerAction = PlayerUtil.PlayerAction.None;
-
-        center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
-        aimer?.Update(center, Mouse.GetState());
     }
 
     public void Draw(SpriteBatch spriteBatch)

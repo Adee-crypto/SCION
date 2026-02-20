@@ -1,6 +1,5 @@
 ﻿﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Sprint2.Controllers;
 using Sprint2.UI;
@@ -107,9 +106,7 @@ public class Game1 : Game
 
             if (player0.IsBreakable)
             {
-                Vector2 bottomCenter = new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom);
-                var cell = testPlant.FindCellBelow(bottomCenter);
-                if (cell.HasValue) testPlant.RemoveBlock(cell.Value.Item1, cell.Value.Item2);
+                testPlant.RemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom));
                 player0.IsBreakable = false;
             }
 

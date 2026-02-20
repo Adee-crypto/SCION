@@ -51,9 +51,10 @@ public static class PlayerUtil
         LeftAttack,
         RightAttack,
         LeftFalling,
-        RightFalling
+        RightFalling,
+        BlockBreaking
     };
-    public const float breakDuration = 2f;
+    public const float breakDuration = 1f;
     public const int hitboxSize = 16;
     public const float secondsPerFrame = 0.2f;
     public const float horizontalSpeed = 150f;
@@ -74,7 +75,8 @@ public static class PlayerUtil
             { PlayerAnimation.LeftAttack, [new(16, 32, 16, 16)]},
             { PlayerAnimation.RightAttack, [new(0, 32, 16, 16)]},
             { PlayerAnimation.LeftFalling, [new(48, 0, 16, 16)] },
-            { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] }
+            { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] },
+            { PlayerAnimation.BlockBreaking, [new(16, 80, 16, 16)] }
         };
         return framesMap;
     }
