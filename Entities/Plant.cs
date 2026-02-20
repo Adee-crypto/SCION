@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input; //FOR TESTING, DELETE THIS
 
 namespace Sprint2;
 
@@ -11,8 +12,19 @@ public class Plant(Plant.Species species, (int, int) root)
     private Species species = species;
     private HashSet<(int, int)> bud_cells = [root];
     private HashSet<(int, int)> stem_cells = [];
+    private float timeGrown = 0f;
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime) {
+        if (Keyboard.GetState().IsKeyDown(Keys.D1)) { //FOR TESTING
+            timeGrown += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            while (timeGrown >= PlantUtil.SpeciesGrowTimes[species]) {
+                timeGrown -= PlantUtil.SpeciesGrowTimes[species];
+                Grow();
+            }
+        }
+    }
+
+    private void Grow()
     {
         HashSet<(int, int)> newGrowth = [];
         foreach ((int x, int y) in bud_cells)
