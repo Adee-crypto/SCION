@@ -20,21 +20,15 @@ public class Player : IPlayer
 
     /// 
 
-    private float holdTimer = 0f;
-    private const float holdDuration = 2f;
+    private float breakTimer = 0f;
+    private const float breakDuration = 2f;
     private bool isBreakabke = false;
     public bool IsBreakable
     {
-        get
-        {
-            if (isBreakabke)
-            {
-                isBreakabke = false;
-                return true;
-            }
-            return false;
-        }
+        get => isBreakabke;
+        set { isBreakabke = value;}
     }
+
 
     ///
 
@@ -119,17 +113,15 @@ public class Player : IPlayer
 
         if (playerAction == PlayerUtil.PlayerAction.BreakBlock)
         {
-            holdTimer += time;
-            if (holdTimer >= holdDuration)
+            breakTimer += time;
+            if (breakTimer >= breakDuration)
             {
-                holdTimer = 0f;
+                breakTimer = 0f;
                 isBreakabke = true;
             }
         }
-        else
-        {
-            holdTimer = 0f;
-        }
+        else breakTimer = 0f;
+
 
         ///
 

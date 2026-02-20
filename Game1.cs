@@ -109,12 +109,10 @@ public class Game1 : Game
 
             if (player0.IsBreakable)
             {
+                player0.IsBreakable = false;
                 Vector2 bottomCenter = new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom);
                 var cell = testPlant.FindClosestCellBelow(bottomCenter);
-                if (cell.HasValue)
-                {
-                    testPlant.RemoveBlock(cell.Value.Item1, cell.Value.Item2);
-                }
+                if (cell.HasValue) testPlant.RemoveBlock(cell.Value.Item1, cell.Value.Item2);
             }
 
             ///

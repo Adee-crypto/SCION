@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -81,47 +82,35 @@ public class Plant(Plant.Species species, (int, int) root)
         };
     }
 
-    /// test
+    /// 
 
-    public (int, int)? FindClosestCellBelow(Vector2 position)
+    public (int, int)? FindClosestCellBelow(Vector2 bottomCenter)
     {
-        int gridX = (int)(position.X / PlantUtil.cellWidth);
-        int gridY = (int)(position.Y / PlantUtil.cellWidth);
+        int gridX = (int)(bottomCenter.X / PlantUtil.cellWidth);
+        int gridY = (int)(bottomCenter.Y / PlantUtil.cellWidth);
 
-        (int, int)? best = null;
+        (int, int)? closestCell = null;
         int bestDist = int.MaxValue;
 
-        foreach ((int cx, int cy) in stem_cells)
+        foreach ((int cellX, int cellY) in stem_cells)
         {
-            if (cx == gridX && cy >= gridY)
+            if (cellX == gridX && cellY >= gridY)
             {
-                int dist = cy - gridY;
+                int dist = cellY - gridY;
                 if (dist < bestDist)
                 {
                     bestDist = dist;
-                    best = (cx, cy);
+                    closestCell = (cellX, cellY);
                 }
             }
         }
-        foreach ((int cx, int cy) in bud_cells)
-        {
-            if (cx == gridX && cy >= gridY)
-            {
-                int dist = cy - gridY;
-                if (dist < bestDist)
-                {
-                    bestDist = dist;
-                    best = (cx, cy);
-                }
-            }
-        }
-        return best;
+        return closestCell;
     }
 
-    public bool RemoveBlock(int cellX, int cellY)
+    public void RemoveBlock(int cellX, int cellY)
     {
-        if (stem_cells.Remove((cellX, cellY))) return true;
-        if (bud_cells.Remove((cellX, cellY))) return true;
-        return false;
+        stem_cells.Remove((cellX, cellY));
     }
+
+    ///
 }
