@@ -29,7 +29,7 @@ public class Game1 : Game
     private List<Platform> platforms;
 
     //for testing
-    private Plant testPlant;
+    public Plant testPlant;
 
     public Game1()
     {
@@ -100,20 +100,11 @@ public class Game1 : Game
         } else {
             objects.Clear();
 
-            //This is all for testing/display
-            if (Keyboard.GetState().IsKeyDown(Keys.D1))
-            {
-                testPlant.Update(gameTime);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.D2))
-            {
-                testPlant.ToggleSpecies();
-            }
-
             objects.AddRange(testPlant.GetPlantObjects());
             objects.AddRange(platforms.Select(p => p.Bounds));
 
             player0.Update(gameTime, objects);
+            testPlant.Update(gameTime);
 
             if (player0.Position.Y > screenSize.h) ResetLevel();
         }

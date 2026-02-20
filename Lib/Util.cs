@@ -25,7 +25,8 @@ public static class CommandUtil
         {
             {new[] {Keys.Escape}, () => game.TogglePause()},
             {new[] {Keys.Q}, () => game.Exit()},
-            {new[] {Keys.R}, () => game.ResetLevel()}
+            {new[] {Keys.R}, () => game.ResetLevel()},
+            {new[] {Keys.D2}, () => game.testPlant.ToggleSpecies()} //for testing
         };
     }
 }
@@ -86,9 +87,16 @@ public static class PlantUtil
 
     public static Dictionary<Plant.Species, Rectangle> SpeciesSpriteRects = new()
     {
-        { Plant.Species.grass, new (0, 0, cellWidth, cellWidth) },
-        { Plant.Species.apple, new (cellWidth, 0, cellWidth, cellWidth) },
-        { Plant.Species.pineapple, new (2*cellWidth, 0, cellWidth, cellWidth) },
+        { Plant.Species.grass, new (2*cellWidth, 9*cellWidth, cellWidth, cellWidth) },
+        { Plant.Species.apple, new (2*cellWidth, 10*cellWidth, cellWidth, cellWidth) },
+        { Plant.Species.pineapple, new (2*cellWidth, 11*cellWidth, cellWidth, cellWidth) },
+    };
+
+    public static Dictionary<Plant.Species, float> SpeciesGrowTimes = new()
+    {
+        { Plant.Species.grass, 0.2f },
+        { Plant.Species.apple, 0.5f },
+        { Plant.Species.pineapple, 1.0f },
     };
 
     public static IEnumerable<(int, int)> ShuffledDirs()
@@ -119,14 +127,12 @@ public static class PlatformUtil
     };
 }
 
-public static class UIUtil
-{
+public static class UIUtil {
     public static Texture2D buttonTexture; // Set in Game1.LoadContent
     public static Texture2D resetTexture; // Set in Game1.LoadContent
     public static SpriteFont uiFont; // Set in Game1.LoadContent
 }
 
-public static class ScreenUtil
-{
+public static class ScreenUtil {
     public static (int w, int h) defaultScreenSize = (1000, 800);
 }
