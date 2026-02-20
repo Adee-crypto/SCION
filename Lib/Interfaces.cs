@@ -1,26 +1,23 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Sprint2;
-using System;
 using System.Collections.Generic;
-using static Sprint2.Sprites.PlayerSprite;
+using Sprint2;
 
 namespace Interfaces;
 
 public interface IDrawableObject
 {
-    public void Draw(SpriteBatch spriteBatch);
+    void Draw(SpriteBatch spriteBatch);
 }
 
 public interface IUpdatable
 {
-    public void Update(GameTime gameTime);
+    void Update(GameTime gameTime);
 }
 
 public interface IUpdatableObject
 {
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects);
+    void Update(GameTime gameTime, IEnumerable<Rectangle> objects);
 }
 
 public interface IPhysicsObject
@@ -31,37 +28,42 @@ public interface IPhysicsObject
 
 public interface IController
 {
-    public bool IsPaused { get; set; } 
-    public void Update();
+    bool IsPaused { get; set; } 
+    void Update();
 }
 
 public interface IMouseController : IController
 {
-    public bool IsLeftClick();
+    bool IsLeftClick();
 
-    public bool IsRightClick();
+    bool IsRightClick();
 }
 
 public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject
 {
-    public void Reset();
+    void Reset();
 
-    public void Move(int index);
+    void Move(int index);
 
-    public void MoveLeft();
+    void MoveLeft();
 
-    public void MoveRight();
+    void MoveRight();
 
-    public void Jump();
+    void Jump();
 
-    public void BreakBlock();
+    void BreakBlock();
 
-    public void PlantSeed();
+    void PlantSeed();
 
-    public void Attack();
+    void Attack();
 }
 
-internal interface ISprite : IDrawableObject, IUpdatable
+public interface IProjectile : IDrawableObject, IUpdatableObject, IPhysicsObject
 {
-    public void SetFrames(PlayerUtil.PlayerAction linkAction, Vector2 direction, Vector2 velocity);
+    bool IsAlive { get; }
+}
+
+internal interface IPlayerSprite : IDrawableObject, IUpdatable
+{
+    void SetFrames(PlayerUtil.PlayerAction linkAction, Vector2 direction, Vector2 velocity);
 }

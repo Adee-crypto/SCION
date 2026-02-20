@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Sprint2.Sprites;
 
-public class PlayerSprite : ISprite
+public class PlayerSprite : IPlayerSprite
 {
     private PlayerUtil.PlayerAnimation currentState;
     private Rectangle[] frames;
