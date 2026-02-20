@@ -20,7 +20,7 @@ public static class CommandUtil
             {new[] {Keys.Right, Keys.D}, () => game.player0.MoveRight()},
             {new[] {Keys.Up, Keys.W}, () => game.player0.Jump()},
             {new[] {Keys.Z, Keys.N}, () => game.player0.Attack()},
-            {new[] {Keys.Down, Keys.S}, () => game.player0.BreakBlock()} // test
+            {new[] {Keys.Down, Keys.S}, () => game.player0.BreakBlock()}
         };
         tapKeyCommandBindings = new()
         {
@@ -53,7 +53,7 @@ public static class PlayerUtil
         LeftFalling,
         RightFalling
     };
-
+    public const float breakDuration = 2f;
     public const int hitboxSize = 16;
     public const float secondsPerFrame = 0.2f;
     public const float horizontalSpeed = 150f;

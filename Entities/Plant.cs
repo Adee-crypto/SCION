@@ -82,35 +82,25 @@ public class Plant(Plant.Species species, (int, int) root)
         };
     }
 
-    /// 
-
-    public (int, int)? FindClosestCellBelow(Vector2 bottomCenter)
+    public (int, int)? FindCellBelow(Vector2 bottomCenter)
     {
         int gridX = (int)(bottomCenter.X / PlantUtil.cellWidth);
         int gridY = (int)(bottomCenter.Y / PlantUtil.cellWidth);
 
-        (int, int)? closestCell = null;
-        int bestDist = int.MaxValue;
+        (int, int)? cellBelow = null;
 
         foreach ((int cellX, int cellY) in stem_cells)
         {
-            if (cellX == gridX && cellY >= gridY)
+            if (cellX == gridX && cellY == gridY)
             {
-                int dist = cellY - gridY;
-                if (dist < bestDist)
-                {
-                    bestDist = dist;
-                    closestCell = (cellX, cellY);
-                }
+                cellBelow = (cellX, cellY);
             }
         }
-        return closestCell;
+        return cellBelow;
     }
 
     public void RemoveBlock(int cellX, int cellY)
     {
         stem_cells.Remove((cellX, cellY));
     }
-
-    ///
 }

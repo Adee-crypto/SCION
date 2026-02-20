@@ -21,14 +21,12 @@ public class Player : IPlayer
     /// 
 
     private float breakTimer = 0f;
-    private const float breakDuration = 2f;
     private bool isBreakabke = false;
     public bool IsBreakable
     {
         get => isBreakabke;
         set { isBreakabke = value;}
     }
-
 
     ///
 
@@ -114,7 +112,7 @@ public class Player : IPlayer
         if (playerAction == PlayerUtil.PlayerAction.BreakBlock)
         {
             breakTimer += time;
-            if (breakTimer >= breakDuration)
+            if (breakTimer >= PlayerUtil.breakDuration)
             {
                 breakTimer = 0f;
                 isBreakabke = true;

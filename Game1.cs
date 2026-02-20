@@ -105,17 +105,13 @@ public class Game1 : Game
 
             player0.Update(gameTime, objects);
 
-            ///
-
             if (player0.IsBreakable)
             {
-                player0.IsBreakable = false;
                 Vector2 bottomCenter = new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom);
-                var cell = testPlant.FindClosestCellBelow(bottomCenter);
+                var cell = testPlant.FindCellBelow(bottomCenter);
                 if (cell.HasValue) testPlant.RemoveBlock(cell.Value.Item1, cell.Value.Item2);
+                player0.IsBreakable = false;
             }
-
-            ///
 
             testPlant.Update(gameTime);
 
