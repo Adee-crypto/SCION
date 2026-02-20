@@ -77,15 +77,14 @@ public class Player : IPlayer
 
         Vector2 movement = Vector2.Zero;
         if (velocity.X != 0) movement.X = velocity.X * time;
-        isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
-        if (isGrounded && velocity.Y >= 0)
-            velocity.Y = 0;        
-        else
+        if (velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
+        if (!isGrounded)
         {
             movement.Y = 0.5f * (2f * velocity.Y + PlayerUtil.gravity * time) * time;
             velocity.Y += PlayerUtil.gravity * time;
         }
-        Collisions.ManageCollision(this, objects, movement, ref isGrounded, ref velocity);
+        else velocity.Y = 0;
+        Collisions.ManageCollision(this, objects, movement, ref velocity);
 
         playerSprite.Position = position;
         playerSprite.SetFrames(playerAction, direction, velocity);
