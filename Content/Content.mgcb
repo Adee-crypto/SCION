@@ -50,6 +50,7 @@
 /build:Link.png
 
 #begin NukeProjectile.png
+#begin plant.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -59,7 +60,11 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+
 /build:NukeProjectile.png
+
+/build:plant.png
+
 
 #begin ResetButton.png
 /importer:TextureImporter
