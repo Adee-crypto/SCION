@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Sprites;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sprint2;
 
@@ -17,10 +19,11 @@ public class Player : IPlayer
     private Vector2 direction;
     private Vector2 velocity;
     private bool isGrounded;
-    private bool isBreakable;
+    public bool IsBreakable {get; set;}
     private float breakTimer;
     public Vector2 AimDirection => aimer.Direction;
     public Vector2 Center => center;
+    private Plant.Species[] seeds;
 
     public Player()
     {
@@ -37,14 +40,9 @@ public class Player : IPlayer
         direction = new Vector2(1, 0);
         velocity = Vector2.Zero;
         isGrounded = false;
-        isBreakable = false;
+        IsBreakable = false;
         breakTimer = 0f;
-    }
-
-    public bool IsBreakable
-    {
-        get => isBreakable;
-        set { isBreakable = value; }
+        seeds = [.. Enum.GetValues<Plant.Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
     }
 
     public Vector2 Position
@@ -110,7 +108,7 @@ public class Player : IPlayer
             if (breakTimer >= PlayerUtil.breakDuration)
             {
                 breakTimer = 0f;
-                isBreakable = true;
+                IsBreakable = true;
             }
         }
         else breakTimer = 0f;
@@ -121,6 +119,12 @@ public class Player : IPlayer
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        //Draw seeds
+        for (int i = 0; i < seeds.Length; i++)
+        {
+            spriteBatch.Draw(PlantUtil.spritesheet, position + new Vector2(0, - i*16), PlantUtil.SeedSpriteRects[seeds[i]], Color.White);
+        }
+
         playerSprite.Draw(spriteBatch);
         aimer?.Draw(spriteBatch, center);
     }

@@ -6,33 +6,17 @@ using System;
 
 namespace Sprint2;
 
-public class Projectile : IProjectile
+public class Projectile(ProjectileDef type, Vector2 initialPosition, Vector2 initialVelocity) : IProjectile
 {
-    private readonly ProjectileDef def;
-    private Vector2 position;
-    private Vector2 velocity;
-    private float angle;
+    private readonly ProjectileDef def = type;
+    public Vector2 Position { get; set; } = initialPosition;
+    private Vector2 velocity = initialVelocity;
+    private float angle = MathF.Atan2(initialVelocity.Y, initialVelocity.X);
 
-    private float age;
+    private float age = 0f;
     public bool IsAlive { get; private set; } = true;
 
-    public Projectile(ProjectileDef type, Vector2 initialPosition, Vector2 initialVelocity)
-    {
-        def = type;
-        position = initialPosition;
-        velocity = initialVelocity;
-        age = 0f;
-
-        angle = MathF.Atan2(initialVelocity.Y, initialVelocity.X);
-    }
-
-    public Vector2 Position
-    {
-        get => position;
-        set => position = value;
-    }
-
-    public Rectangle Hitbox => new Rectangle((int)(position.X - def.Size.X / 2f), (int)(position.Y - def.Size.Y / 2f), (int)def.Size.X, (int)def.Size.Y);
+    public Rectangle Hitbox => new((int)(Position.X - def.Size.X / 2f), (int)(Position.Y - def.Size.Y / 2f), (int)def.Size.X, (int)def.Size.Y);
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
@@ -48,7 +32,7 @@ public class Projectile : IProjectile
         }
 
         velocity += new Vector2(0f, def.Gravity) * time;
-        position += velocity * time;
+        Position += velocity * time;
 
         if (velocity.LengthSquared() > 0.0001f)
         {
@@ -71,6 +55,6 @@ public class Projectile : IProjectile
     public void Draw(SpriteBatch spriteBatch)
     {
         if (!IsAlive) return;
-        spriteBatch.Draw(def.Texture, position, null, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
+        spriteBatch.Draw(def.Texture, Position, null, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
     }
 }

@@ -95,6 +95,13 @@ public static class PlantUtil
         { Plant.Species.pineapple, new (2*cellWidth, 11*cellWidth, cellWidth, cellWidth) },
     };
 
+    public static Dictionary<Plant.Species, Rectangle> SeedSpriteRects = new()
+    {
+        { Plant.Species.grass, new (3*cellWidth, 16*cellWidth, cellWidth, cellWidth) },
+        { Plant.Species.apple, new (9*cellWidth, 16*cellWidth, cellWidth, cellWidth) },
+        { Plant.Species.pineapple, new (2*cellWidth, 16*cellWidth, cellWidth, cellWidth) },
+    };
+
     public static Dictionary<Plant.Species, float> SpeciesGrowTimes = new()
     {
         { Plant.Species.grass, 0.2f },

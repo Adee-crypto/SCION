@@ -5,19 +5,12 @@ using System.Collections.Generic;
 
 namespace Sprint2;
 
-public class ProjectileManager : IDrawableObject, IUpdatableObject
+public class ProjectileManager(IMouseController mouse, Player player, ProjectileDef def) : IDrawableObject, IUpdatableObject
 {
-    private readonly IMouseController mouse;
-    private readonly Player player;
+    private readonly IMouseController mouse = mouse;
+    private readonly Player player = player;
     private readonly List<IProjectile> projectiles = new();
-    private readonly ProjectileDef def;
-
-    public ProjectileManager(IMouseController mouse, Player player, ProjectileDef def)
-    {
-        this.mouse = mouse;
-        this.player = player;
-        this.def = def;
-    }
+    private readonly ProjectileDef def = def;
 
     public void Reset()
     {
