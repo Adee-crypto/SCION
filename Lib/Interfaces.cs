@@ -59,7 +59,9 @@ public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject, IA
 
     void Damaged();
 
-    void UpdateHP(bool isDamaged, float time);
+    void UpdateHealth(bool isDamaged, float time);
+
+    void UpdateBreakBlock(float time);
 }
 
 public interface IAim
@@ -74,5 +76,5 @@ public interface IProjectile : IDrawableObject, IUpdatableObject, IPhysicsObject
 
 internal interface IPlayerSprite : IDrawableObject, IUpdatable
 {
-    void SetFrames(PlayerUtil.PlayerState linkAction, Vector2 direction, Vector2 velocity);
+    void SetFrames(PlayerUtil.PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);
 }

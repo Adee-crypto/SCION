@@ -11,8 +11,8 @@ public class PlayerSprite : IPlayerSprite
     private Rectangle[] frames;
     private int currentFrameIndex;
     private double timeSinceLastFrame;
+    private Color color;
     public Vector2 Position {get;set;}
-    public bool Isdamaged {get;set;}
 
     public PlayerSprite()
     {
@@ -20,10 +20,12 @@ public class PlayerSprite : IPlayerSprite
         frames = PlayerUtil.framesMap[PlayerUtil.PlayerAnimation.RightFacing];
         currentFrameIndex = 0;
         timeSinceLastFrame = 0;
+        color = Color.White;
     }
 
-    public void SetFrames(PlayerUtil.PlayerState state, Vector2 direction, Vector2 velocity)
+    public void SetFrames(PlayerUtil.PlayerState state, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
+        color = isDamaged ? Color.Red : Color.White;
         PlayerUtil.PlayerAnimation newState;
 
         if (state == PlayerUtil.PlayerState.None)
@@ -68,8 +70,6 @@ public class PlayerSprite : IPlayerSprite
     }
 
     public void Draw(SpriteBatch spriteBatch) {
-        Color playerColor = Color.White;
-        if (Isdamaged) playerColor = Color.Red;
-        spriteBatch.Draw(PlayerUtil.playerTexture, Position, frames[currentFrameIndex], playerColor);
+        spriteBatch.Draw(PlayerUtil.playerTexture, Position, frames[currentFrameIndex], color);
     }
 }

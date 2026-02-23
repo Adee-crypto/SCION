@@ -171,7 +171,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
         Collisions.ManageCollision(this, objects, movement, ref velocity);
 
         enemySprite.Position = position;
-        enemySprite.SetFrames(enemyAction, direction, velocity);
+        enemySprite.SetFrames(enemyAction, direction, velocity, false);
         enemySprite.Update(gameTime);
 
         center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
