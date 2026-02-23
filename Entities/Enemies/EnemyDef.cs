@@ -3,24 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Sprint2;
 
-public class EnemyDef
+public class EnemyDef(string enemyID, Texture2D enemyTexture, float enemySpeed = 100f, float enemyGravity = 98f, float enemyPatrolDistance = 128f, float enemyViewDistance = 160f, float enemyAttackRange = 4f)
 {
-    public string Id { get; }
-    public Texture2D Texture { get; }
-    public float Gravity { get; }
-    public float Speed { get; }
-    public float PatrolDistance { get; }
-    public float ViewDistance { get; }
-    public float AttackRange { get; }
-
-    public EnemyDef(string enemyID, Texture2D enemyTexture, float enemySpeed = 100f, float enemyGravity = 98f, float enemyPatrolDistance = 128f, float enemyViewDistance = 160f, float enemyAttackRange = 4f)
-    {
-        Id = enemyID;
-        Texture = enemyTexture;
-        Speed = enemySpeed;
-        Gravity = enemyGravity;
-        PatrolDistance = enemyPatrolDistance;
-        ViewDistance = enemyViewDistance;
-        AttackRange = enemyAttackRange;
-    }
+    public string Id { get; } = enemyID;
+    public Texture2D Texture { get; } = enemyTexture;
+    public float Gravity { get; } = enemyGravity;
+    public float Speed { get; } = enemySpeed;
+    public float PatrolDistance { get; } = enemyPatrolDistance;
+    public float ViewDistance { get; } = enemyViewDistance;
+    public float AttackRange { get; } = enemyAttackRange;
 }
