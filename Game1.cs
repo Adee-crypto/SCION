@@ -84,6 +84,7 @@ public class Game1 : Game
         // projectileDef = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 5f, 200f, 98f);
 
         enemyDef = new EnemyDef("Void Spawn", PlayerUtil.playerTexture, 100f, 98f, 128f, 160f, 8f);
+        ProjectileUtil.SetProjectileDefs();
         projectileManager = new ProjectileManager(mouseController, player0);
         enemyManager = new EnemyManager();
         enemyManager.Spawn(enemyDef, new Vector2(50, 16));
@@ -118,8 +119,8 @@ public class Game1 : Game
             objects.AddRange(testPlant.GetPlantObjects());
             objects.AddRange(platforms.Select(p => p.Bounds));
 
+            projectileManager.Update(gameTime, objects); //MUST BE CALLED BEFORE PLAYER UPDATE TO GET VELOCITY
             player0.Update(gameTime, objects);
-            projectileManager.Update(gameTime, objects);
             enemyManager.Update(gameTime, objects, player0);
 
             if (player0.IsBreakable)

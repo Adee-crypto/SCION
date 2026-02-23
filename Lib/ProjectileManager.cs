@@ -28,13 +28,12 @@ public class ProjectileManager(IMouseController mouse, Player player) : IDrawabl
             {
                 direction.Normalize();
 
-                Plant.Species seedType = player.Seeds[0];
+                Plant.Species seedSpecies = player.Seeds[0];
                 player.Seeds.RemoveAt(0);
-
-                ProjectileDef def = new(seedType.ToString() + " seed", PlantUtil.spritesheet, PlantUtil.SeedSpriteRects[seedType], new Vector2(16, 16));
+                ProjectileDef def = ProjectileUtil.projectileDefs[seedSpecies];
 
                 Vector2 spawnPos = player.Center + direction * 12f;
-                Vector2 initialVelocity = direction * def.LaunchSpeed;
+                Vector2 initialVelocity = direction * def.LaunchSpeed + player.velocity;
 
                 projectiles.Add(new Projectile(def, spawnPos, initialVelocity));   
             }
