@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+namespace Advait;
+
 public abstract class Plant : IPlantable
 {
     protected Texture2D texture;

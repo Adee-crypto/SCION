@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Util;
 using System;
 
-namespace Sprint2;
+namespace Sprint2.Entities;
 
 public class Aimer(float distanceFromPlayer = 20f)
 {
@@ -24,8 +25,8 @@ public class Aimer(float distanceFromPlayer = 20f)
     public void Draw(SpriteBatch spriteBatch, Vector2 playerCenter)
     {
         Vector2 position = playerCenter + Direction * DistanceFromPlayer;
-        Vector2 origin = new (0, PlayerUtil.arrowTexture.Height / 2f);
+        Vector2 origin = new (0, Assets.arrowTexture.Height / 2f);
 
-        spriteBatch.Draw(PlayerUtil.arrowTexture, position, null, Color.White, Angle, origin, 1f, SpriteEffects.None, 0f);
+        spriteBatch.Draw(Assets.arrowTexture, position, null, Color.White, Angle, origin, 1f, SpriteEffects.None, 0f);
     }
 }

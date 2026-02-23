@@ -3,8 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Sprint2.Controllers;
 using Sprint2.UI;
+using Sprint2.Util;
 using Interfaces;
 using System.Linq;
+using Sprint2.Entities;
+using Sprint2.Entities.Enemies;
+using Sprint2.Entities.Plants;
+// using Sprint2.Entities.Plants;
 
 
 namespace Sprint2;
@@ -23,7 +28,7 @@ public class Game1 : Game
 
     private PauseMenu pauseMenu;
 
-    public Player player0;
+    public Player player0 {get; private set;}
     private List<Rectangle> objects;
     private List<Platform> platforms;
     private ProjectileManager projectileManager;
@@ -39,7 +44,7 @@ public class Game1 : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
 
-        screenSize = ScreenUtil.defaultScreenSize;
+        screenSize = Consts.defaultScreenSize;
         _graphics.PreferredBackBufferWidth = screenSize.w;
         _graphics.PreferredBackBufferHeight = screenSize.h;
         _graphics.ApplyChanges();
@@ -51,38 +56,40 @@ public class Game1 : Game
 
         keyboardController = new KeyBoardController();
         mouseController = new MouseController();
-        CommandUtil.AttachCommandBindings(this);
-
+        
         player0 = new Player();
 
         base.Initialize();
         ResetLevel();
+
+        //Requires all (most) fields of Game1 to be initialized first
+        KeyBindings.AttachKeyBindings(this);
     }
 
     protected override void LoadContent()
     {
         //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
-        PlayerUtil.playerTexture = Content.Load<Texture2D>("Link");
-        PlayerUtil.arrowTexture = Content.Load<Texture2D>("AimerArrow");
-        PlantUtil.spritesheet = Content.Load<Texture2D>("testsheet");
-        PlatformUtil.spritesheet = Content.Load<Texture2D>("testsheet");
-        UIUtil.buttonTexture = Content.Load<Texture2D>("DefaultButton");
-        UIUtil.resetTexture = Content.Load<Texture2D>("ResetButton");
-        UIUtil.uiFont = Content.Load<SpriteFont>("UIFont");
-        pauseMenu = new PauseMenu(UIUtil.uiFont, GraphicsDevice);
+        Assets.playerTexture = Content.Load<Texture2D>("Link");
+        Assets.arrowTexture = Content.Load<Texture2D>("AimerArrow");
+        Assets.plantSpritesheet = Content.Load<Texture2D>("testsheet");
+        Assets.platformSpritesheet = Content.Load<Texture2D>("testsheet");
+        Assets.buttonTexture = Content.Load<Texture2D>("DefaultButton");
+        Assets.resetTexture = Content.Load<Texture2D>("ResetButton");
+        Assets.uiFont = Content.Load<SpriteFont>("UIFont");
+        pauseMenu = new PauseMenu(Assets.uiFont, GraphicsDevice);
 
         Vector2 resumePosition = new(screenSize.w / 2 - 100, screenSize.h / 2 - 60);
         Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
         Vector2 resetPosition = new(16, 16);
 
-        pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Resume", () => TogglePause(), new Vector2(200, 50), resumePosition));
-        pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
-        pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
+        pauseMenu.AddButton(new Button(Assets.uiFont, Assets.buttonTexture, "Resume", TogglePause, new Vector2(200, 50), resumePosition));
+        pauseMenu.AddButton(new Button(Assets.uiFont, Assets.buttonTexture, "Quit", Exit, new Vector2(200, 50), quitPosition));
+        pauseMenu.AddButton(new Button(Assets.uiFont, Assets.resetTexture, "", ResetLevel, new Vector2(32, 32), resetPosition));
 
         //THIS DEF IS CURRENTLY UNUSED
         // projectileDef = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 5f, 200f, 98f);
 
-        enemyDef = new EnemyDef("Void Spawn", PlayerUtil.playerTexture, 100f, 98f, 128f, 160f, 8f);
+        enemyDef = new EnemyDef("Void Spawn", Assets.playerTexture, 100f, 98f, 128f, 160f, 8f);
         projectileManager = new ProjectileManager(mouseController, player0);
         enemyManager = new EnemyManager();
         enemyManager.Spawn(enemyDef, new Vector2(50, 16));
@@ -96,7 +103,7 @@ public class Game1 : Game
         enemyManager.Reset();
         projectileManager.Reset();
         enemyManager.Spawn(enemyDef, new Vector2(16*40, 16*24));
-        testPlant = new(Plant.Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
+        testPlant = new(Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
         objects = [];
         platforms = [new(Platform.Type.stonebrick, 0, 16*25, 50, 1)];
         isPaused = false;

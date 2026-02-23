@@ -2,9 +2,10 @@ using Interfaces;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Util;
 using System;
 
-namespace Sprint2;
+namespace Sprint2.Entities.Projectiles;
 
 public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 initialVelocity) : IProjectile
 {
@@ -54,6 +55,6 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
     public void Draw(SpriteBatch spriteBatch)
     {
         if (!IsAlive) return;
-        spriteBatch.Draw(PlantUtil.spritesheet, Position, def.SourceRect, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
+        spriteBatch.Draw(Assets.plantSpritesheet, Position, def.SourceRect, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
     }
 }

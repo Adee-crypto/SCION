@@ -1,15 +1,15 @@
 using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.Sprites;
+using Sprint2.Util;
 using System;
 using System.Collections.Generic;
 
-namespace Sprint2;
+namespace Sprint2.Entities.Enemies;
 
 public class Enemy : IDrawableObject, IPhysicsObject
 {
-    private PlayerUtil.PlayerState enemyAction;
+    private PlayerState enemyAction;
     private PlayerSprite enemySprite;
     private Vector2 initialPos;
     private Vector2 position;
@@ -32,7 +32,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
     {
         enemySprite = new PlayerSprite();
         position = initialPos;
-        center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
+        center = position + Consts.playerHitboxSize * Vector2.One * 0.5f;
         direction = new Vector2(1, 0);
         velocity = Vector2.Zero;
         isGrounded = false;
@@ -46,7 +46,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
         set { position = value; enemySprite.Position = value; }
     }
 
-    public Rectangle Hitbox => new((int)position.X, (int)position.Y, PlayerUtil.hitboxSize, PlayerUtil.hitboxSize);
+    public Rectangle Hitbox => new((int)position.X, (int)position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
 
     public void Move(int direction)
     {
@@ -59,13 +59,13 @@ public class Enemy : IDrawableObject, IPhysicsObject
         if (isGrounded)
         {
             isGrounded = false;
-            velocity.Y = PlayerUtil.jumpSpeed;
+            velocity.Y = Consts.playerJumpSpeed;
         }
     }
 
     public void Attack()
     {
-        enemyAction = PlayerUtil.PlayerState.Attack;
+        enemyAction = PlayerState.Attack;
     }
 
     private void PatrolStep()
@@ -174,10 +174,10 @@ public class Enemy : IDrawableObject, IPhysicsObject
         enemySprite.SetFrames(enemyAction, direction, velocity, false);
         enemySprite.Update(gameTime);
 
-        center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
-
+        center = position + Consts.playerHitboxSize * Vector2.One * 0.5f;
+        
         velocity.X = 0;
-        enemyAction = PlayerUtil.PlayerState.None;
+        enemyAction = PlayerState.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)

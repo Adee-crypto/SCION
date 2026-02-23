@@ -2,16 +2,25 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Sprint2.Sprites;
+using Sprint2.Util;
+using Sprint2.Entities.Plants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sprint2;
+namespace Sprint2.Entities;
 
-public class Player : IPlayer
+public enum PlayerState
 {
-    private PlayerUtil.PlayerState playerState;
+    None,
+    Attack,
+    PlantSeed,
+    BreakBlock,
+    Dead
+};
+
+public class Player : IPlayer {
+    private PlayerState playerState;
     private PlayerSprite playerSprite;
     private Vector2 position;
     private Vector2 direction;
@@ -21,14 +30,14 @@ public class Player : IPlayer
     private float damageTimer;
     private float breakTimer;
     private Aimer aimer;
-    public List<Plant.Species> Seeds;
-
     public Vector2 AimDirection => aimer.Direction;
+    public List<Species> Seeds;
+
     private bool IsDamaged { get; set; }
     public bool IsBreakable { get; set; }
     public Vector2 Center
     {
-        get => position + PlayerUtil.hitboxSize * Vector2.One / 2f;
+        get => position + Consts.playerHitboxSize * Vector2.One / 2f;
     }
 
     public Vector2 Position
@@ -39,7 +48,7 @@ public class Player : IPlayer
 
     public Rectangle Hitbox
     {
-        get => new((int)position.X, (int)position.Y, PlayerUtil.hitboxSize, PlayerUtil.hitboxSize);
+        get => new((int)position.X, (int)position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
     }
 
     public Player()
@@ -49,7 +58,7 @@ public class Player : IPlayer
 
     public void Reset()
     {
-        playerState = PlayerUtil.PlayerState.None;
+        playerState = PlayerState.None;
         playerSprite = new PlayerSprite();
         position = new Vector2(16, 16);
         direction = new Vector2(1, 0);
@@ -61,37 +70,37 @@ public class Player : IPlayer
         IsBreakable = false;
         breakTimer = 0f;
         aimer = new Aimer(10f);
-        Seeds = [.. Enum.GetValues<Plant.Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
+        Seeds = [.. Enum.GetValues<Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
     }
 
     public void Move(int direction)
     {
-        if (playerState != PlayerUtil.PlayerState.Dead)
+        if (playerState != PlayerState.Dead)
         {
             this.direction.X = direction;
-            velocity.X = PlayerUtil.horizontalSpeed * direction;
+            velocity.X = Consts.playerXSpeed * direction;
         }
     }
 
     public void Jump()
     {
-        if (isGrounded && playerState != PlayerUtil.PlayerState.Dead)
+        if (isGrounded && playerState != PlayerState.Dead)
         {
             isGrounded = false;
-            velocity.Y = PlayerUtil.jumpSpeed;
+            velocity.Y = Consts.playerJumpSpeed;
         }
     }
 
     public void BreakBlock() 
     {
-        if (isGrounded && velocity.X == 0 && playerState != PlayerUtil.PlayerState.Dead) {
-            playerState = PlayerUtil.PlayerState.BreakBlock;
+        if (isGrounded && velocity.X == 0 && playerState != PlayerState.Dead) {
+            playerState = PlayerState.BreakBlock;
         }
     }
 
     //Add random seed to inventory
     public void GetSeed() {
-        Seeds.Add(Random.Shared.GetItems(Enum.GetValues<Plant.Species>(), 1)[0]);
+        Seeds.Add(Random.Shared.GetItems(Enum.GetValues<Species>(), 1)[0]);
     }
 
     public string ThrowSeed() {
@@ -105,10 +114,7 @@ public class Player : IPlayer
 
     public void Attack()
     {
-        if (playerState != PlayerUtil.PlayerState.Dead)
-        {
-            playerState = PlayerUtil.PlayerState.Attack;
-        }
+        if (playerState != PlayerState.Dead) playerState = PlayerState.Attack;
     }
 
     public void Damaged()
@@ -123,8 +129,8 @@ public class Player : IPlayer
         if (velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
         if (!isGrounded)
         {
-            movement.Y = 0.5f * (2f * velocity.Y + PlayerUtil.gravity * time) * time;
-            velocity.Y += PlayerUtil.gravity * time;
+            movement.Y = 0.5f * (2f * velocity.Y + Consts.playerGravity * time) * time;
+            velocity.Y += Consts.playerGravity * time;
         }
         else velocity.Y = 0;
         Collisions.ManageCollision(this, objects, movement, ref velocity);
@@ -132,10 +138,10 @@ public class Player : IPlayer
 
     public void UpdateBreakBlock(float time)
     {
-        if (playerState == PlayerUtil.PlayerState.BreakBlock)
+        if (playerState == PlayerState.BreakBlock)
         {
             breakTimer += time;
-            if (breakTimer >= PlayerUtil.breakDuration)
+            if (breakTimer >= Consts.breakDuration)
             {
                 breakTimer = 0f;
                 IsBreakable = true;
@@ -155,7 +161,7 @@ public class Player : IPlayer
                 health--;
             }
         }
-        if (health == 0) playerState = PlayerUtil.PlayerState.Dead;
+        if (health == 0) playerState = PlayerState.Dead;
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
@@ -172,7 +178,7 @@ public class Player : IPlayer
         playerSprite.Update(gameTime);
 
         velocity.X = 0;
-        if (playerState != PlayerUtil.PlayerState.Dead) playerState = PlayerUtil.PlayerState.None;
+        if (playerState != PlayerState.Dead) playerState = PlayerState.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -180,7 +186,7 @@ public class Player : IPlayer
         //Draw seed in inventory
         for (int i = 0; i < Seeds.Count; i++)
         {
-            spriteBatch.Draw(PlantUtil.spritesheet, position + new Vector2(0, - (i+1)*16), PlantUtil.SeedSpriteRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(Assets.plantSpritesheet, position + new Vector2(0, - (i+1)*16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
 
         playerSprite.Draw(spriteBatch);

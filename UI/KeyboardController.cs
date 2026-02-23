@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using System;
 using Interfaces;
+using Sprint2.UI;
 
 
 namespace Sprint2.Controllers;
@@ -16,7 +17,7 @@ public class KeyBoardController : IController
 
         //Commands to execute while key held
         if (!IsPaused) {
-            foreach ((Keys[] keySet, Action command) in CommandUtil.holdKeyCommandBindings) {
+            foreach ((Keys[] keySet, Action command) in KeyBindings.holdKeyBindings) {
                 foreach (Keys key in keySet){
                     if (currentKeyboardState.IsKeyDown(key)) {
                         command();
@@ -26,7 +27,7 @@ public class KeyBoardController : IController
         }
 
         //Comands to execute on key press
-        foreach ((Keys[] keySet, Action command) in CommandUtil.tapKeyCommandBindings) {
+        foreach ((Keys[] keySet, Action command) in KeyBindings.tapKeyBindings) {
             foreach (Keys key in keySet) {
                 if (currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key)) {
                     command();
