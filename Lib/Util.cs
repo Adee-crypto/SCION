@@ -76,7 +76,8 @@ public static class PlayerUtil
         { PlayerAnimation.RightAttack, [new(0, 32, 16, 16)]},
         { PlayerAnimation.LeftFalling, [new(48, 0, 16, 16)] },
         { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] },
-        { PlayerAnimation.BlockBreaking, [new(16, 80, 16, 16)] }
+        { PlayerAnimation.BlockBreaking, [new(16, 80, 16, 16)] },
+        { PlayerAnimation.Dead, [new(0, 80, 16, 16)]}
     };
 }
 
