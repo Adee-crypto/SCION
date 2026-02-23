@@ -23,7 +23,7 @@ public class Player : IPlayer
     private float breakTimer;
     public Vector2 AimDirection => aimer.Direction;
     public Vector2 Center => center;
-    private Plant.Species[] seeds;
+    public List<Plant.Species> Seeds;
 
     public Player()
     {
@@ -42,7 +42,7 @@ public class Player : IPlayer
         isGrounded = false;
         IsBreakable = false;
         breakTimer = 0f;
-        seeds = [.. Enum.GetValues<Plant.Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
+        Seeds = [.. Enum.GetValues<Plant.Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
     }
 
     public Vector2 Position
@@ -120,9 +120,9 @@ public class Player : IPlayer
     public void Draw(SpriteBatch spriteBatch)
     {
         //Draw seeds
-        for (int i = 0; i < seeds.Length; i++)
+        for (int i = 0; i < Seeds.Count; i++)
         {
-            spriteBatch.Draw(PlantUtil.spritesheet, position + new Vector2(0, - i*16), PlantUtil.SeedSpriteRects[seeds[i]], Color.White);
+            spriteBatch.Draw(PlantUtil.spritesheet, position + new Vector2(0, - (i+1)*16), PlantUtil.SeedSpriteRects[Seeds[i]], Color.White);
         }
 
         playerSprite.Draw(spriteBatch);

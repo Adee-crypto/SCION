@@ -80,9 +80,11 @@ public class Game1 : Game
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
 
-        projectileDef = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 5f, 200f, 98f);
+        //THIS DEF IS CURRENTLY UNUSED
+        // projectileDef = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 5f, 200f, 98f);
+
         enemyDef = new EnemyDef("Void Spawn", PlayerUtil.playerTexture, 100f, 98f, 128f, 160f, 8f);
-        projectileManager = new ProjectileManager(mouseController, player0, projectileDef);
+        projectileManager = new ProjectileManager(mouseController, player0);
         enemyManager = new EnemyManager();
         enemyManager.Spawn(enemyDef, new Vector2(50, 16));
     }

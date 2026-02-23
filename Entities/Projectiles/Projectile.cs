@@ -16,7 +16,7 @@ public class Projectile(ProjectileDef type, Vector2 initialPosition, Vector2 ini
     private float age = 0f;
     public bool IsAlive { get; private set; } = true;
 
-    public Rectangle Hitbox => new((int)(Position.X - def.Size.X / 2f), (int)(Position.Y - def.Size.Y / 2f), (int)def.Size.X, (int)def.Size.Y);
+    public Rectangle Hitbox => new((int)(Position.X - def.HitBox.X / 2f), (int)(Position.Y - def.HitBox.Y / 2f), (int)def.HitBox.X, (int)def.HitBox.Y);
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
@@ -55,6 +55,6 @@ public class Projectile(ProjectileDef type, Vector2 initialPosition, Vector2 ini
     public void Draw(SpriteBatch spriteBatch)
     {
         if (!IsAlive) return;
-        spriteBatch.Draw(def.Texture, Position, null, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
+        spriteBatch.Draw(def.Texture, Position, def.SourceRect, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
     }
 }

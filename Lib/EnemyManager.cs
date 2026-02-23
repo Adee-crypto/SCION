@@ -7,7 +7,7 @@ namespace Sprint2;
 
 public class EnemyManager : IDrawableObject
 {
-    private readonly List<Enemy> enemies = new();
+    private readonly List<Enemy> enemies = [];
 
     public EnemyManager() {}
 
