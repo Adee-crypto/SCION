@@ -26,7 +26,6 @@ public class Game1 : Game
     public Player player0;
     private List<Rectangle> objects;
     private List<Platform> platforms;
-    private ProjectileDef projectileDef;
     private ProjectileManager projectileManager;
     private EnemyDef enemyDef;
     private EnemyManager enemyManager;
@@ -84,7 +83,6 @@ public class Game1 : Game
         // projectileDef = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 5f, 200f, 98f);
 
         enemyDef = new EnemyDef("Void Spawn", PlayerUtil.playerTexture, 100f, 98f, 128f, 160f, 8f);
-        ProjectileUtil.SetProjectileDefs();
         projectileManager = new ProjectileManager(mouseController, player0);
         enemyManager = new EnemyManager();
         enemyManager.Spawn(enemyDef, new Vector2(50, 16));
@@ -125,7 +123,9 @@ public class Game1 : Game
 
             if (player0.IsBreakable)
             {
-                testPlant.RemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom));
+                if (testPlant.RemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom))) {
+                    player0.GetSeed();
+                }
                 player0.IsBreakable = false;
             }
 

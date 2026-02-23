@@ -17,7 +17,7 @@ public class PlayerSprite : IPlayerSprite
     public PlayerSprite()
     {
         currentState = PlayerUtil.PlayerAnimation.RightFacing;
-        frames = PlayerUtil.GetFrames()[PlayerUtil.PlayerAnimation.RightFacing];
+        frames = PlayerUtil.framesMap[PlayerUtil.PlayerAnimation.RightFacing];
         currentFrameIndex = 0;
         timeSinceLastFrame = 0;
     }
@@ -51,7 +51,7 @@ public class PlayerSprite : IPlayerSprite
         if (currentState != newState)
         {
             currentState = newState;
-            frames = PlayerUtil.GetFrames()[newState];
+            frames = PlayerUtil.framesMap[newState];
             currentFrameIndex = 0;
             timeSinceLastFrame = 0;
         }

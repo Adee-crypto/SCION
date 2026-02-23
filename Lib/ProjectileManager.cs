@@ -20,17 +20,15 @@ public class ProjectileManager(IMouseController mouse, Player player) : IDrawabl
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
 
-        if (mouse.IsLeftClick() && player.Seeds.Count > 0)
-        {
+        if (mouse.IsLeftClick() && player.Seeds.Count > 0) {
             Vector2 direction = player.AimDirection;
 
             if (direction.LengthSquared() > 0.0001f)
             {
                 direction.Normalize();
 
-                Plant.Species seedSpecies = player.Seeds[0];
-                player.Seeds.RemoveAt(0);
-                ProjectileDef def = ProjectileUtil.projectileDefs[seedSpecies];
+                string seedSpecies = player.ThrowSeed();
+                ProjectileDef def =  new(seedSpecies);
 
                 Vector2 spawnPos = player.Center + direction * 12f;
                 Vector2 initialVelocity = direction * def.LaunchSpeed + player.velocity;

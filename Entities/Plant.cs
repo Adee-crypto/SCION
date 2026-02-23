@@ -82,19 +82,23 @@ public class Plant(Plant.Species species, (int, int) root)
         };
     }
 
-    public void RemoveCellBelow(Vector2 bottomCenter)
+    public bool RemoveCellBelow(Vector2 bottomCenter)
     {
         int cellX = (int)(bottomCenter.X / PlantUtil.cellWidth);
         int cellY = (int)(bottomCenter.Y / PlantUtil.cellWidth);
-        if (stem_cells.Contains((cellX, cellY))) stem_cells.Remove((cellX, cellY));
-        else if (stem_cells.Contains((cellX - 1, cellY)) || stem_cells.Contains((cellX + 1, cellY)))
+        if (stem_cells.Contains((cellX, cellY))) {
+            stem_cells.Remove((cellX, cellY));
+            return true;
+        } else if (stem_cells.Contains((cellX - 1, cellY)) || stem_cells.Contains((cellX + 1, cellY)))
         {
-            float leftCenterX = (cellX - 1) * PlantUtil.cellWidth + PlantUtil.cellWidth / 2f;
-            float rightCenterX = (cellX + 1) * PlantUtil.cellWidth + PlantUtil.cellWidth / 2f;
+            float leftCenterX = PlantUtil.cellWidth * (cellX - 0.5f);
+            float rightCenterX = PlantUtil.cellWidth * (cellX + 0.5f);
             float leftDist = Math.Abs(bottomCenter.X - leftCenterX);
             float rightDist = Math.Abs(bottomCenter.X - rightCenterX);
             if (leftDist < rightDist) stem_cells.Remove((cellX - 1, cellY));
             else stem_cells.Remove((cellX + 1, cellY));
+            return true;
         }
+        return false;
     }
 }

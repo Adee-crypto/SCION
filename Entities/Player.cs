@@ -79,7 +79,21 @@ public class Player : IPlayer
 
     public void BreakBlock() 
     {
-        if (isGrounded && velocity.X == 0 && playerState != PlayerUtil.PlayerState.Dead) playerState = PlayerUtil.PlayerState.BreakBlock;
+        if (isGrounded && velocity.X == 0 && playerState != PlayerUtil.PlayerState.Dead) {
+            playerState = PlayerUtil.PlayerState.BreakBlock;
+        }
+    }
+
+    //Add random seed to inventory
+    public void GetSeed() {
+        Seeds.Add(Random.Shared.GetItems(Enum.GetValues<Plant.Species>(), 1)[0]);
+    }
+
+    public string ThrowSeed() {
+        //ADD SAFEGUARD FOR EMPTY SEED LIST
+        string seedSpecies = Seeds[0].ToString() + " seed";
+        Seeds.RemoveAt(0);
+        return seedSpecies;
     }
 
     public void PlantSeed() { }
@@ -161,7 +175,7 @@ public class Player : IPlayer
         //Draw seed in inventory
         for (int i = 0; i < Seeds.Count; i++)
         {
-            spriteBatch.Draw(PlantUtil.spritesheet, position + new Vector2(0, - (i+1)*16), PlantUtil.SeedSpriteRects[Seeds[i]], Color.White);
+            spriteBatch.Draw(PlantUtil.spritesheet, position + new Vector2(0, - (i+1)*16), PlantUtil.SeedSpriteRects[Seeds[i]][0], Color.White);
         }
 
         playerSprite.Draw(spriteBatch);

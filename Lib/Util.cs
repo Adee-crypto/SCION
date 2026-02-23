@@ -67,23 +67,17 @@ public static class PlayerUtil
     public static Texture2D playerTexture; // Set in Game1.LoadContent
     public static Texture2D arrowTexture; // Set in Game1.LoadContent
 
-    public static Dictionary<PlayerAnimation, Rectangle[]> GetFrames()
-    {
-        Dictionary<PlayerAnimation, Rectangle[]> framesMap = new()
-        {
-            { PlayerAnimation.LeftFacing, [new (32, 0, 16, 16)] },
-            { PlayerAnimation.LeftRunning, [new(32, 0, 16, 16), new(48, 0, 16, 16)] },
-            { PlayerAnimation.RightFacing, [new (0, 0, 16, 16)] },
-            { PlayerAnimation.RightRunning, [new(0, 0, 16, 16), new(16, 0, 16, 16)] },
-            { PlayerAnimation.LeftAttack, [new(16, 32, 16, 16)]},
-            { PlayerAnimation.RightAttack, [new(0, 32, 16, 16)]},
-            { PlayerAnimation.LeftFalling, [new(48, 0, 16, 16)] },
-            { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] },
-            { PlayerAnimation.BlockBreaking, [new(16, 80, 16, 16)] },
-            { PlayerAnimation.Dead, [new(0, 80, 16, 16)]}
-        };
-        return framesMap;
-    }
+    public static Dictionary<PlayerAnimation, Rectangle[]> framesMap = new() {
+        { PlayerAnimation.LeftFacing, [new (32, 0, 16, 16)] },
+        { PlayerAnimation.LeftRunning, [new(32, 0, 16, 16), new(48, 0, 16, 16)] },
+        { PlayerAnimation.RightFacing, [new (0, 0, 16, 16)] },
+        { PlayerAnimation.RightRunning, [new(0, 0, 16, 16), new(16, 0, 16, 16)] },
+        { PlayerAnimation.LeftAttack, [new(16, 32, 16, 16)]},
+        { PlayerAnimation.RightAttack, [new(0, 32, 16, 16)]},
+        { PlayerAnimation.LeftFalling, [new(48, 0, 16, 16)] },
+        { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] },
+        { PlayerAnimation.BlockBreaking, [new(16, 80, 16, 16)] }
+    };
 }
 
 public static class PlantUtil 
@@ -99,11 +93,11 @@ public static class PlantUtil
         { Plant.Species.pineapple, new (2*cellWidth, 11*cellWidth, cellWidth, cellWidth) },
     };
 
-    public static Dictionary<Plant.Species, Rectangle> SeedSpriteRects = new()
+    public static Dictionary<Plant.Species, Rectangle[]> SeedSpriteRects = new()
     {
-        { Plant.Species.grass, new (3*cellWidth, 16*cellWidth, cellWidth, cellWidth) },
-        { Plant.Species.apple, new (9*cellWidth, 16*cellWidth, cellWidth, cellWidth) },
-        { Plant.Species.pineapple, new (2*cellWidth, 16*cellWidth, cellWidth, cellWidth) },
+        { Plant.Species.grass, [new (6*cellWidth, 16*cellWidth, cellWidth, cellWidth), new (7*cellWidth, 16*cellWidth, cellWidth, cellWidth)] },
+        { Plant.Species.apple, [new (9*cellWidth, 16*cellWidth, cellWidth, cellWidth), new (8*cellWidth, 16*cellWidth, cellWidth, cellWidth)] },
+        { Plant.Species.pineapple, [new (2*cellWidth, 16*cellWidth, cellWidth, cellWidth), new (4*cellWidth, 16*cellWidth, cellWidth, cellWidth)] },
     };
 
     public static Dictionary<Plant.Species, float> SpeciesGrowTimes = new()
@@ -152,12 +146,11 @@ public static class ScreenUtil {
 }
 
 public static class ProjectileUtil {
-    public static Dictionary<Plant.Species, ProjectileDef> projectileDefs = [];
-
-    public static void SetProjectileDefs() {
-        foreach (Plant.Species species in Enum.GetValues<Plant.Species>()) {
-            ProjectileDef def = new(species.ToString() + " seed", PlantUtil.spritesheet, PlantUtil.SeedSpriteRects[species], new Vector2(16, 16));
-            projectileDefs[species] = def;
-        }
-    }
+    static int cellWidth = PlantUtil.cellWidth; //TODO make this not duplicate
+    public static Dictionary<string, Rectangle[]> projectileFrames = new()
+    {
+        { "grass seed", [new (6*cellWidth, 16*cellWidth, cellWidth, cellWidth), new (7*cellWidth, 16*cellWidth, cellWidth, cellWidth)] },
+        { "apple seed", [new (9*cellWidth, 16*cellWidth, cellWidth, cellWidth), new (8*cellWidth, 16*cellWidth, cellWidth, cellWidth)] },
+        { "pineapple seed", [new (2*cellWidth, 16*cellWidth, cellWidth, cellWidth), new (4*cellWidth, 16*cellWidth, cellWidth, cellWidth)] },
+    };
 }
