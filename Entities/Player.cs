@@ -11,7 +11,7 @@ namespace Sprint2;
 
 public class Player : IPlayer
 {
-    private PlayerUtil.PlayerAction playerAction;
+    private PlayerUtil.PlayerState playerState;
     private PlayerSprite playerSprite;
     private Aimer aimer;
     private Vector2 position;
@@ -19,6 +19,9 @@ public class Player : IPlayer
     private Vector2 direction;
     private Vector2 velocity;
     private bool isGrounded;
+    private int hp;
+    private bool IsDamaged {get; set;}
+    private float damageTimer;
     public bool IsBreakable {get; set;}
     private float breakTimer;
     public Vector2 AimDirection => aimer.Direction;
@@ -32,7 +35,7 @@ public class Player : IPlayer
 
     public void Reset()
     {
-        playerAction = PlayerUtil.PlayerAction.None;
+        playerState = PlayerUtil.PlayerState.None;
         playerSprite = new PlayerSprite();
         aimer = new Aimer(10f);
         position = new Vector2(16, 16);
@@ -40,6 +43,9 @@ public class Player : IPlayer
         direction = new Vector2(1, 0);
         velocity = Vector2.Zero;
         isGrounded = false;
+        hp = 5;
+        IsDamaged = false;
+        damageTimer = 0f;
         IsBreakable = false;
         breakTimer = 0f;
         Seeds = [.. Enum.GetValues<Plant.Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
@@ -55,13 +61,16 @@ public class Player : IPlayer
 
     public void Move(int direction)
     {
-        this.direction.X = direction;
-        velocity.X = PlayerUtil.horizontalSpeed * direction;
+        if (playerState != PlayerUtil.PlayerState.Dead)
+        {
+            this.direction.X = direction;
+            velocity.X = PlayerUtil.horizontalSpeed * direction;
+        }
     }
 
     public void Jump()
     {
-        if (isGrounded)
+        if (isGrounded && playerState != PlayerUtil.PlayerState.Dead)
         {
             isGrounded = false;
             velocity.Y = PlayerUtil.jumpSpeed;
@@ -70,51 +79,81 @@ public class Player : IPlayer
 
     public void BreakBlock() 
     {
-        if (isGrounded && velocity.X == 0) playerAction = PlayerUtil.PlayerAction.BreakBlock;
+        if (isGrounded && velocity.X == 0 && playerState != PlayerUtil.PlayerState.Dead) playerState = PlayerUtil.PlayerState.BreakBlock;
     }
 
     public void PlantSeed() { }
 
     public void Attack()
     {
-        playerAction = PlayerUtil.PlayerAction.Attack;
+        if (playerState != PlayerUtil.PlayerState.Dead) playerState = PlayerUtil.PlayerState.Attack;
+    }
+
+    public void Damaged()
+    {
+        IsDamaged = !IsDamaged; // Key.E to toggle for sprint2
+    }
+
+    public void UpdateHP(bool isDamaged, float time)
+    {
+        if (isDamaged)
+        {
+            damageTimer += time;
+            if (damageTimer >= 1)
+            {
+                damageTimer = 0f;
+                hp--;
+            }
+        }
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
-        float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        Vector2 movement = Vector2.Zero;
-        if (velocity.X != 0) movement.X = velocity.X * time;
-        if (velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
-        if (!isGrounded)
+        if (playerState != PlayerUtil.PlayerState.Dead)
         {
-            movement.Y = 0.5f * (2f * velocity.Y + PlayerUtil.gravity * time) * time;
-            velocity.Y += PlayerUtil.gravity * time;
-        }
-        else velocity.Y = 0;
-        Collisions.ManageCollision(this, objects, movement, ref velocity);
+            float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        playerSprite.Position = position;
-        playerSprite.SetFrames(playerAction, direction, velocity);
-        playerSprite.Update(gameTime);
-
-        center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
-        aimer?.Update(center, Mouse.GetState());
-
-        if (playerAction == PlayerUtil.PlayerAction.BreakBlock)
-        {
-            breakTimer += time;
-            if (breakTimer >= PlayerUtil.breakDuration)
+            Vector2 movement = Vector2.Zero;
+            if (velocity.X != 0) movement.X = velocity.X * time;
+            if (velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
+            if (!isGrounded)
             {
-                breakTimer = 0f;
-                IsBreakable = true;
+                movement.Y = 0.5f * (2f * velocity.Y + PlayerUtil.gravity * time) * time;
+                velocity.Y += PlayerUtil.gravity * time;
+            }
+            else velocity.Y = 0;
+            Collisions.ManageCollision(this, objects, movement, ref velocity);
+
+            playerSprite.Isdamaged = IsDamaged;
+            playerSprite.Position = position;
+            playerSprite.SetFrames(playerState, direction, velocity);
+            playerSprite.Update(gameTime);
+
+            center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
+            aimer?.Update(center, Mouse.GetState());
+
+            if (playerState == PlayerUtil.PlayerState.BreakBlock)
+            {
+                breakTimer += time;
+                if (breakTimer >= PlayerUtil.breakDuration)
+                {
+                    breakTimer = 0f;
+                    IsBreakable = true;
+                }
+            }
+            else breakTimer = 0f;
+
+            velocity.X = 0;
+            playerState = PlayerUtil.PlayerState.None;
+
+            UpdateHP(IsDamaged, time);
+            if (hp == 0)
+            {
+                playerState = PlayerUtil.PlayerState.Dead;
+                playerSprite.SetFrames(playerState, direction, velocity);
+                playerSprite.Update(gameTime);
             }
         }
-        else breakTimer = 0f;
-
-        velocity.X = 0;
-        playerAction = PlayerUtil.PlayerAction.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)

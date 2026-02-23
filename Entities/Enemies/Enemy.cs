@@ -9,7 +9,7 @@ namespace Sprint2;
 
 public class Enemy : IDrawableObject, IPhysicsObject
 {
-    private PlayerUtil.PlayerAction enemyAction;
+    private PlayerUtil.PlayerState enemyAction;
     private PlayerSprite enemySprite;
     private Vector2 initialPos;
     private Vector2 position;
@@ -65,7 +65,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
 
     public void Attack()
     {
-        enemyAction = PlayerUtil.PlayerAction.Attack;
+        enemyAction = PlayerUtil.PlayerState.Attack;
     }
 
     private void PatrolStep()
@@ -177,7 +177,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
         center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
 
         velocity.X = 0;
-        enemyAction = PlayerUtil.PlayerAction.None;
+        enemyAction = PlayerUtil.PlayerState.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)

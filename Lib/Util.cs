@@ -27,19 +27,21 @@ public static class CommandUtil
             {new[] {Keys.Escape}, () => game.TogglePause()},
             {new[] {Keys.Q}, () => game.Exit()},
             {new[] {Keys.R}, () => game.ResetLevel()},
-            {new[] {Keys.D2}, () => game.testPlant.ToggleSpecies()} //for testing
+            {new[] {Keys.D2}, () => game.testPlant.ToggleSpecies()}, //for testing
+            {new[] {Keys.E}, () => game.player0.Damaged()}
         };
     }
 }
 
 public static class PlayerUtil
 {
-    public enum PlayerAction
+    public enum PlayerState
     {
         None,
         Attack,
         PlantSeed,
-        BreakBlock 
+        BreakBlock,
+        Dead
     };
 
     public enum PlayerAnimation
@@ -52,7 +54,8 @@ public static class PlayerUtil
         RightAttack,
         LeftFalling,
         RightFalling,
-        BlockBreaking
+        BlockBreaking,
+        Dead
     };
     public const float breakDuration = 1f;
     public const int hitboxSize = 16;
@@ -76,7 +79,8 @@ public static class PlayerUtil
             { PlayerAnimation.RightAttack, [new(0, 32, 16, 16)]},
             { PlayerAnimation.LeftFalling, [new(48, 0, 16, 16)] },
             { PlayerAnimation.RightFalling, [new(16, 0, 16, 16)] },
-            { PlayerAnimation.BlockBreaking, [new(16, 80, 16, 16)] }
+            { PlayerAnimation.BlockBreaking, [new(16, 80, 16, 16)] },
+            { PlayerAnimation.Dead, [new(0, 80, 16, 16)]}
         };
         return framesMap;
     }
