@@ -91,8 +91,8 @@ public class Plant(Plant.Species species, (int, int) root)
             return true;
         } else if (stem_cells.Contains((cellX - 1, cellY)) || stem_cells.Contains((cellX + 1, cellY)))
         {
-            float leftCenterX = (cellX - 1) * PlantUtil.cellWidth + PlantUtil.cellWidth / 2f;
-            float rightCenterX = (cellX + 1) * PlantUtil.cellWidth + PlantUtil.cellWidth / 2f;
+            float leftCenterX = (cellX - 0.5f) * PlantUtil.cellWidth;
+            float rightCenterX = (cellX + 1.5f) * PlantUtil.cellWidth;
             float leftDist = Math.Abs(bottomCenter.X - leftCenterX);
             float rightDist = Math.Abs(bottomCenter.X - rightCenterX);
             if (leftDist < rightDist) stem_cells.Remove((cellX - 1, cellY));
