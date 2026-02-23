@@ -27,7 +27,7 @@ public class ProjectileManager : IDrawableObject, IUpdatableObject
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
 
-        if (mouse.IsLeftClickHeld())
+        if (mouse.IsLeftClick())
         {
             Vector2 direction = player.AimDirection;
 

@@ -26,8 +26,10 @@ public class Game1 : Game
     public Player player0;
     private List<Rectangle> objects;
     private List<Platform> platforms;
-    private ProjectileDef def;
+    private ProjectileDef projectileDef;
     private ProjectileManager projectileManager;
+    private EnemyDef enemyDef;
+    private EnemyManager enemyManager;
 
     //for testing
     public Plant testPlant;
@@ -78,8 +80,11 @@ public class Game1 : Game
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.buttonTexture, "Quit", () => Exit(), new Vector2(200, 50), quitPosition));
         pauseMenu.AddButton(new Button(UIUtil.uiFont, UIUtil.resetTexture, "", () => ResetLevel(), new Vector2(32, 32), resetPosition));
 
-        def = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 5f, 200f, 98f);
-        projectileManager = new ProjectileManager(mouseController, player0, def);
+        projectileDef = new ProjectileDef("Nuke", Content.Load<Texture2D>("NukeProjectile"), new Vector2(12, 29), 5f, 200f, 98f);
+        enemyDef = new EnemyDef("Void Spawn", PlayerUtil.playerTexture, 100f, 98f, 128f, 160f, 8f);
+        projectileManager = new ProjectileManager(mouseController, player0, projectileDef);
+        enemyManager = new EnemyManager();
+        enemyManager.Spawn(enemyDef, new Vector2(50, 16));
     }
 
     public void TogglePause() => isPaused = !isPaused;
@@ -87,10 +92,12 @@ public class Game1 : Game
     public void ResetLevel()
     {
         player0.Reset();
+        enemyManager.Reset();
         projectileManager.Reset();
+        enemyManager.Spawn(enemyDef, new Vector2(16*40, 16*24));
         testPlant = new(Plant.Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
         objects = [];
-        platforms = [new(Platform.Type.stonebrick, 0, 16*25, 40, 1)];
+        platforms = [new(Platform.Type.stonebrick, 0, 16*25, 50, 1)];
         isPaused = false;
     }
 
@@ -111,6 +118,7 @@ public class Game1 : Game
 
             player0.Update(gameTime, objects);
             projectileManager.Update(gameTime, objects);
+            enemyManager.Update(gameTime, objects, player0);
 
             if (player0.IsBreakable)
             {
@@ -134,6 +142,7 @@ public class Game1 : Game
         player0.Draw(spriteBatch);
         testPlant.Draw(spriteBatch);
         projectileManager.Draw(spriteBatch);
+        enemyManager.Draw(spriteBatch);
         platforms.ForEach(p => p.Draw(spriteBatch));
 
         if (isPaused) pauseMenu.Draw(spriteBatch, screenSize);

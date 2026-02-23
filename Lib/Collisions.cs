@@ -6,40 +6,40 @@ namespace Sprint2;
 
 public class Collisions
 {
-    public static void ManageCollision(IPlayer player, IEnumerable<Rectangle> objects, Vector2 movement, ref Vector2 velocity)
+    public static void ManageCollision(IPhysicsObject entity, IEnumerable<Rectangle> objects, Vector2 movement, ref Vector2 velocity)
     {
-        Vector2 currentPosition = player.Position;
+        Vector2 currentPosition = entity.Position;
 
         currentPosition.X += movement.X;
-        player.Position = currentPosition;
+        entity.Position = currentPosition;
         foreach (var obj in objects)
         {
-            if (!player.Hitbox.Intersects(obj)) continue;
-            if (movement.X > 0) currentPosition.X = obj.Left - player.Hitbox.Width;
+            if (!entity.Hitbox.Intersects(obj)) continue;
+            if (movement.X > 0) currentPosition.X = obj.Left - entity.Hitbox.Width;
             else if (movement.X < 0) currentPosition.X = obj.Right;
         }
 
         currentPosition.Y += movement.Y;
-        player.Position = currentPosition;
+        entity.Position = currentPosition;
         foreach (var obj in objects)
         {
-            if (!player.Hitbox.Intersects(obj)) continue;
+            if (!entity.Hitbox.Intersects(obj)) continue;
             if (movement.Y < 0) velocity.Y = 0;
-            currentPosition.Y = (movement.Y < 0) ? obj.Bottom : obj.Top - player.Hitbox.Height;
+            currentPosition.Y = (movement.Y < 0) ? obj.Bottom : obj.Top - entity.Hitbox.Height;
         }
 
-        player.Position = currentPosition;
+        entity.Position = currentPosition;
     }
 
-    public static bool CheckGrounded(IPlayer player, IEnumerable<Rectangle> objects, ref Vector2 movement)
+    public static bool CheckGrounded(IPhysicsObject entity, IEnumerable<Rectangle> objects, ref Vector2 movement)
     {
-        Rectangle onePixelBelow = player.Hitbox;
+        Rectangle onePixelBelow = entity.Hitbox;
         onePixelBelow.Y += 1;
         foreach (var obj in objects)
         {
             if (onePixelBelow.Intersects(obj) && onePixelBelow.Bottom >= obj.Top)
             {
-                movement.Y = obj.Top - player.Hitbox.Bottom;
+                movement.Y = obj.Top - entity.Hitbox.Bottom;
                 return true; 
             }
         }
