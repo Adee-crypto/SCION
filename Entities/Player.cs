@@ -17,7 +17,7 @@ public class Player : IPlayer
     private Vector2 position;
     private Vector2 center;
     private Vector2 direction;
-    private Vector2 velocity;
+    public Vector2 velocity;
     private bool isGrounded;
     public bool IsBreakable {get; set;}
     private float breakTimer;
@@ -99,7 +99,7 @@ public class Player : IPlayer
         playerSprite.SetFrames(playerAction, direction, velocity);
         playerSprite.Update(gameTime);
 
-        center = new Vector2(position.X + PlayerUtil.hitboxSize / 2f, position.Y + PlayerUtil.hitboxSize / 2f);
+        center = position + PlayerUtil.hitboxSize * Vector2.One / 2f;
         aimer?.Update(center, Mouse.GetState());
 
         if (playerAction == PlayerUtil.PlayerAction.BreakBlock)
@@ -119,7 +119,7 @@ public class Player : IPlayer
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        //Draw seeds
+        //Draw seed in inventory
         for (int i = 0; i < Seeds.Count; i++)
         {
             spriteBatch.Draw(PlantUtil.spritesheet, position + new Vector2(0, - (i+1)*16), PlantUtil.SeedSpriteRects[Seeds[i]], Color.White);

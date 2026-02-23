@@ -146,3 +146,14 @@ public static class UIUtil {
 public static class ScreenUtil {
     public static (int w, int h) defaultScreenSize = (1000, 800);
 }
+
+public static class ProjectileUtil {
+    public static Dictionary<Plant.Species, ProjectileDef> projectileDefs = [];
+
+    public static void SetProjectileDefs() {
+        foreach (Plant.Species species in Enum.GetValues<Plant.Species>()) {
+            ProjectileDef def = new(species.ToString() + " seed", PlantUtil.spritesheet, PlantUtil.SeedSpriteRects[species], new Vector2(16, 16));
+            projectileDefs[species] = def;
+        }
+    }
+}
