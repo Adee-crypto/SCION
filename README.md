@@ -30,6 +30,7 @@ Project Starseed is a platformer where the environment is built through organic 
 | **Restart Level** | `R` |
 | **Debug: Force Growth** | `1` (Hold) |
 | **Debug: Cycle Plant Type** | `2` (Tap) |
+| **Debug: Damage Player** | `E` (Hold) |
 
 
 ## 🚀 Getting Started
