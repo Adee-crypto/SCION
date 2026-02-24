@@ -182,6 +182,6 @@ public class Enemy : IDrawableObject, IPhysicsObject
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        enemySprite.Draw(spriteBatch);
+        enemySprite.Draw(spriteBatch, Assets.voidspawnTexture);
     }
 }

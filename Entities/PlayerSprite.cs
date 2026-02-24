@@ -82,7 +82,7 @@ public class PlayerSprite : IPlayerSprite {
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch) {
-        spriteBatch.Draw(Assets.playerTexture, Position, frames[currentFrameIndex], color);
+    public void Draw(SpriteBatch spriteBatch, Texture2D texture) {
+        spriteBatch.Draw(texture, Position, frames[currentFrameIndex], color);
     }
 }

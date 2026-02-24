@@ -76,6 +76,7 @@ public class Game1 : Game
         Assets.buttonTexture = Content.Load<Texture2D>("DefaultButton");
         Assets.resetTexture = Content.Load<Texture2D>("ResetButton");
         Assets.uiFont = Content.Load<SpriteFont>("UIFont");
+        Assets.voidspawnTexture = Content.Load<Texture2D>("VoidSpawn");
         pauseMenu = new PauseMenu(Assets.uiFont, GraphicsDevice);
 
         Vector2 resumePosition = new(screenSize.w / 2 - 100, screenSize.h / 2 - 60);

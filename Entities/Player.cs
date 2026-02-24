@@ -189,7 +189,7 @@ public class Player : IPlayer {
             spriteBatch.Draw(Assets.plantSpritesheet, position + new Vector2(0, - (i+1)*16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
 
-        playerSprite.Draw(spriteBatch);
+        playerSprite.Draw(spriteBatch, Assets.playerTexture);
         aimer?.Draw(spriteBatch, Center);
     }
 }
