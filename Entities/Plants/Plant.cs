@@ -13,7 +13,7 @@ public class Plant(Species species, (int, int) root) {
     private Species species = species;
     private HashSet<(int, int)> bud_cells = [root];
     private HashSet<(int, int)> stem_cells = [];
-    private float timeGrown = 0f;
+    private float timeGrown;
 
     public void Update(GameTime gameTime) {
         if (Keyboard.GetState().IsKeyDown(Keys.D1)) { //FOR TESTING

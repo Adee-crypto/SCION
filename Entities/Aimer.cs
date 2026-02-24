@@ -9,7 +9,7 @@ namespace Sprint2.Entities;
 public class Aimer(float distanceFromPlayer = 20f)
 {
     public Vector2 Direction { get; set; } = new(1, 0); // Default aim to the right
-    public float Angle { get; set; } = 0f; // Angle in radians
+    public float Angle { get; set; } // Angle in radians
     public float DistanceFromPlayer { get; set; } = distanceFromPlayer;
 
     public void Update(Vector2 playerCenter, MouseState mouse)

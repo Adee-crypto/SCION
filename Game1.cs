@@ -19,8 +19,8 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
 
-    private IController keyboardController;
-    private IMouseController mouseController;
+    private KeyBoardController keyboardController;
+    private MouseController mouseController;
     private (int w, int h) screenSize;
 
     private bool isPaused;
@@ -32,7 +32,8 @@ public class Game1 : Game
     private List<Rectangle> objects;
     private List<Platform> platforms;
     private ProjectileManager projectileManager;
-    private EnemyDef enemyDef;
+    private EnemyDef meleeEnemy;
+    private EnemyDef rangedEnemy;
     private EnemyManager enemyManager;
 
     //for testing
@@ -76,7 +77,7 @@ public class Game1 : Game
         Assets.buttonTexture = Content.Load<Texture2D>("DefaultButton");
         Assets.resetTexture = Content.Load<Texture2D>("ResetButton");
         Assets.uiFont = Content.Load<SpriteFont>("UIFont");
-        Assets.voidspawnTexture = Content.Load<Texture2D>("VoidSpawn");
+        Assets.voidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
         pauseMenu = new PauseMenu(Assets.uiFont, GraphicsDevice);
 
         Vector2 resumePosition = new(screenSize.w / 2 - 100, screenSize.h / 2 - 60);
@@ -87,10 +88,9 @@ public class Game1 : Game
         pauseMenu.AddButton(new Button(Assets.uiFont, Assets.buttonTexture, "Quit", Exit, new Vector2(200, 50), quitPosition));
         pauseMenu.AddButton(new Button(Assets.uiFont, Assets.resetTexture, "", ResetLevel, new Vector2(32, 32), resetPosition));
 
-        enemyDef = new EnemyDef("Void Spawn", Assets.playerTexture, 100f, 98f, 128f, 160f, 8f);
+        rangedEnemy = new EnemyDef("Void Spawn", Assets.voidspawnTexture, 100f, 98f, 96f, 128f, 96f);
         projectileManager = new ProjectileManager(mouseController, player0);
         enemyManager = new EnemyManager();
-        enemyManager.Spawn(enemyDef, new Vector2(50, 16));
     }
 
     public void TogglePause() => isPaused = !isPaused;
@@ -100,7 +100,7 @@ public class Game1 : Game
         player0.Reset();
         enemyManager.Reset();
         projectileManager.Reset();
-        enemyManager.Spawn(enemyDef, new Vector2(16*40, 16*24));
+        enemyManager.Spawn(rangedEnemy, new Vector2(16*40, 16*24));
         testPlant = new(Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
         objects = [];
         platforms = [new(Platform.Type.stonebrick, 0, 16*25, 50, 1)];
@@ -124,7 +124,7 @@ public class Game1 : Game
 
             projectileManager.Update(gameTime, objects); //MUST BE CALLED BEFORE PLAYER UPDATE TO GET VELOCITY
             player0.Update(gameTime, objects);
-            enemyManager.Update(gameTime, objects, player0);
+            enemyManager.Update(gameTime, objects, player0, projectileManager);
 
             if (player0.IsBreakable)
             {

@@ -24,6 +24,17 @@ public static class SourceRects
         { State.Dead, [TileSourceRectAt(0, 5)] }
     };
 
+    public static Dictionary<State, Rectangle[]> EnemySourceRects = new()
+    {
+        { State.LeftFacing, [TileSourceRectAt(2, 0)] },
+        { State.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
+        { State.RightFacing, [TileSourceRectAt(0, 0)] },
+        { State.RightRunning, [TileSourceRectAt(0, 0), TileSourceRectAt(1, 0)] },
+        { State.LeftAttack, [TileSourceRectAt(2,0)]},
+        { State.RightAttack, [TileSourceRectAt(0, 0)]},
+        { State.Dead, [TileSourceRectAt(2, 5)] }
+    };
+
     public static Dictionary<Species, Rectangle> SpeciesSourceRects = new()
     {
         { Species.grass, TileSourceRectAt(2, 9) },
@@ -50,5 +61,6 @@ public static class SourceRects
         { "grass seed", [TileSourceRectAt(6, 16), TileSourceRectAt(7, 16)] },
         { "apple seed", [TileSourceRectAt(9, 16), TileSourceRectAt(8, 16)] },
         { "pineapple seed", [TileSourceRectAt(2, 16), TileSourceRectAt(4, 16)] },
+        { "VoidShot", [TileSourceRectAt(2, 16), TileSourceRectAt(4, 16)] }
     };
 }

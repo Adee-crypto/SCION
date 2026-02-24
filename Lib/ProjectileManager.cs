@@ -18,6 +18,11 @@ public class ProjectileManager(IMouseController mouse, Player player) : IDrawabl
         projectiles.Clear();
     }
 
+    public void Spawn(ProjectileDef def, Vector2 spawnPos, Vector2 initialVelocity)
+    {
+        projectiles.Add(new Projectile(def, spawnPos, initialVelocity));
+    }
+
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {
 

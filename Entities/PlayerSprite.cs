@@ -19,7 +19,7 @@ public enum State
     Dead
 };
 
-public class PlayerSprite : IPlayerSprite {
+public class PlayerSprite : IEntitySprite {
     private State currentState;
     private Rectangle[] frames;
     private int currentFrameIndex;
@@ -36,12 +36,12 @@ public class PlayerSprite : IPlayerSprite {
         color = Color.White;
     }
 
-    public void SetFrames(PlayerState playerState, Vector2 direction, Vector2 velocity, bool isDamaged)
+    public void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
         color = isDamaged ? Color.Red : Color.White;
         State newState;
 
-        if (playerState == PlayerState.None)
+        if (linkAction == PlayerState.None)
         {
             if (velocity.Y != 0)
                 newState = direction.X == 1 ? State.RightFalling : State.LeftFalling;
@@ -50,11 +50,11 @@ public class PlayerSprite : IPlayerSprite {
             else
                 newState = direction.X == 1 ? State.RightFacing : State.LeftFacing;
         }
-        else if (playerState == PlayerState.Dead)
+        else if (linkAction == PlayerState.Dead)
         {
             newState = State.Dead;
         }
-        else if (playerState == PlayerState.Attack)
+        else if (linkAction == PlayerState.Attack)
         {
             newState = direction.X == 1 ? State.RightAttack : State.LeftAttack;
         }

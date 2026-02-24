@@ -1,6 +1,8 @@
 using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input; // For debug
+using Sprint2.Entities.Projectiles;
 using Sprint2.Util;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,20 @@ public class Enemy : IDrawableObject, IPhysicsObject
     private bool isGrounded;
     private float PatrolMaxX;
     private float PatrolMinX;
+
+    // TEST FIELDS
+    private State currentState = State.RightFacing;
+    private Rectangle[] frames = SourceRects.PlayerSourceRects[State.RightFacing];
+    private int currentFrameIndex = 0;
+    private double timeSinceLastFrame = 0;
+    private Color color = Color.White;
+    private int swapFactor = 0;
+    private KeyboardState prevKeyboard;
+    private double shootCooldownLeft = 0.0;
+    private const double shootCooldown = 0.2;
+    private bool firedAttackPrev = false;
+    private const float ProjectileSpeed = 100f;
+    // END TEST FIELDS
 
     public Enemy(EnemyDef type, Vector2 spawnPos)
     {
@@ -83,24 +99,42 @@ public class Enemy : IDrawableObject, IPhysicsObject
             position.X = PatrolMinX;
             Move(1);
         }
+        enemyAction = PlayerState.None;
     }
 
-    private void AttackStep(Player player)
+    private void AttackStep(Player player, ProjectileManager projectileManager)
     {
-        float distance = player.Position.X - position.X;
-        float absDistance = MathF.Abs(distance);
+        float enemyCenter = position.X + Consts.playerHitboxSize * 0.5f;
+        float playerCenter = player.Position.X + Consts.playerHitboxSize * 0.5f;
+
+        float distance = playerCenter - enemyCenter;
 
         int facing = (distance >= 0) ? 1 : -1;
         direction.X = facing;
 
-        if (absDistance <= def.AttackRange)
+        float range = def.AttackRange;
+        float targetCenter = playerCenter - facing * range;
+        float difference = targetCenter - enemyCenter;
+
+        const float buffer = 2f;
+
+        if (MathF.Abs(difference) > buffer)
         {
-            Attack();
-            velocity.X = 0;
+            firedAttackPrev = false;
+            enemyAction = PlayerState.None;
+            float newSpeed = def.Speed;
+            velocity.X = newSpeed * MathF.Sign(difference);
+            return;
         } 
-        else
+        
+        velocity.X = 0;
+        Attack();
+
+        if (!firedAttackPrev && shootCooldownLeft <= 0)
         {
-            velocity.X = def.Speed * 1.2f * facing;
+            FireShot(projectileManager, facing);
+            firedAttackPrev = true;
+            shootCooldownLeft = shootCooldown;
         }
     }
 
@@ -108,6 +142,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
     {
         if (position.X > PatrolMaxX)
         {
+            
             Move(-1);
         }
         else if (position.X < PatrolMinX)
@@ -118,6 +153,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
         {
             velocity.X = 0;
         }
+        enemyAction = PlayerState.None;
     }
 
     private bool CanSeePlayer(Player player)
@@ -134,15 +170,17 @@ public class Enemy : IDrawableObject, IPhysicsObject
         return inFront && inView;
     }
 
-    private void Decide(Player player)
+    private void Decide(Player player, ProjectileManager projectileManager)
     {
         bool seesPlayer = CanSeePlayer(player);
 
         if (seesPlayer)
         {
-            AttackStep(player);
+            AttackStep(player, projectileManager);
             return;
         }
+
+        firedAttackPrev = false;
         
         if (position.X > PatrolMaxX || position.X < PatrolMinX)
         {
@@ -153,11 +191,37 @@ public class Enemy : IDrawableObject, IPhysicsObject
         PatrolStep();
     }
 
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player)
+    private void FireShot(ProjectileManager projectileManager, int facing)
+    {
+        Vector2 spawnPos = new(center.X + (facing * 8), center.Y);
+        Vector2 shotVelocity = new(facing * ProjectileSpeed, 0);
+        ProjectileDef shotDef = new ProjectileDef("VoidShot", 5, 100, 0);
+        projectileManager.Spawn(shotDef, spawnPos, shotVelocity);
+    }
+
+    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player, ProjectileManager projectileManager)
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        // FOR TESTING
+        var kb = Keyboard.GetState();
+        if ((kb.IsKeyDown(Keys.O) && !prevKeyboard.IsKeyDown(Keys.O)) || (kb.IsKeyDown(Keys.P) && !prevKeyboard.IsKeyDown(Keys.P)))
+        {
+            swapFactor ^= 1;
+        }
+        prevKeyboard = kb;
 
-        Decide(player);
+        timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
+        while (timeSinceLastFrame >= Consts.playerFrameTime) //ADD FUNC TO FUNCS TO AUTOMATE ALL LOOPS LIKE THIS
+        {
+            currentFrameIndex = (currentFrameIndex + 1) % frames.Length; // Frames rotate
+            timeSinceLastFrame -= Consts.playerFrameTime;
+        }
+
+        shootCooldownLeft -= time;
+        if (shootCooldownLeft < 0) shootCooldownLeft = 0;
+        // END TESTING
+
+        Decide(player, projectileManager);
 
         Vector2 movement = Vector2.Zero;
         if (velocity.X != 0) movement.X = velocity.X * time;
@@ -176,12 +240,49 @@ public class Enemy : IDrawableObject, IPhysicsObject
 
         center = position + Consts.playerHitboxSize * Vector2.One * 0.5f;
         
+        SetFrames(enemyAction, direction, velocity);
+        if (enemyAction != PlayerState.Dead) enemyAction = PlayerState.None;
         velocity.X = 0;
-        enemyAction = PlayerState.None;
+    }
+
+    public void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity)
+    {
+        State newState;
+
+        if (linkAction == PlayerState.None)
+        {
+            if (velocity.X != 0)
+                newState = direction.X == 1 ? State.RightRunning : State.LeftRunning;
+            else
+                newState = direction.X == 1 ? State.RightFacing : State.LeftFacing;
+        }
+        else if (linkAction == PlayerState.Dead)
+        {
+            newState = State.Dead;
+        }
+        else if (linkAction == PlayerState.Attack)
+        {
+            newState = direction.X == 1 ? State.RightAttack : State.LeftAttack;
+        }
+        else
+        {
+            newState = State.RightFacing;
+        }
+
+        if (currentState != newState)
+        {
+            currentState = newState;
+            frames = SourceRects.EnemySourceRects[currentState];
+            currentFrameIndex = 0;
+            timeSinceLastFrame = 0;
+        }
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        enemySprite.Draw(spriteBatch, Assets.voidspawnTexture);
+        Rectangle srcRect = frames[currentFrameIndex];
+        srcRect.Y += swapFactor * 16;
+
+        spriteBatch.Draw(def.Texture, Position, srcRect, color);
     }
 }
