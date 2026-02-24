@@ -128,6 +128,7 @@ public class Player : IPlayer
         }
         else velocity.Y = 0;
         Collisions.ManageCollision(this, objects, movement, ref velocity);
+        playerSprite.Position = position;
     }
 
     public void UpdateBreakBlock(float time)
@@ -163,7 +164,6 @@ public class Player : IPlayer
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         UpdateMovement(time, objects);
-        playerSprite.Position = position;
         aimer?.Update(Center, Mouse.GetState());
         UpdateBreakBlock(time);
         UpdateHealth(IsDamaged, time);
