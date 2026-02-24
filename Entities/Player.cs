@@ -170,10 +170,10 @@ public class Player : IPlayer {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         UpdateMovement(time, objects);
-        aimer?.Update(Center, Mouse.GetState());
         UpdateBreakBlock(time);
         UpdateHealth(IsDamaged, time);
 
+        aimer?.Update(Center, Mouse.GetState());
         playerSprite.SetFrames(playerState, direction, velocity, IsDamaged);
         playerSprite.Update(gameTime);
 
