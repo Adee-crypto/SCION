@@ -11,5 +11,5 @@ The fields and constructor are very clear, being one after the other and being i
 
 The casework on the playerState seems like it would be easier to parse in a case switch stateent.
 
-The frame rotation logic is a little clunky, as the comment says it could probably be extracted to a separate helper method
+The frame rotation logic is a little clunky, as the comment says, it could probably be extracted to a separate helper method
 
