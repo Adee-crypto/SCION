@@ -8,7 +8,8 @@
         "name": "C#: Sprint2 Debug",
         "type": "dotnet",
         "request": "launch",
-        "projectPath": "${workspaceFolder}/Sprint2.csproj"
+        "projectPath": "${workspaceFolder}/Sprint2.csproj",
+        "profiler": "cpu"
       }
     ],
   }
