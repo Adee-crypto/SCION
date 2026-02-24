@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Sprint2.Entities;
+using System.Collections.Generic;
 
 namespace Interfaces;
 
@@ -28,7 +28,7 @@ public interface IPhysicsObject
 
 public interface IController
 {
-    bool IsPaused { get; set; } 
+    bool IsPaused { get; set; }
     void Update();
 }
 

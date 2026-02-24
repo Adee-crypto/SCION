@@ -14,18 +14,18 @@ public class Aimer(float distanceFromPlayer = 20f)
 
     public void Update(Vector2 playerCenter, MouseState mouse)
     {
-        Vector2 mousePos = new (mouse.X, mouse.Y);
+        Vector2 mousePos = new(mouse.X, mouse.Y);
         Vector2 aimerPos = mousePos - playerCenter;
-        
+
         if (aimerPos.LengthSquared() > 0.0001f) Direction = Vector2.Normalize(aimerPos);
 
-        Angle = (float) Math.Atan2(Direction.Y, Direction.X);
+        Angle = (float)Math.Atan2(Direction.Y, Direction.X);
     }
 
     public void Draw(SpriteBatch spriteBatch, Vector2 playerCenter)
     {
         Vector2 position = playerCenter + Direction * DistanceFromPlayer;
-        Vector2 origin = new (0, Assets.arrowTexture.Height / 2f);
+        Vector2 origin = new(0, Assets.arrowTexture.Height / 2f);
 
         spriteBatch.Draw(Assets.arrowTexture, position, null, Color.White, Angle, origin, 1f, SpriteEffects.None, 0f);
     }

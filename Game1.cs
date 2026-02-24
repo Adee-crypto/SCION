@@ -1,14 +1,14 @@
-﻿﻿using Microsoft.Xna.Framework;
+﻿using Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Sprint2.Controllers;
-using Sprint2.UI;
-using Sprint2.Util;
-using Interfaces;
-using System.Linq;
 using Sprint2.Entities;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Plants;
+using Sprint2.UI;
+using Sprint2.Util;
+using System.Collections.Generic;
+using System.Linq;
 // using Sprint2.Entities.Plants;
 
 
@@ -28,7 +28,7 @@ public class Game1 : Game
 
     private PauseMenu pauseMenu;
 
-    public Player player0 {get; private set;}
+    public Player player0 { get; private set; }
     private List<Rectangle> objects;
     private List<Platform> platforms;
     private ProjectileManager projectileManager;
@@ -56,7 +56,7 @@ public class Game1 : Game
 
         keyboardController = new KeyBoardController();
         mouseController = new MouseController();
-        
+
         player0 = new Player();
 
         base.Initialize();
@@ -100,10 +100,10 @@ public class Game1 : Game
         player0.Reset();
         enemyManager.Reset();
         projectileManager.Reset();
-        enemyManager.Spawn(enemyDef, new Vector2(16*40, 16*24));
+        enemyManager.Spawn(enemyDef, new Vector2(16 * 40, 16 * 24));
         testPlant = new(Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
         objects = [];
-        platforms = [new(Platform.Type.stonebrick, 0, 16*25, 50, 1)];
+        platforms = [new(Platform.Type.stonebrick, 0, 16 * 25, 50, 1)];
         isPaused = false;
     }
 
@@ -114,9 +114,12 @@ public class Game1 : Game
         keyboardController.Update();
         screenSize = (GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
-        if (isPaused) {
+        if (isPaused)
+        {
             pauseMenu.Update(mouseController);
-        } else {
+        }
+        else
+        {
             objects.Clear();
 
             objects.AddRange(testPlant.GetPlantObjects());
@@ -128,7 +131,8 @@ public class Game1 : Game
 
             if (player0.IsBreakable)
             {
-                if (testPlant.RemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom))) {
+                if (testPlant.RemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom)))
+                {
                     player0.GetSeed();
                 }
                 player0.IsBreakable = false;

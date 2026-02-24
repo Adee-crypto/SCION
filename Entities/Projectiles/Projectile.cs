@@ -1,9 +1,9 @@
 using Interfaces;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
 using System;
+using System.Collections.Generic;
 
 namespace Sprint2.Entities.Projectiles;
 
@@ -18,7 +18,7 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
     public bool IsAlive { get; private set; } = true;
 
     //This is kind of broken currently, so I have 0x0 hitbox
-    public Rectangle Hitbox => new ((int)Position.X, (int)Position.Y, 0, 0);//new((Position - def.HitBox / 2f).ToPoint(), def.HitBox.ToPoint());
+    public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, 0, 0);//new((Position - def.HitBox / 2f).ToPoint(), def.HitBox.ToPoint());
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
     {

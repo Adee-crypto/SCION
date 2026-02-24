@@ -1,7 +1,7 @@
+using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Interfaces;
 
 namespace Sprint2.UI;
 
@@ -32,7 +32,7 @@ public class PauseMenu
 
         Vector2 textSize = font.MeasureString(pauseText);
         Vector2 center = new((screenSize.w - textSize.X) / 2, (screenSize.h - textSize.Y) / 2);
-        
+
         spriteBatch.Draw(overlay, new Rectangle(0, 0, screenSize.w, screenSize.h), Color.Black * 0.5f);
 
         Vector2 textPosition = new(center.X, center.Y / 4);

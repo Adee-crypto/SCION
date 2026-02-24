@@ -1,13 +1,14 @@
 using Microsoft.Xna.Framework;
+using Sprint2.Entities;
 using Sprint2.Entities.Plants;
 using System.Collections.Generic;
-using Sprint2.Entities;
 
 namespace Sprint2.Util;
 
 public static class SourceRects
 {
-    private static Rectangle TileSourceRectAt(int x, int y) {    
+    private static Rectangle TileSourceRectAt(int x, int y)
+    {
         return new(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
     }
 

@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
-using Interfaces;
+﻿using Interfaces;
+using Microsoft.Xna.Framework.Input;
 
 
 namespace Sprint2.Controllers;

@@ -19,13 +19,14 @@ public enum State
     Dead
 };
 
-public class PlayerSprite : IPlayerSprite {
+public class PlayerSprite : IPlayerSprite
+{
     private State currentState;
     private Rectangle[] frames;
     private int currentFrameIndex;
     private double timeSinceLastFrame;
     private Color color;
-    public Vector2 Position {get;set;}
+    public Vector2 Position { get; set; }
 
     public PlayerSprite()
     {
@@ -82,7 +83,8 @@ public class PlayerSprite : IPlayerSprite {
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch, Texture2D texture) {
+    public void Draw(SpriteBatch spriteBatch, Texture2D texture)
+    {
         spriteBatch.Draw(texture, Position, frames[currentFrameIndex], color);
     }
 }

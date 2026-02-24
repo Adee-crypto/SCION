@@ -97,7 +97,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
         {
             Attack();
             velocity.X = 0;
-        } 
+        }
         else
         {
             velocity.X = def.Speed * 1.2f * facing;
@@ -143,7 +143,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
             AttackStep(player);
             return;
         }
-        
+
         if (position.X > PatrolMaxX || position.X < PatrolMinX)
         {
             ReturnStep();
@@ -175,7 +175,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
         enemySprite.Update(gameTime);
 
         center = position + Consts.playerHitboxSize * Vector2.One * 0.5f;
-        
+
         velocity.X = 0;
         enemyAction = PlayerState.None;
     }
