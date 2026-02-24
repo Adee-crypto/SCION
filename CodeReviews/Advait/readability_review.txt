@@ -1,0 +1,10 @@
+Author: Advait Kakade
+Date: 2026-02-23
+Sprint: 2
+Reviewed file: Aimer.cs
+Author of reviewed file: Benny Jiang
+Time taken for review: 5 minutes
+
+The constructor is clear and easy to understand, with well-named parameters such as font, texture, and text, making it obvious what each argument represents. The code also does a good job of encapsulating the button's logic, with private fields and a clean, concise update mechanism that handles hover detection and click events effectively.
+
+The hover state and bounds handling could be simplified, as the current implementation calls spriteBatch.Draw twice with slightly different bounds.This could be changed to a single call.
