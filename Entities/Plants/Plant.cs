@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input; //FOR TESTING, DELETE THIS
+using Microsoft.Xna.Framework.Input;
+using Sprint2.Util; //FOR TESTING, DELETE THIS
 
-namespace Sprint2;
+namespace Sprint2.Entities.Plants;
 
-public class Plant(Plant.Species species, (int, int) root)
-{
-    public enum Species {grass, apple, pineapple};
+public enum Species {grass, apple, pineapple};
 
+public class Plant(Species species, (int, int) root) {
     private Species species = species;
     private HashSet<(int, int)> bud_cells = [root];
     private HashSet<(int, int)> stem_cells = [];
@@ -30,13 +30,13 @@ public class Plant(Plant.Species species, (int, int) root)
         HashSet<(int, int)> newGrowth = [];
         foreach ((int x, int y) in bud_cells)
         {
-            foreach ((int dx, int dy) in PlantUtil.ShuffledDirs()) {
-            (int, int) newCell = (x + dx, y + dy);
-            if (!stem_cells.Contains(newCell) && !bud_cells.Contains(newCell))
-                {
-                    newGrowth.Add(newCell);
-                    break;
-                }
+            foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.growDirs)) {
+                (int, int) newCell = (x + dx, y + dy);
+                if (!stem_cells.Contains(newCell) && !bud_cells.Contains(newCell))
+                    {
+                        newGrowth.Add(newCell);
+                        break;
+                    }
             }
         }
 
@@ -49,12 +49,12 @@ public class Plant(Plant.Species species, (int, int) root)
     {
         foreach (var (x, y) in stem_cells)
         {
-            yield return new Rectangle(x * PlantUtil.cellWidth, y * PlantUtil.cellWidth, PlantUtil.cellWidth, PlantUtil.cellWidth);
+            yield return new Rectangle(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
         }
 
         foreach (var (x, y) in bud_cells)
         {
-            yield return new Rectangle(x * PlantUtil.cellWidth, y * PlantUtil.cellWidth, PlantUtil.cellWidth, PlantUtil.cellWidth);
+            yield return new Rectangle(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
         }
     }
 
@@ -62,11 +62,11 @@ public class Plant(Plant.Species species, (int, int) root)
     {
         foreach ((int x, int y) in stem_cells)
         {
-            spriteBatch.Draw(PlantUtil.spritesheet, new Vector2(x, y)*PlantUtil.cellWidth, PlantUtil.SpeciesSpriteRects[species], Color.Gray);
+            spriteBatch.Draw(Assets.plantSpritesheet, new Vector2(x, y)*Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.Gray);
         }
         foreach ((int x, int y) in bud_cells)
         {
-            spriteBatch.Draw(PlantUtil.spritesheet, new Vector2(x, y)*PlantUtil.cellWidth, PlantUtil.SpeciesSpriteRects[species], Color.White);
+            spriteBatch.Draw(Assets.plantSpritesheet, new Vector2(x, y)*Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.White);
         }
     }
 
@@ -84,15 +84,15 @@ public class Plant(Plant.Species species, (int, int) root)
 
     public bool RemoveCellBelow(Vector2 bottomCenter)
     {
-        int cellX = (int)(bottomCenter.X / PlantUtil.cellWidth);
-        int cellY = (int)(bottomCenter.Y / PlantUtil.cellWidth);
+        int cellX = (int)(bottomCenter.X / Consts.cellWidth);
+        int cellY = (int)(bottomCenter.Y / Consts.cellWidth);
         if (stem_cells.Contains((cellX, cellY))) {
             stem_cells.Remove((cellX, cellY));
             return true;
         } else if (stem_cells.Contains((cellX - 1, cellY)) || stem_cells.Contains((cellX + 1, cellY)))
         {
-            float leftCenterX = (cellX - 0.5f) * PlantUtil.cellWidth;
-            float rightCenterX = (cellX + 1.5f) * PlantUtil.cellWidth;
+            float leftCenterX = Consts.cellWidth * (cellX - 0.5f);
+            float rightCenterX = Consts.cellWidth * (cellX + 0.5f);
             float leftDist = Math.Abs(bottomCenter.X - leftCenterX);
             float rightDist = Math.Abs(bottomCenter.X - rightCenterX);
             if (leftDist < rightDist) stem_cells.Remove((cellX - 1, cellY));

@@ -1,13 +1,26 @@
 ﻿using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.ComponentModel.Design;
+using Sprint2.Util;
 
-namespace Sprint2.Sprites;
+namespace Sprint2.Entities;
 
-public class PlayerSprite : IPlayerSprite
+public enum State
 {
-    private PlayerUtil.PlayerAnimation currentState;
+    LeftFacing,
+    LeftRunning,
+    RightFacing,
+    RightRunning,
+    LeftAttack,
+    RightAttack,
+    LeftFalling,
+    RightFalling,
+    BlockBreaking,
+    Dead
+};
+
+public class PlayerSprite : IPlayerSprite {
+    private State currentState;
     private Rectangle[] frames;
     private int currentFrameIndex;
     private double timeSinceLastFrame;
@@ -16,44 +29,44 @@ public class PlayerSprite : IPlayerSprite
 
     public PlayerSprite()
     {
-        currentState = PlayerUtil.PlayerAnimation.RightFacing;
-        frames = PlayerUtil.framesMap[PlayerUtil.PlayerAnimation.RightFacing];
+        currentState = State.RightFacing;
+        frames = SourceRects.PlayerSourceRects[State.RightFacing];
         currentFrameIndex = 0;
         timeSinceLastFrame = 0;
         color = Color.White;
     }
 
-    public void SetFrames(PlayerUtil.PlayerState state, Vector2 direction, Vector2 velocity, bool isDamaged)
+    public void SetFrames(PlayerState playerState, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
         color = isDamaged ? Color.Red : Color.White;
-        PlayerUtil.PlayerAnimation newState;
+        State newState;
 
-        if (state == PlayerUtil.PlayerState.None)
+        if (playerState == PlayerState.None)
         {
             if (velocity.Y != 0)
-                newState = direction.X == 1 ? PlayerUtil.PlayerAnimation.RightFalling : PlayerUtil.PlayerAnimation.LeftFalling;
+                newState = direction.X == 1 ? State.RightFalling : State.LeftFalling;
             else if (velocity.X != 0)
-                newState = direction.X == 1 ? PlayerUtil.PlayerAnimation.RightRunning : PlayerUtil.PlayerAnimation.LeftRunning;
+                newState = direction.X == 1 ? State.RightRunning : State.LeftRunning;
             else
-                newState = direction.X == 1 ? PlayerUtil.PlayerAnimation.RightFacing : PlayerUtil.PlayerAnimation.LeftFacing;
+                newState = direction.X == 1 ? State.RightFacing : State.LeftFacing;
         }
-        else if (state == PlayerUtil.PlayerState.Dead)
+        else if (playerState == PlayerState.Dead)
         {
-            newState = PlayerUtil.PlayerAnimation.Dead;
+            newState = State.Dead;
         }
-        else if (state == PlayerUtil.PlayerState.Attack)
+        else if (playerState == PlayerState.Attack)
         {
-            newState = direction.X == 1 ? PlayerUtil.PlayerAnimation.RightAttack : PlayerUtil.PlayerAnimation.LeftAttack;
+            newState = direction.X == 1 ? State.RightAttack : State.LeftAttack;
         }
         else
         {
-            newState = PlayerUtil.PlayerAnimation.BlockBreaking;
+            newState = State.BlockBreaking;
         }
 
         if (currentState != newState)
         {
             currentState = newState;
-            frames = PlayerUtil.framesMap[newState];
+            frames = SourceRects.PlayerSourceRects[newState];
             currentFrameIndex = 0;
             timeSinceLastFrame = 0;
         }
@@ -62,14 +75,14 @@ public class PlayerSprite : IPlayerSprite
     public void Update(GameTime gameTime)
     {
         timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
-        if (timeSinceLastFrame >= PlayerUtil.secondsPerFrame)
+        while (timeSinceLastFrame >= Consts.playerFrameTime) //ADD FUNC TO FUNCS TO AUTOMATE ALL LOOPS LIKE THIS
         {
             currentFrameIndex = (currentFrameIndex + 1) % frames.Length; // Frames rotate
-            timeSinceLastFrame = 0;
+            timeSinceLastFrame -= Consts.playerFrameTime;
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch) {
-        spriteBatch.Draw(PlayerUtil.playerTexture, Position, frames[currentFrameIndex], color);
+    public void Draw(SpriteBatch spriteBatch, Texture2D texture) {
+        spriteBatch.Draw(texture, Position, frames[currentFrameIndex], color);
     }
 }

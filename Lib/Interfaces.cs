@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Sprint2;
+using Sprint2.Entities;
 
 namespace Interfaces;
 
@@ -74,7 +74,7 @@ public interface IProjectile : IDrawableObject, IUpdatableObject, IPhysicsObject
     bool IsAlive { get; }
 }
 
-internal interface IPlayerSprite : IDrawableObject, IUpdatable
+internal interface IPlayerSprite : IUpdatable
 {
-    void SetFrames(PlayerUtil.PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);
+    void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);
 }

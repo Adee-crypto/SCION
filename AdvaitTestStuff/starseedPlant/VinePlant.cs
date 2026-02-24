@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+namespace Advait;
+
 public class VinePlant : Plant
 {
     public VinePlant(Texture2D texture, Point startPosition)

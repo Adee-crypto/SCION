@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Sprint2;
+namespace Sprint2.Entities.Enemies;
 
 public class EnemyDef(string enemyID, Texture2D enemyTexture, float enemySpeed = 100f, float enemyGravity = 98f, float enemyPatrolDistance = 128f, float enemyViewDistance = 160f, float enemyAttackRange = 4f)
 {

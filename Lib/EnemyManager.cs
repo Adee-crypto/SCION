@@ -1,6 +1,8 @@
 using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Entities;
+using Sprint2.Entities.Enemies;
 using System.Collections.Generic;
 
 namespace Sprint2;
@@ -23,14 +25,11 @@ public class EnemyManager : IDrawableObject
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player)
     {
-        foreach (var e in enemies)
-        {
-            e.Update(gameTime, objects, player);
-        }
+        enemies.ForEach(e => e.Update(gameTime, objects, player));
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach (var e in enemies) e.Draw(spriteBatch);
+        enemies.ForEach(e => e.Draw(spriteBatch));
     }
 }

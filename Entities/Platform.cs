@@ -1,8 +1,9 @@
 using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Util;
 
-namespace Sprint2;
+namespace Sprint2.Entities;
 
 public class Platform : IDrawableObject
 {
@@ -20,24 +21,24 @@ public class Platform : IDrawableObject
     {
         PlatformType = type;
 
-        int width = tilesWide * PlatformUtil.platformWidth;
-        int height = tilesTall * PlatformUtil.platformWidth;
+        int width = tilesWide * Consts.platformWidth;
+        int height = tilesTall * Consts.platformWidth;
 
         Bounds = new Rectangle(x, y, width, height);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        Rectangle sourceSprite = PlatformUtil.PlatformSpriteRects[PlatformType];
+        Rectangle sourceSprite = SourceRects.PlatformSourceRects[PlatformType];
 
-        int size = PlatformUtil.platformWidth;
+        int size = Consts.platformWidth;
 
         for (int height = 0; height < Bounds.Height; height += size)
         {
             for (int width = 0; width < Bounds.Width; width += size)
             {
                 var finalPlat = new Rectangle(Bounds.X + width, Bounds.Y + height, size, size);
-                spriteBatch.Draw(PlatformUtil.spritesheet, finalPlat, sourceSprite, Color.White);
+                spriteBatch.Draw(Assets.platformSpritesheet, finalPlat, sourceSprite, Color.White);
             }
         }
     }
