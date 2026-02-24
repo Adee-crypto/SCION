@@ -16,7 +16,7 @@ public class PauseMenu
         this.font = font;
 
         overlay = new Texture2D(graphicsDevice, 1, 1);
-        overlay.SetData(new[] { Color.White });
+        overlay.SetData([Color.White]);
     }
 
     public void AddButton(Button button) => buttons.Add(button);

@@ -1,0 +1,15 @@
+Author: Sean Lipton
+Date: 2026-02-23
+Sprint: 2
+Reviewed file: PlayerSprite.cs
+Author of reviewed file: Benny Jiang
+Time taken for review: 4 minutes
+
+The enum is very clear
+
+The fields and constructor are very clear, being one after the other and being initialized to obvious values.
+
+The casework on the playerState seems like it would be easier to parse in a case switch stateent.
+
+The frame rotation logic is a little clunky, as the comment says it could probably be extracted to a separate helper method
+
