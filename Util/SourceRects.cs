@@ -20,7 +20,8 @@ public static class SourceRects
         { State.RightAttack, [TileSourceRectAt(0, 2)]},
         { State.LeftFalling, [TileSourceRectAt(3, 0)] },
         { State.RightFalling, [TileSourceRectAt(1, 0)] },
-        { State.BlockBreaking, [TileSourceRectAt(1, 5)] }
+        { State.BlockBreaking, [TileSourceRectAt(1, 5)] },
+        { State.Dead, [TileSourceRectAt(0, 5)] }
     };
 
     public static Dictionary<Species, Rectangle> SpeciesSourceRects = new()
