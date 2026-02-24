@@ -1,12 +1,8 @@
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Input;
-using System.Linq;
-using System;
 
 namespace Sprint2.Entities.Plants;
 
-public static class PlantUtil 
+public static class PlantUtil
 {
     public static List<(int, int)> growDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 

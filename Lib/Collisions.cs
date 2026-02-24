@@ -40,7 +40,7 @@ public class Collisions
             if (onePixelBelow.Intersects(obj) && onePixelBelow.Bottom >= obj.Top)
             {
                 movement.Y = obj.Top - entity.Hitbox.Bottom;
-                return true; 
+                return true;
             }
         }
         return false;

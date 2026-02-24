@@ -1,0 +1,10 @@
+Author: Sean Lipton
+Date: 2026-02-23
+Sprint: 2
+Reviewed file: PauseMenu.cs
+Author of reviewed file: Justin Imber
+Time taken for review: 4 minutes
+
+In the future we'll probably want to add more things to the pause menu, such as an options or help screen.
+Currently, adding additional buttons is very maintainable due to the list of buttons that it holds, even having an AddButton method.
+However, there is currently no "menu" or "screen" class, so if we want to make it so that clicking one of the buttons takes you to a tutorial page or a settings page, that will need to be implemented elsewhere.

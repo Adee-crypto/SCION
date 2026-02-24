@@ -1,0 +1,10 @@
+Author: Benny Jiang
+Date: 2026-02-23
+Sprint: 2
+Reviewed file: ProjectileManager.cs
+Author of reviewed file: Justin Imber
+Time taken for review: 5 minutes
+
+The use of a ProjectileDef pattern is excellent for maintainability, as it simplify the specific stats of a seed from the management logic.
+
+Adding new projectile types is highly maintainable since the manager works with the IProjectile interface and a generic List, allowing for new behaviors without changing the core loop.

@@ -1,0 +1,14 @@
+Author: Benny Jiang
+Date: 2026-02-23
+Sprint: 2
+Reviewed file: Collisions.cs
+Author of reviewed file: Benny Jiang, Justin Imber
+Time taken for review: 5 minutes
+
+The logic for handling axis-separated movement is straightforward and easy to follow.
+
+The use of ref for velocity and movement parameters is clear in its intent to modify the calling state, though it requires the reader to be careful about side effects.
+
+It might be more readable if split Y collision resolution into a standard if-else block to match the X-axis implementation.
+
+The CheckGrounded method uses a "one pixel below" approach which is a very intuitive way to handle grounded state detection.

@@ -18,14 +18,14 @@ public class VinePlant : Plant
         // 111
         //  1
 
-        return new Point[]
-        {
+        return
+        [
             new Point(0,0),
             new Point(0,1),
             new Point(-1,2),
             new Point(0,2),
             new Point(1,2),
             new Point(0,3)
-        };
+        ];
     }
 }

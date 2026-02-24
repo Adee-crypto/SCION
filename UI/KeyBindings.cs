@@ -1,6 +1,6 @@
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Input;
 
 namespace Sprint2.UI;
 
@@ -8,8 +8,9 @@ public static class KeyBindings
 {
     public static Dictionary<Keys[], Action> holdKeyBindings;
     public static Dictionary<Keys[], Action> tapKeyBindings;
-    
-    public static void AttachKeyBindings(Game1 game) {
+
+    public static void AttachKeyBindings(Game1 game)
+    {
         holdKeyBindings = new()
         {
             {new[] {Keys.Left, Keys.A}, () => game.player0.Move(-1)},

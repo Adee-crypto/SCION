@@ -3,7 +3,7 @@ namespace Sprint2.Util;
 public static class Consts
 {
     public static (int w, int h) defaultScreenSize = (1000, 800);
-    
+
     //player
     public const float breakDuration = 1f;
     public const int playerHitboxSize = 16;
@@ -13,7 +13,7 @@ public static class Consts
     public const float playerGravity = 980f;
 
     //plant
-    public const int cellWidth = 16; 
+    public const int cellWidth = 16;
 
     //platform
     public const int platformWidth = 16;

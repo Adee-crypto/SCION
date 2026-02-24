@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Sprint2.Util;
 using Sprint2.Entities.Plants;
+using Sprint2.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,8 @@ public enum PlayerState
     Dead
 };
 
-public class Player : IPlayer {
+public class Player : IPlayer
+{
     private PlayerState playerState;
     private PlayerSprite playerSprite;
     private Vector2 position;
@@ -91,19 +92,22 @@ public class Player : IPlayer {
         }
     }
 
-    public void BreakBlock() 
+    public void BreakBlock()
     {
-        if (isGrounded && velocity.X == 0 && playerState != PlayerState.Dead) {
+        if (isGrounded && velocity.X == 0 && playerState != PlayerState.Dead)
+        {
             playerState = PlayerState.BreakBlock;
         }
     }
 
     //Add random seed to inventory
-    public void GetSeed() {
+    public void GetSeed()
+    {
         Seeds.Add(Random.Shared.GetItems(Enum.GetValues<Species>(), 1)[0]);
     }
 
-    public string ThrowSeed() {
+    public string ThrowSeed()
+    {
         //ADD SAFEGUARD FOR EMPTY SEED LIST
         string seedSpecies = Seeds[0].ToString() + " seed";
         Seeds.RemoveAt(0);
@@ -186,7 +190,7 @@ public class Player : IPlayer {
         //Draw seed in inventory
         for (int i = 0; i < Seeds.Count; i++)
         {
-            spriteBatch.Draw(Assets.plantSpritesheet, position + new Vector2(0, - (i+1)*16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(Assets.plantSpritesheet, position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
 
         playerSprite.Draw(spriteBatch, Assets.playerTexture);

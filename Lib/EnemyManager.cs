@@ -12,7 +12,7 @@ public class EnemyManager : IDrawableObject
 {
     private readonly List<Enemy> enemies = [];
 
-    public EnemyManager() {}
+    public EnemyManager() { }
 
     public void Spawn(EnemyDef type, Vector2 spawnPos)
     {

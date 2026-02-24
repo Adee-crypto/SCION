@@ -1,24 +1,28 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Util; //FOR TESTING, DELETE THIS
+using System;
+using System.Collections.Generic;
 
 namespace Sprint2.Entities.Plants;
 
-public enum Species {grass, apple, pineapple};
+public enum Species { grass, apple, pineapple };
 
-public class Plant(Species species, (int, int) root) {
+public class Plant(Species species, (int, int) root)
+{
     private Species species = species;
     private HashSet<(int, int)> bud_cells = [root];
     private HashSet<(int, int)> stem_cells = [];
     private float timeGrown;
 
-    public void Update(GameTime gameTime) {
-        if (Keyboard.GetState().IsKeyDown(Keys.D1)) { //FOR TESTING
+    public void Update(GameTime gameTime)
+    {
+        if (Keyboard.GetState().IsKeyDown(Keys.D1))
+        { //FOR TESTING
             timeGrown += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            while (timeGrown >= PlantUtil.SpeciesGrowTimes[species]) {
+            while (timeGrown >= PlantUtil.SpeciesGrowTimes[species])
+            {
                 timeGrown -= PlantUtil.SpeciesGrowTimes[species];
                 Grow();
             }
@@ -30,13 +34,14 @@ public class Plant(Species species, (int, int) root) {
         HashSet<(int, int)> newGrowth = [];
         foreach ((int x, int y) in bud_cells)
         {
-            foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.growDirs)) {
+            foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.growDirs))
+            {
                 (int, int) newCell = (x + dx, y + dy);
                 if (!stem_cells.Contains(newCell) && !bud_cells.Contains(newCell))
-                    {
-                        newGrowth.Add(newCell);
-                        break;
-                    }
+                {
+                    newGrowth.Add(newCell);
+                    break;
+                }
             }
         }
 
@@ -62,11 +67,11 @@ public class Plant(Species species, (int, int) root) {
     {
         foreach ((int x, int y) in stem_cells)
         {
-            spriteBatch.Draw(Assets.plantSpritesheet, new Vector2(x, y)*Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.Gray);
+            spriteBatch.Draw(Assets.plantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.Gray);
         }
         foreach ((int x, int y) in bud_cells)
         {
-            spriteBatch.Draw(Assets.plantSpritesheet, new Vector2(x, y)*Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.White);
+            spriteBatch.Draw(Assets.plantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.White);
         }
     }
 
@@ -86,10 +91,12 @@ public class Plant(Species species, (int, int) root) {
     {
         int cellX = (int)(bottomCenter.X / Consts.cellWidth);
         int cellY = (int)(bottomCenter.Y / Consts.cellWidth);
-        if (stem_cells.Contains((cellX, cellY))) {
+        if (stem_cells.Contains((cellX, cellY)))
+        {
             stem_cells.Remove((cellX, cellY));
             return true;
-        } else if (stem_cells.Contains((cellX - 1, cellY)) || stem_cells.Contains((cellX + 1, cellY)))
+        }
+        else if (stem_cells.Contains((cellX - 1, cellY)) || stem_cells.Contains((cellX + 1, cellY)))
         {
             float leftCenterX = Consts.cellWidth * (cellX - 0.5f);
             float rightCenterX = Consts.cellWidth * (cellX + 0.5f);
