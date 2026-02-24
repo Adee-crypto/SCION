@@ -38,7 +38,7 @@ public class ProjectileManager(IMouseController mouse, Player player) : IDrawabl
                 ProjectileDef def = new(seedSpecies);
 
                 Vector2 spawnPos = player.Center + direction * 12f;
-                Vector2 initialVelocity = direction * def.LaunchSpeed + player.velocity;
+                Vector2 initialVelocity = direction * def.LaunchSpeed + player.Velocity;
 
                 projectiles.Add(new Projectile(def, spawnPos, initialVelocity));
             }

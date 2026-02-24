@@ -54,7 +54,7 @@ public static class SourceRects
     {
         { Platform.Type.stone, TileSourceRectAt(1, 0) },
         { Platform.Type.stonebrick, TileSourceRectAt(6, 3) },
-        { Platform.Type.cracked_stonebrick, TileSourceRectAt(5, 6) },
+        { Platform.Type.crackedstonebrick, TileSourceRectAt(5, 6) },
     };
 
     public static Dictionary<string, Rectangle[]> ProjectileSourceRects = new()

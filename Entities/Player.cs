@@ -25,14 +25,16 @@ public class Player : IPlayer
     private PlayerSprite playerSprite;
     private Vector2 position;
     private Vector2 direction;
-    public Vector2 velocity;
+    private Vector2 velocity;
     private bool isGrounded;
     private int health;
     private float damageTimer;
     private float breakTimer;
     private Aimer aimer;
     public Vector2 AimDirection => aimer.Direction;
-    public List<Species> Seeds;
+    private List<Species> seeds;
+    public List<Species> Seeds => seeds;
+    public Vector2 Velocity => velocity;
 
     private bool IsDamaged { get; set; }
     public bool IsBreakable { get; set; }
@@ -71,7 +73,7 @@ public class Player : IPlayer
         IsBreakable = false;
         breakTimer = 0f;
         aimer = new Aimer(10f);
-        Seeds = [.. Enum.GetValues<Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
+        seeds = [.. Enum.GetValues<Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
     }
 
     public void Move(int direction)

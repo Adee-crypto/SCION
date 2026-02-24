@@ -11,7 +11,7 @@ public class Platform : IDrawableObject
     {
         stone,
         stonebrick,
-        cracked_stonebrick
+        crackedstonebrick
     }
 
     public Type PlatformType { get; }

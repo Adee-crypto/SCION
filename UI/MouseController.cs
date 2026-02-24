@@ -6,10 +6,10 @@ namespace Sprint2.Controllers;
 
 public class MouseController : IMouseController
 {
-    private MouseState currentMouseState = new MouseState();
-    private MouseState previousMouseState = new MouseState();
+    private MouseState currentMouseState;
+    private MouseState previousMouseState;
 
-    public bool IsPaused { get; set; } = false;
+    public bool IsPaused { get; set; }
 
     public void Update()
     {
