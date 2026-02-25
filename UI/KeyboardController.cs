@@ -18,7 +18,7 @@ public class KeyBoardController : IController
         //Commands to execute while key held
         if (!IsPaused)
         {
-            foreach ((Keys[] keySet, Action command) in KeyBindings.holdKeyBindings)
+            foreach ((Keys[] keySet, Action command) in KeyBindings.HoldKeyBindings)
             {
                 foreach (Keys key in keySet)
                 {
@@ -31,7 +31,7 @@ public class KeyBoardController : IController
         }
 
         //Comands to execute on key press
-        foreach ((Keys[] keySet, Action command) in KeyBindings.tapKeyBindings)
+        foreach ((Keys[] keySet, Action command) in KeyBindings.TapKeyBindings)
         {
             foreach (Keys key in keySet)
             {

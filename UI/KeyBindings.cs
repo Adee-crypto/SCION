@@ -6,12 +6,12 @@ namespace Sprint2.UI;
 
 public static class KeyBindings
 {
-    public static Dictionary<Keys[], Action> holdKeyBindings;
-    public static Dictionary<Keys[], Action> tapKeyBindings;
+    public static Dictionary<Keys[], Action> HoldKeyBindings {get; private set;}
+    public static Dictionary<Keys[], Action> TapKeyBindings {get; private set;}
 
     public static void AttachKeyBindings(Game1 game)
     {
-        holdKeyBindings = new()
+        HoldKeyBindings = new()
         {
             {new[] {Keys.Left, Keys.A}, () => game.player0.Move(-1)},
             {new[] {Keys.Right, Keys.D}, () => game.player0.Move(1)},
@@ -19,13 +19,13 @@ public static class KeyBindings
             {new[] {Keys.Z, Keys.N}, game.player0.Attack},
             {new[] {Keys.Down, Keys.S}, game.player0.BreakBlock}
         };
-        tapKeyBindings = new()
+        TapKeyBindings = new()
         {
             {new[] {Keys.Escape}, game.TogglePause},
             {new[] {Keys.Q}, game.Exit},
             {new[] {Keys.R}, game.ResetLevel},
             {new[] {Keys.D2}, game.testPlant.ToggleSpecies}, //for testing
-            {new[] {Keys.E}, game.player0.Damaged}
+            {new[] {Keys.E}, game.player0.Damaged} //also for testing
         };
     }
 }

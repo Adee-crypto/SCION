@@ -53,11 +53,18 @@ public class Game1 : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        //controllers
         keyboardController = new KeyBoardController();
         mouseController = new MouseController();
 
-        player0 = new Player();
 
+        //specific objects (prob will all be deleted and added to level, maybe not player tho)
+        player0 = new Player();
+        
+        //managers
+        projectileManager = new ProjectileManager(mouseController, player0);
+        enemyManager = new EnemyManager();
+        
         base.Initialize();
         ResetLevel();
 
@@ -87,8 +94,6 @@ public class Game1 : Game
         pauseMenu.AddButton(new Button(Assets.uiFont, Assets.resetTexture, "", ResetLevel, new Vector2(32, 32), resetPosition));
 
         rangedEnemy = new EnemyDef("Void Spawn", Assets.voidspawnTexture, 100f, 98f, 96f, 128f, 96f);
-        projectileManager = new ProjectileManager(mouseController, player0);
-        enemyManager = new EnemyManager();
     }
 
     public void TogglePause() => isPaused = !isPaused;
