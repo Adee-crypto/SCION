@@ -5,6 +5,7 @@ using Sprint2.Entities;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Projectiles;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Sprint2;
 
@@ -16,7 +17,7 @@ public class EnemyManager : IDrawableObject
 
     public void Spawn(EnemyDef type, Vector2 spawnPos)
     {
-        enemies.Add(new Enemy(type, spawnPos));
+        enemies.Add(new(type, spawnPos));
     }
 
     public void Reset()
