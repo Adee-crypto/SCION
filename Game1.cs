@@ -147,7 +147,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin();
 
         player0.Draw(spriteBatch);
