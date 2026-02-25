@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Sprint2.Entities;
 using Sprint2.Entities.Plants;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Sprint2.Util;
 
@@ -12,7 +13,7 @@ public static class SourceRects
         return new(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
     }
 
-    public static Dictionary<State, Rectangle[]> PlayerSourceRects = new() {
+    public static Dictionary<State, Rectangle[]> PlayerSourceRects {get;} = new() {
         { State.LeftFacing, [TileSourceRectAt(2, 0)] },
         { State.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
         { State.RightFacing, [TileSourceRectAt(0, 0)] },
@@ -25,7 +26,7 @@ public static class SourceRects
         { State.Dead, [TileSourceRectAt(0, 5)] }
     };
 
-    public static Dictionary<State, Rectangle[]> EnemySourceRects = new()
+    public static Dictionary<State, Rectangle[]> EnemySourceRects {get;} = new()
     {
         { State.LeftFacing, [TileSourceRectAt(2, 0)] },
         { State.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
@@ -36,28 +37,28 @@ public static class SourceRects
         { State.Dead, [TileSourceRectAt(2, 5)] }
     };
 
-    public static Dictionary<Species, Rectangle> SpeciesSourceRects = new()
+    public static Dictionary<Species, Rectangle> SpeciesSourceRects {get;} = new()
     {
         { Species.grass, TileSourceRectAt(2, 9) },
         { Species.apple, TileSourceRectAt(2, 10) },
         { Species.pineapple, TileSourceRectAt(2, 11) },
     };
 
-    public static Dictionary<Species, Rectangle[]> SeedSourceRects = new()
+    public static Dictionary<Species, Rectangle[]> SeedSourceRects {get;} = new()
     {
         { Species.grass, [TileSourceRectAt(6, 16), TileSourceRectAt(7, 16)] },
         { Species.apple, [TileSourceRectAt(9, 16), TileSourceRectAt(8, 16)] },
         { Species.pineapple, [TileSourceRectAt(2, 16), TileSourceRectAt(4, 16)] },
     };
 
-    public static Dictionary<Platform.Type, Rectangle> PlatformSourceRects = new()
+    public static Dictionary<Platform.Type, Rectangle> PlatformSourceRects {get;} = new()
     {
         { Platform.Type.stone, TileSourceRectAt(1, 0) },
         { Platform.Type.stonebrick, TileSourceRectAt(6, 3) },
         { Platform.Type.crackedstonebrick, TileSourceRectAt(5, 6) },
     };
 
-    public static Dictionary<string, Rectangle[]> ProjectileSourceRects = new()
+    public static Dictionary<string, Rectangle[]> ProjectileSourceRects {get;} = new()
     {
         { "grass seed", [TileSourceRectAt(6, 16), TileSourceRectAt(7, 16)] },
         { "apple seed", [TileSourceRectAt(9, 16), TileSourceRectAt(8, 16)] },
