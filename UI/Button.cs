@@ -23,14 +23,13 @@ public class Button
         text = buttonText;
         onClick = command;
         bounds = new((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
-        textPos = new(pos.X + (size.X - font.MeasureString(buttonText).X) / 2, pos.Y + (size.Y - font.MeasureString(buttonText).Y) / 2);
+        textPos = pos + 0.5f * (size - font.MeasureString(buttonText));
     }
 
     public void Update(IMouseController mouseController)
     {
         hover = bounds.Contains(Mouse.GetState().Position);
-        bool click = hover && mouseController.IsLeftClick();
-        if (click) onClick?.Invoke();
+        if (hover && mouseController.IsLeftClick()) onClick?.Invoke();
     }
 
     public void Draw(SpriteBatch spriteBatch)
