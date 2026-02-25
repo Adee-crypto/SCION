@@ -152,7 +152,7 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.White);
-        spriteBatch.Begin();
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
         player0.Draw(spriteBatch);
         testPlant.Draw(spriteBatch);
