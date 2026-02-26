@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.UI;
 using System;
@@ -37,6 +38,7 @@ public class KeyBoardController : IController
             {
                 if (currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key))
                 {
+                    if (!IsPaused && key == Keys.Q) return; //prevent quitting when not paused
                     command();
                 }
             }
