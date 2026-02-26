@@ -29,9 +29,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
     private int currentFrameIndex = 0;
     private double timeSinceLastFrame = 0;
     private Color color = Color.White;
-    private int swapFactor = 0;
-    private KeyboardState prevKeyboard;
-    private double shootCooldownLeft = 0.0;
+    private double shotCooldownLeft = 0.0;
     private const double shootCooldown = 0.2;
     private bool firedAttackPrev = false;
     private const float ProjectileSpeed = 100f;
@@ -130,11 +128,11 @@ public class Enemy : IDrawableObject, IPhysicsObject
         velocity.X = 0;
         Attack();
 
-        if (!firedAttackPrev && shootCooldownLeft <= 0)
+        if (!firedAttackPrev && shotCooldownLeft <= 0)
         {
             FireShot(projectileManager, facing);
             firedAttackPrev = true;
-            shootCooldownLeft = shootCooldown;
+            shotCooldownLeft = shootCooldown;
         }
     }
 
@@ -203,13 +201,6 @@ public class Enemy : IDrawableObject, IPhysicsObject
     {
         float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
         // FOR TESTING
-        var kb = Keyboard.GetState();
-        if ((kb.IsKeyDown(Keys.O) && !prevKeyboard.IsKeyDown(Keys.O)) || (kb.IsKeyDown(Keys.P) && !prevKeyboard.IsKeyDown(Keys.P)))
-        {
-            swapFactor ^= 1;
-        }
-        prevKeyboard = kb;
-
         timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
         while (timeSinceLastFrame >= Consts.playerFrameTime) //ADD FUNC TO FUNCS TO AUTOMATE ALL LOOPS LIKE THIS
         {
@@ -217,8 +208,8 @@ public class Enemy : IDrawableObject, IPhysicsObject
             timeSinceLastFrame -= Consts.playerFrameTime;
         }
 
-        shootCooldownLeft -= time;
-        if (shootCooldownLeft < 0) shootCooldownLeft = 0;
+        shotCooldownLeft -= time;
+        if (shotCooldownLeft < 0) shotCooldownLeft = 0;
         // END TESTING
 
         Decide(player, projectileManager);
@@ -245,22 +236,22 @@ public class Enemy : IDrawableObject, IPhysicsObject
         velocity.X = 0;
     }
 
-    public void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity)
+    public void SetFrames(PlayerState enemyAction, Vector2 direction, Vector2 velocity)
     {
         State newState;
 
-        if (linkAction == PlayerState.None)
+        if (enemyAction == PlayerState.None)
         {
             if (velocity.X != 0)
                 newState = direction.X == 1 ? State.RightRunning : State.LeftRunning;
             else
                 newState = direction.X == 1 ? State.RightFacing : State.LeftFacing;
         }
-        else if (linkAction == PlayerState.Dead)
+        else if (enemyAction == PlayerState.Dead)
         {
             newState = State.Dead;
         }
-        else if (linkAction == PlayerState.Attack)
+        else if (enemyAction == PlayerState.Attack)
         {
             newState = direction.X == 1 ? State.RightAttack : State.LeftAttack;
         }
@@ -281,7 +272,6 @@ public class Enemy : IDrawableObject, IPhysicsObject
     public void Draw(SpriteBatch spriteBatch)
     {
         Rectangle srcRect = frames[currentFrameIndex];
-        srcRect.Y += swapFactor * 16;
 
         spriteBatch.Draw(def.Texture, Position, srcRect, color);
     }

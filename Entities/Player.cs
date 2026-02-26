@@ -35,6 +35,7 @@ public class Player : IPlayer
     private List<Species> seeds;
     public List<Species> Seeds => seeds;
     public Vector2 Velocity => velocity;
+    private const int maximumSeedsDrawable = 5;
 
     private bool IsDamaged { get; set; }
     public bool IsBreakable { get; set; }
@@ -190,11 +191,12 @@ public class Player : IPlayer
     public void Draw(SpriteBatch spriteBatch)
     {
         //Draw seed in inventory
-        for (int i = 0; i < Seeds.Count; i++)
+        int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
+        for (int i = 0; i < drawableAmount; i++)
         {
             spriteBatch.Draw(Assets.plantSpritesheet, position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
-
+        
         playerSprite.Draw(spriteBatch, Assets.playerTexture);
         aimer?.Draw(spriteBatch, Center);
     }

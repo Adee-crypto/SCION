@@ -112,6 +112,7 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+        mouseController.IsPaused = isPaused;
         mouseController.Update();
         keyboardController.IsPaused = isPaused;
         keyboardController.Update();
