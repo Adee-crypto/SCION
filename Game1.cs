@@ -76,7 +76,7 @@ public class Game1 : Game
     {
         //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
         Assets.playerTexture = Content.Load<Texture2D>("Link");
-        Assets.arrowTexture = Content.Load<Texture2D>("AimerArrow");
+        Assets.arrowTexture = Content.Load<Texture2D>("AimerArrow2");
         Assets.plantSpritesheet = Content.Load<Texture2D>("testsheet");
         Assets.platformSpritesheet = Content.Load<Texture2D>("testsheet");
         Assets.buttonTexture = Content.Load<Texture2D>("DefaultButton");
