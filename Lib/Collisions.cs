@@ -6,7 +6,7 @@ namespace Sprint2;
 
 public class Collisions
 {
-    public static void ManageCollision(IPhysicsObject entity, IEnumerable<Rectangle> objects, Vector2 movement, ref Vector2 velocity)
+    public static void ManageCollision(IPhysicsObject entity, IEnumerable<Rectangle> objects, Vector2 movement)
     {
         Vector2 currentPosition = entity.Position;
 
@@ -24,7 +24,7 @@ public class Collisions
         foreach (var obj in objects)
         {
             if (!entity.Hitbox.Intersects(obj)) continue;
-            if (movement.Y < 0) velocity.Y = 0;
+            if (movement.Y < 0) entity.Velocity.Y = 0;
             currentPosition.Y = (movement.Y < 0) ? obj.Bottom : obj.Top - entity.Hitbox.Height;
         }
 

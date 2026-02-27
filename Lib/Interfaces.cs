@@ -72,7 +72,7 @@ public interface IProjectile : IDrawable, IUpdatableObject, IPhysicsObject
     bool IsAlive { get; }
 }
 
-internal interface IEntitySprite : IUpdatable
-{
-    void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);
-}
+// internal interface IEntitySprite : IUpdatable
+// {
+//     void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);
+// }

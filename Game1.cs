@@ -5,6 +5,7 @@ using Sprint2.Controllers;
 using Sprint2.Entities;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Plants;
+using Sprint2.Entities.Players;
 using Sprint2.UI;
 using Sprint2.Util;
 using System.Collections.Generic;
@@ -51,19 +52,19 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        spriteBatch = new SpriteBatch(GraphicsDevice);
+        spriteBatch = new(GraphicsDevice);
 
         //controllers
-        keyboardController = new KeyBoardController();
-        mouseController = new MouseController();
+        keyboardController = new();
+        mouseController = new();
 
 
         //specific objects (prob will all be deleted and added to level, maybe not player tho)
-        player0 = new Player();
+        player0 = new();
         
         //managers
-        projectileManager = new ProjectileManager(mouseController, player0);
-        enemyManager = new EnemyManager();
+        projectileManager = new(mouseController, player0);
+        enemyManager = new();
         
         base.Initialize();
         ResetLevel();

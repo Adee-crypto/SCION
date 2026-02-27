@@ -1,8 +1,8 @@
 using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.Entities;
 using Sprint2.Entities.Enemies;
+using Sprint2.Entities.Players;
 using System.Collections.Generic;
 
 namespace Sprint2;
@@ -11,25 +11,21 @@ public class EnemyManager : Interfaces.IDrawable
 {
     private readonly List<Enemy> enemies = [];
 
-    public EnemyManager() { }
+    public EnemyManager() {}
 
-    public void Spawn(EnemyDef type, Vector2 spawnPos)
-    {
+    public void Spawn(EnemyDef type, Vector2 spawnPos) {
         enemies.Add(new(type, spawnPos));
     }
 
-    public void Reset()
-    {
+    public void Reset() {
         enemies.Clear();
     }
 
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player, ProjectileManager projectileManager)
-    {
+    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player, ProjectileManager projectileManager) {
         enemies.ForEach(e => e.Update(gameTime, objects, player, projectileManager));
     }
 
-    public void Draw(SpriteBatch spriteBatch)
-    {
+    public void Draw(SpriteBatch spriteBatch) {
         enemies.ForEach(e => e.Draw(spriteBatch));
     }
 }

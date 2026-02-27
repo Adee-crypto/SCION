@@ -7,26 +7,38 @@ using Sprint2.Util;
 using Sprint2.Lib;
 using System;
 using System.Collections.Generic;
+using Sprint2.Entities.Players;
 
 namespace Sprint2.Entities.Enemies;
 
+public enum State
+{
+    None,
+    Attack,
+    BreakBlock,
+    Dead
+};
+
 public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 {
-    private PlayerState enemyAction;
-    // private PlayerSprite enemySprite;
+    //Motion + Physics
+    private Vector2 direction;
     private Vector2 initialPos;
     public Vector2 Position { get; set; }
+    public Vector2 Velocity;
     private Vector2 center;
-    private Vector2 direction;
-    private Vector2 velocity;
+    //actually implement hitbox correctly
+    // public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
+    
+    //States
     private EnemyDef def;
+    private State state;
+    private EnemySprite sprite = new();
     private bool isGrounded;
     private float PatrolMaxX;
     private float PatrolMinX;
 
     // TEST FIELDS
-    private State currentState = State.RightFacing;
-    private Color color = Color.White;
     private double shotCooldownLeft;
     private const double shootCooldown = 0.2;
     private bool firedAttackPrev;
@@ -42,12 +54,12 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 
     public void Reset()
     {
-        ResetFrameState(SourceRects.EnemySourceRects[currentState]);
+        sprite.Reset();
         // enemySprite = new();
         Position = initialPos;
         center = Position + Consts.playerHitboxSize * Vector2.One * 0.5f;
-        direction = new Vector2(1, 0);
-        velocity = Vector2.Zero;
+        direction = new(1, 0);
+        Velocity = Vector2.Zero;
         isGrounded = false;
         PatrolMaxX = initialPos.X + def.PatrolDistance;
         PatrolMinX = initialPos.X - def.PatrolDistance;
@@ -60,7 +72,7 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
     public void Move(int direction)
     {
         this.direction.X = direction;
-        velocity.X = def.Speed * direction;
+        Velocity.X = def.Speed * direction;
     }
 
     public void Jump()
@@ -68,13 +80,13 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         if (isGrounded)
         {
             isGrounded = false;
-            velocity.Y = Consts.playerJumpSpeed;
+            Velocity.Y = Consts.playerJumpSpeed;
         }
     }
 
     public void Attack()
     {
-        enemyAction = PlayerState.Attack;
+        state = State.Attack;
     }
 
     private void PatrolStep()
@@ -92,7 +104,7 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
             Position = new(PatrolMinX, Position.Y); // could be simplified if weren't for get;set; nonsense
             Move(1);
         }
-        enemyAction = PlayerState.None;
+        state = State.None;
     }
 
     private void AttackStep(Player player, ProjectileManager projectileManager)
@@ -114,13 +126,13 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         if (MathF.Abs(difference) > buffer)
         {
             firedAttackPrev = false;
-            enemyAction = PlayerState.None;
+            state = State.None;
             float newSpeed = def.Speed;
-            velocity.X = newSpeed * MathF.Sign(difference);
+            Velocity.X = newSpeed * MathF.Sign(difference);
             return;
         } 
         
-        velocity.X = 0;
+        Velocity.X = 0;
         Attack();
 
         if (!firedAttackPrev && shotCooldownLeft <= 0)
@@ -135,7 +147,6 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
     {
         if (Position.X > PatrolMaxX)
         {
-            
             Move(-1);
         }
         else if (Position.X < PatrolMinX)
@@ -144,9 +155,9 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         }
         else
         {
-            velocity.X = 0;
+            Velocity.X = 0;
         }
-        enemyAction = PlayerState.None;
+        state = State.None;
     }
 
     private bool CanSeePlayer(Player player)
@@ -186,7 +197,7 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 
     private void FireShot(ProjectileManager projectileManager, int facing)
     {
-        Vector2 spawnPos = new(center.X + (facing * 8), center.Y);
+        Vector2 spawnPos = center + new Vector2(facing * 8, 0);
         Vector2 shotVelocity = new(facing * ProjectileSpeed, 0);
         ProjectileDef shotDef = new("VoidShot", 5, 100, 0);
         projectileManager.Spawn(shotDef, spawnPos, shotVelocity);
@@ -194,9 +205,7 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player, ProjectileManager projectileManager)
     {
-        UpdateFrameState(gameTime);
         // FOR TESTING
-
         shotCooldownLeft -= Time;
         if (shotCooldownLeft < 0) shotCooldownLeft = 0;
         // END TESTING
@@ -204,59 +213,27 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         Decide(player, projectileManager);
 
         Vector2 movement = Vector2.Zero;
-        if (velocity.X != 0) movement.X = velocity.X * Time;
-        if (velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
+        if (Velocity.X != 0) movement.X = Velocity.X * Time;
+        if (Velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
         if (!isGrounded)
         {
-            movement.Y = 0.5f * (2f * velocity.Y + def.Gravity * Time) * Time;
-            velocity.Y += def.Gravity * Time;
+            movement.Y = 0.5f * (2f * Velocity.Y + def.Gravity * Time) * Time;
+            Velocity.Y += def.Gravity * Time;
         }
-        else velocity.Y = 0;
-        Collisions.ManageCollision(this, objects, movement, ref velocity);
-
-        // enemySprite.SetFrames(enemyAction, direction, velocity, false);
-        // enemySprite.Update(gameTime);
+        else Velocity.Y = 0;
+        Collisions.ManageCollision(this, objects, movement, ref Velocity);
 
         center = Position + Consts.playerHitboxSize * Vector2.One * 0.5f;
         
-        SetFrames(enemyAction, direction, velocity);
-        if (enemyAction != PlayerState.Dead) enemyAction = PlayerState.None;
-        velocity.X = 0;
-    }
+        sprite.UpdateState(state, direction, Velocity, false);
+        sprite.Update(gameTime);
 
-    public void SetFrames(PlayerState enemyAction, Vector2 direction, Vector2 velocity)
-    {
-        State newState;
-
-        if (enemyAction == PlayerState.None)
-        {
-            if (velocity.X != 0)
-                newState = direction.X == 1 ? State.RightRunning : State.LeftRunning;
-            else
-                newState = direction.X == 1 ? State.RightFacing : State.LeftFacing;
-        }
-        else if (enemyAction == PlayerState.Dead)
-        {
-            newState = State.Dead;
-        }
-        else if (enemyAction == PlayerState.Attack)
-        {
-            newState = direction.X == 1 ? State.RightAttack : State.LeftAttack;
-        }
-        else
-        {
-            newState = State.RightFacing;
-        }
-
-        if (currentState != newState)
-        {
-            currentState = newState;
-            ResetFrameState(SourceRects.EnemySourceRects[currentState]);
-        }
+        Velocity.X = 0;
+        if (state != State.Dead) state = State.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(def.Texture, Position, CurrentSourceRect, color);
+        sprite.Draw(spriteBatch, Position);
     }
 }

@@ -9,47 +9,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Sprint2.Entities;
+namespace Sprint2.Entities.Players;
 
-public enum PlayerState
+public enum State
 {
     None,
     Attack,
-    PlantSeed,
     BreakBlock,
     Dead
 };
 
 public class Player : IPlayer
 {
-    private PlayerState playerState;
-    private PlayerSprite playerSprite;
+    //Motion + Physics
     private Vector2 direction;
-    private Vector2 velocity;
     public Vector2 Position { get; set; }
+    private Vector2 velocity;
+    public Vector2 Velocity => velocity;
+    public Vector2 Center => Position + Consts.playerHitboxSize * Vector2.One / 2f;
+    public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
+    
+    //States
+    private State playerState;
+    private PlayerSprite playerSprite;
     private bool isGrounded;
+    private bool IsDamaged { get; set; }
+    public bool IsBreakable { get; set; }
     private int health;
     private float damageTimer;
     private float breakTimer;
+    
+    //Aiming
     private Aimer aimer;
     public Vector2 AimDirection => aimer.Direction;
-    private List<Species> seeds;
-    public List<Species> Seeds => seeds;
-    public Vector2 Velocity => velocity;
+    
+    //Inventory
+    public List<Species> Seeds {get; set;}
     private const int maximumSeedsDrawable = 5;
-
-    private bool IsDamaged { get; set; }
-    public bool IsBreakable { get; set; }
-    public Vector2 Center => Position + Consts.playerHitboxSize * Vector2.One / 2f;
-
-
-    public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
 
     public Player() => Reset();
 
     public void Reset()
     {
-        playerState = PlayerState.None;
+        playerState = State.None;
         playerSprite = new();
         Position = new(16, 16);
         direction = new(1, 0);
@@ -61,12 +63,12 @@ public class Player : IPlayer
         IsBreakable = false;
         breakTimer = 0f;
         aimer = new(10f);
-        seeds = [.. Enum.GetValues<Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
+        Seeds = [.. Enum.GetValues<Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
     }
 
     public void Move(int direction)
     {
-        if (playerState != PlayerState.Dead)
+        if (playerState != State.Dead)
         {
             this.direction.X = direction;
             velocity.X = Consts.playerXSpeed * direction;
@@ -75,7 +77,7 @@ public class Player : IPlayer
 
     public void Jump()
     {
-        if (isGrounded && playerState != PlayerState.Dead)
+        if (isGrounded && playerState != State.Dead)
         {
             isGrounded = false;
             velocity.Y = Consts.playerJumpSpeed;
@@ -84,9 +86,9 @@ public class Player : IPlayer
 
     public void BreakBlock()
     {
-        if (isGrounded && velocity.X == 0 && playerState != PlayerState.Dead)
+        if (isGrounded && velocity.X == 0 && playerState != State.Dead)
         {
-            playerState = PlayerState.BreakBlock;
+            playerState = State.BreakBlock;
         }
     }
 
@@ -108,7 +110,7 @@ public class Player : IPlayer
 
     public void Attack()
     {
-        if (playerState != PlayerState.Dead) playerState = PlayerState.Attack;
+        if (playerState != State.Dead) playerState = State.Attack;
     }
 
     public void UpdateMovement(float time, IEnumerable<Rectangle> objects)
@@ -127,7 +129,7 @@ public class Player : IPlayer
 
     public void UpdateBreakBlock(float time)
     {
-        if (playerState == PlayerState.BreakBlock)
+        if (playerState == State.BreakBlock)
         {
             breakTimer += time;
             if (breakTimer >= Consts.breakDuration)
@@ -150,7 +152,7 @@ public class Player : IPlayer
                 health--;
             }
         }
-        if (health == 0) playerState = PlayerState.Dead;
+        if (health == 0) playerState = State.Dead;
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
@@ -162,11 +164,11 @@ public class Player : IPlayer
         UpdateHealth(IsDamaged, time);
 
         aimer?.Update(Center, Mouse.GetState());
-        playerSprite.SetFrames(playerState, direction, velocity, IsDamaged);
+        playerSprite.UpdateState(playerState, direction, velocity, IsDamaged);
         playerSprite.Update(gameTime);
 
         velocity.X = 0;
-        if (playerState != PlayerState.Dead) playerState = PlayerState.None;
+        if (playerState != State.Dead) playerState = State.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)

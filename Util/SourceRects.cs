@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
-using Sprint2.Entities;
 using Sprint2.Entities.Plants;
+using Players = Sprint2.Entities.Players;
+using Enemies = Sprint2.Entities.Enemies;
 using System.Collections.Generic;
+using Sprint2.Entities;
 
 namespace Sprint2.Util;
 
@@ -12,28 +14,28 @@ public static class SourceRects
         return new(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
     }
 
-    public static Dictionary<State, Rectangle[]> PlayerSourceRects {get;} = new() {
-        { State.LeftFacing, [TileSourceRectAt(2, 0)] },
-        { State.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
-        { State.RightFacing, [TileSourceRectAt(0, 0)] },
-        { State.RightRunning, [TileSourceRectAt(0, 0), TileSourceRectAt(1, 0)] },
-        { State.LeftAttack, [TileSourceRectAt(1, 2)]},
-        { State.RightAttack, [TileSourceRectAt(0, 2)]},
-        { State.LeftFalling, [TileSourceRectAt(3, 0)] },
-        { State.RightFalling, [TileSourceRectAt(1, 0)] },
-        { State.BlockBreaking, [TileSourceRectAt(1, 5)] },
-        { State.Dead, [TileSourceRectAt(0, 5)] }
+    public static Dictionary<Players.SpriteState, Rectangle[]> PlayerSourceRects {get;} = new() {
+        { Players.SpriteState.LeftFacing, [TileSourceRectAt(2, 0)] },
+        { Players.SpriteState.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
+        { Players.SpriteState.RightFacing, [TileSourceRectAt(0, 0)] },
+        { Players.SpriteState.RightRunning, [TileSourceRectAt(0, 0), TileSourceRectAt(1, 0)] },
+        { Players.SpriteState.LeftAttack, [TileSourceRectAt(1, 2)]},
+        { Players.SpriteState.RightAttack, [TileSourceRectAt(0, 2)]},
+        { Players.SpriteState.LeftFalling, [TileSourceRectAt(3, 0)] },
+        { Players.SpriteState.RightFalling, [TileSourceRectAt(1, 0)] },
+        { Players.SpriteState.BlockBreaking, [TileSourceRectAt(1, 5)] },
+        { Players.SpriteState.Dead, [TileSourceRectAt(0, 5)] }
     };
 
-    public static Dictionary<State, Rectangle[]> EnemySourceRects {get;} = new()
+    public static Dictionary<Enemies.SpriteState, Rectangle[]> EnemySourceRects {get;} = new()
     {
-        { State.LeftFacing, [TileSourceRectAt(2, 0)] },
-        { State.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
-        { State.RightFacing, [TileSourceRectAt(0, 0)] },
-        { State.RightRunning, [TileSourceRectAt(0, 0), TileSourceRectAt(1, 0)] },
-        { State.LeftAttack, [TileSourceRectAt(2,0)]},
-        { State.RightAttack, [TileSourceRectAt(0, 0)]},
-        { State.Dead, [TileSourceRectAt(2, 5)] }
+        { Enemies.SpriteState.LeftFacing, [TileSourceRectAt(2, 0)] },
+        { Enemies.SpriteState.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
+        { Enemies.SpriteState.RightFacing, [TileSourceRectAt(0, 0)] },
+        { Enemies.SpriteState.RightRunning, [TileSourceRectAt(0, 0), TileSourceRectAt(1, 0)] },
+        { Enemies.SpriteState.LeftAttack, [TileSourceRectAt(2,0)]},
+        { Enemies.SpriteState.RightAttack, [TileSourceRectAt(0, 0)]},
+        { Enemies.SpriteState.Dead, [TileSourceRectAt(2, 5)] }
     };
 
     public static Dictionary<Species, Rectangle> SpeciesSourceRects {get;} = new()

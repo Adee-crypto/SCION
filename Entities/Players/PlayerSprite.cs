@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
 using Sprint2.Lib;
 
-namespace Sprint2.Entities;
+namespace Sprint2.Entities.Players;
 
-public enum State
+public enum SpriteState
 {
     LeftFacing,
     LeftRunning,
@@ -20,41 +20,41 @@ public enum State
     Dead
 };
 
-public class PlayerSprite : Animated, IEntitySprite {
-    private State currentState;
+public class PlayerSprite : Animated {
+    private SpriteState currentState;
     public bool IsDamaged { get; set; }
 
     public PlayerSprite()
     {
-        currentState = State.RightFacing;
+        currentState = SpriteState.RightFacing;
         IsDamaged = false;
-        ResetFrameState(SourceRects.PlayerSourceRects[State.RightFacing]);
+        ResetFrameState(SourceRects.PlayerSourceRects[SpriteState.RightFacing]);
     }
 
-    public void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
+    public void UpdateState(State linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
-        State newState;
+        SpriteState newState;
 
-        if (linkAction == PlayerState.None)
+        if (linkAction == State.None)
         {
             if (velocity.Y != 0)
-                newState = direction.X == 1 ? State.RightFalling : State.LeftFalling;
+                newState = direction.X == 1 ? SpriteState.RightFalling : SpriteState.LeftFalling;
             else if (velocity.X != 0)
-                newState = direction.X == 1 ? State.RightRunning : State.LeftRunning;
+                newState = direction.X == 1 ? SpriteState.RightRunning : SpriteState.LeftRunning;
             else
-                newState = direction.X == 1 ? State.RightFacing : State.LeftFacing;
+                newState = direction.X == 1 ? SpriteState.RightFacing : SpriteState.LeftFacing;
         }
-        else if (linkAction == PlayerState.Dead)
+        else if (linkAction == State.Dead)
         {
-            newState = State.Dead;
+            newState = SpriteState.Dead;
         }
-        else if (linkAction == PlayerState.Attack)
+        else if (linkAction == State.Attack)
         {
-            newState = direction.X == 1 ? State.RightAttack : State.LeftAttack;
+            newState = direction.X == 1 ? SpriteState.RightAttack : SpriteState.LeftAttack;
         }
         else
         {
-            newState = State.BlockBreaking;
+            newState = SpriteState.BlockBreaking;
         }
 
         if (currentState != newState)
