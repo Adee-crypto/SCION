@@ -157,11 +157,11 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-        player0.Draw(spriteBatch);
         testPlant.Draw(spriteBatch);
         projectileManager.Draw(spriteBatch);
         enemyManager.Draw(spriteBatch);
         platforms.ForEach(p => p.Draw(spriteBatch));
+        player0.Draw(spriteBatch);
 
         if (isPaused) pauseMenu.Draw(spriteBatch, screenSize);
 
