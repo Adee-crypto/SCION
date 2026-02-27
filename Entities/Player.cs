@@ -195,12 +195,13 @@ public class Player : IPlayer
         int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
         for (int i = 0; i < drawableAmount; i++)
         {
-            spriteBatch.Draw(Assets.plantSpritesheet, playerSprite.Position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(Assets.PlantSpritesheet, position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
         
-        string text = $"{seeds.Count}";
-        spriteBatch.DrawString(Assets.uiFont, text, playerSprite.Position + new Vector2(0, 16), Color.Black);
-        playerSprite.Draw(spriteBatch, Assets.playerTexture);
+        playerSprite.Draw(spriteBatch, Assets.PlayerTexture);
+        string text = $"{Seeds.Count}";
+        spriteBatch.DrawString(Assets.UiFont, text, playerSprite.Position + new Vector2(0, 16), Color.Black);
+        playerSprite.Draw(spriteBatch, Assets.PlayerTexture);
         aimer?.Draw(spriteBatch, Center);
     }
 }

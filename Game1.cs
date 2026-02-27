@@ -43,7 +43,7 @@ public class Game1 : Game
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
 
-        screenSize = Consts.defaultScreenSize;
+        screenSize = Consts.DefaultScreenSize;
         _graphics.PreferredBackBufferWidth = screenSize.w;
         _graphics.PreferredBackBufferHeight = screenSize.h;
         _graphics.ApplyChanges();
@@ -75,25 +75,25 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
-        Assets.playerTexture = Content.Load<Texture2D>("Link");
-        Assets.arrowTexture = Content.Load<Texture2D>("AimerArrow2");
-        Assets.plantSpritesheet = Content.Load<Texture2D>("testsheet");
-        Assets.platformSpritesheet = Content.Load<Texture2D>("testsheet");
-        Assets.buttonTexture = Content.Load<Texture2D>("DefaultButton");
-        Assets.resetTexture = Content.Load<Texture2D>("ResetButton");
-        Assets.uiFont = Content.Load<SpriteFont>("UIFont");
-        Assets.voidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
-        pauseMenu = new PauseMenu(Assets.uiFont, GraphicsDevice);
+        Assets.PlayerTexture = Content.Load<Texture2D>("Link");
+        Assets.ArrowTexture = Content.Load<Texture2D>("AimerArrow2");
+        Assets.PlantSpritesheet = Content.Load<Texture2D>("testsheet");
+        Assets.PlatformSpritesheet = Content.Load<Texture2D>("testsheet");
+        Assets.ButtonTexture = Content.Load<Texture2D>("DefaultButton");
+        Assets.ResetTexture = Content.Load<Texture2D>("ResetButton");
+        Assets.UiFont = Content.Load<SpriteFont>("UIFont");
+        Assets.VoidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
+        pauseMenu = new PauseMenu(Assets.UiFont, GraphicsDevice);
 
         Vector2 resumePosition = new(screenSize.w / 2 - 100, screenSize.h / 2 - 60);
         Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
         Vector2 resetPosition = new(16, 16);
 
-        pauseMenu.AddButton(new Button(Assets.uiFont, Assets.buttonTexture, "Resume", TogglePause, new Vector2(200, 50), resumePosition));
-        pauseMenu.AddButton(new Button(Assets.uiFont, Assets.buttonTexture, "Quit", Exit, new Vector2(200, 50), quitPosition));
-        pauseMenu.AddButton(new Button(Assets.uiFont, Assets.resetTexture, "", ResetLevel, new Vector2(32, 32), resetPosition));
+        pauseMenu.AddButton(new Button(Assets.UiFont, Assets.ButtonTexture, "Resume", TogglePause, new Vector2(200, 50), resumePosition));
+        pauseMenu.AddButton(new Button(Assets.UiFont, Assets.ButtonTexture, "Quit", Exit, new Vector2(200, 50), quitPosition));
+        pauseMenu.AddButton(new Button(Assets.UiFont, Assets.ResetTexture, "", ResetLevel, new Vector2(32, 32), resetPosition));
 
-        rangedEnemy = new EnemyDef("Void Spawn", Assets.voidspawnTexture, 100f, 98f, 96f, 128f, 96f);
+        rangedEnemy = new EnemyDef("Void Spawn", Assets.VoidspawnTexture, 100f, 98f, 96f, 128f, 96f);
     }
 
     public void TogglePause() => isPaused = !isPaused;
@@ -137,7 +137,7 @@ public class Game1 : Game
 
             if (player0.IsBreakable)
             {
-                if (testPlant.RemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom)))
+                if (testPlant.TryRemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom)))
                 {
                     player0.GetSeed();
                 }

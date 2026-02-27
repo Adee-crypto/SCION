@@ -43,6 +43,6 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
     public void Draw(SpriteBatch spriteBatch)
     {
         if (IsAlive)
-            spriteBatch.Draw(Assets.plantSpritesheet, Position, def.SourceRect, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Assets.PlantSpritesheet, Position, def.SourceRect, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
     }
 }
