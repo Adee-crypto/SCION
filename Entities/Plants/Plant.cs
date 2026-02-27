@@ -87,11 +87,11 @@ public class Plant(Species species, (int, int) root)
         };
     }
 
-    public bool TryRemoveCellBelow(Vector2 bottomCenter)
-    {
+    //FIX THIS TO ONLY BREAK IF PLAYER ACTUALLY TOUCHING BLOCK; work with collision?
+    public bool TryRemoveCellBelow(Vector2 bottomCenter) {
         int cellX = (int)(bottomCenter.X / Consts.cellWidth);
         int cellY = (int)(bottomCenter.Y / Consts.cellWidth);
-        if (stemCells.Contains((cellX, cellY))) { //FIX THIS TO ONLY BREAK IF PLAYER ACTUALLY TOUCHING BLOCK; work with collision?
+        if (stemCells.Contains((cellX, cellY))) { 
             stemCells.Remove((cellX, cellY));
             return true;
         } else if (stemCells.Contains((cellX - 1, cellY)) && bottomCenter.X % Consts.cellWidth < Consts.cellWidth / 2f) {

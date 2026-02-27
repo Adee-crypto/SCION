@@ -5,7 +5,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Entities;
 
-public class Platform : IDrawableObject
+public class Platform : Interfaces.IDrawable
 {
     public enum Type
     {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Sprint2;
 
-public class EnemyManager : IDrawableObject
+public class EnemyManager : Interfaces.IDrawable
 {
     private readonly List<Enemy> enemies = [];
 

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Sprint2;
 
-public class ProjectileManager(IMouseController mouse, Player player) : IDrawableObject, IUpdatableObject
+public class ProjectileManager(IMouseController mouse, Player player) : Interfaces.IDrawable, IUpdatableObject
 {
     private readonly IMouseController mouse = mouse;
     private readonly Player player = player;

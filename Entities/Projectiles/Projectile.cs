@@ -14,7 +14,7 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
     public Vector2 Position { get; set; } = initialPosition;
     private Vector2 velocity = initialVelocity;
 
-    private float angle => MathF.Atan2(velocity.Y, velocity.X);
+    private float Angle => MathF.Atan2(velocity.Y, velocity.X);
 
     public bool IsAlive { get; private set; } = true;
 
@@ -24,7 +24,7 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects) {
         if (!IsAlive) return;
 
-        def.Update(gameTime);
+        def.UpdateFrameState(gameTime);
 
         if (def.Age >= def.MaxLifetimeSeconds) { //kill if too old
             Kill();
@@ -43,6 +43,6 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
     public void Draw(SpriteBatch spriteBatch)
     {
         if (IsAlive)
-            spriteBatch.Draw(Assets.PlantSpritesheet, Position, def.SourceRect, Color.White, angle, def.Origin, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Assets.PlantSpritesheet, Position, def.CurrentSourceRect, Color.White, Angle, def.Origin, 1f, SpriteEffects.None, 0f);
     }
 }

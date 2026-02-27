@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Sprint2.Entities.Enemies;
 
-public class Enemy : IDrawableObject, IPhysicsObject
+public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 {
     private PlayerState enemyAction;
     private PlayerSprite enemySprite;
@@ -25,9 +25,6 @@ public class Enemy : IDrawableObject, IPhysicsObject
 
     // TEST FIELDS
     private State currentState = State.RightFacing;
-    private Rectangle[] frames = SourceRects.PlayerSourceRects[State.RightFacing];
-    private int currentFrameIndex;
-    private double timeSinceLastFrame;
     private Color color = Color.White;
     private double shotCooldownLeft;
     private const double shootCooldown = 0.2;
@@ -44,6 +41,7 @@ public class Enemy : IDrawableObject, IPhysicsObject
 
     public void Reset()
     {
+        ResetFrameState(SourceRects.EnemySourceRects[currentState]);
         enemySprite = new PlayerSprite();
         position = initialPos;
         center = position + Consts.playerHitboxSize * Vector2.One * 0.5f;
@@ -197,34 +195,28 @@ public class Enemy : IDrawableObject, IPhysicsObject
     {
         Vector2 spawnPos = new(center.X + (facing * 8), center.Y);
         Vector2 shotVelocity = new(facing * ProjectileSpeed, 0);
-        ProjectileDef shotDef = new ProjectileDef("VoidShot", 5, 100, 0);
+        ProjectileDef shotDef = new("VoidShot", 5, 100, 0);
         projectileManager.Spawn(shotDef, spawnPos, shotVelocity);
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player, ProjectileManager projectileManager)
     {
-        float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        UpdateFrameState(gameTime);
         // FOR TESTING
-        timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
-        while (timeSinceLastFrame >= Consts.playerFrameTime) //ADD FUNC TO FUNCS TO AUTOMATE ALL LOOPS LIKE THIS
-        {
-            currentFrameIndex = (currentFrameIndex + 1) % frames.Length; // Frames rotate
-            timeSinceLastFrame -= Consts.playerFrameTime;
-        }
 
-        shotCooldownLeft -= time;
+        shotCooldownLeft -= Time;
         if (shotCooldownLeft < 0) shotCooldownLeft = 0;
         // END TESTING
 
         Decide(player, projectileManager);
 
         Vector2 movement = Vector2.Zero;
-        if (velocity.X != 0) movement.X = velocity.X * time;
+        if (velocity.X != 0) movement.X = velocity.X * Time;
         if (velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
         if (!isGrounded)
         {
-            movement.Y = 0.5f * (2f * velocity.Y + def.Gravity * time) * time;
-            velocity.Y += def.Gravity * time;
+            movement.Y = 0.5f * (2f * velocity.Y + def.Gravity * Time) * Time;
+            velocity.Y += def.Gravity * Time;
         }
         else velocity.Y = 0;
         Collisions.ManageCollision(this, objects, movement, ref velocity);
@@ -267,16 +259,12 @@ public class Enemy : IDrawableObject, IPhysicsObject
         if (currentState != newState)
         {
             currentState = newState;
-            frames = SourceRects.EnemySourceRects[currentState];
-            currentFrameIndex = 0;
-            timeSinceLastFrame = 0;
+            ResetFrameState(SourceRects.EnemySourceRects[currentState]);
         }
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        Rectangle srcRect = frames[currentFrameIndex];
-
-        spriteBatch.Draw(def.Texture, Position, srcRect, color);
+        spriteBatch.Draw(def.Texture, Position, CurrentSourceRect, color);
     }
 }

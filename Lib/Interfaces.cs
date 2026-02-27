@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Interfaces;
 
-public interface IDrawableObject
+public interface IDrawable
 {
     void Draw(SpriteBatch spriteBatch);
 }
@@ -43,7 +43,7 @@ public interface IMouseController : IController
     bool IsRightClickHeld();
 }
 
-public interface IPlayer : IDrawableObject, IUpdatableObject, IPhysicsObject, IAim
+public interface IPlayer : IDrawable, IUpdatableObject, IPhysicsObject, IAim
 {
     void Reset();
 
@@ -69,7 +69,7 @@ public interface IAim
     Vector2 AimDirection { get; }
 }
 
-public interface IProjectile : IDrawableObject, IUpdatableObject, IPhysicsObject
+public interface IProjectile : IDrawable, IUpdatableObject, IPhysicsObject
 {
     bool IsAlive { get; }
 }
