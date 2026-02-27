@@ -87,7 +87,7 @@ public class Plant(Species species, (int, int) root)
         };
     }
 
-    public bool RemoveCellBelow(Vector2 bottomCenter)
+    public bool TryRemoveCellBelow(Vector2 bottomCenter)
     {
         int cellX = (int)(bottomCenter.X / Consts.cellWidth);
         int cellY = (int)(bottomCenter.Y / Consts.cellWidth);

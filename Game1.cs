@@ -135,7 +135,7 @@ public class Game1 : Game
 
             if (player0.IsBreakable)
             {
-                if (testPlant.RemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom)))
+                if (testPlant.TryRemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom)))
                 {
                     player0.GetSeed();
                 }
