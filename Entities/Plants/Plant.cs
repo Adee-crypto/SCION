@@ -67,11 +67,11 @@ public class Plant(Species species, (int, int) root)
     {
         foreach ((int x, int y) in stem_cells)
         {
-            spriteBatch.Draw(Assets.plantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.Gray);
+            spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.Gray);
         }
         foreach ((int x, int y) in bud_cells)
         {
-            spriteBatch.Draw(Assets.plantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.White);
+            spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.White);
         }
     }
 

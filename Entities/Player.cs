@@ -194,10 +194,10 @@ public class Player : IPlayer
         int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
         for (int i = 0; i < drawableAmount; i++)
         {
-            spriteBatch.Draw(Assets.plantSpritesheet, position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(Assets.PlantSpritesheet, position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
         
-        playerSprite.Draw(spriteBatch, Assets.playerTexture);
+        playerSprite.Draw(spriteBatch, Assets.PlayerTexture);
         aimer?.Draw(spriteBatch, Center);
     }
 }

@@ -38,7 +38,7 @@ public class Platform : IDrawableObject
             for (int width = 0; width < Bounds.Width; width += size)
             {
                 var finalPlat = new Rectangle(Bounds.X + width, Bounds.Y + height, size, size);
-                spriteBatch.Draw(Assets.platformSpritesheet, finalPlat, sourceSprite, Color.White);
+                spriteBatch.Draw(Assets.PlatformSpritesheet, finalPlat, sourceSprite, Color.White);
             }
         }
     }

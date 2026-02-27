@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
 using Sprint2.Entities.Enemies;
-using Sprint2.Entities.Projectiles;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace Sprint2;
 
