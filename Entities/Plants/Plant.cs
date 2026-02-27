@@ -12,8 +12,8 @@ public enum Species { grass, apple, pineapple };
 public class Plant(Species species, (int, int) root)
 {
     private Species species = species;
-    private HashSet<(int, int)> bud_cells = [root];
-    private HashSet<(int, int)> stem_cells = [];
+    private HashSet<(int, int)> budCells = [root];
+    private HashSet<(int, int)> stemCells = [];
     private float timeGrown;
 
     public void Update(GameTime gameTime)
@@ -32,12 +32,12 @@ public class Plant(Species species, (int, int) root)
     private void Grow()
     {
         HashSet<(int, int)> newGrowth = [];
-        foreach ((int x, int y) in bud_cells)
+        foreach ((int x, int y) in budCells)
         {
             foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.growDirs))
             {
                 (int, int) newCell = (x + dx, y + dy);
-                if (!stem_cells.Contains(newCell) && !bud_cells.Contains(newCell))
+                if (!stemCells.Contains(newCell) && !budCells.Contains(newCell))
                 {
                     newGrowth.Add(newCell);
                     break;
@@ -46,18 +46,18 @@ public class Plant(Species species, (int, int) root)
         }
 
         //Move buds to stem, and replenish new buds
-        stem_cells.UnionWith(bud_cells);
-        bud_cells = newGrowth; //this very possibly might not do what i want
+        stemCells.UnionWith(budCells);
+        budCells = newGrowth; //this very possibly might not do what i want
     }
 
     public IEnumerable<Rectangle> GetPlantObjects()
     {
-        foreach (var (x, y) in stem_cells)
+        foreach (var (x, y) in stemCells)
         {
             yield return new Rectangle(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
         }
 
-        foreach (var (x, y) in bud_cells)
+        foreach (var (x, y) in budCells)
         {
             yield return new Rectangle(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
         }
@@ -65,11 +65,11 @@ public class Plant(Species species, (int, int) root)
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach ((int x, int y) in stem_cells)
+        foreach ((int x, int y) in stemCells)
         {
             spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.Gray);
         }
-        foreach ((int x, int y) in bud_cells)
+        foreach ((int x, int y) in budCells)
         {
             spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.White);
         }
@@ -91,19 +91,14 @@ public class Plant(Species species, (int, int) root)
     {
         int cellX = (int)(bottomCenter.X / Consts.cellWidth);
         int cellY = (int)(bottomCenter.Y / Consts.cellWidth);
-        if (stem_cells.Contains((cellX, cellY)))
-        {
-            stem_cells.Remove((cellX, cellY));
+        if (stemCells.Contains((cellX, cellY))) { //FIX THIS TO ONLY BREAK IF PLAYER ACTUALLY TOUCHING BLOCK; work with collision?
+            stemCells.Remove((cellX, cellY));
             return true;
-        }
-        else if (stem_cells.Contains((cellX - 1, cellY)) || stem_cells.Contains((cellX + 1, cellY)))
-        {
-            float leftCenterX = Consts.cellWidth * (cellX - 0.5f);
-            float rightCenterX = Consts.cellWidth * (cellX + 1.5f);
-            float leftDist = Math.Abs(bottomCenter.X - leftCenterX);
-            float rightDist = Math.Abs(bottomCenter.X - rightCenterX);
-            if (leftDist < rightDist) stem_cells.Remove((cellX - 1, cellY));
-            else stem_cells.Remove((cellX + 1, cellY));
+        } else if (stemCells.Contains((cellX - 1, cellY)) && bottomCenter.X % Consts.cellWidth < Consts.cellWidth / 2f) {
+            stemCells.Remove((cellX - 1, cellY));
+            return true;
+        } else if (stemCells.Contains((cellX + 1, cellY)) && bottomCenter.X % Consts.cellWidth > Consts.cellWidth / 2f) {
+            stemCells.Remove((cellX + 1, cellY));
             return true;
         }
         return false;
