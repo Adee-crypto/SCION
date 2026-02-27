@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
+using Sprint2.Lib;
 
 namespace Sprint2.Entities;
 
@@ -22,13 +23,12 @@ public enum State
 public class PlayerSprite : Animated, IEntitySprite {
     private State currentState;
     private Color color;
-    public Vector2 Position { get; set; }
 
     public PlayerSprite()
     {
         currentState = State.RightFacing;
-        ResetFrameState(SourceRects.PlayerSourceRects[State.RightFacing]);
         color = Color.White;
+        ResetFrameState(SourceRects.PlayerSourceRects[State.RightFacing]);
     }
 
     public void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
@@ -67,8 +67,8 @@ public class PlayerSprite : Animated, IEntitySprite {
 
     public void Update(GameTime gameTime) => UpdateFrameState(gameTime);
 
-    public void Draw(SpriteBatch spriteBatch, Texture2D texture)
+    public void Draw(SpriteBatch spriteBatch, Vector2 pos)
     {
-        spriteBatch.Draw(texture, Position, CurrentSourceRect, color);
+        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, color);
     }
 }

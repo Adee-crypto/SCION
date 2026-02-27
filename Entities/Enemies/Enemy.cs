@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input; // For debug
 using Sprint2.Entities.Projectiles;
 using Sprint2.Util;
+using Sprint2.Lib;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +15,7 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
     private PlayerState enemyAction;
     private PlayerSprite enemySprite;
     private Vector2 initialPos;
-    private Vector2 position;
+    public Vector2 Position { get; set; }
     private Vector2 center;
     private Vector2 direction;
     private Vector2 velocity;
@@ -43,8 +44,8 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
     {
         ResetFrameState(SourceRects.EnemySourceRects[currentState]);
         enemySprite = new PlayerSprite();
-        position = initialPos;
-        center = position + Consts.playerHitboxSize * Vector2.One * 0.5f;
+        Position = initialPos;
+        center = Position + Consts.playerHitboxSize * Vector2.One * 0.5f;
         direction = new Vector2(1, 0);
         velocity = Vector2.Zero;
         isGrounded = false;
@@ -54,13 +55,8 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         firedAttackPrev = false;
     }
 
-    public Vector2 Position
-    {
-        get => position;
-        set { position = value; enemySprite.Position = value; }
-    }
 
-    public Rectangle Hitbox => new((int)position.X, (int)position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
+    public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
 
     public void Move(int direction)
     {
@@ -87,14 +83,14 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         int facing = (direction.X >= 0) ? 1 : -1;
         Move(facing);
 
-        if (position.X >= PatrolMaxX)
+        if (Position.X >= PatrolMaxX)
         {
-            position.X = PatrolMaxX;
+            Position = new(PatrolMaxX, Position.Y); // could be simplified if weren't for get;set; nonsense
             Move(-1);
         }
-        else if (position.X <= PatrolMinX)
+        else if (Position.X <= PatrolMinX)
         {
-            position.X = PatrolMinX;
+            Position = new(PatrolMinX, Position.Y); // could be simplified if weren't for get;set; nonsense
             Move(1);
         }
         enemyAction = PlayerState.None;
@@ -102,7 +98,7 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 
     private void AttackStep(Player player, ProjectileManager projectileManager)
     {
-        float enemyCenter = position.X + Consts.playerHitboxSize * 0.5f;
+        float enemyCenter = Position.X + Consts.playerHitboxSize * 0.5f;
         float playerCenter = player.Position.X + Consts.playerHitboxSize * 0.5f;
 
         float distance = playerCenter - enemyCenter;
@@ -138,12 +134,12 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 
     private void ReturnStep()
     {
-        if (position.X > PatrolMaxX)
+        if (Position.X > PatrolMaxX)
         {
             
             Move(-1);
         }
-        else if (position.X < PatrolMinX)
+        else if (Position.X < PatrolMinX)
         {
             Move(1);
         }
@@ -180,7 +176,7 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 
         firedAttackPrev = false;
         
-        if (position.X > PatrolMaxX || position.X < PatrolMinX)
+        if (Position.X > PatrolMaxX || Position.X < PatrolMinX)
         {
             ReturnStep();
             return;
@@ -219,11 +215,10 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         else velocity.Y = 0;
         Collisions.ManageCollision(this, objects, movement, ref velocity);
 
-        enemySprite.Position = position;
         enemySprite.SetFrames(enemyAction, direction, velocity, false);
         enemySprite.Update(gameTime);
 
-        center = position + Consts.playerHitboxSize * Vector2.One * 0.5f;
+        center = Position + Consts.playerHitboxSize * Vector2.One * 0.5f;
         
         SetFrames(enemyAction, direction, velocity);
         if (enemyAction != PlayerState.Dead) enemyAction = PlayerState.None;

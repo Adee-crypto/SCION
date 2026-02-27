@@ -24,9 +24,9 @@ public class Player : IPlayer
 {
     private PlayerState playerState;
     private PlayerSprite playerSprite;
-    private Vector2 position;
     private Vector2 direction;
     private Vector2 velocity;
+    public Vector2 Position { get; set; }
     private bool isGrounded;
     private int health;
     private float damageTimer;
@@ -40,18 +40,10 @@ public class Player : IPlayer
 
     private bool IsDamaged { get; set; }
     public bool IsBreakable { get; set; }
-    public Vector2 Center
-    {
-        get => position + Consts.playerHitboxSize * Vector2.One / 2f;
-    }
+    public Vector2 Center => Position + Consts.playerHitboxSize * Vector2.One / 2f;
 
-    public Vector2 Position
-    {
-        get => position;
-        set { position = value; playerSprite.Position = value; }
-    }
 
-    public Rectangle Hitbox => new((int)position.X, (int)position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
+    public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
 
     public Player() => Reset();
 
@@ -59,7 +51,7 @@ public class Player : IPlayer
     {
         playerState = PlayerState.None;
         playerSprite = new();
-        position = new(16, 16);
+        Position = new(16, 16);
         direction = new(1, 0);
         velocity = Vector2.Zero;
         isGrounded = false;
@@ -131,7 +123,6 @@ public class Player : IPlayer
         }
         else velocity.Y = 0;
         Collisions.ManageCollision(this, objects, movement, ref velocity);
-        playerSprite.Position = position;
     }
 
     public void UpdateBreakBlock(float time)
@@ -184,13 +175,12 @@ public class Player : IPlayer
         int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
         for (int i = 0; i < drawableAmount; i++)
         {
-            spriteBatch.Draw(Assets.PlantSpritesheet, position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(Assets.PlantSpritesheet, Position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
         
-        playerSprite.Draw(spriteBatch, Assets.PlayerTexture);
+        playerSprite.Draw(spriteBatch, Position);
         string text = $"{Seeds.Count}";
-        spriteBatch.DrawString(Assets.UiFont, text, playerSprite.Position + new Vector2(1, 18), Color.Black, 0f, new Vector2(0, 0), 0.75f, SpriteEffects.None, 0f);
-        playerSprite.Draw(spriteBatch, Assets.PlayerTexture);
+        spriteBatch.DrawString(Assets.UiFont, text, Position + new Vector2(1, 18), Color.Black, 0f, new Vector2(0, 0), 0.75f, SpriteEffects.None, 0f);
         aimer?.Draw(spriteBatch, Center);
     }
 }

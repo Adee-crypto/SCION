@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Sprint2.Util;
+using Sprint2.Lib;
 
 namespace Sprint2.Entities.Projectiles;
 

@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace Sprint2.Util; //This should be changed
+namespace Sprint2.Lib; //This should be changed, 
 
 public abstract class Animated
 {
