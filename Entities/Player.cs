@@ -200,7 +200,7 @@ public class Player : IPlayer
         
         playerSprite.Draw(spriteBatch, Assets.PlayerTexture);
         string text = $"{Seeds.Count}";
-        spriteBatch.DrawString(Assets.UiFont, text, playerSprite.Position + new Vector2(2, 18), Color.Black, 0f, new Vector2(0, 0), 0.75f, SpriteEffects.None, 0f);
+        spriteBatch.DrawString(Assets.UiFont, text, playerSprite.Position + new Vector2(1, 18), Color.Black, 0f, new Vector2(0, 0), 0.75f, SpriteEffects.None, 0f);
         playerSprite.Draw(spriteBatch, Assets.PlayerTexture);
         aimer?.Draw(spriteBatch, Center);
     }
