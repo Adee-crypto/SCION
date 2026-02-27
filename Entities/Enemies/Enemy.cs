@@ -50,8 +50,6 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         isGrounded = false;
         PatrolMaxX = initialPos.X + def.PatrolDistance;
         PatrolMinX = initialPos.X - def.PatrolDistance;
-        currentFrameIndex = 0;
-        timeSinceLastFrame = 0;
         shotCooldownLeft = 0;
         firedAttackPrev = false;
     }

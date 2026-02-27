@@ -53,11 +53,9 @@ public interface IPlayer : IDrawable, IUpdatableObject, IPhysicsObject, IAim
 
     void BreakBlock();
 
-    void PlantSeed();
-
     void Attack();
 
-    void Damaged();
+    void ToggleDamaged();
 
     void UpdateHealth(bool isDamaged, float time);
 

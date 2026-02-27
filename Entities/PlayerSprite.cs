@@ -19,20 +19,15 @@ public enum State
     Dead
 };
 
-public class PlayerSprite : IEntitySprite {
+public class PlayerSprite : Animated, IEntitySprite {
     private State currentState;
-    private Rectangle[] frames;
-    private int currentFrameIndex;
-    private double timeSinceLastFrame;
     private Color color;
     public Vector2 Position { get; set; }
 
     public PlayerSprite()
     {
         currentState = State.RightFacing;
-        frames = SourceRects.PlayerSourceRects[State.RightFacing];
-        currentFrameIndex = 0;
-        timeSinceLastFrame = 0;
+        ResetFrameState(SourceRects.PlayerSourceRects[State.RightFacing]);
         color = Color.White;
     }
 
@@ -66,24 +61,14 @@ public class PlayerSprite : IEntitySprite {
         if (currentState != newState)
         {
             currentState = newState;
-            frames = SourceRects.PlayerSourceRects[newState];
-            currentFrameIndex = 0;
-            timeSinceLastFrame = 0;
+            ResetFrameState(SourceRects.PlayerSourceRects[currentState]);
         }
     }
 
-    public void Update(GameTime gameTime)
-    {
-        timeSinceLastFrame += gameTime.ElapsedGameTime.TotalSeconds;
-        while (timeSinceLastFrame >= Consts.playerFrameTime) //ADD FUNC TO FUNCS TO AUTOMATE ALL LOOPS LIKE THIS
-        {
-            currentFrameIndex = (currentFrameIndex + 1) % frames.Length; // Frames rotate
-            timeSinceLastFrame -= Consts.playerFrameTime;
-        }
-    }
+    public void Update(GameTime gameTime) => UpdateFrameState(gameTime);
 
     public void Draw(SpriteBatch spriteBatch, Texture2D texture)
     {
-        spriteBatch.Draw(texture, Position, frames[currentFrameIndex], color);
+        spriteBatch.Draw(texture, Position, CurrentSourceRect, color);
     }
 }

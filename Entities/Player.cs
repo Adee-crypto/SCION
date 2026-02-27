@@ -51,22 +51,16 @@ public class Player : IPlayer
         set { position = value; playerSprite.Position = value; }
     }
 
-    public Rectangle Hitbox
-    {
-        get => new((int)position.X, (int)position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
-    }
+    public Rectangle Hitbox => new((int)position.X, (int)position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
 
-    public Player()
-    {
-        Reset();
-    }
+    public Player() => Reset();
 
     public void Reset()
     {
         playerState = PlayerState.None;
-        playerSprite = new PlayerSprite();
-        position = new Vector2(16, 16);
-        direction = new Vector2(1, 0);
+        playerSprite = new();
+        position = new(16, 16);
+        direction = new(1, 0);
         velocity = Vector2.Zero;
         isGrounded = false;
         health = 5;
@@ -74,7 +68,7 @@ public class Player : IPlayer
         damageTimer = 0f;
         IsBreakable = false;
         breakTimer = 0f;
-        aimer = new Aimer(10f);
+        aimer = new(10f);
         seeds = [.. Enum.GetValues<Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
     }
 
@@ -118,16 +112,11 @@ public class Player : IPlayer
         return seedSpecies;
     }
 
-    public void PlantSeed() { }
+    public void ToggleDamaged() => IsDamaged = !IsDamaged;
 
     public void Attack()
     {
         if (playerState != PlayerState.Dead) playerState = PlayerState.Attack;
-    }
-
-    public void Damaged()
-    {
-        IsDamaged = !IsDamaged;
     }
 
     public void UpdateMovement(float time, IEnumerable<Rectangle> objects)

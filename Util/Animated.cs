@@ -19,8 +19,8 @@ public abstract class Animated
 
     public void UpdateFrameState(GameTime gameTime)
     {
-        Time = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        int indexIncrease = (int)(Age % 1 + Time);
+        Time = (float) gameTime.ElapsedGameTime.TotalSeconds;
+        int indexIncrease = (int) ((Age % 0.2 + Time) / 0.2); //make this customizeable somehow
         FrameIndex = (FrameIndex + indexIncrease) % FrameSourceRects.Length;
         Age += Time;
     }

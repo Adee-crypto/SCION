@@ -25,7 +25,7 @@ public static class KeyBindings
             {new[] {Keys.Q}, game.Exit},
             {new[] {Keys.R}, game.ResetLevel},
             {new[] {Keys.D2}, () => game.testPlant.ToggleSpecies()}, //for testing
-            {new[] {Keys.E}, game.player0.Damaged} //also for testing
+            {new[] {Keys.E}, game.player0.ToggleDamaged} //also for testing
         };
     }
 }
