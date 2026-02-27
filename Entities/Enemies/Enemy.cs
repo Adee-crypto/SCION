@@ -26,12 +26,12 @@ public class Enemy : IDrawableObject, IPhysicsObject
     // TEST FIELDS
     private State currentState = State.RightFacing;
     private Rectangle[] frames = SourceRects.PlayerSourceRects[State.RightFacing];
-    private int currentFrameIndex = 0;
-    private double timeSinceLastFrame = 0;
+    private int currentFrameIndex;
+    private double timeSinceLastFrame;
     private Color color = Color.White;
-    private double shotCooldownLeft = 0.0;
+    private double shotCooldownLeft;
     private const double shootCooldown = 0.2;
-    private bool firedAttackPrev = false;
+    private bool firedAttackPrev;
     private const float ProjectileSpeed = 100f;
     // END TEST FIELDS
 
@@ -52,6 +52,10 @@ public class Enemy : IDrawableObject, IPhysicsObject
         isGrounded = false;
         PatrolMaxX = initialPos.X + def.PatrolDistance;
         PatrolMinX = initialPos.X - def.PatrolDistance;
+        currentFrameIndex = 0;
+        timeSinceLastFrame = 0;
+        shotCooldownLeft = 0;
+        firedAttackPrev = false;
     }
 
     public Vector2 Position
