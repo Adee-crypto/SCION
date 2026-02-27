@@ -7,6 +7,7 @@ using Sprint2.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Sprint2.Entities;
 
@@ -194,9 +195,11 @@ public class Player : IPlayer
         int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
         for (int i = 0; i < drawableAmount; i++)
         {
-            spriteBatch.Draw(Assets.plantSpritesheet, position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(Assets.plantSpritesheet, playerSprite.Position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
         
+        string text = $"{seeds.Count}";
+        spriteBatch.DrawString(Assets.uiFont, text, playerSprite.Position + new Vector2(0, 16), Color.Black);
         playerSprite.Draw(spriteBatch, Assets.playerTexture);
         aimer?.Draw(spriteBatch, Center);
     }

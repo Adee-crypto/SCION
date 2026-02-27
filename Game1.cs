@@ -112,10 +112,12 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        mouseController.IsPaused = isPaused;
-        mouseController.Update();
-        keyboardController.IsPaused = isPaused;
-        keyboardController.Update();
+        if (this.IsActive) { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
+            mouseController.IsPaused = isPaused;
+            mouseController.Update();
+            keyboardController.IsPaused = isPaused;
+            keyboardController.Update();
+        }
         screenSize = (GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
         if (isPaused)
