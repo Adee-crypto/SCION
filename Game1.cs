@@ -35,7 +35,7 @@ public class Game1 : Game
     private EnemyManager enemyManager;
 
     //for testing
-    public Plant testPlant;
+    public Plant testPlant { get; private set; }
 
     public Game1()
     {
