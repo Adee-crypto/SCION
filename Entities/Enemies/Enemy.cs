@@ -13,7 +13,7 @@ namespace Sprint2.Entities.Enemies;
 public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
 {
     private PlayerState enemyAction;
-    private PlayerSprite enemySprite;
+    // private PlayerSprite enemySprite;
     private Vector2 initialPos;
     public Vector2 Position { get; set; }
     private Vector2 center;
@@ -43,7 +43,7 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
     public void Reset()
     {
         ResetFrameState(SourceRects.EnemySourceRects[currentState]);
-        enemySprite = new PlayerSprite();
+        // enemySprite = new();
         Position = initialPos;
         center = Position + Consts.playerHitboxSize * Vector2.One * 0.5f;
         direction = new Vector2(1, 0);
@@ -54,7 +54,6 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         shotCooldownLeft = 0;
         firedAttackPrev = false;
     }
-
 
     public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
 
@@ -215,8 +214,8 @@ public class Enemy : Animated, Interfaces.IDrawable, IPhysicsObject
         else velocity.Y = 0;
         Collisions.ManageCollision(this, objects, movement, ref velocity);
 
-        enemySprite.SetFrames(enemyAction, direction, velocity, false);
-        enemySprite.Update(gameTime);
+        // enemySprite.SetFrames(enemyAction, direction, velocity, false);
+        // enemySprite.Update(gameTime);
 
         center = Position + Consts.playerHitboxSize * Vector2.One * 0.5f;
         

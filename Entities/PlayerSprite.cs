@@ -22,18 +22,17 @@ public enum State
 
 public class PlayerSprite : Animated, IEntitySprite {
     private State currentState;
-    private Color color;
+    public bool IsDamaged { get; set; }
 
     public PlayerSprite()
     {
         currentState = State.RightFacing;
-        color = Color.White;
+        IsDamaged = false;
         ResetFrameState(SourceRects.PlayerSourceRects[State.RightFacing]);
     }
 
     public void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
-        color = isDamaged ? Color.Red : Color.White;
         State newState;
 
         if (linkAction == PlayerState.None)
@@ -69,6 +68,6 @@ public class PlayerSprite : Animated, IEntitySprite {
 
     public void Draw(SpriteBatch spriteBatch, Vector2 pos)
     {
-        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, color);
+        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, IsDamaged ? Color.Red : Color.White);
     }
 }
