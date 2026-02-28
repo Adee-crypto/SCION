@@ -1,54 +1,24 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Sprint2.Util; //FOR TESTING, DELETE THIS
-using System;
+using Sprint2.Lib;
+using Sprint2.Util;
 using System.Collections.Generic;
 
 namespace Sprint2.Entities.Plants;
 
 public enum Species { grass, apple, pineapple };
 
-public class Plant(Species species, (int, int) root)
+public abstract class Plant(Species species, (int, int) root)
 {
-    private Species species = species;
-    private HashSet<(int, int)> budCells = [root];
-    private HashSet<(int, int)> stemCells = [];
-    private float timeGrown;
+    protected readonly Species species = species;
+    protected HashSet<(int, int)> budCells = [root];
+    protected HashSet<(int, int)> stemCells = [];
+    protected float age;
+    protected readonly Ticker ticker = new(PlantUtil.SpeciesGrowTimes[species]);
 
-    public void Update(GameTime gameTime)
-    {
-        if (Keyboard.GetState().IsKeyDown(Keys.D1))
-        { //FOR TESTING
-            timeGrown += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            while (timeGrown >= PlantUtil.SpeciesGrowTimes[species])
-            {
-                timeGrown -= PlantUtil.SpeciesGrowTimes[species];
-                Grow();
-            }
-        }
-    }
+    public abstract void Update(GameTime gameTime);
 
-    private void Grow()
-    {
-        HashSet<(int, int)> newGrowth = [];
-        foreach ((int x, int y) in budCells)
-        {
-            foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.growDirs))
-            {
-                (int, int) newCell = (x + dx, y + dy);
-                if (!stemCells.Contains(newCell) && !budCells.Contains(newCell))
-                {
-                    newGrowth.Add(newCell);
-                    break;
-                }
-            }
-        }
-
-        //Move buds to stem, and replenish new buds
-        stemCells.UnionWith(budCells);
-        budCells = newGrowth; //this very possibly might not do what i want
-    }
+    protected abstract void Grow();
 
     public IEnumerable<Rectangle> GetPlantObjects()
     {
@@ -65,26 +35,14 @@ public class Plant(Species species, (int, int) root)
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach ((int x, int y) in stemCells)
+        foreach (var (x, y) in stemCells)
         {
             spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.Gray);
         }
-        foreach ((int x, int y) in budCells)
+        foreach (var (x, y) in budCells)
         {
             spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.White);
         }
-    }
-
-    //Just a test method, prob won't be used in final game
-    public void ToggleSpecies()
-    {
-        species = species switch
-        {
-            Species.grass => Species.apple,
-            Species.apple => Species.pineapple,
-            Species.pineapple => Species.grass,
-            _ => species, // never happen
-        };
     }
 
     //FIX THIS TO ONLY BREAK IF PLAYER ACTUALLY TOUCHING BLOCK; work with collision?

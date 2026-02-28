@@ -105,7 +105,7 @@ public class Game1 : Game
         enemyManager.Reset();
         projectileManager.Reset();
         enemyManager.Spawn(rangedEnemy, new Vector2(16 * 40, 16 * 24));
-        testPlant = new(Species.grass, (20, 20)); //POTENTIALLY ADD RESET TO PLANT
+        testPlant = new ApplePlant((20, 20)); //POTENTIALLY ADD RESET TO PLANT
         objects = [];
         platforms = [new(Platform.Type.stonebrick, 0, 16 * 25, 50, 1)];
         isPaused = false;

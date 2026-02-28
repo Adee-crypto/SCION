@@ -2,7 +2,6 @@ using Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,7 +19,7 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
 
         def.UpdateFrameState(gameTime);
 
-        if (def.Age >= def.MaxLifetimeSeconds) { //kill if too old
+        if (def.Ticker.TickAge >= def.MaxLifetimeSeconds) { //kill if too old
             Kill();
             return;
         }

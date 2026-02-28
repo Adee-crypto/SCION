@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input; // For debug
 using Sprint2.Entities.Projectiles;
 using Sprint2.Util;
-using Sprint2.Lib;
 using System;
 using System.Collections.Generic;
 using Sprint2.Entities.Players;
@@ -23,7 +22,7 @@ public class Enemy : Interfaces.IDrawable
 {
     //Motion + Physics
     private Vector2 direction;
-    public Collider Collider;
+    public Collider Collider { get; }
     
     //States
     private EnemyDef def;
@@ -192,20 +191,21 @@ public class Enemy : Interfaces.IDrawable
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player, ProjectileManager projectileManager)
     {
+        float dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
         // FOR TESTING
-        shotCooldownLeft -= sprite.Time;
+        shotCooldownLeft -= dt;
         if (shotCooldownLeft < 0) shotCooldownLeft = 0;
         // END TESTING
 
         Decide(player, projectileManager);
 
         Vector2 movement = Vector2.Zero;
-        if (Collider.Velocity.X != 0) movement.X = Collider.Velocity.X * sprite.Time;
+        if (Collider.Velocity.X != 0) movement.X = Collider.Velocity.X * dt;
         if (Collider.Velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(Collider, objects, ref movement);
         if (!isGrounded)
         {
-            movement.Y = 0.5f * (2f * Collider.Velocity.Y + def.Gravity * sprite.Time) * sprite.Time;
-            Collider.Velocity.Y += def.Gravity * sprite.Time;
+            movement.Y = Collider.Velocity.Y * dt + 0.5f * def.Gravity * dt * dt;
+            Collider.Velocity.Y += def.Gravity * dt;
         }
         else Collider.Velocity.Y = 0;
         Collisions.ManageCollision(Collider, objects, movement);

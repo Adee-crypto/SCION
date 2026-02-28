@@ -24,7 +24,7 @@ public class Platform : Interfaces.IDrawable
         int width = tilesWide * Consts.platformWidth;
         int height = tilesTall * Consts.platformWidth;
 
-        Bounds = new Rectangle(x, y, width, height);
+        Bounds = new(x, y, width, height);
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -37,7 +37,7 @@ public class Platform : Interfaces.IDrawable
         {
             for (int width = 0; width < Bounds.Width; width += size)
             {
-                var finalPlat = new Rectangle(Bounds.X + width, Bounds.Y + height, size, size);
+                Rectangle finalPlat = new(Bounds.X + width, Bounds.Y + height, size, size);
                 spriteBatch.Draw(Assets.PlatformSpritesheet, finalPlat, sourceSprite, Color.White);
             }
         }
