@@ -1,45 +1,48 @@
-using Interfaces;
 using Microsoft.Xna.Framework;
+using Sprint2.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Sprint2;
 
 public class Collisions
 {
-    public static void ManageCollision(IPhysicsObject entity, IEnumerable<Rectangle> objects, Vector2 movement)
+    public static void ManageCollision(Collider collider, IEnumerable<Rectangle> objects, Vector2 movement)
     {
-        Vector2 currentPosition = entity.Position;
+        Vector2 currentPosition = collider.Position;
 
         currentPosition.X += movement.X;
-        entity.Position = currentPosition;
+        collider.Position = currentPosition;
         foreach (var obj in objects)
         {
-            if (!entity.Hitbox.Intersects(obj)) continue;
-            if (movement.X > 0) currentPosition.X = obj.Left - entity.Hitbox.Width;
-            else if (movement.X < 0) currentPosition.X = obj.Right;
+            if (collider.Hitbox.Intersects(obj)) {
+                if (movement.X > 0) currentPosition.X = obj.Left - collider.Hitbox.Width;
+                else if (movement.X < 0) currentPosition.X = obj.Right;
+            }
         }
 
         currentPosition.Y += movement.Y;
-        entity.Position = currentPosition;
+        collider.Position = currentPosition;
         foreach (var obj in objects)
         {
-            if (!entity.Hitbox.Intersects(obj)) continue;
-            if (movement.Y < 0) entity.Velocity.Y = 0;
-            currentPosition.Y = (movement.Y < 0) ? obj.Bottom : obj.Top - entity.Hitbox.Height;
+            if (collider.Hitbox.Intersects(obj)) {
+                if (movement.Y < 0) collider.Velocity.Y = 0;
+                currentPosition.Y = (movement.Y < 0) ? obj.Bottom : obj.Top - collider.Hitbox.Height;
+            }
         }
 
-        entity.Position = currentPosition;
+        collider.Position = currentPosition;
     }
 
-    public static bool CheckGrounded(IPhysicsObject entity, IEnumerable<Rectangle> objects, ref Vector2 movement)
+    public static bool CheckGrounded(Collider collider, IEnumerable<Rectangle> objects, ref Vector2 movement)
     {
-        Rectangle onePixelBelow = entity.Hitbox;
+        Rectangle onePixelBelow = collider.Hitbox;
         onePixelBelow.Y += 1;
         foreach (var obj in objects)
         {
             if (onePixelBelow.Intersects(obj) && onePixelBelow.Bottom >= obj.Top)
             {
-                movement.Y = obj.Top - entity.Hitbox.Bottom;
+                movement.Y = obj.Top - collider.Hitbox.Bottom;
                 return true;
             }
         }

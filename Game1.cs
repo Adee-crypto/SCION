@@ -113,7 +113,7 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (this.IsActive) { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
+        if (IsActive) { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
             mouseController.IsPaused = isPaused;
             mouseController.Update();
             keyboardController.IsPaused = isPaused;
@@ -138,7 +138,7 @@ public class Game1 : Game
 
             if (player0.IsBreakable)
             {
-                if (testPlant.TryRemoveCellBelow(new Vector2(player0.Hitbox.Center.X, player0.Hitbox.Bottom)))
+                if (testPlant.TryRemoveCellBelow(new Vector2(player0.Collider.Hitbox.Center.X, player0.Collider.Hitbox.Bottom)))
                 {
                     player0.GetSeed();
                 }
@@ -147,7 +147,7 @@ public class Game1 : Game
 
             testPlant.Update(gameTime);
 
-            if (player0.Position.Y > screenSize.h) ResetLevel();
+            if (player0.Collider.Position.Y > screenSize.h) ResetLevel();
         }
 
         base.Update(gameTime);

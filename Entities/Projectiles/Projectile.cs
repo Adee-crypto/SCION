@@ -11,15 +11,9 @@ namespace Sprint2.Entities.Projectiles;
 public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 initialVelocity) : IProjectile
 {
     private readonly ProjectileDef def = def;
-    public Vector2 Position { get; set; } = initialPosition;
-    private Vector2 velocity = initialVelocity;
-
-    private float Angle => MathF.Atan2(velocity.Y, velocity.X);
+    public Collider Collider { get; } = new(initialPosition, Vector2.Zero) {Velocity = initialVelocity};  //change this from Vector2.Zero
 
     public bool IsAlive { get; private set; } = true;
-
-    //This is kind of broken currently, so I have 0x0 hitbox
-    public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, 0, 0);//new((Position - def.HitBox / 2f).ToPoint(), def.HitBox.ToPoint());
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects) {
         if (!IsAlive) return;
@@ -31,11 +25,11 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
             return;
         }
         //update position and velocity
-        velocity += new Vector2(0f, def.Gravity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Collider.Velocity += new Vector2(0f, def.Gravity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Collider.Position += Collider.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
         // if (velocity.LengthSquared() > 0.0001f) I hope having this commented doesnt break anything
         //     angle = MathF.Atan2(velocity.Y, velocity.X);
-        if (objects.Any(o => o.Intersects(Hitbox))) Kill();  //kill on collision
+        if (objects.Any(o => o.Intersects(Collider.Hitbox))) Kill();  //kill on collision
     }
 
     public void Kill() => IsAlive = false;
@@ -43,6 +37,6 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
     public void Draw(SpriteBatch spriteBatch)
     {
         if (IsAlive)
-            spriteBatch.Draw(Assets.PlantSpritesheet, Position, def.CurrentSourceRect, Color.White, Angle, def.Origin, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Assets.PlantSpritesheet, Collider.Position, def.CurrentSourceRect, Color.White, Collider.Angle, def.Origin, 1f, SpriteEffects.None, 0f);
     }
 }

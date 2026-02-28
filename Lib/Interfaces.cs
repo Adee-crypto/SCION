@@ -22,8 +22,7 @@ public interface IUpdatableObject
 
 public interface IPhysicsObject
 {
-    Vector2 Position { get; set; }
-    Rectangle Hitbox { get; }
+    Collider Collider {get;}
 }
 
 public interface IController

@@ -22,12 +22,8 @@ public enum State
 public class Player : IPlayer
 {
     //Motion + Physics
+    public Collider Collider { get; } = new(new(16, 16), Consts.playerHitboxSize * Vector2.One);
     private Vector2 direction;
-    public Vector2 Position { get; set; }
-    private Vector2 velocity;
-    public Vector2 Velocity => velocity;
-    public Vector2 Center => Position + Consts.playerHitboxSize * Vector2.One / 2f;
-    public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, Consts.playerHitboxSize, Consts.playerHitboxSize);
     
     //States
     private State playerState;
@@ -47,15 +43,16 @@ public class Player : IPlayer
     public List<Species> Seeds {get; set;}
     private const int maximumSeedsDrawable = 5;
 
-    public Player() => Reset();
+    public Player() {
+        Reset();
+    }
 
     public void Reset()
     {
+        Collider.Reset();
         playerState = State.None;
         playerSprite = new();
-        Position = new(16, 16);
         direction = new(1, 0);
-        velocity = Vector2.Zero;
         isGrounded = false;
         health = 5;
         IsDamaged = false;
@@ -71,7 +68,7 @@ public class Player : IPlayer
         if (playerState != State.Dead)
         {
             this.direction.X = direction;
-            velocity.X = Consts.playerXSpeed * direction;
+            Collider.Velocity.X = Consts.playerXSpeed * direction;
         }
     }
 
@@ -80,13 +77,13 @@ public class Player : IPlayer
         if (isGrounded && playerState != State.Dead)
         {
             isGrounded = false;
-            velocity.Y = Consts.playerJumpSpeed;
+            Collider.Velocity.Y = Consts.playerJumpSpeed;
         }
     }
 
     public void BreakBlock()
     {
-        if (isGrounded && velocity.X == 0 && playerState != State.Dead)
+        if (isGrounded && Collider.Velocity.X == 0 && playerState != State.Dead)
         {
             playerState = State.BreakBlock;
         }
@@ -116,15 +113,15 @@ public class Player : IPlayer
     public void UpdateMovement(float time, IEnumerable<Rectangle> objects)
     {
         Vector2 movement = Vector2.Zero;
-        if (velocity.X != 0) movement.X = velocity.X * time;
-        if (velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(this, objects, ref movement);
+        if (Collider.Velocity.X != 0) movement.X = Collider.Velocity.X * time;
+        if (Collider.Velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(Collider, objects, ref movement);
         if (!isGrounded)
         {
-            movement.Y = 0.5f * (2f * velocity.Y + Consts.playerGravity * time) * time;
-            velocity.Y += Consts.playerGravity * time;
+            movement.Y = 0.5f * (2f * Collider.Velocity.Y + Consts.playerGravity * time) * time;
+            Collider.Velocity.Y += Consts.playerGravity * time;
         }
-        else velocity.Y = 0;
-        Collisions.ManageCollision(this, objects, movement, ref velocity);
+        else Collider.Velocity.Y = 0;
+        Collisions.ManageCollision(Collider, objects, movement);
     }
 
     public void UpdateBreakBlock(float time)
@@ -163,11 +160,11 @@ public class Player : IPlayer
         UpdateBreakBlock(time);
         UpdateHealth(IsDamaged, time);
 
-        aimer?.Update(Center, Mouse.GetState());
-        playerSprite.UpdateState(playerState, direction, velocity, IsDamaged);
+        aimer?.Update(Collider.Center, Mouse.GetState());
+        playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
         playerSprite.Update(gameTime);
 
-        velocity.X = 0;
+        Collider.Velocity.X = 0;
         if (playerState != State.Dead) playerState = State.None;
     }
 
@@ -177,12 +174,12 @@ public class Player : IPlayer
         int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
         for (int i = 0; i < drawableAmount; i++)
         {
-            spriteBatch.Draw(Assets.PlantSpritesheet, Position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(Assets.PlantSpritesheet, Collider.Position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
         }
         
-        playerSprite.Draw(spriteBatch, Position);
+        playerSprite.Draw(spriteBatch, Collider.Position);
         string text = $"{Seeds.Count}";
-        spriteBatch.DrawString(Assets.UiFont, text, Position + new Vector2(1, 18), Color.Black, 0f, new Vector2(0, 0), 0.75f, SpriteEffects.None, 0f);
-        aimer?.Draw(spriteBatch, Center);
+        spriteBatch.DrawString(Assets.UiFont, text, Collider.Position + new Vector2(1, 18), Color.Black, 0f, new Vector2(0, 0), 0.75f, SpriteEffects.None, 0f);
+        aimer?.Draw(spriteBatch, Collider.Center);
     }
 }

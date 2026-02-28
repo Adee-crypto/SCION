@@ -11,7 +11,7 @@ namespace Sprint2;
 public class ProjectileManager(IMouseController mouse, Player player) : Interfaces.IDrawable, IUpdatableObject
 {
     private readonly IMouseController mouse = mouse;
-    private readonly Player player = player;
+    private readonly Collider playerCollider = player.Collider;
     private readonly List<IProjectile> projectiles = [];
 
     public void Reset()
@@ -38,8 +38,8 @@ public class ProjectileManager(IMouseController mouse, Player player) : Interfac
                 string seedSpecies = player.ThrowSeed();
                 ProjectileDef def = new(seedSpecies);
 
-                Vector2 spawnPos = player.Center + direction * 12f;
-                Vector2 initialVelocity = direction * def.LaunchSpeed + player.Velocity;
+                Vector2 spawnPos = playerCollider.Center + direction * 12f;
+                Vector2 initialVelocity = direction * def.LaunchSpeed + playerCollider.Velocity;
 
                 projectiles.Add(new Projectile(def, spawnPos, initialVelocity));
             }
