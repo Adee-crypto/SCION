@@ -8,7 +8,7 @@ namespace Sprint2.UI;
 
 public class Menu
 {
-    private readonly SpriteFont font = font;
+    private readonly SpriteFont font;
     private readonly List<Button> buttons = [];
 
     public string Title { get; set; } = "";
