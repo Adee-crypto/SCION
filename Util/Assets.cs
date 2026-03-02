@@ -12,6 +12,7 @@ public static class Assets
     public static Texture2D ButtonTexture {get; set;}
     public static Texture2D ResetTexture {get; set;}
     public static Texture2D VoidspawnTexture {get; set;}
+    public static Texture2D PauseMenuTexture {get; set;}
 
     public static SpriteFont UiFont {get; set;}
     //Add sounds here too

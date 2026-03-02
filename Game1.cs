@@ -84,7 +84,9 @@ public class Game1 : Game
         Assets.ResetTexture = Content.Load<Texture2D>("ResetButton");
         Assets.UiFont = Content.Load<SpriteFont>("UIFont");
         Assets.VoidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
-        pauseMenu = new PauseMenu(Assets.UiFont, GraphicsDevice);
+        Assets.PauseMenuTexture = new Texture2D(GraphicsDevice, 1, 1);
+        Assets.PauseMenuTexture.SetData([Color.White]);
+        pauseMenu = new PauseMenu(Assets.UiFont);
 
         Vector2 resumePosition = new(screenSize.w / 2 - 100, screenSize.h / 2 - 60);
         Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
