@@ -1,11 +1,11 @@
-﻿﻿using Interfaces;
-using Microsoft.Xna.Framework;
+﻿﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Controllers;
 using Sprint2.Entities;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
+using Sprint2.Managers;
 using Sprint2.UI;
 using Sprint2.Util;
 using System.Collections.Generic;

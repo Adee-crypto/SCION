@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
 using System.Collections.Generic;
 
-namespace Interfaces;
+namespace Sprint2.Extensions;
 
 public interface IDrawable
 {

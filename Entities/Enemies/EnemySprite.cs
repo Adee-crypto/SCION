@@ -1,8 +1,7 @@
-﻿using Interfaces;
+﻿using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
-using Sprint2.Lib;
 
 namespace Sprint2.Entities.Enemies;
 

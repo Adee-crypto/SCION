@@ -1,5 +1,5 @@
 using System;
-using Interfaces;
+using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 
 namespace Sprint2.Entities;

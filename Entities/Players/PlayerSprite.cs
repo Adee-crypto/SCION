@@ -1,8 +1,7 @@
-﻿using Interfaces;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
-using Sprint2.Lib;
+using Sprint2.Extensions;
 
 namespace Sprint2.Entities.Players;
 
