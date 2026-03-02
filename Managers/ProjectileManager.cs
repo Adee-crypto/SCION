@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
 using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
-using System;
 using System.Collections.Generic;
 using Sprint2.Controllers;
 

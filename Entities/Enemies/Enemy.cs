@@ -1,11 +1,8 @@
-using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input; // For debug
 using Sprint2.Entities.Projectiles;
 using Sprint2.Util;
 using System;
-using System.Collections.Generic;
 using Sprint2.Entities.Players;
 using Sprint2.Managers;
 

@@ -2,7 +2,6 @@ using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
-using System.Collections.Generic;
 using System.Linq;
 using Sprint2.Managers;
 

@@ -44,8 +44,6 @@ public class Game1 : Game
     protected override void Initialize()
     {
         spriteBatch = new(GraphicsDevice);
-
-        //specific objects (prob will all be deleted and added to level, maybe not player tho)
         Player = new();
         level = new(Player);
         
@@ -92,8 +90,6 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        ScreenSize = (GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-
         if (IsActive) { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
             MouseController.Update();
             KeyboardController.Update(IsPaused);
@@ -106,7 +102,6 @@ public class Game1 : Game
         }
 
         base.Update(gameTime);
-        //screenManager.Update(gameTime); // Not yet finished
     }
 
     protected override void Draw(GameTime gameTime)

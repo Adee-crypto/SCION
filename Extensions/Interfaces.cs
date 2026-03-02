@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
 using Sprint2.Managers;
-using System.Collections.Generic;
 
 namespace Sprint2.Extensions;
 
