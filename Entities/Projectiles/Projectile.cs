@@ -7,12 +7,19 @@ using System.Linq;
 
 namespace Sprint2.Entities.Projectiles;
 
-public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 initialVelocity) : IProjectile
+public class Projectile : IProjectile
 {
-    private readonly ProjectileDef def = def;
-    public Collider Collider { get; } = new(initialPosition, Vector2.Zero) {Velocity = initialVelocity};  //change this from Vector2.Zero
+    private readonly ProjectileDef def;
+    public Collider Collider { get; }  //change this from Vector2.Zero
 
     public bool IsAlive { get; private set; } = true;
+
+    public Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 initialVelocity)
+    {
+        this.def = def;
+        Collider = new Collider(initialPosition, Vector2.Zero);
+        Collider.SetVelocity(initialVelocity);
+    }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects) {
         if (!IsAlive) return;
@@ -24,8 +31,8 @@ public class Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 init
             return;
         }
         //update position and velocity
-        Collider.Velocity += new Vector2(0f, def.Gravity) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Collider.Position += Collider.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Collider.SetVelocity(Collider.Velocity + (new Vector2(0f, def.Gravity) * (float)gameTime.ElapsedGameTime.TotalSeconds));
+        Collider.SetPosition(Collider.Position + (Collider.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds));
         // if (velocity.LengthSquared() > 0.0001f) I hope having this commented doesnt break anything
         //     angle = MathF.Atan2(velocity.Y, velocity.X);
         if (objects.Any(o => o.Intersects(Collider.Hitbox))) Kill();  //kill on collision

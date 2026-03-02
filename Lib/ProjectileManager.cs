@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
 using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
+using System;
 using System.Collections.Generic;
 
 namespace Sprint2;
@@ -39,7 +40,9 @@ public class ProjectileManager(IMouseController mouse, Player player) : Interfac
                 ProjectileDef def = new(seedSpecies);
 
                 Vector2 spawnPos = playerCollider.Center + direction * 12f;
-                Vector2 initialVelocity = direction * def.LaunchSpeed + playerCollider.Velocity;
+                Vector2 initialVelocity;
+                if (Vector2.Dot(direction, playerCollider.Velocity) > 0) { initialVelocity = direction * def.LaunchSpeed + playerCollider.Velocity; }
+                else initialVelocity = direction * def.LaunchSpeed;
 
                 projectiles.Add(new Projectile(def, spawnPos, initialVelocity));
             }

@@ -62,7 +62,7 @@ public class Enemy : Interfaces.IDrawable
     public void Move(int direction)
     {
         this.direction.X = direction;
-        Collider.Velocity.X = def.Speed * direction;
+        Collider.SetVelocityX(def.Speed * direction);
     }
 
     public void Jump()
@@ -70,7 +70,7 @@ public class Enemy : Interfaces.IDrawable
         if (isGrounded)
         {
             isGrounded = false;
-            Collider.Velocity.Y = Consts.playerJumpSpeed;
+            Collider.SetVelocityY(Consts.playerJumpSpeed);
         }
     }
 
@@ -86,12 +86,12 @@ public class Enemy : Interfaces.IDrawable
 
         if (Collider.Position.X >= PatrolMaxX)
         {
-            Collider.Position.X = PatrolMaxX;
+            Collider.SetPositionX(PatrolMaxX);
             Move(-1);
         }
         else if (Collider.Position.X <= PatrolMinX)
         {
-            Collider.Position.X = PatrolMinX;
+            Collider.SetPositionX(PatrolMinX);
             Move(1);
         }
         state = State.None;
@@ -114,11 +114,11 @@ public class Enemy : Interfaces.IDrawable
             firedAttackPrev = false;
             state = State.None;
             float newSpeed = def.Speed;
-            Collider.Velocity.X = newSpeed * MathF.Sign(difference);
+            Collider.SetVelocityX(newSpeed * MathF.Sign(difference));
             return;
         } 
         
-        Collider.Velocity.X = 0;
+        Collider.SetVelocityX(0);
         Attack();
 
         if (!firedAttackPrev && shotCooldownLeft <= 0)
@@ -141,7 +141,7 @@ public class Enemy : Interfaces.IDrawable
         }
         else
         {
-            Collider.Position.X = 0;
+            Collider.SetPositionX(0);
         }
         state = State.None;
     }
@@ -205,15 +205,15 @@ public class Enemy : Interfaces.IDrawable
         if (!isGrounded)
         {
             movement.Y = Collider.Velocity.Y * dt + 0.5f * def.Gravity * dt * dt;
-            Collider.Velocity.Y += def.Gravity * dt;
+            Collider.SetVelocityY(Collider.Velocity.Y + (def.Gravity * dt));
         }
-        else Collider.Velocity.Y = 0;
+        else Collider.SetVelocityY(0);
         Collisions.ManageCollision(Collider, objects, movement);
         
         sprite.UpdateState(state, direction, Collider.Velocity, false);
         sprite.Update(gameTime);
 
-        Collider.Velocity.X = 0;
+        Collider.SetVelocityX(0);
         if (state != State.Dead) state = State.None;
     }
 

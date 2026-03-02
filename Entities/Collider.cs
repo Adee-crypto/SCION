@@ -8,14 +8,13 @@ public class Collider
 {
     private Vector2 initialPos;
     public Vector2 InitialPos => initialPos;
-    public Vector2 Position;
-    public Vector2 Velocity;
+    //public Vector2 Position;
+    //public Vector2 Velocity;
     public float Angle => MathF.Atan2(Velocity.Y, Velocity.X);
-    //im so tired of these warnings
-    // private Vector2 position;
-    // public Vector2 Position {get => position; set => position = value;}
-    // private Vector2 velocity;
-    // public Vector2 Velocity {get => velocity; set => velocity = value;}
+    private Vector2 position;
+    public Vector2 Position {get => position; private set => position = value;}
+     private Vector2 velocity;
+    public Vector2 Velocity {get => velocity; private set => velocity = value;}
     private Vector2 Size;
     public Vector2 Center => Position + Size / 2f;
     public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y); //probably make this not int at some point
@@ -29,5 +28,40 @@ public class Collider
     public void Reset() {
         Position = initialPos;
         Velocity = Vector2.Zero;
+    }
+
+    public void SetVelocityX(float x)
+    {
+        Velocity = new Vector2(x, Velocity.Y);
+    }
+
+    public void SetVelocityY(float y)
+    {
+        Velocity = new Vector2(Velocity.X, y);
+    }
+
+    public void SetVelocity(float x, float y)
+    {
+        Velocity = new Vector2(x, y);
+    }
+
+    public void SetVelocity(Vector2 newVelocity)
+    {
+        Velocity = newVelocity;
+    }
+
+    public void SetPositionX(float x)
+    {
+        Position = new Vector2(x, Position.Y);
+    }
+
+    public void SetPositionY(float y)
+    {
+        Position = new Vector2(Position.X, y);
+    }
+
+    public void SetPosition(Vector2 newPosition)
+    {
+        Position = newPosition;
     }
 }

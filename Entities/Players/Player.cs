@@ -68,7 +68,7 @@ public class Player : IPlayer
         if (playerState != State.Dead)
         {
             this.direction.X = direction;
-            Collider.Velocity.X = Consts.playerXSpeed * direction;
+            Collider.SetVelocityX(Consts.playerXSpeed * direction);
         }
     }
 
@@ -77,7 +77,7 @@ public class Player : IPlayer
         if (isGrounded && playerState != State.Dead)
         {
             isGrounded = false;
-            Collider.Velocity.Y = Consts.playerJumpSpeed;
+            Collider.SetVelocityY(Consts.playerJumpSpeed);
         }
     }
 
@@ -118,9 +118,9 @@ public class Player : IPlayer
         if (!isGrounded)
         {
             movement.Y = 0.5f * (2f * Collider.Velocity.Y + Consts.playerGravity * time) * time;
-            Collider.Velocity.Y += Consts.playerGravity * time;
+            Collider.SetVelocityY(Collider.Velocity.Y + (Consts.playerGravity * time));
         }
-        else Collider.Velocity.Y = 0;
+        else Collider.SetVelocityY(0);
         Collisions.ManageCollision(Collider, objects, movement);
     }
 
@@ -164,7 +164,7 @@ public class Player : IPlayer
         playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
         playerSprite.Update(gameTime);
 
-        Collider.Velocity.X = 0;
+        Collider.SetVelocityX(0);
         if (playerState != State.Dead) playerState = State.None;
     }
 

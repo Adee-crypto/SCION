@@ -12,7 +12,8 @@ public class Collisions
         Vector2 currentPosition = collider.Position;
 
         currentPosition.X += movement.X;
-        collider.Position = currentPosition;
+        collider.SetPosition(currentPosition);
+
         foreach (var obj in objects)
         {
             if (collider.Hitbox.Intersects(obj)) {
@@ -22,16 +23,16 @@ public class Collisions
         }
 
         currentPosition.Y += movement.Y;
-        collider.Position = currentPosition;
+        collider.SetPosition(currentPosition);
         foreach (var obj in objects)
         {
             if (collider.Hitbox.Intersects(obj)) {
-                if (movement.Y < 0) collider.Velocity.Y = 0;
+                if (movement.Y < 0) collider.SetVelocityY(0);
                 currentPosition.Y = (movement.Y < 0) ? obj.Bottom : obj.Top - collider.Hitbox.Height;
             }
         }
 
-        collider.Position = currentPosition;
+        collider.SetPosition(currentPosition);
     }
 
     public static bool CheckGrounded(Collider collider, IEnumerable<Rectangle> objects, ref Vector2 movement)
