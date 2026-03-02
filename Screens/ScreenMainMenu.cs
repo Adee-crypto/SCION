@@ -16,7 +16,7 @@ public class ScreenMainMenu : IScreen
         this.game = game;
         this.screenManager = screenManager;
 
-        menu = new Menu(Assets.UiFont, game.GraphicsDevice) { Title = "Main Menu", DimBackground = false };
+        menu = new(Assets.UiFont) { Title = "Main Menu", DimBackground = false };
     }
 
     public void OnEnter()

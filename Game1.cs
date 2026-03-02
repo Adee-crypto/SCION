@@ -24,21 +24,23 @@ public class Game1 : Game
 
     public Game1()
     {
-        //graphics & resizing
         _graphics = new(this);
         Window.AllowUserResizing = true;
-        Window.ClientSizeChanged += new EventHandler<EventArgs>(ResizeGraphics);
-        ResizeGraphics(null, null);
-
+        Window.ClientSizeChanged += new EventHandler<EventArgs>(OnResize);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
 
-    private void ResizeGraphics(object sender, EventArgs e) {
+    private void OnResize(object sender, EventArgs e) {
+        //resizing _graphics
         ScreenSize = (Window.ClientBounds.Width, Window.ClientBounds.Height);
         _graphics.PreferredBackBufferWidth = ScreenSize.w;
         _graphics.PreferredBackBufferHeight = ScreenSize.h;
         _graphics.ApplyChanges();
+
+        //resizing anything else
+        pauseMenu.Resize(ScreenSize);
+        level.Resize(ScreenSize);
     }
 
     protected override void Initialize()
@@ -46,12 +48,9 @@ public class Game1 : Game
         spriteBatch = new(GraphicsDevice);
         Player = new();
         level = new(Player);
-        
+        KeyBindings.AttachKeyBindings(this); // Must be done after Game1's fields are initialized
+        //screenManager.SetScreen(new ScreenMainMenu(this, screenManager, mouseController)); // Not yet finished
         base.Initialize();
-        ResetLevel();
-
-        //Requires all (most) fields of Game1 to be initialized first
-        KeyBindings.AttachKeyBindings(this);
     }
 
     protected override void LoadContent()
@@ -67,14 +66,13 @@ public class Game1 : Game
         Assets.VoidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
         Assets.PauseMenuTexture = new Texture2D(GraphicsDevice, 1, 1);
         Assets.PauseMenuTexture.SetData([Color.White]);
-        //screenManager.SetScreen(new ScreenMainMenu(this, screenManager, mouseController)); // Not yet finished
 
-        pauseMenu = new(Assets.UiFont, GraphicsDevice) { Title = "Game Paused", DimBackground = true };
-
+        //I would like to be able to move all of these to Initialize but not sure how
+        pauseMenu = new(Assets.UiFont) { Title = "Game Paused", DimBackground = true };
+        OnResize(null, null);
         Vector2 resumePosition = new(ScreenSize.w / 2 - 100, ScreenSize.h / 2 - 60);
         Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
         Vector2 resetPosition = new(16, 16);
-
         pauseMenu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Resume", TogglePause, new(200, 50), resumePosition));
         pauseMenu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Quit", Exit, new(200, 50), quitPosition));
         pauseMenu.AddButton(new(Assets.UiFont, Assets.ResetTexture, "", ResetLevel, new(32, 32), resetPosition));

@@ -12,7 +12,7 @@ public class Button
     private readonly Texture2D texture;
     private readonly string text;
     private readonly Action onClick;
-    private readonly Rectangle bounds;
+    private Rectangle bounds;
     private readonly Vector2 textPos;
     private bool hover;
 
@@ -24,6 +24,11 @@ public class Button
         onClick = command;
         bounds = new((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
         textPos = pos + 0.5f * (size - font.MeasureString(buttonText));
+    }
+
+    public void Resize((int w, int h) screenSize)
+    {
+        //TODO IMPLEMENT THIS
     }
 
     public void Update()

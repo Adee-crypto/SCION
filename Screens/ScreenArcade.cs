@@ -16,7 +16,7 @@ public class ScreenArcade : IScreen
         this.game = game;
         this.screenManager = screenManager;
 
-        menu = new(Assets.UiFont, game.GraphicsDevice) { Title = "Arcade Mode", DimBackground = true };
+        menu = new(Assets.UiFont) { Title = "Arcade Mode", DimBackground = true };
     }
 
     public void OnEnter()

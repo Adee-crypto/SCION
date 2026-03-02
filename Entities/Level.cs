@@ -13,6 +13,7 @@ namespace Sprint2;
 
 public class Level {
     private readonly Player Player;
+    private (int w, int h) ScreenSize {get;set;}
     private List<Platform> platforms;
     private readonly ProjectileManager projectileManager;
     private readonly CollisionManager collisionManager;
@@ -45,7 +46,7 @@ public class Level {
         platforms = [new(Platform.Type.stonebrick, 0, 16 * 25, 50, 1)];
     }
 
-    public void Update(GameTime gameTime, (int w, int h) screenSize)
+    public void Update(GameTime gameTime)
     {
         //screenManager.Update(gameTime); // Not yet finished
         collisionManager.Reset();
@@ -67,8 +68,10 @@ public class Level {
 
         testPlant.Update(gameTime);
 
-        if (Player.Collider.Position.Y > screenSize.h) Reset();
+        if (Player.Collider.Position.Y > ScreenSize.h) Reset();
     }
+
+    public void Resize((int w, int h) size) => ScreenSize = (size.w, size.h);
 
     public void Draw(SpriteBatch spriteBatch)
     {

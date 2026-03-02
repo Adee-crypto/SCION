@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Advait;
 
-public abstract class Plant : IPlantable
+public abstract class Plant(Texture2D texture, Point startPosition) : IPlantable
 {
-    protected Texture2D texture;
-    protected Rectangle sourceRectangle;
+    protected Texture2D texture = texture;
+    protected Rectangle sourceRectangle = new Rectangle(335, 450, 37, 37);
 
     protected const int TILE_SIZE = 37;
 
-    protected Point horizontalOrigin;
+    protected Point horizontalOrigin = startPosition;
     protected Point patternOrigin;
 
     protected float timer = 0f;
@@ -20,14 +20,6 @@ public abstract class Plant : IPlantable
     protected int patternStep = 0;
 
     protected bool startPattern = false;
-
-    public Plant(Texture2D texture, Point startPosition)
-    {
-        this.texture = texture;
-        this.horizontalOrigin = startPosition;
-
-        sourceRectangle = new Rectangle(335, 450, 37, 37);
-    }
 
     public virtual void Update(GameTime gameTime)
     {

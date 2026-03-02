@@ -5,22 +5,18 @@ using System.Collections.Generic;
 
 namespace Sprint2.UI;
 
-public class Menu
+public class Menu(SpriteFont font)
 {
-    private readonly SpriteFont font;
+    private readonly SpriteFont font = font;
     private readonly List<Button> buttons = [];
 
     public string Title { get; set; } = "";
     public bool DimBackground { get; set; } = true;
 
-    public Menu(SpriteFont font, GraphicsDevice graphicsDevice)
-    {
-        this.font = font;
-    }
-
     public void AddButton(Button button) => buttons.Add(button);
     public void ClearButtons() => buttons.Clear();
     public void Update() => buttons.ForEach(b => b.Update());
+    public void Resize((int, int) size) => buttons.ForEach(b => b.Resize(size));
 
     public void Draw(SpriteBatch spriteBatch, (int w, int h) screenSize)
     {

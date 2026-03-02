@@ -3,12 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Advait;
 
-public class VinePlant : Plant
+public class VinePlant(Texture2D texture, Point startPosition) : Plant(texture, startPosition)
 {
-    public VinePlant(Texture2D texture, Point startPosition)
-        : base(texture, startPosition)
-    {
-    }
 
     protected override Point[] GetPatternOffsets()
     {

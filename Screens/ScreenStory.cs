@@ -16,7 +16,7 @@ public class ScreenStory : IScreen
         this.game = game;
         this.screenManager = screenManager;
 
-        menu = new Menu(Assets.UiFont, game.GraphicsDevice) { Title = "Story Mode", DimBackground = true };
+        menu = new(Assets.UiFont) { Title = "Story Mode", DimBackground = true };
     }
 
     public void OnEnter()
