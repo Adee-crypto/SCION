@@ -9,8 +9,6 @@ public static class MouseController// : IMouseController
     private static MouseState currentMouseState;
     private static MouseState previousMouseState;
 
-    public static bool IsPaused { get; set; }
-
     public static void Update()
     {
         previousMouseState = currentMouseState;

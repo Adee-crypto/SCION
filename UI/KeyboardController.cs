@@ -10,14 +10,13 @@ namespace Sprint2.Controllers;
 public static class KeyboardController// : IController
 {
     private static KeyboardState previousKeyboardState;
-    public static bool IsPaused { get; set; }
 
-    public static void Update()
+    public static void Update(bool isPaused)
     {
         KeyboardState currentKeyboardState = Keyboard.GetState();
 
         //Commands to execute while key held
-        if (!IsPaused)
+        if (!isPaused)
         {
             foreach ((Keys[] keySet, Action command) in KeyBindings.HoldKeyBindings)
             {
@@ -38,7 +37,7 @@ public static class KeyboardController// : IController
             {
                 if (currentKeyboardState.IsKeyDown(key) && previousKeyboardState.IsKeyUp(key))
                 {
-                    if (!IsPaused && key == Keys.Q) return; //prevent quitting when not paused
+                    if (!isPaused && key == Keys.Q) return; //prevent quitting when not paused
                     command();
                 }
             }

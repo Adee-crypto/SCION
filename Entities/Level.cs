@@ -1,29 +1,23 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.Controllers;
 using Sprint2.Entities;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
 using Sprint2.Managers;
-using Sprint2.UI;
 using Sprint2.Util;
-using Sprint2.Screens;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Sprint2;
 
-public class Level
-{
-    private bool isPaused;
-    private Player Player;
+public class Level {
+    private readonly Player Player;
     private List<Platform> platforms;
-    private ProjectileManager projectileManager;
-    private CollisionManager collisionManager;
-    private EnemyManager enemyManager;
-    private EnemyDef rangedEnemy;
+    private readonly ProjectileManager projectileManager;
+    private readonly CollisionManager collisionManager;
+    private readonly EnemyManager enemyManager;
+    private readonly EnemyDef rangedEnemy;
     //private ScreenManager screenManager; // Not yet finished
 
     //for testing
@@ -31,37 +25,30 @@ public class Level
 
     public Level(Player player)
     {
-        //specific objects (prob will all be deleted and added to level, maybe not player tho)
-        Player = player;
-        
+        Player = player;   
         //managers
         //screenManager = new ScreenManager(); // Not yet finished
         projectileManager = new(Player);
         collisionManager = new();
         enemyManager = new();
         rangedEnemy = new("Void Spawn", Assets.VoidspawnTexture, 100f, 98f, 96f, 128f, 96f);
-        
         Reset();
     }
 
     public void Reset() {
         Player.Reset();
-        enemyManager.Reset();
         projectileManager.Reset();
         collisionManager.Reset();
+        enemyManager.Reset();
         enemyManager.Spawn(rangedEnemy, 16 * new Vector2(40, 24));
         testPlant = new ApplePlant((20, 20)); //POTENTIALLY ADD RESET TO PLANT
         platforms = [new(Platform.Type.stonebrick, 0, 16 * 25, 50, 1)];
     }
 
-    public void TogglePause() => isPaused = !isPaused;
-
     public void Update(GameTime gameTime, (int w, int h) screenSize)
     {
         //screenManager.Update(gameTime); // Not yet finished
-
         collisionManager.Reset();
-
         collisionManager.Objects.AddRange(testPlant.GetPlantObjects());
         collisionManager.Objects.AddRange(platforms.Select(p => p.Bounds));
 
@@ -85,11 +72,11 @@ public class Level
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        //screenManager.Draw(spriteBatch); // Not yet finished
         testPlant.Draw(spriteBatch);
         projectileManager.Draw(spriteBatch);
         enemyManager.Draw(spriteBatch);
         platforms.ForEach(p => p.Draw(spriteBatch));
         Player.Draw(spriteBatch);
+        //screenManager.Draw(spriteBatch); // Not yet finished
     }
 }
