@@ -5,7 +5,7 @@ namespace Sprint2.Entities;
 
 public class Collider {
     //Newton would be proud
-    public float Mass { get; set; }
+    public float Mass { get; private set; }
     public Vector2 InitialPos { get; private set; }
     public Vector2 Position { get; private set; }
     public Vector2 Velocity { get => Momentum / Mass; }
@@ -13,7 +13,7 @@ public class Collider {
 
     //Dimensions & helpful values
     private Vector2 Size;
-    public float Angle => MathF.Atan2(Velocity.Y, Velocity.X);
+    public float Angle => MathF.Atan2(Momentum.Y, Momentum.X);
     public Vector2 Center => Position + Size / 2f;
     public Rectangle Hitbox => new((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y); //probably make this not int at some point
 
