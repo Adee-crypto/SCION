@@ -96,7 +96,7 @@ public class Game1 : Game
         if (IsPaused) {
             pauseMenu.Update();
         } else {
-            level.Update(gameTime, ScreenSize);
+            level.Update(gameTime);
         }
 
         base.Update(gameTime);
