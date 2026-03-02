@@ -190,7 +190,7 @@ public class Enemy : Extensions.IDrawable
         projectileManager.Spawn(shotDef, spawnPos, shotVelocity);
     }
 
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player, ProjectileManager projectileManager)
+    public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager)
     {
         float dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
         // FOR TESTING
@@ -202,14 +202,14 @@ public class Enemy : Extensions.IDrawable
 
         Vector2 movement = Vector2.Zero;
         if (Collider.Velocity.X != 0) movement.X = Collider.Velocity.X * dt;
-        if (Collider.Velocity.Y >= 0) isGrounded = CollisionManager.CheckGrounded(Collider, objects, ref movement);
+        if (Collider.Velocity.Y >= 0) isGrounded = collisionManager.CheckGrounded(Collider, ref movement);
         if (!isGrounded)
         {
             movement.Y = Collider.Velocity.Y * dt + 0.5f * def.Gravity * dt * dt;
             Collider.SetMomentumY(Collider.Velocity.Y + (def.Gravity * dt));
         }
         else Collider.SetMomentumY(0);
-        CollisionManager.ManageCollision(Collider, objects, movement);
+        collisionManager.ManageCollision(Collider, movement);
         
         sprite.UpdateState(state, direction, Collider.Velocity, false);
         sprite.Update(gameTime);

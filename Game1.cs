@@ -20,30 +20,18 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
-
-    private KeyBoardController keyboardController;
-    private MouseController mouseController;
     private (int w, int h) screenSize;
 
-    private bool isPaused;
-    public bool IsPaused => isPaused;
+    public bool IsPaused {get; private set;}
 
     private Menu pauseMenu;
 
-    public Player Player { get; private set; }
-    private List<Rectangle> objects;
-    private List<Platform> platforms;
-    private ProjectileManager projectileManager;
-    private EnemyDef rangedEnemy;
-    private EnemyManager enemyManager;
-    //private ScreenManager screenManager; // Not yet finished
-
-    //for testing
-    public Plant testPlant { get; private set; }
+    private Level level;
+    public Player Player {get; private set;}
 
     public Game1()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        _graphics = new(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
 
@@ -57,18 +45,9 @@ public class Game1 : Game
     {
         spriteBatch = new(GraphicsDevice);
 
-        //controllers
-        keyboardController = new();
-        mouseController = new();
-
-
         //specific objects (prob will all be deleted and added to level, maybe not player tho)
         Player = new();
-        
-        //managers
-        //screenManager = new ScreenManager(); // Not yet finished
-        projectileManager = new(mouseController, Player);
-        enemyManager = new();
+        level = new(Player);
         
         base.Initialize();
         ResetLevel();
@@ -101,22 +80,14 @@ public class Game1 : Game
         pauseMenu.AddButton(new Button(Assets.UiFont, Assets.ButtonTexture, "Resume", TogglePause, new Vector2(200, 50), resumePosition));
         pauseMenu.AddButton(new Button(Assets.UiFont, Assets.ButtonTexture, "Quit", Exit, new Vector2(200, 50), quitPosition));
         pauseMenu.AddButton(new Button(Assets.UiFont, Assets.ResetTexture, "", ResetLevel, new Vector2(32, 32), resetPosition));
-
-        rangedEnemy = new EnemyDef("Void Spawn", Assets.VoidspawnTexture, 100f, 98f, 96f, 128f, 96f);
     }
 
-    public void TogglePause() => isPaused = !isPaused;
+    public void TogglePause() => IsPaused = !IsPaused;
 
     public void ResetLevel()
     {
-        Player.Reset();
-        enemyManager.Reset();
-        projectileManager.Reset();
-        enemyManager.Spawn(rangedEnemy, new Vector2(16 * 40, 16 * 24));
-        testPlant = new ApplePlant((20, 20)); //POTENTIALLY ADD RESET TO PLANT
-        objects = [];
-        platforms = [new(Platform.Type.stonebrick, 0, 16 * 25, 50, 1)];
-        isPaused = false;
+        level.Reset();
+        // IsPaused = false;
     }
 
     protected override void Update(GameTime gameTime)
@@ -124,40 +95,20 @@ public class Game1 : Game
         //screenManager.Update(gameTime); // Not yet finished
 
         if (IsActive) { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
-            mouseController.IsPaused = isPaused;
-            mouseController.Update();
-            keyboardController.IsPaused = isPaused;
-            keyboardController.Update();
+            MouseController.IsPaused = IsPaused;
+            MouseController.Update();
+            KeyboardController.IsPaused = IsPaused;
+            KeyboardController.Update();
         }
         screenSize = (GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
-        if (isPaused)
+        if (IsPaused)
         {
-            pauseMenu.Update(mouseController);
+            pauseMenu.Update();
         }
         else
         {
-            objects.Clear();
-
-            objects.AddRange(testPlant.GetPlantObjects());
-            objects.AddRange(platforms.Select(p => p.Bounds));
-
-            projectileManager.Update(gameTime, objects); //MUST BE CALLED BEFORE PLAYER UPDATE TO GET VELOCITY
-            Player.Update(gameTime, objects);
-            enemyManager.Update(gameTime, objects, Player, projectileManager);
-
-            if (Player.IsBreakable)
-            {
-                if (testPlant.TryRemoveCellBelow(new Vector2(Player.Collider.Hitbox.Center.X, Player.Collider.Hitbox.Bottom)))
-                {
-                    Player.GetSeed();
-                }
-                Player.IsBreakable = false;
-            }
-
-            testPlant.Update(gameTime);
-
-            if (Player.Collider.Position.Y > screenSize.h) ResetLevel();
+            level.Update(gameTime, screenSize);
         }
 
         base.Update(gameTime);
@@ -167,16 +118,9 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-
-        //screenManager.Draw(spriteBatch); // Not yet finished
-
-        testPlant.Draw(spriteBatch);
-        projectileManager.Draw(spriteBatch);
-        enemyManager.Draw(spriteBatch);
-        platforms.ForEach(p => p.Draw(spriteBatch));
-        Player.Draw(spriteBatch);
-
-        if (isPaused) pauseMenu.Draw(spriteBatch, screenSize);
+        
+        level.Draw(spriteBatch);
+        if (IsPaused) pauseMenu.Draw(spriteBatch, screenSize);
 
         spriteBatch.End();
         base.Draw(gameTime);

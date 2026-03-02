@@ -6,39 +6,43 @@ namespace Sprint2.Managers;
 
 public class CollisionManager
 {
-    public static void ManageCollision(Collider collider, IEnumerable<Rectangle> objects, Vector2 movement)
+    public List<Rectangle> Objects {get;} = [];
+
+    public void Reset() => Objects.Clear();
+
+    public void ManageCollision(Collider collider, Vector2 deltaPos)
     {
         Vector2 currentPosition = collider.Position;
 
-        currentPosition.X += movement.X;
+        currentPosition.X += deltaPos.X;
         collider.SetPosition(currentPosition);
 
-        foreach (var obj in objects)
+        foreach (var obj in Objects)
         {
             if (collider.Hitbox.Intersects(obj)) {
-                if (movement.X > 0) currentPosition.X = obj.Left - collider.Hitbox.Width;
-                else if (movement.X < 0) currentPosition.X = obj.Right;
+                if (deltaPos.X > 0) currentPosition.X = obj.Left - collider.Hitbox.Width;
+                else if (deltaPos.X < 0) currentPosition.X = obj.Right;
             }
         }
 
-        currentPosition.Y += movement.Y;
+        currentPosition.Y += deltaPos.Y;
         collider.SetPosition(currentPosition);
-        foreach (var obj in objects)
+        foreach (var obj in Objects)
         {
             if (collider.Hitbox.Intersects(obj)) {
-                if (movement.Y < 0) collider.SetMomentumY(0);
-                currentPosition.Y = (movement.Y < 0) ? obj.Bottom : obj.Top - collider.Hitbox.Height;
+                if (deltaPos.Y < 0) collider.SetMomentumY(0);
+                currentPosition.Y = (deltaPos.Y < 0) ? obj.Bottom : obj.Top - collider.Hitbox.Height;
             }
         }
 
         collider.SetPosition(currentPosition);
     }
 
-    public static bool CheckGrounded(Collider collider, IEnumerable<Rectangle> objects, ref Vector2 movement)
+    public bool CheckGrounded(Collider collider, ref Vector2 movement)
     {
         Rectangle onePixelBelow = collider.Hitbox;
         onePixelBelow.Y += 1;
-        foreach (var obj in objects)
+        foreach (var obj in Objects)
         {
             if (onePixelBelow.Intersects(obj) && onePixelBelow.Bottom >= obj.Top)
             {

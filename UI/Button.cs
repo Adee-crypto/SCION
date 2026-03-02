@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Controllers;
 using Sprint2.Extensions;
 using System;
 
@@ -26,10 +27,10 @@ public class Button
         textPos = pos + 0.5f * (size - font.MeasureString(buttonText));
     }
 
-    public void Update(IMouseController mouseController)
+    public void Update()
     {
         hover = bounds.Contains(Mouse.GetState().Position);
-        if (hover && mouseController.IsLeftClick()) onClick?.Invoke();
+        if (hover && MouseController.IsLeftClick()) onClick?.Invoke();
     }
 
     public void Draw(SpriteBatch spriteBatch)

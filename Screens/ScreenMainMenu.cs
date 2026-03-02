@@ -11,13 +11,11 @@ public class ScreenMainMenu : IScreen
 {
     private readonly Game1 game;
     private readonly ScreenManager screenManager;
-    private readonly IMouseController mouseController;
     private readonly Menu menu;
-    public ScreenMainMenu(Game1 game, ScreenManager screenManager, IMouseController mouseController)
+    public ScreenMainMenu(Game1 game, ScreenManager screenManager)
     {
         this.game = game;
         this.screenManager = screenManager;
-        this.mouseController = mouseController;
 
         menu = new Menu(Assets.UiFont, game.GraphicsDevice) { Title = "Main Menu", DimBackground = false };
     }
@@ -32,8 +30,8 @@ public class ScreenMainMenu : IScreen
         float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
         float y = game.GraphicsDevice.Viewport.Height * 0.3f;
 
-        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Story Mode", () => screenManager.SetScreen(new ScreenStory(game, screenManager, mouseController)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 0)));
-        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Arcade Mode", () => screenManager.SetScreen(new ScreenArcade(game, screenManager, mouseController)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 1)));
+        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Story Mode", () => screenManager.SetScreen(new ScreenStory(game, screenManager)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 0)));
+        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Arcade Mode", () => screenManager.SetScreen(new ScreenArcade(game, screenManager)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 1)));
         //menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Settings Mode", () => screenManager.SetScreen(new ScreenSettings(game, screenManager, mouseController)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 2))); // TO BE IMPLEMENTED
         menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Quit Game", () => game.Exit(), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 3)));
     }
@@ -42,7 +40,7 @@ public class ScreenMainMenu : IScreen
 
     public void Update(GameTime gameTime)
     {
-        menu.Update(mouseController);
+        menu.Update();
     }
 
     public void Draw(SpriteBatch spriteBatch)

@@ -6,12 +6,12 @@ using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
 using System;
 using System.Collections.Generic;
+using Sprint2.Controllers;
 
 namespace Sprint2.Managers;
 
-public class ProjectileManager(IMouseController mouse, Player player) : Extensions.IDrawable, IUpdatableObject
+public class ProjectileManager(Player player) : Extensions.IDrawable, IUpdatableObject
 {
-    private readonly IMouseController mouse = mouse;
     private readonly Collider playerCollider = player.Collider;
     private readonly List<IProjectile> projectiles = [];
 
@@ -25,10 +25,10 @@ public class ProjectileManager(IMouseController mouse, Player player) : Extensio
         projectiles.Add(new Projectile(def, spawnPos, initialVelocity));
     }
 
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
+    public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
 
-        if (mouse.IsLeftClick() && player.Seeds.Count > 0)
+        if (MouseController.IsLeftClick() && player.Seeds.Count > 0)
         {
             Vector2 direction = player.AimDirection;
 
@@ -50,7 +50,7 @@ public class ProjectileManager(IMouseController mouse, Player player) : Extensio
 
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
-            projectiles[i].Update(gameTime, objects);
+            projectiles[i].Update(gameTime, collisionManager);
             if (!projectiles[i].IsAlive) projectiles.RemoveAt(i);
         }
     }

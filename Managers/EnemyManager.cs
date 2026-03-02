@@ -21,8 +21,8 @@ public class EnemyManager : Extensions.IDrawable
         enemies.Clear();
     }
 
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects, Player player, ProjectileManager projectileManager) {
-        enemies.ForEach(e => e.Update(gameTime, objects, player, projectileManager));
+    public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager) {
+        enemies.ForEach(e => e.Update(gameTime, player, projectileManager, collisionManager));
     }
 
     public void Draw(SpriteBatch spriteBatch) {

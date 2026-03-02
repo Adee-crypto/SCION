@@ -4,35 +4,35 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Sprint2.Controllers;
 
-public class MouseController : IMouseController
+public static class MouseController// : IMouseController
 {
-    private MouseState currentMouseState;
-    private MouseState previousMouseState;
+    private static MouseState currentMouseState;
+    private static MouseState previousMouseState;
 
-    public bool IsPaused { get; set; }
+    public static bool IsPaused { get; set; }
 
-    public void Update()
+    public static void Update()
     {
         previousMouseState = currentMouseState;
         currentMouseState = Mouse.GetState();
     }
 
-    public bool IsLeftClick()
+    public static bool IsLeftClick()
     {
         return currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released;
     }
 
-    public bool IsRightClick()
+    public static bool IsRightClick()
     {
         return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released;
     }
 
-    public bool IsLeftClickHeld()
+    public static bool IsLeftClickHeld()
     {
         return currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Pressed;
     }
 
-    public bool IsRightClickHeld()
+    public static bool IsRightClickHeld()
     {
         return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Pressed;
     }

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
+using Sprint2.Managers;
 using System.Collections.Generic;
 
 namespace Sprint2.Extensions;
@@ -17,7 +18,7 @@ public interface IUpdatable
 
 public interface IUpdatableObject
 {
-    void Update(GameTime gameTime, IEnumerable<Rectangle> objects);
+    void Update(GameTime gameTime, CollisionManager collisionManager);
 }
 
 public interface IPhysicsObject
@@ -25,22 +26,22 @@ public interface IPhysicsObject
     Collider Collider {get;}
 }
 
-public interface IController
-{
-    bool IsPaused { get; set; }
-    void Update();
-}
+// public interface IController
+// {
+//     bool IsPaused { get; set; }
+//     void Update();
+// }
 
-public interface IMouseController : IController
-{
-    bool IsLeftClick();
+// public interface IMouseController : IController
+// {
+//     bool IsLeftClick();
 
-    bool IsRightClick();
+//     bool IsRightClick();
 
-    bool IsLeftClickHeld();
+//     bool IsLeftClickHeld();
 
-    bool IsRightClickHeld();
-}
+//     bool IsRightClickHeld();
+// }
 
 public interface IPlayer : IDrawable, IUpdatableObject, IPhysicsObject, IAim
 {

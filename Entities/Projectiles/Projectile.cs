@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
 using System.Collections.Generic;
 using System.Linq;
+using Sprint2.Managers;
 
 namespace Sprint2.Entities.Projectiles;
 
@@ -14,14 +15,14 @@ public class Projectile : IProjectile
 
     public bool IsAlive { get; private set; } = true;
 
-    public Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 initialVelocity)
+    public Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 initialMomentum)
     {
         this.def = def;
-        Collider = new Collider(initialPosition, Vector2.Zero);
-        Collider.SetMomentum(initialVelocity);
+        Collider = new(initialPosition, Vector2.Zero);
+        Collider.SetMomentum(initialMomentum);
     }
 
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects) {
+    public void Update(GameTime gameTime, CollisionManager collisionManager) {
         if (!IsAlive) return;
 
         def.UpdateFrameState(gameTime);
@@ -30,12 +31,13 @@ public class Projectile : IProjectile
             Kill();
             return;
         }
-        //update position and velocity
-        Collider.SetMomentum(Collider.Velocity + (new Vector2(0f, def.Gravity) * (float)gameTime.ElapsedGameTime.TotalSeconds));
-        Collider.SetPosition(Collider.Position + (Collider.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds));
-        // if (velocity.LengthSquared() > 0.0001f) I hope having this commented doesnt break anything
-        //     angle = MathF.Atan2(velocity.Y, velocity.X);
-        if (objects.Any(o => o.Intersects(Collider.Hitbox))) Kill();  //kill on collision
+
+        float dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
+        //update position and momentum
+        Collider.SetMomentumY(Collider.Momentum.Y + Collider.Mass * def.Gravity * dt);
+        Collider.SetPosition(Collider.Position + Collider.Velocity * dt);
+
+        if (collisionManager.Objects.Any(o => o.Intersects(Collider.Hitbox))) Kill();  //kill on collision
     }
 
     public void Kill() => IsAlive = false;

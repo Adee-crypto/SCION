@@ -22,9 +22,9 @@ public class Menu
     public void AddButton(Button button) => buttons.Add(button);
     public void ClearButtons() => buttons.Clear();
 
-    public void Update(IMouseController mouseController)
+    public void Update()
     {
-        buttons.ForEach(b => b.Update(mouseController));
+        buttons.ForEach(b => b.Update());
     }
 
     public void Draw(SpriteBatch spriteBatch, (int w, int h) screenSize)

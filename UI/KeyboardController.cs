@@ -7,12 +7,12 @@ using System;
 
 namespace Sprint2.Controllers;
 
-public class KeyBoardController : IController
+public static class KeyboardController// : IController
 {
-    private KeyboardState previousKeyboardState;
-    public bool IsPaused { get; set; }
+    private static KeyboardState previousKeyboardState;
+    public static bool IsPaused { get; set; }
 
-    public void Update()
+    public static void Update()
     {
         KeyboardState currentKeyboardState = Keyboard.GetState();
 

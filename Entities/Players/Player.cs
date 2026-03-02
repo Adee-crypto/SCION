@@ -111,18 +111,18 @@ public class Player : IPlayer
         if (playerState != State.Dead) playerState = State.Attack;
     }
 
-    public void UpdateMovement(float time, IEnumerable<Rectangle> objects)
+    public void UpdateMovement(float time, CollisionManager collisionManager)
     {
         Vector2 movement = Vector2.Zero;
         if (Collider.Velocity.X != 0) movement.X = Collider.Velocity.X * time;
-        if (Collider.Velocity.Y >= 0) isGrounded = CollisionManager.CheckGrounded(Collider, objects, ref movement);
+        if (Collider.Velocity.Y >= 0) isGrounded = collisionManager.CheckGrounded(Collider, ref movement);
         if (!isGrounded)
         {
             movement.Y =  (Collider.Velocity.Y + 0.5f * Consts.playerGravity * time) * time;
             Collider.SetMomentumY(Collider.Velocity.Y + (Consts.playerGravity * time));
         }
         else Collider.SetMomentumY(0);
-        CollisionManager.ManageCollision(Collider, objects, movement);
+        collisionManager.ManageCollision(Collider, movement);
     }
 
     public void UpdateBreakBlock(float time)
@@ -153,13 +153,13 @@ public class Player : IPlayer
         if (health == 0) playerState = State.Dead;
     }
 
-    public void Update(GameTime gameTime, IEnumerable<Rectangle> objects)
+    public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
-        float time = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        UpdateMovement(time, objects);
-        UpdateBreakBlock(time);
-        UpdateHealth(IsDamaged, time);
+        UpdateMovement(dt, collisionManager);
+        UpdateBreakBlock(dt);
+        UpdateHealth(IsDamaged, dt);
 
         aimer?.Update(Collider.Center, Mouse.GetState());
         playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
