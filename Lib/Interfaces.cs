@@ -71,6 +71,12 @@ public interface IProjectile : IDrawable, IUpdatableObject, IPhysicsObject
     bool IsAlive { get; }
 }
 
+public interface IScreen : IUpdatable, IDrawable
+{
+    void OnEnter();
+    void OnExit();
+}
+
 // internal interface IEntitySprite : IUpdatable
 // {
 //     void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);

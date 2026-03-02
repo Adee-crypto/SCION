@@ -8,8 +8,10 @@ using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
 using Sprint2.UI;
 using Sprint2.Util;
+using Sprint2.Screens;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 
 namespace Sprint2;
@@ -26,7 +28,7 @@ public class Game1 : Game
     private bool isPaused;
     public bool IsPaused => isPaused;
 
-    private PauseMenu pauseMenu;
+    private Menu pauseMenu;
 
     public Player player0 { get; private set; }
     private List<Rectangle> objects;
@@ -34,6 +36,7 @@ public class Game1 : Game
     private ProjectileManager projectileManager;
     private EnemyDef rangedEnemy;
     private EnemyManager enemyManager;
+    //private ScreenManager screenManager; // Not yet finished
 
     //for testing
     public Plant testPlant { get; private set; }
@@ -63,6 +66,7 @@ public class Game1 : Game
         player0 = new();
         
         //managers
+        //screenManager = new ScreenManager(); // Not yet finished
         projectileManager = new(mouseController, player0);
         enemyManager = new();
         
@@ -84,7 +88,8 @@ public class Game1 : Game
         Assets.ResetTexture = Content.Load<Texture2D>("ResetButton");
         Assets.UiFont = Content.Load<SpriteFont>("UIFont");
         Assets.VoidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
-        pauseMenu = new PauseMenu(Assets.UiFont, GraphicsDevice);
+        //screenManager.SetScreen(new ScreenMainMenu(this, screenManager, mouseController)); // Not yet finished
+        pauseMenu = new Menu(Assets.UiFont, GraphicsDevice) { Title = "Game Paused", DimBackground = true };
 
         Vector2 resumePosition = new(screenSize.w / 2 - 100, screenSize.h / 2 - 60);
         Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
@@ -113,6 +118,8 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+        //screenManager.Update(gameTime); // Not yet finished
+
         if (IsActive) { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
             mouseController.IsPaused = isPaused;
             mouseController.Update();
@@ -157,6 +164,8 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
+        //screenManager.Draw(spriteBatch); // Not yet finished
 
         testPlant.Draw(spriteBatch);
         projectileManager.Draw(spriteBatch);
