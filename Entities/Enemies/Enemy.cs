@@ -63,7 +63,7 @@ public class Enemy : Extensions.IDrawable
     public void Move(int direction)
     {
         this.direction.X = direction;
-        Collider.SetVelocityX(def.Speed * direction);
+        Collider.SetMomentumX(def.Speed * direction);
     }
 
     public void Jump()
@@ -71,7 +71,7 @@ public class Enemy : Extensions.IDrawable
         if (isGrounded)
         {
             isGrounded = false;
-            Collider.SetVelocityY(Consts.playerJumpSpeed);
+            Collider.SetMomentumY(Consts.playerJumpSpeed);
         }
     }
 
@@ -115,11 +115,11 @@ public class Enemy : Extensions.IDrawable
             firedAttackPrev = false;
             state = State.None;
             float newSpeed = def.Speed;
-            Collider.SetVelocityX(newSpeed * MathF.Sign(difference));
+            Collider.SetMomentumX(newSpeed * MathF.Sign(difference));
             return;
         } 
         
-        Collider.SetVelocityX(0);
+        Collider.SetMomentumX(0);
         Attack();
 
         if (!firedAttackPrev && shotCooldownLeft <= 0)
@@ -206,15 +206,15 @@ public class Enemy : Extensions.IDrawable
         if (!isGrounded)
         {
             movement.Y = Collider.Velocity.Y * dt + 0.5f * def.Gravity * dt * dt;
-            Collider.SetVelocityY(Collider.Velocity.Y + (def.Gravity * dt));
+            Collider.SetMomentumY(Collider.Velocity.Y + (def.Gravity * dt));
         }
-        else Collider.SetVelocityY(0);
+        else Collider.SetMomentumY(0);
         CollisionManager.ManageCollision(Collider, objects, movement);
         
         sprite.UpdateState(state, direction, Collider.Velocity, false);
         sprite.Update(gameTime);
 
-        Collider.SetVelocityX(0);
+        Collider.SetMomentumX(0);
         if (state != State.Dead) state = State.None;
     }
 

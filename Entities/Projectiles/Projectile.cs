@@ -18,7 +18,7 @@ public class Projectile : IProjectile
     {
         this.def = def;
         Collider = new Collider(initialPosition, Vector2.Zero);
-        Collider.SetVelocity(initialVelocity);
+        Collider.SetMomentum(initialVelocity);
     }
 
     public void Update(GameTime gameTime, IEnumerable<Rectangle> objects) {
@@ -31,7 +31,7 @@ public class Projectile : IProjectile
             return;
         }
         //update position and velocity
-        Collider.SetVelocity(Collider.Velocity + (new Vector2(0f, def.Gravity) * (float)gameTime.ElapsedGameTime.TotalSeconds));
+        Collider.SetMomentum(Collider.Velocity + (new Vector2(0f, def.Gravity) * (float)gameTime.ElapsedGameTime.TotalSeconds));
         Collider.SetPosition(Collider.Position + (Collider.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds));
         // if (velocity.LengthSquared() > 0.0001f) I hope having this commented doesnt break anything
         //     angle = MathF.Atan2(velocity.Y, velocity.X);
