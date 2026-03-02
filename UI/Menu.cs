@@ -1,14 +1,14 @@
-using Interfaces;
+using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Util;
 using System.Collections.Generic;
 
 namespace Sprint2.UI;
 
 public class Menu
 {
-    private readonly SpriteFont font;
-    private readonly Texture2D overlay;
+    private readonly SpriteFont font = font;
     private readonly List<Button> buttons = [];
 
     public string Title { get; set; } = "";
@@ -17,9 +17,6 @@ public class Menu
     public Menu(SpriteFont font, GraphicsDevice graphicsDevice)
     {
         this.font = font;
-
-        overlay = new Texture2D(graphicsDevice, 1, 1);
-        overlay.SetData([Color.White]);
     }
 
     public void AddButton(Button button) => buttons.Add(button);
@@ -32,7 +29,7 @@ public class Menu
 
     public void Draw(SpriteBatch spriteBatch, (int w, int h) screenSize)
     {
-        if (DimBackground) spriteBatch.Draw(overlay, new Rectangle(0, 0, screenSize.w, screenSize.h), Color.Black * 0.5f);
+        if (DimBackground) spriteBatch.Draw(Assets.PauseMenuTexture, new Rectangle(0, 0, screenSize.w, screenSize.h), Color.Black * 0.5f);
 
         if (!string.IsNullOrWhiteSpace(Title))
         {

@@ -1,4 +1,4 @@
-using Interfaces;
+using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input; // For debug
@@ -7,6 +7,7 @@ using Sprint2.Util;
 using System;
 using System.Collections.Generic;
 using Sprint2.Entities.Players;
+using Sprint2.Managers;
 
 namespace Sprint2.Entities.Enemies;
 
@@ -18,7 +19,7 @@ public enum State
     Dead
 };
 
-public class Enemy : Interfaces.IDrawable
+public class Enemy : Extensions.IDrawable
 {
     //Motion + Physics
     private Vector2 direction;
@@ -201,14 +202,14 @@ public class Enemy : Interfaces.IDrawable
 
         Vector2 movement = Vector2.Zero;
         if (Collider.Velocity.X != 0) movement.X = Collider.Velocity.X * dt;
-        if (Collider.Velocity.Y >= 0) isGrounded = Collisions.CheckGrounded(Collider, objects, ref movement);
+        if (Collider.Velocity.Y >= 0) isGrounded = CollisionManager.CheckGrounded(Collider, objects, ref movement);
         if (!isGrounded)
         {
             movement.Y = Collider.Velocity.Y * dt + 0.5f * def.Gravity * dt * dt;
             Collider.SetVelocityY(Collider.Velocity.Y + (def.Gravity * dt));
         }
         else Collider.SetVelocityY(0);
-        Collisions.ManageCollision(Collider, objects, movement);
+        CollisionManager.ManageCollision(Collider, objects, movement);
         
         sprite.UpdateState(state, direction, Collider.Velocity, false);
         sprite.Update(gameTime);

@@ -1,11 +1,10 @@
 using Microsoft.Xna.Framework;
 using Sprint2.Entities;
-using System;
 using System.Collections.Generic;
 
-namespace Sprint2;
+namespace Sprint2.Managers;
 
-public class Collisions
+public class CollisionManager
 {
     public static void ManageCollision(Collider collider, IEnumerable<Rectangle> objects, Vector2 movement)
     {

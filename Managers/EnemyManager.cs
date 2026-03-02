@@ -1,13 +1,13 @@
-using Interfaces;
+using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Players;
 using System.Collections.Generic;
 
-namespace Sprint2;
+namespace Sprint2.Managers;
 
-public class EnemyManager : Interfaces.IDrawable
+public class EnemyManager : Extensions.IDrawable
 {
     private readonly List<Enemy> enemies = [];
 

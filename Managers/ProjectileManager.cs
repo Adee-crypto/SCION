@@ -1,4 +1,4 @@
-using Interfaces;
+using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
@@ -7,9 +7,9 @@ using Sprint2.Entities.Projectiles;
 using System;
 using System.Collections.Generic;
 
-namespace Sprint2;
+namespace Sprint2.Managers;
 
-public class ProjectileManager(IMouseController mouse, Player player) : Interfaces.IDrawable, IUpdatableObject
+public class ProjectileManager(IMouseController mouse, Player player) : Extensions.IDrawable, IUpdatableObject
 {
     private readonly IMouseController mouse = mouse;
     private readonly Collider playerCollider = player.Collider;
