@@ -13,18 +13,18 @@ public static class KeyBindings
     {
         HoldKeyBindings = new()
         {
-            {new[] {Keys.Left, Keys.A}, () => game.player0.Move(-1)},
-            {new[] {Keys.Right, Keys.D}, () => game.player0.Move(1)},
-            {new[] {Keys.Up, Keys.W}, () => game.player0.Jump()},
-            {new[] {Keys.Z, Keys.N}, () => game.player0.Attack()},
-            {new[] {Keys.Down, Keys.S}, () => game.player0.BreakBlock()}
+            {new[] {Keys.Left, Keys.A}, () => game.Player.Move(-1)},
+            {new[] {Keys.Right, Keys.D}, () => game.Player.Move(1)},
+            {new[] {Keys.Up, Keys.W}, () => game.Player.Jump()},
+            {new[] {Keys.Z, Keys.N}, () => game.Player.Attack()},
+            {new[] {Keys.Down, Keys.S}, () => game.Player.BreakBlock()}
         };
         TapKeyBindings = new()
         {
             {new[] {Keys.Escape}, game.TogglePause},
             {new[] {Keys.Q}, game.Exit},
             {new[] {Keys.R}, game.ResetLevel},
-            {new[] {Keys.E}, game.player0.ToggleDamaged} //also for testing
+            {new[] {Keys.E}, game.Player.ToggleDamaged} //also for testing
         };
     }
 }

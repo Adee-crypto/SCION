@@ -28,7 +28,7 @@ public class Game1 : Game
 
     private PauseMenu pauseMenu;
 
-    public Player player0 { get; private set; }
+    public Player Player { get; private set; }
     private List<Rectangle> objects;
     private List<Platform> platforms;
     private ProjectileManager projectileManager;
@@ -60,10 +60,10 @@ public class Game1 : Game
 
 
         //specific objects (prob will all be deleted and added to level, maybe not player tho)
-        player0 = new();
+        Player = new();
         
         //managers
-        projectileManager = new(mouseController, player0);
+        projectileManager = new(mouseController, Player);
         enemyManager = new();
         
         base.Initialize();
@@ -101,7 +101,7 @@ public class Game1 : Game
 
     public void ResetLevel()
     {
-        player0.Reset();
+        Player.Reset();
         enemyManager.Reset();
         projectileManager.Reset();
         enemyManager.Spawn(rangedEnemy, new Vector2(16 * 40, 16 * 24));
@@ -133,21 +133,21 @@ public class Game1 : Game
             objects.AddRange(platforms.Select(p => p.Bounds));
 
             projectileManager.Update(gameTime, objects); //MUST BE CALLED BEFORE PLAYER UPDATE TO GET VELOCITY
-            player0.Update(gameTime, objects);
-            enemyManager.Update(gameTime, objects, player0, projectileManager);
+            Player.Update(gameTime, objects);
+            enemyManager.Update(gameTime, objects, Player, projectileManager);
 
-            if (player0.IsBreakable)
+            if (Player.IsBreakable)
             {
-                if (testPlant.TryRemoveCellBelow(new Vector2(player0.Collider.Hitbox.Center.X, player0.Collider.Hitbox.Bottom)))
+                if (testPlant.TryRemoveCellBelow(new Vector2(Player.Collider.Hitbox.Center.X, Player.Collider.Hitbox.Bottom)))
                 {
-                    player0.GetSeed();
+                    Player.GetSeed();
                 }
-                player0.IsBreakable = false;
+                Player.IsBreakable = false;
             }
 
             testPlant.Update(gameTime);
 
-            if (player0.Collider.Position.Y > screenSize.h) ResetLevel();
+            if (Player.Collider.Position.Y > screenSize.h) ResetLevel();
         }
 
         base.Update(gameTime);
@@ -162,7 +162,7 @@ public class Game1 : Game
         projectileManager.Draw(spriteBatch);
         enemyManager.Draw(spriteBatch);
         platforms.ForEach(p => p.Draw(spriteBatch));
-        player0.Draw(spriteBatch);
+        Player.Draw(spriteBatch);
 
         if (isPaused) pauseMenu.Draw(spriteBatch, screenSize);
 

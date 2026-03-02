@@ -10,11 +10,11 @@ public enum Species { grass, apple, pineapple };
 
 public abstract class Plant(Species species, (int, int) root)
 {
-    protected readonly Species species = species;
-    protected HashSet<(int, int)> budCells = [root];
-    protected HashSet<(int, int)> stemCells = [];
-    protected float age;
-    protected readonly Ticker ticker = new(PlantUtil.SpeciesGrowTimes[species]);
+    protected Species Species { get; } = species;
+    protected HashSet<(int, int)> BudCells { get; set; }= [root];
+    protected HashSet<(int, int)> StemCells { get; } = [];
+    protected float Age { get; set; }
+    protected Ticker Ticker { get; }= new(PlantUtil.SpeciesGrowTimes[species]);
 
     public abstract void Update(GameTime gameTime);
 
@@ -22,12 +22,12 @@ public abstract class Plant(Species species, (int, int) root)
 
     public IEnumerable<Rectangle> GetPlantObjects()
     {
-        foreach (var (x, y) in stemCells)
+        foreach (var (x, y) in StemCells)
         {
             yield return new Rectangle(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
         }
 
-        foreach (var (x, y) in budCells)
+        foreach (var (x, y) in BudCells)
         {
             yield return new Rectangle(x * Consts.cellWidth, y * Consts.cellWidth, Consts.cellWidth, Consts.cellWidth);
         }
@@ -35,13 +35,13 @@ public abstract class Plant(Species species, (int, int) root)
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach (var (x, y) in stemCells)
+        foreach (var (x, y) in StemCells)
         {
-            spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.Gray);
+            spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[Species], Color.Gray);
         }
-        foreach (var (x, y) in budCells)
+        foreach (var (x, y) in BudCells)
         {
-            spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[species], Color.White);
+            spriteBatch.Draw(Assets.PlantSpritesheet, new Vector2(x, y) * Consts.cellWidth, SourceRects.SpeciesSourceRects[Species], Color.White);
         }
     }
 
@@ -49,14 +49,14 @@ public abstract class Plant(Species species, (int, int) root)
     public bool TryRemoveCellBelow(Vector2 bottomCenter) {
         int cellX = (int)(bottomCenter.X / Consts.cellWidth);
         int cellY = (int)(bottomCenter.Y / Consts.cellWidth);
-        if (stemCells.Contains((cellX, cellY))) { 
-            stemCells.Remove((cellX, cellY));
+        if (StemCells.Contains((cellX, cellY))) { 
+            StemCells.Remove((cellX, cellY));
             return true;
-        } else if (stemCells.Contains((cellX - 1, cellY)) && bottomCenter.X % Consts.cellWidth < Consts.cellWidth / 2f) {
-            stemCells.Remove((cellX - 1, cellY));
+        } else if (StemCells.Contains((cellX - 1, cellY)) && bottomCenter.X % Consts.cellWidth < Consts.cellWidth / 2f) {
+            StemCells.Remove((cellX - 1, cellY));
             return true;
-        } else if (stemCells.Contains((cellX + 1, cellY)) && bottomCenter.X % Consts.cellWidth > Consts.cellWidth / 2f) {
-            stemCells.Remove((cellX + 1, cellY));
+        } else if (StemCells.Contains((cellX + 1, cellY)) && bottomCenter.X % Consts.cellWidth > Consts.cellWidth / 2f) {
+            StemCells.Remove((cellX + 1, cellY));
             return true;
         }
         return false;
