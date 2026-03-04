@@ -6,7 +6,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-public class ScreenMainMenu : IScreen
+public class ScreenMainMenu : IScreen, IResizableScreen
 {
     private readonly Game1 game;
     private readonly ScreenManager screenManager;
@@ -31,11 +31,14 @@ public class ScreenMainMenu : IScreen
 
         menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Story Mode", () => screenManager.SetScreen(new ScreenStory(game, screenManager)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 0)));
         menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Arcade Mode", () => screenManager.SetScreen(new ScreenArcade(game, screenManager)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 1)));
-        //menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Settings Mode", () => screenManager.SetScreen(new ScreenSettings(game, screenManager, mouseController)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 2))); // TO BE IMPLEMENTED
+        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Settings", () => {}, buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 2))); // TO BE IMPLEMENTED
+        //menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Settings", () => {}screenManager.SetScreen(new ScreenSettings(game, screenManager, mouseController)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 2)));
         menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Quit Game", () => game.Exit(), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 3)));
     }
 
     public void OnExit() {}
+
+    public void Resize((int w, int h) size) => OnEnter();
 
     public void Update(GameTime gameTime)
     {

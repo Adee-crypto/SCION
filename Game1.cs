@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Controllers;
 using Sprint2.Entities.Players;
+using Sprint2.Extensions;
+using Sprint2.Screens;
 using Sprint2.UI;
 using Sprint2.Util;
 
@@ -15,12 +17,12 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
     private (int w, int h) ScreenSize { get; set; } = Consts.DefaultScreenSize;
-    
+
     //game state & data
+    private readonly ScreenManager screenManager = new();
+    public ScreenManager ScreenManager => screenManager;
     public bool IsPaused {get; private set;}
     private Menu pauseMenu;
-    private Level level;
-    public Player Player {get; private set;}
 
     public Game1()
     {
@@ -40,14 +42,14 @@ public class Game1 : Game
 
         //resizing anything else
         pauseMenu.Resize(ScreenSize);
-        level.Resize(ScreenSize);
+
+        //if (screenManager.Current is IResizableScreen resizable) resizable.Resize(ScreenSize);
     }
 
     protected override void Initialize()
     {
         spriteBatch = new(GraphicsDevice);
-        Player = new();
-        level = new(Player);
+
         KeyBindings.AttachKeyBindings(this); // Must be done after Game1's fields are initialized
         //screenManager.SetScreen(new ScreenMainMenu(this, screenManager, mouseController)); // Not yet finished
         base.Initialize();
@@ -64,26 +66,32 @@ public class Game1 : Game
         Assets.ResetTexture = Content.Load<Texture2D>("ResetButton");
         Assets.UiFont = Content.Load<SpriteFont>("UIFont");
         Assets.VoidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
+
         Assets.PauseMenuTexture = new Texture2D(GraphicsDevice, 1, 1);
         Assets.PauseMenuTexture.SetData([Color.White]);
 
         //I would like to be able to move all of these to Initialize but not sure how
         pauseMenu = new(Assets.UiFont) { Title = "Game Paused", DimBackground = true };
+
         OnResize(null, null);
+
         Vector2 resumePosition = new(ScreenSize.w / 2 - 100, ScreenSize.h / 2 - 60);
         Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
         Vector2 resetPosition = new(16, 16);
+
         pauseMenu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Resume", TogglePause, new(200, 50), resumePosition));
         pauseMenu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Quit", Exit, new(200, 50), quitPosition));
         pauseMenu.AddButton(new(Assets.UiFont, Assets.ResetTexture, "", ResetLevel, new(32, 32), resetPosition));
+
+        screenManager.SetScreen(new ScreenMainMenu(this, screenManager));
     }
 
     public void TogglePause() => IsPaused = !IsPaused;
 
     public void ResetLevel()
     {
-        level.Reset();
-        // IsPaused = false; //idk if we want this or not
+        IsPaused = false; //idk if we want this or not
+        if (screenManager.Current is IResettableScreen resettable) resettable.Reset();
     }
 
     protected override void Update(GameTime gameTime)
@@ -95,8 +103,10 @@ public class Game1 : Game
 
         if (IsPaused) {
             pauseMenu.Update();
-        } else {
-            level.Update(gameTime);
+        }
+        else
+        {
+            screenManager.Update(gameTime);
         }
 
         base.Update(gameTime);
@@ -106,8 +116,8 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        screenManager.Draw(spriteBatch);
         
-        level.Draw(spriteBatch);
         if (IsPaused) pauseMenu.Draw(spriteBatch, ScreenSize);
 
         spriteBatch.End();
