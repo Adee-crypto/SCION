@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Sprint2.Entities;
 
@@ -30,8 +31,6 @@ public static class StoryLevelRegistry
 
     public static StoryLevelDef Get(int index)
     {
-        if (index < 0) index = 0;
-        if (index >= All.Length) index = All.Length - 1;
-        return All[index];
+        return All[Math.Clamp(index, 0, All.Length-1)];
     }
 }
