@@ -32,7 +32,11 @@ public abstract class BaseLevel(Player player) : ILevel
     public bool IsOver { get; protected set; }
     public LevelEndReason EndReason { get; protected set; } = LevelEndReason.None;
 
-    public void Resize((int w, int h) size) => ScreenSize = size;
+    public void Resize((int w, int h) size)
+    {
+        ScreenSize = size;
+        hudManager.Resize(size);
+    }
 
     public virtual void Reset()
     {

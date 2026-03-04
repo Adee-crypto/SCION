@@ -21,6 +21,11 @@ public class HUDManager
         healthBar.Draw(spriteBatch);
     }
 
+    public void Resize((int w, int h) size)
+    {
+        healthBar.Resize(size);
+    }
+
     /*public void Update(GameTime gameTime)
     {
         // Currently, the health bar is the only HUD element that needs updating.

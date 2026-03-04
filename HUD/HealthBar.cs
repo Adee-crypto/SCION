@@ -10,13 +10,23 @@ public class HealthBar
 {
     private readonly Player player;
     private readonly Vector2 position;
-    private readonly Vector2 size;
+    private readonly Vector2 initialSize;
+    private Vector2 size;
 
     public HealthBar(Player player, Vector2 position, Vector2 size)
     {
         this.player = player;
         this.position = position;
+        initialSize = size;
         this.size = size;
+    }
+
+    public void Resize((int w, int h) screenSize)
+    {
+        float changeWidth = screenSize.w / (float)Consts.DefaultScreenSize.w;
+        float changeHeight = screenSize.h / (float)Consts.DefaultScreenSize.h;
+
+        size = new(initialSize.X * changeWidth, initialSize.Y * changeHeight);
     }
 
     public void Draw(SpriteBatch spriteBatch)
