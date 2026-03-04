@@ -23,8 +23,8 @@ public abstract class BaseLevel : ILevel
     protected CollisionManager CollisionManager => collisionManager;
     protected EnemyManager EnemyManager => enemyManager;
 
-    protected List<Platform> Platforms { get; }= new();
-    protected List<Plant> Plants { get; }= new();
+    protected List<Platform> Platforms { get; }= [];
+    protected List<Plant> Plants { get; }= [];
 
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }
