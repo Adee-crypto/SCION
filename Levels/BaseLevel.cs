@@ -71,7 +71,7 @@ public abstract class BaseLevel : ILevel
 
         collisionManager.Reset();
 
-        foreach (var p in Plants) collisionManager.Objects.AddRange(p.GetPlantObjects());
+        Plants.ForEach(p => collisionManager.Objects.AddRange(p.GetPlantObjects()));
 
         collisionManager.Objects.AddRange(Platforms.Select(p => p.Bounds));
 
@@ -93,7 +93,7 @@ public abstract class BaseLevel : ILevel
             player.IsBreakable = false;
         }
 
-        foreach (var p in Plants) p.Update(gameTime);
+        Plants.ForEach(p => p.Update(gameTime));
 
         UpdateLevelLogic(gameTime);
 
@@ -106,12 +106,12 @@ public abstract class BaseLevel : ILevel
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        foreach (var p in Plants) p.Draw(spriteBatch);
+        Plants.ForEach(p => p.Draw(spriteBatch));
 
         projectileManager.Draw(spriteBatch);
         enemyManager.Draw(spriteBatch);
 
-        foreach (var p in Platforms) p.Draw(spriteBatch);
+        Platforms.ForEach(p => p.Draw(spriteBatch));
 
         player.Draw(spriteBatch);
     }
