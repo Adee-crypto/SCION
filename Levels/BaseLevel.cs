@@ -11,12 +11,12 @@ using Sprint2.Entities.Enemies;
 
 namespace Sprint2.Levels;
 
-public abstract class BaseLevel : ILevel
+public abstract class BaseLevel(Player player) : ILevel
 {
-    private readonly Player player;
-    private readonly ProjectileManager projectileManager;
-    private readonly CollisionManager collisionManager;
-    private readonly EnemyManager enemyManager;
+    private readonly Player player = player;
+    private readonly ProjectileManager projectileManager = new ProjectileManager(player);
+    private readonly CollisionManager collisionManager = new CollisionManager();
+    private readonly EnemyManager enemyManager = new EnemyManager();
 
     protected Player Player => player;
     protected ProjectileManager ProjectileManager => projectileManager;
@@ -29,14 +29,6 @@ public abstract class BaseLevel : ILevel
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }
     public LevelEndReason EndReason { get; protected set; } = LevelEndReason.None;
-
-    protected BaseLevel(Player player)
-    {
-        this.player = player;
-        projectileManager = new ProjectileManager(player);
-        collisionManager = new CollisionManager();
-        enemyManager = new EnemyManager();
-    }
 
     public void Resize((int w, int h) size) => ScreenSize = size;
 
