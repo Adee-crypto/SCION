@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Controllers;
+using Sprint2.Util;
 using System;
 
 namespace Sprint2.UI;
@@ -13,7 +14,7 @@ public class Button
     private readonly string text;
     private readonly Action onClick;
     private Rectangle bounds;
-    private readonly Vector2 textPos;
+    private Vector2 textPos;
     private bool hover;
 
     public Button(SpriteFont textFont, Texture2D buttonTexture, string buttonText, Action command, Vector2 size, Vector2 pos)
@@ -28,7 +29,17 @@ public class Button
 
     public void Resize((int w, int h) screenSize)
     {
-        //TODO IMPLEMENT THIS
+        Vector2 size = new(bounds.Width, bounds.Height);
+        Vector2 pos = new(bounds.X, bounds.Y);
+        if (screenSize != Consts.DefaultScreenSize)
+        {
+            float widthRatio = screenSize.w / (float)Consts.DefaultScreenSize.w;
+            float heightRatio = screenSize.h / (float)Consts.DefaultScreenSize.h;
+            size *= new Vector2(widthRatio, heightRatio);
+            pos *= new Vector2(widthRatio, heightRatio);
+        }
+        bounds = new((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
+        textPos = pos + 0.5f * (size - font.MeasureString(text));
     }
 
     public void Update()

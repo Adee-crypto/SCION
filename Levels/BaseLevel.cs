@@ -14,14 +14,16 @@ namespace Sprint2.Levels;
 public abstract class BaseLevel(Player player) : ILevel
 {
     private readonly Player player = player;
-    private readonly ProjectileManager projectileManager = new ProjectileManager(player);
-    private readonly CollisionManager collisionManager = new CollisionManager();
-    private readonly EnemyManager enemyManager = new EnemyManager();
+    private readonly ProjectileManager projectileManager = new(player);
+    private readonly CollisionManager collisionManager = new();
+    private readonly EnemyManager enemyManager = new();
+    private readonly HUDManager hudManager = new(player);
 
     protected Player Player => player;
     protected ProjectileManager ProjectileManager => projectileManager;
     protected CollisionManager CollisionManager => collisionManager;
     protected EnemyManager EnemyManager => enemyManager;
+    protected HUDManager HudManager => hudManager;
 
     protected List<Platform> Platforms { get; }= [];
     protected List<Plant> Plants { get; }= [];
@@ -89,7 +91,7 @@ public abstract class BaseLevel(Player player) : ILevel
 
         UpdateLevelLogic(gameTime);
 
-        if (!IsOver && ScreenSize.h > 0 && player.Collider.Position.Y > ScreenSize.h)
+        if ((!IsOver && ScreenSize.h > 0 && player.Collider.Position.Y > ScreenSize.h) || player.IsDead)
         {
             IsOver = true;
             EndReason = LevelEndReason.PlayerDied;
@@ -104,6 +106,8 @@ public abstract class BaseLevel(Player player) : ILevel
         enemyManager.Draw(spriteBatch);
 
         Platforms.ForEach(p => p.Draw(spriteBatch));
+
+        hudManager.Draw(spriteBatch);
 
         player.Draw(spriteBatch);
     }

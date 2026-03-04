@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Entities.Plants;
 using Sprint2.Util;
+using Sprint2.HUD;
 using Sprint2.Managers;
 using System;
 using System.Collections.Generic;
@@ -27,14 +28,20 @@ public class Player : IPlayer
     
     //States
     private State playerState;
+    public bool IsDead => playerState == State.Dead;
     private PlayerSprite playerSprite;
     private bool isGrounded;
     private bool IsDamaged { get; set; }
     public bool IsBreakable { get; set; }
-    private int health;
     private float damageTimer;
     private float breakTimer;
-    
+
+    //Stats
+    private readonly int maxHealth = 5;
+    public int MaxHealth => maxHealth;
+    private int health;
+    public int Health => health;
+
     //Aiming
     private Aimer aimer;
     public Vector2 AimDirection => aimer.Direction;
@@ -54,7 +61,7 @@ public class Player : IPlayer
         playerSprite = new();
         direction = new(1, 0);
         isGrounded = false;
-        health = 5;
+        health = MaxHealth;
         IsDamaged = false;
         damageTimer = 0f;
         IsBreakable = false;
@@ -154,6 +161,11 @@ public class Player : IPlayer
 
     public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
+        if (playerState == State.Dead)
+        {
+            Collider.SetMomentumX(0);
+            return;
+        }
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         UpdateMovement(dt, collisionManager);

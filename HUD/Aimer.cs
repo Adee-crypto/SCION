@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Sprint2.Util;
 using System;
 
-namespace Sprint2.Entities;
+namespace Sprint2.HUD;
 
 public class Aimer(float distanceFromPlayer = 20f)
 {

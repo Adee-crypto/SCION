@@ -20,7 +20,7 @@ public class Menu(SpriteFont font)
 
     public void Draw(SpriteBatch spriteBatch, (int w, int h) screenSize)
     {
-        if (DimBackground) spriteBatch.Draw(Assets.PauseMenuTexture, new Rectangle(0, 0, screenSize.w, screenSize.h), Color.Black * 0.5f);
+        if (DimBackground) spriteBatch.Draw(Assets.PixelTexture, new Rectangle(0, 0, screenSize.w, screenSize.h), Color.Black * 0.5f);
 
         if (!string.IsNullOrWhiteSpace(Title))
         {

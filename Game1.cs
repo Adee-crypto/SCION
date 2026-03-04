@@ -43,7 +43,7 @@ public class Game1 : Game
         //resizing anything else
         pauseMenu.Resize(ScreenSize);
 
-        //if (screenManager.Current is IResizableScreen resizable) resizable.Resize(ScreenSize);
+        if (screenManager.Current is IResizableScreen resizable) resizable.Resize(ScreenSize);
     }
 
     protected override void Initialize()
@@ -67,8 +67,8 @@ public class Game1 : Game
         Assets.UiFont = Content.Load<SpriteFont>("UIFont");
         Assets.VoidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
 
-        Assets.PauseMenuTexture = new Texture2D(GraphicsDevice, 1, 1);
-        Assets.PauseMenuTexture.SetData([Color.White]);
+        Assets.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
+        Assets.PixelTexture.SetData([Color.White]);
 
         //I would like to be able to move all of these to Initialize but not sure how
         pauseMenu = new(Assets.UiFont) { Title = "Game Paused", DimBackground = true };
