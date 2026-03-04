@@ -33,6 +33,7 @@ public class PlayerSprite : Animated {
     public void UpdateState(State linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
         SpriteState newState;
+        IsDamaged = isDamaged;
 
         if (linkAction == State.None)
         {
