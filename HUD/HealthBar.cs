@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Players;
@@ -9,13 +8,15 @@ namespace Sprint2.HUD;
 public class HealthBar
 {
     private readonly Player player;
-    private readonly Vector2 position;
+    private readonly Vector2 initialPosition;
     private readonly Vector2 initialSize;
+    private Vector2 position;
     private Vector2 size;
 
     public HealthBar(Player player, Vector2 position, Vector2 size)
     {
         this.player = player;
+        initialPosition = position;
         this.position = position;
         initialSize = size;
         this.size = size;
@@ -27,6 +28,7 @@ public class HealthBar
         float changeHeight = screenSize.h / (float)Consts.DefaultScreenSize.h;
 
         size = new(initialSize.X * changeWidth, initialSize.Y * changeHeight);
+        position = new(initialPosition.X * changeWidth, initialPosition.Y * changeHeight);
     }
 
     public void Draw(SpriteBatch spriteBatch)
