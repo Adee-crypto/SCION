@@ -8,7 +8,7 @@ using Sprint2.Entities.Players;
 
 namespace Sprint2.Screens;
 
-public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlayerProvider
+public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlayerProvider, IPausableScreen
 {
     private enum ArcadeState
     {
@@ -24,6 +24,9 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
     private readonly float spacer = 18f;
     private ArcadeState state;
     private LevelManager levelManager;
+    private bool isPaused;
+    public bool IsPaused => isPaused;
+    private PauseOverlay pause;
     private Player player;
     public IPlayer CurrentPlayer => state == ArcadeState.Playing ? player : null;
     public ScreenArcade(Game1 game, ScreenManager screenManager)
@@ -32,7 +35,6 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
         this.screenManager = screenManager;
 
         menu = new(Assets.UiFont) { Title = "Arcade Mode", DimBackground = true };
-
         gameOverMenu = new(Assets.UiFont) { Title = "Game Over", DimBackground = true };
     }
 
@@ -43,6 +45,7 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
         player = new Player();
         levelManager = new LevelManager();
 
+        pause = new PauseOverlay(game);
         BuildMenu();
         BuildGameOverMenu();
     }
@@ -101,8 +104,6 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
 
     private void StartArcadeRun()
     {
-        player = new Player();
-        levelManager = new LevelManager();
         levelManager.StartArcade(player);
         levelManager.Resize((game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
         state = ArcadeState.Playing;
@@ -110,8 +111,11 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
 
     public void Resize((int w, int h) size)
     {
+        OnEnter();
         levelManager?.Resize(size);
     }
+
+    public void TogglePause() => isPaused = !isPaused;
 
     public void Reset()
     {
@@ -120,6 +124,12 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
 
     public void Update(GameTime gameTime)
     {
+        if (isPaused)
+        {
+            pause.Update(gameTime);
+            return;
+        }
+
         switch (state)
         {
             case ArcadeState.Menu:
@@ -137,16 +147,13 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (state == ArcadeState.Playing)
-        {
-            levelManager.Draw(spriteBatch);
-            return;
-        }
-
         var size = (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
 
-        if (state == ArcadeState.Menu) menu.Draw(spriteBatch, size);
+        if (state == ArcadeState.Playing) levelManager.Draw(spriteBatch);
+        else if (state == ArcadeState.Menu) menu.Draw(spriteBatch, size);
         else gameOverMenu.Draw(spriteBatch, size);
+
+        if (isPaused) pause.Draw(spriteBatch, size);
     }
 
 }

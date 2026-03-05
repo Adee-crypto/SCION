@@ -86,6 +86,12 @@ public interface IScreen : IUpdatable, IDrawable
     void OnExit();
 }
 
+public interface IPausableScreen
+{
+    bool IsPaused { get; }
+    void TogglePause();
+}
+
 public interface ILevel : IUpdatable, IDrawable, IResizableScreen, IResettableScreen
 {
     bool IsOver { get; }

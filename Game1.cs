@@ -21,8 +21,6 @@ public class Game1 : Game
     //game state & data
     private readonly ScreenManager screenManager = new();
     public ScreenManager ScreenManager => screenManager;
-    public bool IsPaused {get; private set;}
-    private Menu pauseMenu;
 
     public Game1()
     {
@@ -41,8 +39,6 @@ public class Game1 : Game
         _graphics.ApplyChanges();
 
         //resizing anything else
-        pauseMenu.Resize(ScreenSize);
-
         if (screenManager.Current is IResizableScreen resizable) resizable.Resize(ScreenSize);
     }
 
@@ -51,7 +47,7 @@ public class Game1 : Game
         spriteBatch = new(GraphicsDevice);
 
         KeyBindings.AttachKeyBindings(this); // Must be done after Game1's fields are initialized
-        //screenManager.SetScreen(new ScreenMainMenu(this, screenManager, mouseController)); // Not yet finished
+
         base.Initialize();
     }
 
@@ -70,27 +66,18 @@ public class Game1 : Game
         Assets.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
         Assets.PixelTexture.SetData([Color.White]);
 
-        //I would like to be able to move all of these to Initialize but not sure how
-        pauseMenu = new(Assets.UiFont) { Title = "Game Paused", DimBackground = true };
-
         OnResize(null, null);
-
-        Vector2 resumePosition = new(ScreenSize.w / 2 - 100, ScreenSize.h / 2 - 60);
-        Vector2 quitPosition = new(resumePosition.X, resumePosition.Y + 60);
-        Vector2 resetPosition = new(16, 16);
-
-        pauseMenu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Resume", TogglePause, new(200, 50), resumePosition));
-        pauseMenu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Quit", Exit, new(200, 50), quitPosition));
-        pauseMenu.AddButton(new(Assets.UiFont, Assets.ResetTexture, "", ResetLevel, new(32, 32), resetPosition));
 
         screenManager.SetScreen(new ScreenMainMenu(this, screenManager));
     }
 
-    public void TogglePause() => IsPaused = !IsPaused;
+    public void TogglePause()
+    {
+        if (screenManager.Current is IPausableScreen pausable) pausable.TogglePause();
+    }
 
     public void ResetLevel()
     {
-        IsPaused = false; //idk if we want this or not
         if (screenManager.Current is IResettableScreen resettable) resettable.Reset();
     }
 
@@ -98,16 +85,11 @@ public class Game1 : Game
     {
         if (IsActive) { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
             MouseController.Update();
-            KeyboardController.Update(IsPaused);
+            bool isPaused = screenManager.Current is IPausableScreen pause && pause.IsPaused;
+            KeyboardController.Update(isPaused);
         }
 
-        if (IsPaused) {
-            pauseMenu.Update();
-        }
-        else
-        {
-            screenManager.Update(gameTime);
-        }
+        screenManager.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -117,8 +99,6 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         screenManager.Draw(spriteBatch);
-        
-        if (IsPaused) pauseMenu.Draw(spriteBatch, ScreenSize);
 
         spriteBatch.End();
         base.Draw(gameTime);

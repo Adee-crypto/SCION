@@ -8,7 +8,7 @@ using Sprint2.Entities.Players;
 
 namespace Sprint2.Screens;
 
-public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayerProvider
+public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayerProvider, IPausableScreen
 {
     private enum StoryState
     {
@@ -25,7 +25,10 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
     private StoryState state;
     private LevelManager levelManager;
     private Player player;
+    private bool isPaused;
+    public bool IsPaused => isPaused;
     private int currentLevelIndex;
+    private PauseOverlay pause;
     public IPlayer CurrentPlayer => state == StoryState.Playing ? player : null;
 
     public ScreenStory(Game1 game, ScreenManager screenManager)
@@ -46,6 +49,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
 
         currentLevelIndex = 0;
 
+        pause = new PauseOverlay(game);
         BuildMenu();
         BuildGameOverMenu();
     }
@@ -129,8 +133,11 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
 
     public void Resize((int w, int h) size)
     {
+        OnEnter();
         levelManager?.Resize(size);
     }
+
+    public void TogglePause() => isPaused = !isPaused;
 
     public void Reset()
     {
@@ -139,6 +146,12 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
 
     public void Update(GameTime gameTime)
     {
+        if (isPaused)
+        {
+            pause.Update(gameTime);
+            return;
+        }
+
         switch (state)
         {
             case StoryState.Menu:
@@ -156,16 +169,13 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (state == StoryState.Playing)
-        {
-            levelManager.Draw(spriteBatch);
-            return;
-        }
-
         var size = (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
 
-        if (state == StoryState.Menu) menu.Draw(spriteBatch, size);
+        if (state == StoryState.Playing) levelManager.Draw(spriteBatch);
+        else if (state == StoryState.Menu) menu.Draw(spriteBatch, size);
         else gameOverMenu.Draw(spriteBatch, size);
+
+        if (isPaused) pause.Draw(spriteBatch, size);
     }
 
 }
