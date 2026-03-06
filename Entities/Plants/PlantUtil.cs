@@ -4,7 +4,7 @@ namespace Sprint2.Entities.Plants;
 
 public static class PlantUtil
 {
-    public static List<(int, int)> growDirs { get; } = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+    public static List<(int, int)> GrowDirs { get; } = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
     public static Dictionary<Species, float> SpeciesGrowTimes { get; } = new()
     {

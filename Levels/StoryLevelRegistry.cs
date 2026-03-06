@@ -11,10 +11,10 @@ public static class StoryLevelRegistry
         new StoryLevelDef
         {
             Index = 0,
-            PlayerSpawnPos = new Vector2(5, 10),
+            PlayerSpawnPos = new(5, 10),
             Platforms = 
             [
-                new Platform(Platform.Type.stonebrick, 0, 16 * 25, 50, 1),
+                new(BlockType.StoneBrick, 0, 25, 50, 1),
             ]
         },
         new StoryLevelDef
@@ -23,8 +23,8 @@ public static class StoryLevelRegistry
             PlayerSpawnPos = new Vector2(5, 10),
             Platforms =
             [
-                new Platform(Platform.Type.crackedstonebrick, 0, 16 * 20, 50, 1),
-                new Platform(Platform.Type.stone, 10 * 16, 16 * 15, 8, 1),
+                new Platform(BlockType.CrackedStoneBrick, 0, 20, 50, 1),
+                new Platform(BlockType.Stone, 10, 15, 8, 1),
             ]
         }
     ];

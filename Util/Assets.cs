@@ -7,8 +7,7 @@ public static class Assets
 {
     public static Texture2D PlayerTexture {get; set;}
     public static Texture2D ArrowTexture {get; set;}
-    public static Texture2D PlantSpritesheet {get; set;}
-    public static Texture2D PlatformSpritesheet {get; set;}
+    public static Texture2D BlockSpriteSheet {get; set;}
     public static Texture2D ButtonTexture {get; set;}
     public static Texture2D ResetTexture {get; set;}
     public static Texture2D VoidspawnTexture {get; set;}

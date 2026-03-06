@@ -183,7 +183,7 @@ public class Enemy : Extensions.IDrawable
     {
         Vector2 spawnPos = Collider.Center + new Vector2(facing * 8, 0);
         Vector2 shotVelocity = new(facing * ProjectileSpeed, 0);
-        ProjectileDef shotDef = new("VoidShot", 5, 100, 0);
+        ProjectileDef shotDef = new(ProjectileType.Void, 5, 100, 0);
         projectileManager.Spawn(shotDef, spawnPos, shotVelocity);
     }
 

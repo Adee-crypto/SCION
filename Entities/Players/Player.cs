@@ -9,6 +9,7 @@ using Sprint2.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sprint2.Entities.Projectiles;
 
 namespace Sprint2.Entities.Players;
 
@@ -47,7 +48,7 @@ public class Player : IPlayer
     public Vector2 AimDirection => aimer.Direction;
     
     //Inventory
-    public List<Species> Seeds {get; set;}
+    public List<ProjectileType> Seeds {get; set;} = [];
     private const int maximumSeedsDrawable = 5;
 
     public Player() {
@@ -67,7 +68,9 @@ public class Player : IPlayer
         IsBreakable = false;
         breakTimer = 0f;
         aimer = new(10f);
-        Seeds = [.. Enum.GetValues<Species>().OrderBy(_ => Random.Shared.Next())]; //shuffles seed species order
+        for (int i = 0; i < 5; i++) {
+            GetSeed();
+        }
     }
 
     public void Move(int direction)
@@ -99,13 +102,13 @@ public class Player : IPlayer
     //Add random seed to inventory
     public void GetSeed()
     {
-        Seeds.Add(Random.Shared.GetItems(Enum.GetValues<Species>(), 1)[0]);
+        Seeds.Add(ProjectileDef.SpeciesToProjectileType(Random.Shared.GetItems(Enum.GetValues<Species>(), 1)[0]));
     }
 
-    public string ThrowSeed()
+    public ProjectileType ThrowSeed()
     {
         //ADD SAFEGUARD FOR EMPTY SEED LIST
-        string seedSpecies = Seeds[0].ToString() + " seed";
+        ProjectileType seedSpecies = Seeds[0];
         Seeds.RemoveAt(0);
         return seedSpecies;
     }
@@ -186,7 +189,7 @@ public class Player : IPlayer
         int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
         for (int i = 0; i < drawableAmount; i++)
         {
-            spriteBatch.Draw(Assets.PlantSpritesheet, Collider.Position + new Vector2(0, -(i + 1) * 16), SourceRects.SeedSourceRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(Assets.BlockSpriteSheet, Collider.Position + new Vector2(0, -(i + 1) * 16), SourceRects.ProjectileSourceRects[Seeds[i]][0], Color.White);
         }
         
         playerSprite.Draw(spriteBatch, Collider.Position);

@@ -16,22 +16,22 @@ public class ApplePlant((int, int) root) : Plant(Species.apple, root)
 
     protected override void Grow()
     {
-        HashSet<(int, int)> newGrowth = [];
-        foreach ((int x, int y) in BudCells)
+        BlockList newGrowth = new();
+        foreach ((int x, int y) in BudCells.Positions())
         {
-            foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.growDirs))
+            foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.GrowDirs))
             {
-                (int, int) newCell = (x + dx, y + dy);
-                if (!StemCells.Contains(newCell) && !BudCells.Contains(newCell))
+                var newCellPos = (x + dx, y + dy);
+                if (!StemCells.Contains(newCellPos) && !BudCells.Contains(newCellPos))
                 {
-                    newGrowth.Add(newCell);
+                    newGrowth.Add(newCellPos, SpeciesToBlockType(Species));
                     break;
                 }
             }
         }
 
         //Move buds to stem, and replenish new buds
-        StemCells.UnionWith(BudCells);
-        BudCells = newGrowth; //this very possibly might not do what i want
+        StemCells.Union(BudCells);
+        BudCells = newGrowth;
     }
 }

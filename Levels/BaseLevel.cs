@@ -27,6 +27,7 @@ public abstract class BaseLevel(Player player) : ILevel
 
     protected List<Platform> Platforms { get; }= [];
     protected List<Plant> Plants { get; }= [];
+    protected BlockList Blocks {get;} = new();
 
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }
@@ -71,7 +72,7 @@ public abstract class BaseLevel(Player player) : ILevel
 
         Plants.ForEach(p => collisionManager.Objects.AddRange(p.GetPlantObjects()));
 
-        collisionManager.Objects.AddRange(Platforms.Select(p => p.Bounds));
+        collisionManager.Objects.AddRange(Platforms.Select(p => p.PixelBounds));
 
         projectileManager.Update(gameTime, collisionManager);
         player.Update(gameTime, collisionManager);
