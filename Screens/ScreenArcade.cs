@@ -111,7 +111,7 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
 
     public void Resize((int w, int h) size)
     {
-        OnEnter();
+        if (state == ArcadeState.Menu) OnEnter();
         levelManager?.Resize(size);
     }
 

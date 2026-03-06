@@ -133,7 +133,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
 
     public void Resize((int w, int h) size)
     {
-        OnEnter();
+        if (state == StoryState.Menu) OnEnter();
         levelManager?.Resize(size);
     }
 
