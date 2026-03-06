@@ -12,9 +12,6 @@ public static class Consts
     public const float playerJumpSpeed = -450f;
     public const float playerGravity = 980f;
 
-    //plant
-    public const int cellWidth = 16;
-
-    //platform
-    public const int platformWidth = 16;
+    //Blocks
+    public const int BlockWidth = 16;
 }

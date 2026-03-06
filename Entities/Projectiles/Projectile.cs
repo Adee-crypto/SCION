@@ -44,6 +44,6 @@ public class Projectile : IProjectile
     public void Draw(SpriteBatch spriteBatch)
     {
         if (IsAlive)
-            spriteBatch.Draw(Assets.PlantSpritesheet, Collider.Position, def.CurrentSourceRect, Color.White, Collider.Angle, def.Origin, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Assets.BlockSpriteSheet, Collider.Position, def.CurrentSourceRect, Color.White, Collider.Angle, def.Origin, 1f, SpriteEffects.None, 0f);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
@@ -6,39 +7,22 @@ namespace Sprint2.Entities;
 
 public class Platform : Extensions.IDrawable
 {
-    public enum Type
+    public BlockList Blocks {get;} = new();
+    public Rectangle PixelBounds {get;}
+
+    public Platform(BlockType type, int x, int y, int w, int h)
     {
-        stone,
-        stonebrick,
-        crackedstonebrick
-    }
-
-    public Type PlatformType { get; }
-    public Rectangle Bounds { get; private set; }
-
-    public Platform(Type type, int x, int y, int tilesWide, int tilesTall)
-    {
-        PlatformType = type;
-
-        int width = tilesWide * Consts.platformWidth;
-        int height = tilesTall * Consts.platformWidth;
-
-        Bounds = new(x, y, width, height);
-    }
-
-    public void Draw(SpriteBatch spriteBatch)
-    {
-        Rectangle sourceSprite = SourceRects.PlatformSourceRects[PlatformType];
-
-        int size = Consts.platformWidth;
-
-        for (int height = 0; height < Bounds.Height; height += size)
+        for (int j = 0; j < h; j++)
         {
-            for (int width = 0; width < Bounds.Width; width += size)
+            for (int i = 0; i < w; i++)
             {
-                Rectangle finalPlat = new(Bounds.X + width, Bounds.Y + height, size, size);
-                spriteBatch.Draw(Assets.PlatformSpritesheet, finalPlat, sourceSprite, Color.White);
+                Blocks.Add((x+i, y+j), type);
             }
         }
+        PixelBounds = new(x * Consts.BlockWidth, y * Consts.BlockWidth, w * Consts.BlockWidth, h * Consts.BlockWidth);
+    }
+
+    public void Draw(SpriteBatch spriteBatch) {
+        Blocks.Draw(spriteBatch);
     }
 }

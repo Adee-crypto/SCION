@@ -6,7 +6,7 @@ namespace Advait;
 public abstract class Plant(Texture2D texture, Point startPosition) : IPlantable
 {
     protected Texture2D texture = texture;
-    protected Rectangle sourceRectangle = new Rectangle(335, 450, 37, 37);
+    protected Rectangle sourceRectangle = new(335, 450, 37, 37);
 
     protected const int TILE_SIZE = 37;
 
@@ -41,7 +41,7 @@ public abstract class Plant(Texture2D texture, Point startPosition) : IPlantable
         // Draw horizontal growth
         for (int i = 0; i < horizontalStep; i++)
         {
-            Rectangle target = new Rectangle(
+            Rectangle target = new(
                 horizontalOrigin.X + i * TILE_SIZE,
                 horizontalOrigin.Y,
                 TILE_SIZE,
@@ -57,7 +57,7 @@ public abstract class Plant(Texture2D texture, Point startPosition) : IPlantable
 
             for (int i = 0; i < patternStep && i < pattern.Length; i++)
             {
-                Rectangle target = new Rectangle(
+                Rectangle target = new(
                     patternOrigin.X + pattern[i].X * TILE_SIZE,
                     patternOrigin.Y + pattern[i].Y * TILE_SIZE,
                     TILE_SIZE,

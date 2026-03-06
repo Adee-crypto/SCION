@@ -98,6 +98,7 @@ public enum LevelEndReason
     PlayerDied,
     Completed
 }
+
 // internal interface IEntitySprite : IUpdatable
 // {
 //     void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);

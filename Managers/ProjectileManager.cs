@@ -35,8 +35,7 @@ public class ProjectileManager(Player player) : Extensions.IDrawable, IUpdatable
             {
                 direction.Normalize();
 
-                string seedSpecies = player.ThrowSeed();
-                ProjectileDef def = new(seedSpecies);
+                ProjectileDef def = new(player.ThrowSeed());
 
                 Vector2 spawnPos = playerCollider.Center + direction * 12f;
                 Vector2 initialVelocity;
