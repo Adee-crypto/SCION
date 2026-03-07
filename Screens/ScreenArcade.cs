@@ -95,10 +95,18 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
         gameOverMenu.AddButton(new(
             Assets.UiFont,
             Assets.ButtonTexture,
-            "Back",
+            "Main Menu",
             () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)),
             buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 1)
+        ));
+        gameOverMenu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Quit Game",
+            game.Exit,
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 2)
         ));
     }
 
@@ -111,7 +119,9 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
 
     public void Resize((int w, int h) size)
     {
-        if (state == ArcadeState.Menu) OnEnter();
+        BuildMenu();
+        BuildGameOverMenu();
+        pause.Resize(size);
         levelManager?.Resize(size);
     }
 

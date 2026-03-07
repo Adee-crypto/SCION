@@ -107,14 +107,18 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
         gameOverMenu.AddButton(new(
             Assets.UiFont,
             Assets.ButtonTexture,
-            "Back",
-            () =>
-            {
-                state = StoryState.Menu;
-                BuildMenu();
-            },
+            "Main Menu",
+            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)),
             buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 1)
+        ));
+        gameOverMenu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Quit Game",
+            game.Exit,
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 2)
         ));
     }
 
@@ -133,7 +137,9 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
 
     public void Resize((int w, int h) size)
     {
-        if (state == StoryState.Menu) OnEnter();
+        BuildMenu();
+        BuildGameOverMenu();
+        pause.Resize(size);
         levelManager?.Resize(size);
     }
 
