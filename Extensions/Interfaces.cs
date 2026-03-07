@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Sprint2.Entities;
 using Sprint2.Managers;
 
@@ -23,7 +22,7 @@ public interface IUpdatableObject
 
 public interface IPhysicsObject
 {
-    Collider Collider {get;}
+    Collider Collider { get; }
 }
 
 // public interface IController
@@ -67,7 +66,7 @@ public interface IAim
 
 public interface IProjectile : IDrawable, IUpdatableObject, IPhysicsObject
 {
-    bool IsAlive { get; }
+    bool IsGEMaxLifetime { get; }
 }
 
 public interface IResizableScreen

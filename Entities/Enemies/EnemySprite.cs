@@ -1,6 +1,6 @@
-﻿using Sprint2.Extensions;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Extensions;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Enemies;
@@ -19,7 +19,8 @@ public enum SpriteState
     Dead
 };
 
-public class EnemySprite : Animated {
+public class EnemySprite : Animated
+{
     private SpriteState currentState;
     public bool IsDamaged { get; set; }
 

@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace Sprint2.Extensions; //This should be changed
 
-public class Ticker (double freq)
+public class Ticker(double freq)
 {
     public double Remainder { get; set; }
     public int TickAge { get; set; }
@@ -14,9 +14,10 @@ public class Ticker (double freq)
         Remainder = 0;
     }
 
-    public int TicksPassed(GameTime gameTime) {
+    public int TicksPassed(GameTime gameTime)
+    {
         Remainder += gameTime.ElapsedGameTime.TotalSeconds;
-        int NewTicks = (int) (Remainder / Freq);
+        int NewTicks = (int)(Remainder / Freq);
         Remainder %= Freq;
         TickAge += NewTicks;
         return NewTicks;

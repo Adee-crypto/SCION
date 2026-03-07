@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework;
-using Sprint2.Entities.Plants;
-using Players = Sprint2.Entities.Players;
-using Enemies = Sprint2.Entities.Enemies;
-using System.Collections.Generic;
 using Sprint2.Entities;
 using Sprint2.Entities.Projectiles;
+using System.Collections.Generic;
+using Enemies = Sprint2.Entities.Enemies;
+using Players = Sprint2.Entities.Players;
 
 namespace Sprint2.Util;
 
@@ -15,7 +14,7 @@ public static class SourceRects
         return new(x * Consts.BlockWidth, y * Consts.BlockWidth, Consts.BlockWidth, Consts.BlockWidth);
     }
 
-    public static Dictionary<Players.SpriteState, Rectangle[]> PlayerSourceRects {get;} = new() {
+    public static Dictionary<Players.SpriteState, Rectangle[]> PlayerSourceRects { get; } = new() {
         { Players.SpriteState.LeftFacing, [TileSourceRectAt(2, 0)] },
         { Players.SpriteState.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
         { Players.SpriteState.RightFacing, [TileSourceRectAt(0, 0)] },
@@ -28,7 +27,7 @@ public static class SourceRects
         { Players.SpriteState.Dead, [TileSourceRectAt(0, 5)] }
     };
 
-    public static Dictionary<Enemies.SpriteState, Rectangle[]> EnemySourceRects {get;} = new()
+    public static Dictionary<Enemies.SpriteState, Rectangle[]> EnemySourceRects { get; } = new()
     {
         { Enemies.SpriteState.LeftFacing, [TileSourceRectAt(2, 0)] },
         { Enemies.SpriteState.LeftRunning, [TileSourceRectAt(2, 0), TileSourceRectAt(3, 0)] },
@@ -39,7 +38,7 @@ public static class SourceRects
         { Enemies.SpriteState.Dead, [TileSourceRectAt(2, 5)] }
     };
 
-    public static Dictionary<BlockType, Rectangle> BlockSourceRects {get;} = new()
+    public static Dictionary<BlockType, Rectangle> BlockSourceRects { get; } = new()
     {
         { BlockType.Grass, TileSourceRectAt(2, 9) },
         { BlockType.Apple, TileSourceRectAt(2, 10) },
@@ -49,7 +48,7 @@ public static class SourceRects
         { BlockType.CrackedStoneBrick, TileSourceRectAt(5, 6) },
     };
 
-    public static Dictionary<ProjectileType, Rectangle[]> ProjectileSourceRects {get;} = new()
+    public static Dictionary<ProjectileType, Rectangle[]> ProjectileSourceRects { get; } = new()
     {
         { ProjectileType.Grass, [TileSourceRectAt(6, 16), TileSourceRectAt(7, 16)] },
         { ProjectileType.Apple, [TileSourceRectAt(9, 16), TileSourceRectAt(8, 16)] },

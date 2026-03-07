@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
@@ -8,8 +6,8 @@ namespace Sprint2.Entities;
 
 public class Platform : Extensions.IDrawable
 {
-    public BlockList Blocks {get;} = new();
-    public Rectangle PixelBounds {get;}
+    public BlockList Blocks { get; } = new();
+    public Rectangle PixelBounds { get; }
 
     public Platform(BlockType type, int x, int y, int w, int h)
     {
@@ -17,13 +15,14 @@ public class Platform : Extensions.IDrawable
         {
             for (int i = 0; i < w; i++)
             {
-                Blocks.Add((x+i, y+j), type);
+                Blocks.Add((x + i, y + j), type);
             }
         }
         PixelBounds = new(x * Consts.BlockWidth, y * Consts.BlockWidth, w * Consts.BlockWidth, h * Consts.BlockWidth);
     }
 
-    public void Draw(SpriteBatch spriteBatch) {
+    public void Draw(SpriteBatch spriteBatch)
+    {
         Blocks.Draw(spriteBatch);
     }
 }

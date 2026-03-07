@@ -1,6 +1,6 @@
-using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Extensions;
 using Sprint2.UI;
 using Sprint2.Util;
 
@@ -17,7 +17,7 @@ public class PauseOverlay : IResizableScreen
         this.game = game;
 
         menu = new(Assets.UiFont) { Title = "GAME PAUSED", DimBackground = true };
-        BuildMenu();    
+        BuildMenu();
     }
 
     private void BuildMenu()
@@ -28,27 +28,27 @@ public class PauseOverlay : IResizableScreen
         float y = game.GraphicsDevice.Viewport.Height * 0.4f;
 
         menu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Resume", 
-            game.TogglePause, 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Resume",
+            game.TogglePause,
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 0)
         ));
         menu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Main Menu", 
-            () => {}, 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Main Menu",
+            () => { },
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 1)
         ));
         menu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Quit Game", 
-            game.Exit, 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Quit Game",
+            game.Exit,
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 2)
         ));
     }

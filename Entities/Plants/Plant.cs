@@ -7,13 +7,15 @@ using System.Linq;
 
 namespace Sprint2.Entities.Plants;
 
-public enum Species {
+public enum Species
+{
     grass, apple, pineapple
-    };
+};
 
 public abstract class Plant
 {
-    public static BlockType SpeciesToBlockType(Species plant) => plant switch {
+    public static BlockType SpeciesToBlockType(Species plant) => plant switch
+    {
         Species.grass => BlockType.Grass,
         Species.apple => BlockType.Apple,
         Species.pineapple => BlockType.Pineapple,
@@ -26,7 +28,8 @@ public abstract class Plant
     protected float Age { get; set; }
     protected Ticker Ticker { get; }
 
-    public Plant(Species species, (int, int) root) {
+    public Plant(Species species, (int, int) root)
+    {
         Ticker = new(PlantUtil.SpeciesGrowTimes[species]);
         Species = species;
         BudCells.Add(root, SpeciesToBlockType(species));
@@ -48,16 +51,22 @@ public abstract class Plant
     }
 
     //FIX THIS TO ONLY BREAK IF PLAYER ACTUALLY TOUCHING BLOCK; work with collision?
-    public bool TryRemoveCellBelow(Vector2 bottomCenter) {
+    public bool TryRemoveCellBelow(Vector2 bottomCenter)
+    {
         int cellX = (int)(bottomCenter.X / Consts.BlockWidth);
         int cellY = (int)(bottomCenter.Y / Consts.BlockWidth);
-        if (StemCells.Contains((cellX, cellY))) { 
+        if (StemCells.Contains((cellX, cellY)))
+        {
             StemCells.Remove((cellX, cellY));
             return true;
-        } else if (StemCells.Contains((cellX - 1, cellY)) && bottomCenter.X % Consts.BlockWidth < Consts.BlockWidth / 2f) {
+        }
+        else if (StemCells.Contains((cellX - 1, cellY)) && bottomCenter.X % Consts.BlockWidth < Consts.BlockWidth / 2f)
+        {
             StemCells.Remove((cellX - 1, cellY));
             return true;
-        } else if (StemCells.Contains((cellX + 1, cellY)) && bottomCenter.X % Consts.BlockWidth > Consts.BlockWidth / 2f) {
+        }
+        else if (StemCells.Contains((cellX + 1, cellY)) && bottomCenter.X % Consts.BlockWidth > Consts.BlockWidth / 2f)
+        {
             StemCells.Remove((cellX + 1, cellY));
             return true;
         }

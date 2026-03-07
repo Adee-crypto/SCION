@@ -1,13 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
+using Sprint2.Entities.Enemies;
+using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
 using Sprint2.Extensions;
 using Sprint2.Managers;
-using Sprint2.Entities.Plants;
-using Microsoft.Xna.Framework.Graphics;
-using Sprint2.Entities.Enemies;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sprint2.Levels;
 
@@ -25,9 +25,9 @@ public abstract class BaseLevel(Player player) : ILevel
     protected EnemyManager EnemyManager => enemyManager;
     protected HUDManager HudManager => hudManager;
 
-    protected List<Platform> Platforms { get; }= [];
-    protected List<Plant> Plants { get; }= [];
-    protected BlockList Blocks {get;} = new();
+    protected List<Platform> Platforms { get; } = [];
+    protected List<Plant> Plants { get; } = [];
+    protected BlockList Blocks { get; } = new();
 
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }
@@ -57,7 +57,7 @@ public abstract class BaseLevel(Player player) : ILevel
 
     protected abstract void BuildLevel();
 
-    protected virtual void UpdateLevelLogic(GameTime gameTime) {}
+    protected virtual void UpdateLevelLogic(GameTime gameTime) { }
 
     protected void SpawnEnemy(EnemyDef def, Vector2 pos)
     {

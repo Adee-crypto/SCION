@@ -1,11 +1,12 @@
-using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Controllers;
 using Sprint2.Entities;
 using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
+using Sprint2.Extensions;
+using Sprint2.Util;
 using System.Collections.Generic;
-using Sprint2.Controllers;
 
 namespace Sprint2.Managers;
 
@@ -19,9 +20,9 @@ public class ProjectileManager(Player player) : Extensions.IDrawable, IUpdatable
         projectiles.Clear();
     }
 
-    public void Spawn(ProjectileDef def, Vector2 spawnPos, Vector2 initialVelocity)
+    public void Spawn(ProjectileSprite sprite, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size)
     {
-        projectiles.Add(new Projectile(def, spawnPos, initialVelocity));
+        projectiles.Add(new Projectile(sprite, gravity, mass, initialPosition, initialVelocity, size));
     }
 
     public void Update(GameTime gameTime, CollisionManager collisionManager)
@@ -34,22 +35,21 @@ public class ProjectileManager(Player player) : Extensions.IDrawable, IUpdatable
             if (direction.LengthSquared() > 0.0001f)
             {
                 direction.Normalize();
+                Vector2 initialPosition = playerCollider.Center + direction * 12f;
+                Vector2 initialVelocity = direction * 300f;
 
-                ProjectileDef def = new(player.ThrowSeed());
+                ProjectileSprite sprite = new(player.ThrowSeed(), 5f);
+                Projectile projectile = new(sprite, Consts.playerProjectileGravity, Consts.projectileMass, initialPosition, initialVelocity, new(8, 8));
+                projectiles.Add(projectile);
 
-                Vector2 spawnPos = playerCollider.Center + direction * 12f;
-                Vector2 initialVelocity;
-                if (Vector2.Dot(direction, playerCollider.Velocity) > 0) { initialVelocity = direction * def.LaunchSpeed + playerCollider.Velocity; }
-                else initialVelocity = direction * def.LaunchSpeed;
-
-                projectiles.Add(new Projectile(def, spawnPos, initialVelocity));
+                player.KnockBack(projectile.Collider.Momentum);
             }
         }
 
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
             projectiles[i].Update(gameTime, collisionManager);
-            if (!projectiles[i].IsAlive) projectiles.RemoveAt(i);
+            if (projectiles[i].IsGEMaxLifetime) projectiles.RemoveAt(i);
         }
     }
 

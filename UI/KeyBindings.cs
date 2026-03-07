@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Extensions;
 using System;
 using System.Collections.Generic;
-using Sprint2.Extensions;
 
 namespace Sprint2.UI;
 
 public static class KeyBindings
 {
-    public static Dictionary<Keys[], Action> HoldKeyBindings {get; private set;}
-    public static Dictionary<Keys[], Action> TapKeyBindings {get; private set;}
+    public static Dictionary<Keys[], Action> HoldKeyBindings { get; private set; }
+    public static Dictionary<Keys[], Action> TapKeyBindings { get; private set; }
 
     private static IPlayer Target(Game1 game) => (game.ScreenManager.Current as IPlayerProvider)?.CurrentPlayer;
 

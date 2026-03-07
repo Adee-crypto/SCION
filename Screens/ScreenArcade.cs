@@ -1,10 +1,10 @@
-using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Entities.Players;
+using Sprint2.Extensions;
+using Sprint2.Managers;
 using Sprint2.UI;
 using Sprint2.Util;
-using Sprint2.Managers;
-using Sprint2.Entities.Players;
 
 namespace Sprint2.Screens;
 
@@ -50,7 +50,7 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
         BuildGameOverMenu();
     }
 
-    public void OnExit() {}
+    public void OnExit() { }
 
     private void BuildMenu()
     {
@@ -60,19 +60,19 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
         float y = game.GraphicsDevice.Viewport.Height * 0.4f;
 
         menu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Start", 
-            StartArcadeRun, 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Start",
+            StartArcadeRun,
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 0)
         ));
         menu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Back", 
-            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)), 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Back",
+            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)),
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 1)
         ));
     }
@@ -85,19 +85,19 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
         float y = game.GraphicsDevice.Viewport.Height * 0.4f;
 
         gameOverMenu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Play Again", 
-            () => StartArcadeRun(), 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Play Again",
+            () => StartArcadeRun(),
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 0)
         ));
         gameOverMenu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Back", 
-            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)), 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Back",
+            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)),
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 1)
         ));
     }

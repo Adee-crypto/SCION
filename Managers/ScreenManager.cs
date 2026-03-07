@@ -1,6 +1,6 @@
-using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Extensions;
 
 namespace Sprint2.Screens;
 

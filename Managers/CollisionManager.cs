@@ -30,7 +30,7 @@ public class CollisionManager
         foreach (var obj in Objects)
         {
             if (collider.Hitbox.Intersects(obj)) {
-                if (deltaPos.Y < 0) collider.SetMomentumY(0);
+                if (deltaPos.Y < 0) collider.SetVelocityY(0);
                 currentPosition.Y = (deltaPos.Y < 0) ? obj.Bottom : obj.Top - collider.Hitbox.Height;
             }
         }

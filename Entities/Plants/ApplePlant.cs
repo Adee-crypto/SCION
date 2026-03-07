@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Sprint2.Util;
-using System.Collections.Generic;
 
 namespace Sprint2.Entities.Plants;
 

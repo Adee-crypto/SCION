@@ -1,10 +1,10 @@
-using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Entities.Players;
+using Sprint2.Extensions;
+using Sprint2.Managers;
 using Sprint2.UI;
 using Sprint2.Util;
-using Sprint2.Managers;
-using Sprint2.Entities.Players;
 
 namespace Sprint2.Screens;
 
@@ -54,7 +54,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
         BuildGameOverMenu();
     }
 
-    public void OnExit() {}
+    public void OnExit() { }
 
     public void BuildMenu()
     {
@@ -64,27 +64,27 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
         float y = game.GraphicsDevice.Viewport.Height * 0.4f;
 
         menu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "New Game", 
-            StartNewGame, 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "New Game",
+            StartNewGame,
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 0)
         ));
         menu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Load Game\n(WIP)", 
-            () => {}, 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Load Game\n(WIP)",
+            () => { },
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 1)
         ));
         menu.AddButton(new(
-            Assets.UiFont, 
-            Assets.ButtonTexture, 
-            "Back", 
-            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)), 
-            buttonSize, 
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Back",
+            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)),
+            buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 2)
         ));
     }

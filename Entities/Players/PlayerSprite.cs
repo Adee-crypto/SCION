@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.Util;
 using Sprint2.Extensions;
+using Sprint2.Util;
 
 namespace Sprint2.Entities.Players;
 
@@ -19,7 +19,8 @@ public enum SpriteState
     Dead
 };
 
-public class PlayerSprite : Animated {
+public class PlayerSprite : Animated
+{
     private SpriteState currentState;
     public bool IsDamaged { get; set; }
 

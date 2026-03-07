@@ -1,49 +1,44 @@
-using Sprint2.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Extensions;
+using Sprint2.Managers;
 using Sprint2.Util;
 using System.Linq;
-using Sprint2.Managers;
 
 namespace Sprint2.Entities.Projectiles;
 
 public class Projectile : IProjectile
 {
-    private readonly ProjectileDef def;
-    public Collider Collider { get; }  //change this from Vector2.Zero
+    private readonly ProjectileSprite Sprite;
+    public Collider Collider { get; }
+    public bool IsGEMaxLifetime { get; private set; }
 
-    public bool IsAlive { get; private set; } = true;
-
-    public Projectile(ProjectileDef def, Vector2 initialPosition, Vector2 initialMomentum)
+    public Projectile(ProjectileSprite Sprite, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size)
     {
-        this.def = def;
-        Collider = new(initialPosition, Vector2.Zero);
-        Collider.SetMomentum(initialMomentum);
+        this.Sprite = Sprite;
+        Collider = new(gravity, mass, initialPosition, initialVelocity, size);
+        IsGEMaxLifetime = false;
     }
 
-    public void Update(GameTime gameTime, CollisionManager collisionManager) {
-        if (!IsAlive) return;
+    public void Update(GameTime gameTime, CollisionManager collisionManager)
+    {
+        if (IsGEMaxLifetime) return;
 
-        def.UpdateFrameState(gameTime);
+        Sprite.UpdateFrameState(gameTime);
+        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Collider.SetPositionY(Collider.Position.Y + (Collider.Velocity.Y + 0.5f * Consts.playerGravity * dt) * dt);
+        Collider.SetVelocityY(Collider.Velocity.Y + Collider.Gravity * dt);
+        Collider.SetPositionX(Collider.Position.X + Collider.Velocity.X * dt);
 
-        if (def.Ticker.TickAge >= def.MaxLifetimeSeconds) { //kill if too old
-            Kill();
-            return;
-        }
+        if (Sprite.Ticker.TickAge >= Sprite.MaxLifetimeSeconds || collisionManager.Objects.Any(o => o.Intersects(Collider.Hitbox))) Kill();
 
-        float dt = (float) gameTime.ElapsedGameTime.TotalSeconds;
-        //update position and momentum
-        Collider.SetMomentumY(Collider.Momentum.Y + Collider.Mass * def.Gravity * dt);
-        Collider.SetPosition(Collider.Position + Collider.Velocity * dt);
-
-        if (collisionManager.Objects.Any(o => o.Intersects(Collider.Hitbox))) Kill();  //kill on collision
     }
 
-    public void Kill() => IsAlive = false;
+    public void Kill() => IsGEMaxLifetime = true;
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (IsAlive)
-            spriteBatch.Draw(Assets.BlockSpriteSheet, Collider.Position, def.CurrentSourceRect, Color.White, Collider.Angle, def.Origin, 1f, SpriteEffects.None, 0f);
+        if (!IsGEMaxLifetime)
+            spriteBatch.Draw(Assets.BlockSpriteSheet, Collider.Position, Sprite.CurrentSourceRect, Color.White, Collider.Angle, Sprite.Origin, 1f, SpriteEffects.None, 0f);
     }
 }

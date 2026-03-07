@@ -35,7 +35,7 @@ public class HealthBar
     {
         // Draw border
         spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int)position.X - 2, (int)position.Y - 2, (int)size.X + 4, (int)size.Y + 4), Color.Black);
-        
+
         // Draw background
         spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y), Color.DarkGray);
 

@@ -1,6 +1,6 @@
-using System;
 using Microsoft.Xna.Framework;
 using Sprint2.Entities;
+using System;
 
 namespace Sprint2.Levels;
 
@@ -12,7 +12,7 @@ public static class StoryLevelRegistry
         {
             Index = 0,
             PlayerSpawnPos = new(5, 10),
-            Platforms = 
+            Platforms =
             [
                 new(BlockType.StoneBrick, 0, 25, 50, 1),
             ]
@@ -31,6 +31,6 @@ public static class StoryLevelRegistry
 
     public static StoryLevelDef Get(int index)
     {
-        return All[Math.Clamp(index, 0, All.Length-1)];
+        return All[Math.Clamp(index, 0, All.Length - 1)];
     }
 }

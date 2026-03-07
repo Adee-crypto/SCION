@@ -10,21 +10,25 @@ public class EnemyManager : Extensions.IDrawable
 {
     private readonly List<Enemy> enemies = [];
 
-    public EnemyManager() {}
+    public EnemyManager() { }
 
-    public void Spawn(EnemyDef type, Vector2 spawnPos) {
+    public void Spawn(EnemyDef type, Vector2 spawnPos)
+    {
         enemies.Add(new(type, spawnPos));
     }
 
-    public void Reset() {
+    public void Reset()
+    {
         enemies.Clear();
     }
 
-    public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager) {
+    public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager)
+    {
         enemies.ForEach(e => e.Update(gameTime, player, projectileManager, collisionManager));
     }
 
-    public void Draw(SpriteBatch spriteBatch) {
+    public void Draw(SpriteBatch spriteBatch)
+    {
         enemies.ForEach(e => e.Draw(spriteBatch));
     }
 }

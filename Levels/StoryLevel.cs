@@ -29,6 +29,6 @@ public sealed class StoryLevel : BaseLevel
 
     protected override void UpdateLevelLogic(GameTime gameTime)
     {
-        
+
     }
 }

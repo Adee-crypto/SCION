@@ -1,12 +1,11 @@
-﻿﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Controllers;
-using Sprint2.Entities.Players;
 using Sprint2.Extensions;
 using Sprint2.Screens;
 using Sprint2.UI;
 using Sprint2.Util;
+using System;
 
 
 namespace Sprint2;
@@ -31,7 +30,8 @@ public class Game1 : Game
         IsMouseVisible = true;
     }
 
-    private void OnResize(object sender, EventArgs e) {
+    private void OnResize(object sender, EventArgs e)
+    {
         //resizing _graphics
         ScreenSize = (Window.ClientBounds.Width, Window.ClientBounds.Height);
         _graphics.PreferredBackBufferWidth = ScreenSize.w;
@@ -53,7 +53,7 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
+        Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
         Assets.PlayerTexture = Content.Load<Texture2D>("Link");
         Assets.ArrowTexture = Content.Load<Texture2D>("AimerArrow2");
         Assets.BlockSpriteSheet = Content.Load<Texture2D>("testsheet");
@@ -83,7 +83,8 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (IsActive) { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
+        if (IsActive)
+        { //prevents input from being processed when game is not active (e.g. alt-tabbed out)
             MouseController.Update();
             bool isPaused = screenManager.Current is IPausableScreen pause && pause.IsPaused;
             KeyboardController.Update(isPaused);
