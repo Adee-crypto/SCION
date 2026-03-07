@@ -53,7 +53,7 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
+        //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
         Assets.PlayerTexture = Content.Load<Texture2D>("Link");
         Assets.ArrowTexture = Content.Load<Texture2D>("AimerArrow2");
         Assets.BlockSpriteSheet = Content.Load<Texture2D>("testsheet");
