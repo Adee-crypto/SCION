@@ -39,7 +39,7 @@ public class PauseOverlay : IResizableScreen
             Assets.UiFont,
             Assets.ButtonTexture,
             "Main Menu",
-            () => { },
+            () => game.ScreenManager.SetScreen(new ScreenMainMenu(game, game.ScreenManager)),
             buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 1)
         ));
