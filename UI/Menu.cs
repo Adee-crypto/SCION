@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sprint2.UI;
 
@@ -25,7 +26,9 @@ public class Menu(SpriteFont font)
         if (!string.IsNullOrWhiteSpace(Title))
         {
             Vector2 textSize = font.MeasureString(Title);
-            Vector2 titlePos = new((screenSize.w - textSize.X) / 2, (screenSize.h - textSize.Y) / buttons.Count);
+            var topButton = buttons.MinBy(b => b.Position.Y);
+            float spacer = (topButton.Position.Y - topButton.Bounds.Height - 20f) > 0 ? (topButton.Position.Y - topButton.Bounds.Height - 20f) : 0f;
+            Vector2 titlePos = new((screenSize.w - textSize.X) / 2, spacer);
             spriteBatch.DrawString(font, Title, titlePos, Color.Black);
         }
 

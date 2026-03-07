@@ -14,7 +14,9 @@ public class Button
     private readonly string text;
     private readonly Action onClick;
     private Rectangle bounds;
+    public Rectangle Bounds => bounds;
     private Vector2 textPos;
+    public Vector2 Position => textPos;
     private bool hover;
 
     public Button(SpriteFont textFont, Texture2D buttonTexture, string buttonText, Action command, Vector2 size, Vector2 pos)
