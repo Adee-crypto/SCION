@@ -23,7 +23,7 @@ public enum State
 public class Player : IPlayer
 {
     //Motion + Physics
-    public Collider Collider { get; } = new(Consts.playerGravity, Consts.playerMass, new(16, 16), Vector2.Zero, Consts.playerHitbox);
+    public Collider Collider { get; } = new(Consts.playerGravity, Consts.playerMass, Vector2.One * Consts.BlockWidth, Vector2.Zero, Consts.playerHitbox);
     private Vector2 direction;
 
     //States

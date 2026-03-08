@@ -24,7 +24,6 @@ public abstract class BaseLevel(Player player) : ILevel
     //blocks
     protected List<Platform> Platforms { get; } = [];
     protected List<Plant> Plants { get; } = [];
-    protected List<BlockList> BlockLists { get; } = [];
     //state variables
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }

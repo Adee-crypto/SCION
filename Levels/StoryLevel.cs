@@ -23,8 +23,8 @@ public sealed class StoryLevel : BaseLevel
     protected override void BuildLevel()
     {
         Platforms.AddRange(def.Platforms);
-        Plants.Add(new ApplePlant((20, 20)));
-        EnemyManager.Spawn(rangedEnemy, 16 * new Vector2(40, 24));
+        Plants.Add(new ApplePlant(CollisionManager, (20, 20)));
+        EnemyManager.Spawn(rangedEnemy, Consts.BlockWidth * new Vector2(40, 24));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime)

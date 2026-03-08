@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Extensions;
+using Sprint2.Levels;
+using Sprint2.Managers;
 using Sprint2.Util;
 using System;
 using System.Collections.Generic;
@@ -29,9 +31,11 @@ public abstract class Plant
     public BlockList Blocks => new BlockList().Union(BudCells).Union(StemCells);
     protected float Age { get; set; }
     protected Ticker Ticker { get; }
+    private readonly CollisionManager collisionManager;
 
-    public Plant(Species species, (int, int) root)
+    public Plant(CollisionManager collisionManager, Species species, (int, int) root)
     {
+        this.collisionManager = collisionManager;
         Ticker = new(PlantUtil.SpeciesGrowTimes[species]);
         Species = species;
         BudCells.Add(root, SpeciesToBlockType(species));

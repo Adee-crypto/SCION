@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
+using Sprint2.Managers;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class ApplePlant((int, int) root) : Plant(Species.apple, root)
+public class ApplePlant(CollisionManager collisionManager, (int, int) root) : Plant(collisionManager, Species.apple, root)
 {
     public override void Update(GameTime gameTime)
     {
@@ -21,7 +22,7 @@ public class ApplePlant((int, int) root) : Plant(Species.apple, root)
             foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.GrowDirs))
             {
                 var newCellPos = (x + dx, y + dy);
-                if (!StemCells.Contains(newCellPos) && !BudCells.Contains(newCellPos))
+                if (!collisionManager.Blocks.Contains(newCellPos))
                 {
                     newGrowth.Add(newCellPos, SpeciesToBlockType(Species));
                     break;

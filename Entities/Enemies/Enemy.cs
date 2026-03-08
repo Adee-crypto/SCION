@@ -39,7 +39,7 @@ public class Enemy : Extensions.IDrawable
 
     public Enemy(EnemyDef type, Vector2 spawnPos)
     {
-        Collider = new(98f, 0.1f, spawnPos, Vector2.Zero, 16 * Vector2.One);
+        Collider = new(98f, 0.1f, spawnPos, Vector2.Zero, Consts.BlockWidth * Vector2.One);
         def = type;
         Reset();
     }
