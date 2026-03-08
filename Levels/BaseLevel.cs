@@ -6,6 +6,7 @@ using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
 using Sprint2.Extensions;
 using Sprint2.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,22 +14,18 @@ namespace Sprint2.Levels;
 
 public abstract class BaseLevel(Player player) : ILevel
 {
-    private readonly Player player = player;
-    private readonly ProjectileManager projectileManager = new(player);
-    private readonly CollisionManager collisionManager = new();
-    private readonly EnemyManager enemyManager = new();
-    private readonly HUDManager hudManager = new(player);
-
-    protected Player Player => player;
-    protected ProjectileManager ProjectileManager => projectileManager;
-    protected CollisionManager CollisionManager => collisionManager;
-    protected EnemyManager EnemyManager => enemyManager;
-    protected HUDManager HudManager => hudManager;
-
+    //player
+    protected Player Player {get;} = player;
+    //managers
+    protected ProjectileManager ProjectileManager {get;} = new(player);
+    protected CollisionManager CollisionManager {get;} = new();
+    protected EnemyManager EnemyManager {get;} = new();
+    protected HUDManager HudManager {get;} = new(player);
+    //blocks
     protected List<Platform> Platforms { get; } = [];
     protected List<Plant> Plants { get; } = [];
-    protected BlockList Blocks { get; } = new();
-
+    protected List<BlockList> BlockLists { get; } = [];
+    //state variables
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }
     public LevelEndReason EndReason { get; protected set; } = LevelEndReason.None;
@@ -36,7 +33,7 @@ public abstract class BaseLevel(Player player) : ILevel
     public void Resize((int w, int h) size)
     {
         ScreenSize = size;
-        hudManager.Resize(size);
+        HudManager.Resize(size);
     }
 
     public virtual void Reset()
@@ -45,9 +42,9 @@ public abstract class BaseLevel(Player player) : ILevel
         EndReason = LevelEndReason.None;
 
         player.Reset();
-        projectileManager.Reset();
-        collisionManager.Reset();
-        enemyManager.Reset();
+        ProjectileManager.Reset();
+        CollisionManager.Reset();
+        EnemyManager.Reset();
 
         Platforms.Clear();
         Plants.Clear();
@@ -59,30 +56,26 @@ public abstract class BaseLevel(Player player) : ILevel
 
     protected virtual void UpdateLevelLogic(GameTime gameTime) { }
 
-    protected void SpawnEnemy(EnemyDef def, Vector2 pos)
-    {
-        enemyManager.Spawn(def, pos);
-    }
-
     public void Update(GameTime gameTime)
     {
         if (IsOver) return;
 
-        collisionManager.Reset();
+        //Update blocks to collide with
+        CollisionManager.Reset();
+        Plants.ForEach(p => CollisionManager.Blocks.Union(p.Blocks));
+        Platforms.ForEach(p => CollisionManager.Blocks.Union(p.Blocks));
 
-        Plants.ForEach(p => collisionManager.Objects.AddRange(p.GetPlantObjects()));
+        //update entities
+        ProjectileManager.Update(gameTime, CollisionManager);
+        player.Update(gameTime, CollisionManager);
+        EnemyManager.Update(gameTime, player, ProjectileManager, CollisionManager);
 
-        collisionManager.Objects.AddRange(Platforms.Select(p => p.PixelBounds));
-
-        projectileManager.Update(gameTime, collisionManager);
-        player.Update(gameTime, collisionManager);
-        enemyManager.Update(gameTime, player, projectileManager, collisionManager);
-
+        //check for player digging logic
         if (player.IsBreakable)
         {
             foreach (var p in Plants)
             {
-                if (p.TryRemoveCellBelow(new Vector2(player.Collider.Hitbox.Center.X, player.Collider.Hitbox.Bottom)))
+                if (p.TryRemoveCellBelow(new Vector2(player.Collider.Center.X, player.Collider.Bottom)))
                 {
                     player.GetSeed();
                     break;
@@ -105,14 +98,12 @@ public abstract class BaseLevel(Player player) : ILevel
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        Platforms.ForEach(p => p.Draw(spriteBatch));
         Plants.ForEach(p => p.Draw(spriteBatch));
 
-        projectileManager.Draw(spriteBatch);
-        enemyManager.Draw(spriteBatch);
-
-        Platforms.ForEach(p => p.Draw(spriteBatch));
-
-        hudManager.Draw(spriteBatch);
+        EnemyManager.Draw(spriteBatch);
+        ProjectileManager.Draw(spriteBatch);
+        HudManager.Draw(spriteBatch);
 
         player.Draw(spriteBatch);
     }

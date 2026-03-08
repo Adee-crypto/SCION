@@ -41,15 +41,15 @@ public class ProjectileManager(Player player) : Extensions.IDrawable, IUpdatable
                 ProjectileSprite sprite = new(player.ThrowSeed(), 5f);
                 Projectile projectile = new(sprite, Consts.playerProjectileGravity, Consts.projectileMass, initialPosition, initialVelocity, new(8, 8));
                 projectiles.Add(projectile);
-
-                player.KnockBack(projectile.Collider.Momentum);
+                //knockback
+                player.Collider.Momentum -= projectile.Collider.Momentum;
             }
         }
 
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
             projectiles[i].Update(gameTime, collisionManager);
-            if (projectiles[i].IsGEMaxLifetime) projectiles.RemoveAt(i);
+            if (projectiles[i].IsDead) projectiles.RemoveAt(i);
         }
     }
 

@@ -24,7 +24,7 @@ public sealed class StoryLevel : BaseLevel
     {
         Platforms.AddRange(def.Platforms);
         Plants.Add(new ApplePlant((20, 20)));
-        SpawnEnemy(rangedEnemy, 16 * new Vector2(40, 24));
+        EnemyManager.Spawn(rangedEnemy, 16 * new Vector2(40, 24));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime)

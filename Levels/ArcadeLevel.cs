@@ -37,7 +37,7 @@ public sealed class ArcadeLevel : BaseLevel
     {
         Platforms.Add(new Platform(BlockType.StoneBrick, 0, 25, 50, 1));
         Plants.Add(new ApplePlant((20, 20)));
-        SpawnEnemy(rangedEnemy, 16 * new Vector2(40, 24));
+        EnemyManager.Spawn(rangedEnemy, 16 * new Vector2(40, 24));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime)
@@ -53,7 +53,7 @@ public sealed class ArcadeLevel : BaseLevel
             {
                 float spawnX = 30 + i * 2;
                 float spawnY = 24;
-                SpawnEnemy(rangedEnemy, new Vector2(spawnX, spawnY));
+                EnemyManager.Spawn(rangedEnemy, new Vector2(spawnX, spawnY));
             }
 
             double interval = Math.Max(0.75, 2 - wave * 0.2);

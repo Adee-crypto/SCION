@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Extensions;
 using Sprint2.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,6 +26,7 @@ public abstract class Plant
     protected Species Species { get; }
     protected BlockList BudCells { get; set; } = new();
     protected BlockList StemCells { get; } = new();
+    public BlockList Blocks => new BlockList().Union(BudCells).Union(StemCells);
     protected float Age { get; set; }
     protected Ticker Ticker { get; }
 
@@ -39,11 +41,6 @@ public abstract class Plant
 
     protected abstract void Grow();
 
-    public IEnumerable<Rectangle> GetPlantObjects()
-    {
-        return StemCells.ColliderBounds().Concat(BudCells.ColliderBounds());
-    }
-
     public void Draw(SpriteBatch spriteBatch)
     {
         StemCells.Draw(spriteBatch, Color.Gray);
@@ -54,7 +51,7 @@ public abstract class Plant
     public bool TryRemoveCellBelow(Vector2 bottomCenter)
     {
         int cellX = (int)(bottomCenter.X / Consts.BlockWidth);
-        int cellY = (int)(bottomCenter.Y / Consts.BlockWidth);
+        int cellY = (int)(bottomCenter.Y / Consts.BlockWidth) + 1;
         if (StemCells.Contains((cellX, cellY)))
         {
             StemCells.Remove((cellX, cellY));

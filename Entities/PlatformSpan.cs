@@ -7,7 +7,6 @@ namespace Sprint2.Entities;
 public class Platform : Extensions.IDrawable
 {
     public BlockList Blocks { get; } = new();
-    public Rectangle PixelBounds { get; }
 
     public Platform(BlockType type, int x, int y, int w, int h)
     {
@@ -18,7 +17,6 @@ public class Platform : Extensions.IDrawable
                 Blocks.Add((x + i, y + j), type);
             }
         }
-        PixelBounds = new(x * Consts.BlockWidth, y * Consts.BlockWidth, w * Consts.BlockWidth, h * Consts.BlockWidth);
     }
 
     public void Draw(SpriteBatch spriteBatch)

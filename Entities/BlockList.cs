@@ -26,15 +26,7 @@ public class BlockList
     public IEnumerable<(int, int)> Positions() => data.Keys;
     public bool Contains((int, int) Position) => data.ContainsKey(Position);
     public bool Remove((int, int) Position) => data.Remove(Position);
-    public void Union(BlockList other) { foreach (var (pos, type) in other.data) { Add(pos, type); } }
-
-    public IEnumerable<Rectangle> ColliderBounds()
-    {
-        foreach (var (x, y) in data.Keys)
-        {
-            yield return new(x * Consts.BlockWidth, y * Consts.BlockWidth, Consts.BlockWidth, Consts.BlockWidth);
-        }
-    }
+    public BlockList Union(BlockList other) { foreach (var (pos, type) in other.data) { Add(pos, type); } ; return this;}
 
     public void Draw(SpriteBatch batch)
     {

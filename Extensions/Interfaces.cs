@@ -66,7 +66,7 @@ public interface IAim
 
 public interface IProjectile : IDrawable, IUpdatableObject, IPhysicsObject
 {
-    bool IsGEMaxLifetime { get; }
+    bool IsDead { get; }
 }
 
 public interface IResizableScreen

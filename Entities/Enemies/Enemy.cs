@@ -197,16 +197,7 @@ public class Enemy : Extensions.IDrawable
 
         Decide(player, projectileManager);
 
-        Vector2 movement = Vector2.Zero;
-        if (Collider.Velocity.X != 0) movement.X = Collider.Velocity.X * dt;
-        if (Collider.Velocity.Y >= 0) isGrounded = collisionManager.CheckGrounded(Collider, ref movement);
-        if (!isGrounded)
-        {
-            movement.Y = Collider.Velocity.Y * dt + 0.5f * def.Gravity * dt * dt;
-            Collider.SetVelocityY(Collider.Velocity.Y + (def.Gravity * dt));
-        }
-        else Collider.SetVelocityY(0);
-        collisionManager.ManageCollision(Collider, movement);
+        Collider.Update(dt, collisionManager);
 
         sprite.UpdateState(state, direction, Collider.Velocity, false);
         sprite.Update(gameTime);

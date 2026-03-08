@@ -7,38 +7,36 @@ using System.Linq;
 
 namespace Sprint2.Entities.Projectiles;
 
-public class Projectile : IProjectile
+public class Projectile(ProjectileSprite Sprite, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size) : IProjectile
 {
-    private readonly ProjectileSprite Sprite;
-    public Collider Collider { get; }
-    public bool IsGEMaxLifetime { get; private set; }
-
-    public Projectile(ProjectileSprite Sprite, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size)
-    {
-        this.Sprite = Sprite;
-        Collider = new(gravity, mass, initialPosition, initialVelocity, size);
-        IsGEMaxLifetime = false;
-    }
+    private ProjectileSprite Sprite { get; }= Sprite;
+    public Collider Collider { get; } = new(gravity, mass, initialPosition, initialVelocity, size);
+    public bool IsDead { get; private set; }
 
     public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
-        if (IsGEMaxLifetime) return;
+        if (IsDead) return;
 
         Sprite.UpdateFrameState(gameTime);
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Collider.SetPositionY(Collider.Position.Y + (Collider.Velocity.Y + 0.5f * Consts.playerGravity * dt) * dt);
-        Collider.SetVelocityY(Collider.Velocity.Y + Collider.Gravity * dt);
-        Collider.SetPositionX(Collider.Position.X + Collider.Velocity.X * dt);
+        Collider.Update(dt, collisionManager);
 
-        if (Sprite.Ticker.TickAge >= Sprite.MaxLifetimeSeconds || collisionManager.Objects.Any(o => o.Intersects(Collider.Hitbox))) Kill();
+        if (Sprite.Ticker.TickAge >= Sprite.MaxLifetimeSeconds) Kill();
+
+        //ASSUMES PROJECTILES HAVE ZERO SIZE
+        if (collisionManager.Blocks.Contains(((int) (Collider.Left / Consts.BlockWidth), (int) (Collider.Right / Consts.BlockWidth)))) {
+            Kill();
+        }
+
+        //DOESNT HANDLE PROJECTILE-TO-ENTITY COLLISION YET
 
     }
 
-    public void Kill() => IsGEMaxLifetime = true;
+    public void Kill() => IsDead = true;
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (!IsGEMaxLifetime)
+        if (!IsDead)
             spriteBatch.Draw(Assets.BlockSpriteSheet, Collider.Position, Sprite.CurrentSourceRect, Color.White, Collider.Angle, Sprite.Origin, 1f, SpriteEffects.None, 0f);
     }
 }
