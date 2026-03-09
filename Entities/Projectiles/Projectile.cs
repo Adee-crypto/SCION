@@ -20,7 +20,7 @@ public enum ProjectileType
 
 public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size) : IProjectile
 {
-public static Dictionary<ProjectileType, Func<CollisionManager, (int, int), Plant>> ProjectileToPlant { get; } = new() {
+public static Dictionary<ProjectileType, Func<BaseLevel, (int, int), Plant>> ProjectileToPlant { get; } = new() {
     { ProjectileType.Grass, (c, r) => new GrassPlant(c, r) },
     { ProjectileType.Apple, (c, r) => new ApplePlant(c, r) },
     { ProjectileType.Pineapple, (c, r) => new PineapplePlant(c, r) },
@@ -40,11 +40,10 @@ public static Dictionary<ProjectileType, Func<CollisionManager, (int, int), Plan
         Sprite.UpdateFrameState(gameTime);
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
         //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
-        var pastGridCoords = Funcs.GridCoords(Collider.Position);
         (bool isCollision, var _) = Collider.Update(dt, collisionManager);
         if (isCollision) {
-            if (ProjectileToPlant.ContainsKey(type)) {
-                level.TryGrow(type, pastGridCoords);
+            if (ProjectileToPlant.ContainsKey(type)) { //eventually change this to check for type of collider too
+                level.TrySow(type, Funcs.GridCoords(Collider.Position));
             }
             Kill();
         }

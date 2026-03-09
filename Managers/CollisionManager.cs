@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Sprint2.Entities;
 using Sprint2.Util;
@@ -6,7 +8,17 @@ namespace Sprint2.Managers;
 
 public class CollisionManager
 {
-    public BlockList Blocks {get;} = new();
+    public List<BlockList> Blocks {get;} = [];
+
+    //This double-iterator is bad, not sure the best way to resolve this
+    public bool HasBlockAt((int, int) pos)
+    {
+        foreach (var b in Blocks)
+        {
+            if (b.Contains(pos)) return true;
+        }
+        return false;
+    }
 
     public void Reset() => Blocks.Clear();
 
@@ -24,12 +36,12 @@ public class CollisionManager
         int topIndex = (int) ((collider.Top+t) / Consts.BlockWidth);
         int bottomIndex = (int) ((collider.Bottom-t) / Consts.BlockWidth);
         // Console.WriteLine($"({leftIndex}, {topIndex}) to ({rightIndex}, {bottomIndex})");
-        if (Blocks.Contains((leftIndex, bottomIndex)) || Blocks.Contains((rightIndex, bottomIndex))) {
+        if (HasBlockAt((leftIndex, bottomIndex)) || HasBlockAt((rightIndex, bottomIndex))) {
             isGrounded = true;
             isCollision = true;
             collider.SetVelocityY(0);
             collider.SetPositionY(bottomIndex * Consts.BlockWidth - collider.Size.Y - t);
-        } else if (Blocks.Contains((leftIndex, topIndex)) || Blocks.Contains((rightIndex, topIndex))) {
+        } else if (HasBlockAt((leftIndex, topIndex)) || HasBlockAt((rightIndex, topIndex))) {
             isCollision = true;
             collider.SetVelocityY(0);
             collider.SetPositionY((topIndex+1) * Consts.BlockWidth + t);
@@ -41,11 +53,11 @@ public class CollisionManager
         rightIndex = (int) ((collider.Right-t) / Consts.BlockWidth);
         topIndex = (int) ((collider.Top+t) / Consts.BlockWidth);
         bottomIndex = (int) ((collider.Bottom-t) / Consts.BlockWidth);
-        if (Blocks.Contains((rightIndex, topIndex)) || Blocks.Contains((rightIndex, bottomIndex))) {
+        if (HasBlockAt((rightIndex, topIndex)) || HasBlockAt((rightIndex, bottomIndex))) {
             isCollision = true;
             collider.SetVelocityX(0);
             collider.SetPositionX(rightIndex * Consts.BlockWidth - collider.Size.X - t);
-        } else if (Blocks.Contains((leftIndex, topIndex)) || Blocks.Contains((leftIndex, bottomIndex))) {
+        } else if (HasBlockAt((leftIndex, topIndex)) || HasBlockAt((leftIndex, bottomIndex))) {
             isCollision = true;
             collider.SetVelocityX(0);
             collider.SetPositionX((leftIndex+1) * Consts.BlockWidth + t);

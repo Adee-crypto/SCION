@@ -31,7 +31,7 @@ public class Collider(float gravity, float mass, Vector2 initialPosition, Vector
 
     public (bool isCollision, bool isGrounded) Update(float dt, CollisionManager collisionManager) {
         SetVelocityY(Velocity.Y + Gravity * dt);
-        return collisionManager.ManageCollision(this, Velocity * dt);
+        return collisionManager.ManageCollision(this, Velocity * dt); //maybe change this to return *type* of other collider too
     }
 
     public bool Intersects(Collider other) {

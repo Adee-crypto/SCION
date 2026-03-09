@@ -6,6 +6,7 @@ using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
 using Sprint2.Managers;
+using System;
 using System.Collections.Generic;
 
 namespace Sprint2.Levels;
@@ -17,6 +18,8 @@ public abstract class BaseLevel : ILevel
     //managers
     protected ProjectileManager ProjectileManager {get;}
     protected CollisionManager CollisionManager {get;} = new();
+    public void AddBlockList(BlockList blocks) => CollisionManager.Blocks.Add(blocks); //bad for coupling if public
+    public bool HasBlockAt((int, int) pos) => CollisionManager.HasBlockAt(pos); //bad for coupling if public
     protected EnemyManager EnemyManager {get;} = new();
     protected HUDManager HudManager {get;}
     //blocks
@@ -59,9 +62,14 @@ public abstract class BaseLevel : ILevel
 
     protected virtual void UpdateLevelLogic(GameTime gameTime) { }
 
-    public void TryGrow(ProjectileType type, (int, int) coords) {
-        if (!CollisionManager.Blocks.Contains(coords)) {
-            Plants.Add(Projectile.ProjectileToPlant[type](CollisionManager, coords));
+    public void TrySow(ProjectileType type, (int, int) coords) {
+        var (x, y) = coords;
+        int leftRightRand = new Random().Next(0, 2)*2-1;
+        foreach (var pos in new[]{(x, y-1), (x+leftRightRand, y), (x-leftRightRand, y), (x,y+1)}) {
+            if (!CollisionManager.HasBlockAt(pos)) {
+                Plants.Add(Projectile.ProjectileToPlant[type](this, coords));
+                break;
+            }
         }
     }
 
@@ -69,10 +77,10 @@ public abstract class BaseLevel : ILevel
     {
         if (IsOver) return;
 
-        //Update blocks to collide with
-        CollisionManager.Reset();
-        Plants.ForEach(p => CollisionManager.Blocks.Union(p.Blocks));
-        Platforms.ForEach(p => CollisionManager.Blocks.Union(p.Blocks));
+        // //Update blocks to collide with
+        // CollisionManager.Reset();
+        // Plants.ForEach(p => CollisionManager.Blocks.Union(p.Blocks));
+        // Platforms.ForEach(p => CollisionManager.Blocks.Union(p.Blocks));
 
         //update entities
         ProjectileManager.Update(gameTime, CollisionManager);

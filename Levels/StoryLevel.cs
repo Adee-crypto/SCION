@@ -22,8 +22,10 @@ public sealed class StoryLevel : BaseLevel
 
     protected override void BuildLevel()
     {
-        Platforms.AddRange(def.Platforms);
-        Plants.Add(new ApplePlant(CollisionManager, (20, 20)));
+        foreach (var platform in def.Platforms) {
+            Platforms.Add(platform(this));
+        }
+        Plants.Add(new ApplePlant(this, (20, 20)));
         EnemyManager.Spawn(rangedEnemy, Consts.BlockWidth * new Vector2(40, 24));
     }
 

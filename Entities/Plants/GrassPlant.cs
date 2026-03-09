@@ -1,11 +1,12 @@
 using System;
 using Microsoft.Xna.Framework;
+using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class GrassPlant(CollisionManager collisionManager, (int, int) root) : Plant(collisionManager, Species.grass, root)
+public class GrassPlant(BaseLevel level, (int, int) root) : Plant(level, Species.grass, root)
 {
     private readonly int maxCells = new Random().Next(5, 8);
 

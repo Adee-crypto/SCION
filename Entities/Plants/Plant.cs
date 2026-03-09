@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
+using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
 
@@ -30,18 +31,20 @@ public abstract class Plant
     protected Species Species { get; }
     protected BlockList BudCells { get; set; } = new();
     protected BlockList StemCells { get; } = new();
-    public BlockList Blocks => new BlockList().Union(BudCells).Union(StemCells);
+    // public BlockList Blocks => new BlockList().Union(BudCells).Union(StemCells);
     protected float Age { get; set; }
     protected int CellsGrown {get; set;}
     protected Ticker Ticker { get; }
-    private readonly CollisionManager collisionManager;
+    private readonly BaseLevel level; //terrible for coupling, fix somehow
 
-    public Plant(CollisionManager collisionManager, Species species, (int, int) root)
+    public Plant(BaseLevel level, Species species, (int, int) root)
     {
-        this.collisionManager = collisionManager;
+        this.level = level;
         Ticker = new(PlantUtil.SpeciesGrowTimes[species]);
         Species = species;
         BudCells.Add(root, SpeciesToBlock[species]);
+        level.AddBlockList(BudCells);
+        level.AddBlockList(StemCells);
     }
 
     public abstract void Update(GameTime gameTime);
@@ -51,7 +54,7 @@ public abstract class Plant
 
     //returns if it can grow into newCellPos, then grows there
     protected bool TryGrow(BlockList newGrowth, (int, int) newCellPos) {
-        if (!collisionManager.Blocks.Contains(newCellPos)) {
+        if (!level.HasBlockAt(newCellPos)) {
             newGrowth.Add(newCellPos, SpeciesToBlock[Species]);
             CellsGrown++;
             return true;

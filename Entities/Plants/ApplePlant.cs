@@ -1,11 +1,11 @@
 using System;
 using Microsoft.Xna.Framework;
-using Sprint2.Managers;
+using Sprint2.Levels;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class ApplePlant(CollisionManager collisionManager, (int, int) root) : Plant(collisionManager, Species.apple, root)
+public class ApplePlant(BaseLevel level, (int, int) root) : Plant(level, Species.apple, root)
 {
     private readonly int maxCells = new Random().Next(10, 21);
 
@@ -25,7 +25,7 @@ public class ApplePlant(CollisionManager collisionManager, (int, int) root) : Pl
             {
                 foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.GrowDirs))
                 {
-                    TryGrow(newGrowth, (x + dx, y + dy));
+                    if (TryGrow(newGrowth, (x + dx, y + dy))) break;
                 }
             }
         }

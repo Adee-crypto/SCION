@@ -1,11 +1,12 @@
 using System;
 using Microsoft.Xna.Framework;
+using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class PineapplePlant(CollisionManager collisionManager, (int, int) root) : Plant(collisionManager, Species.pineapple, root)
+public class PineapplePlant(BaseLevel level, (int, int) root) : Plant(level, Species.pineapple, root)
 {
     private readonly int maxCells = new Random().Next(7, 40);
     private (int x, int y) root = root;
