@@ -9,7 +9,7 @@ public class Collider(float gravity, float mass, Vector2 initialPosition, Vector
     //Newton would be proud
     public float Gravity { get; private set; } = gravity;
     public float Mass { get; private set; } = mass;
-    public Vector2 InitialPosisiton { get; private set; } = initialPosition;
+    public Vector2 InitialPosisiton { get; set; } = initialPosition;
     public Vector2 Position { get; private set; } = initialPosition;
     public Vector2 Velocity { get; private set; } = initialVelocity;
     public Vector2 Size { get; private set; } = size;

@@ -74,15 +74,15 @@ public abstract class BaseLevel : ILevel
         }
     }
 
-    public bool TryRemoveCellBelow(Vector2 coords) {
+    public bool TryDigBelow(Vector2 coords) {
         var (x, y) = Funcs.GridCoords(coords);
         y++; //want the cell *below* midpoint of bottom edge of player
-        if (CollisionManager.TryRemoveBlockAt((x, y))) {
+        if (CollisionManager.TryBreakBlockAt((x, y))) {
             return true;
         } else if (coords.X % Consts.BlockWidth < Consts.BlockWidth / 2f) {
-            return CollisionManager.TryRemoveBlockAt((x-1, y));
+            return CollisionManager.TryBreakBlockAt((x-1, y));
         } else if (coords.X % Consts.BlockWidth > Consts.BlockWidth / 2f) {
-            return CollisionManager.TryRemoveBlockAt((x+1, y));
+            return CollisionManager.TryBreakBlockAt((x+1, y));
         }
         return false;
     }
@@ -97,7 +97,7 @@ public abstract class BaseLevel : ILevel
         EnemyManager.Update(gameTime, Player, ProjectileManager, CollisionManager);
 
         //check for player digging logic
-        if (Player.IsBreakable && TryRemoveCellBelow(new(Player.Collider.Center.X, Player.Collider.Bottom))) {
+        if (Player.IsBreakable && TryDigBelow(new(Player.Collider.Center.X, Player.Collider.Bottom))) {
             Player.GetSeed();
             Player.IsBreakable = false;
         }

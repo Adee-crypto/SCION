@@ -88,7 +88,7 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlaye
             Assets.UiFont,
             Assets.ButtonTexture,
             "Play Again",
-            () => StartArcadeRun(),
+            StartArcadeRun,
             buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 0)
         ));
