@@ -38,6 +38,7 @@ public class PineapplePlant(BaseLevel level, (int, int) root) : Plant(level, Spe
 
         //Move buds to stem, and replenish new buds
         StemCells.Union(BudCells);
-        BudCells = newGrowth;
+        BudCells.Clear();
+        BudCells.Union(newGrowth);
     }
 }
