@@ -1,12 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Extensions;
-using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sprint2.Entities.Plants;
 
@@ -30,6 +26,7 @@ public abstract class Plant
     protected BlockList StemCells { get; } = new();
     public BlockList Blocks => new BlockList().Union(BudCells).Union(StemCells);
     protected float Age { get; set; }
+    protected int CellsGrown {get; set;}
     protected Ticker Ticker { get; }
     private readonly CollisionManager collisionManager;
 
@@ -43,7 +40,18 @@ public abstract class Plant
 
     public abstract void Update(GameTime gameTime);
 
+    //handles all growing logic
     protected abstract void Grow();
+
+    //returns if it can grow into newCellPos, then grows there
+    protected bool TryGrow(BlockList newGrowth, (int, int) newCellPos) {
+        if (!collisionManager.Blocks.Contains(newCellPos)) {
+            newGrowth.Add(newCellPos, SpeciesToBlockType(Species));
+            CellsGrown++;
+            return true;
+        }
+        return false;
+    }
 
     public void Draw(SpriteBatch spriteBatch)
     {

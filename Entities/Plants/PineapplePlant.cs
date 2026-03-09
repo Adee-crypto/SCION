@@ -5,9 +5,10 @@ using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class ApplePlant(CollisionManager collisionManager, (int, int) root) : Plant(collisionManager, Species.apple, root)
+public class PineapplePlant(CollisionManager collisionManager, (int, int) root) : Plant(collisionManager, Species.pineapple, root)
 {
-    private readonly int maxCells = new Random().Next(10, 21);
+    private readonly int maxCells = new Random().Next(7, 40);
+    private (int x, int y) root = root;
 
     public override void Update(GameTime gameTime)
     {
@@ -23,9 +24,13 @@ public class ApplePlant(CollisionManager collisionManager, (int, int) root) : Pl
         if (CellsGrown < maxCells) {
             foreach ((int x, int y) in BudCells.Positions())
             {
-                foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.GrowDirs))
-                {
-                    TryGrow(newGrowth, (x + dx, y + dy));
+                int parity = (x+root.x+y+root.y) % 2;
+                if (parity == 0) {
+                    TryGrow(newGrowth, (x+1, y));
+                    TryGrow(newGrowth, (x-1, y));
+                } else {
+                    TryGrow(newGrowth, (x, y-1));
+                    TryGrow(newGrowth, (x, y+1));
                 }
             }
         }

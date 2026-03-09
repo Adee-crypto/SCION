@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Sprint2.Entities;
 using Sprint2.Util;
-using System;
-using System.Collections.Generic;
 
 namespace Sprint2.Managers;
 

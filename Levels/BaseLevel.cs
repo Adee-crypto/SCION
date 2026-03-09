@@ -1,14 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
-using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
 using Sprint2.Extensions;
 using Sprint2.Managers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Sprint2.Levels;
 

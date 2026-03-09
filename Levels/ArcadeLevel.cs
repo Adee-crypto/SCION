@@ -36,7 +36,7 @@ public sealed class ArcadeLevel : BaseLevel
     protected override void BuildLevel()
     {
         Platforms.Add(new Platform(BlockType.StoneBrick, 0, 25, 50, 1));
-        Plants.Add(new ApplePlant(CollisionManager, (20, 20)));
+        Plants.Add(new PineapplePlant(CollisionManager, (20, 20)));
         EnemyManager.Spawn(rangedEnemy, Consts.BlockWidth * new Vector2(40, 24));
     }
 

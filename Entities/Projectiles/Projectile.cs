@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Extensions;
 using Sprint2.Managers;
 using Sprint2.Util;
-using System.Linq;
 
 namespace Sprint2.Entities.Projectiles;
 
