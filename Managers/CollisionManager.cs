@@ -10,16 +10,9 @@ public class CollisionManager
 {
     public List<BlockList> Blocks {get;} = [];
 
-    //This double-iterator is bad, not sure the best way to resolve this
-    public bool HasBlockAt((int, int) pos)
-    {
-        foreach (var b in Blocks)
-        {
-            if (b.Contains(pos)) return true;
-        }
-        return false;
-    }
-
+    //These double-iterators are bad, not sure the best way to resolve this
+    public bool HasBlockAt((int, int) pos) => Blocks.Any(b => b.Contains(pos));
+    public bool TryRemoveBlockAt((int, int) pos) => Blocks.Any(b => b.Remove(pos));
     public void Reset() => Blocks.Clear();
 
     //CURRENTLY ASSUMES PLAYER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK

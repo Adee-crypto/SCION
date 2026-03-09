@@ -6,6 +6,7 @@ using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
 using Sprint2.Managers;
+using Sprint2.Util;
 using System;
 using System.Collections.Generic;
 
@@ -73,14 +74,22 @@ public abstract class BaseLevel : ILevel
         }
     }
 
+    public bool TryRemoveCellBelow(Vector2 coords) {
+        var (x, y) = Funcs.GridCoords(coords);
+        y++; //want the cell *below* midpoint of bottom edge of player
+        if (CollisionManager.TryRemoveBlockAt((x, y))) {
+            return true;
+        } else if (coords.X % Consts.BlockWidth < Consts.BlockWidth / 2f) {
+            return CollisionManager.TryRemoveBlockAt((x-1, y));
+        } else if (coords.X % Consts.BlockWidth > Consts.BlockWidth / 2f) {
+            return CollisionManager.TryRemoveBlockAt((x+1, y));
+        }
+        return false;
+    }
+
     public void Update(GameTime gameTime)
     {
         if (IsOver) return;
-
-        // //Update blocks to collide with
-        // CollisionManager.Reset();
-        // Plants.ForEach(p => CollisionManager.Blocks.Union(p.Blocks));
-        // Platforms.ForEach(p => CollisionManager.Blocks.Union(p.Blocks));
 
         //update entities
         ProjectileManager.Update(gameTime, CollisionManager);
@@ -88,17 +97,8 @@ public abstract class BaseLevel : ILevel
         EnemyManager.Update(gameTime, Player, ProjectileManager, CollisionManager);
 
         //check for player digging logic
-        if (Player.IsBreakable)
-        {
-            foreach (var p in Plants)
-            {
-                if (p.TryRemoveCellBelow(new Vector2(Player.Collider.Center.X, Player.Collider.Bottom)))
-                {
-                    Player.GetSeed();
-                    break;
-                }
-            }
-
+        if (Player.IsBreakable && TryRemoveCellBelow(new(Player.Collider.Center.X, Player.Collider.Bottom))) {
+            Player.GetSeed();
             Player.IsBreakable = false;
         }
 
