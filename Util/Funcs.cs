@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 
 namespace Sprint2.Util;
 
 public static class Funcs
 {
+    //Converts pixel coords to grid (block) coords
+    public static (int, int) GridCoords(Vector2 pos) {
+        return ((int) (pos.X/Consts.BlockWidth), (int) (pos.Y/Consts.BlockWidth));
+    }
+
     public static IEnumerable<T> ListShuffle<T>(IEnumerable<T> list)
     {
         foreach (int i in RandRange(list.Count()))

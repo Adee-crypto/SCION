@@ -3,21 +3,22 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
+using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
 using Sprint2.Managers;
 using System.Collections.Generic;
 
 namespace Sprint2.Levels;
 
-public abstract class BaseLevel(Player player) : ILevel
+public abstract class BaseLevel : ILevel
 {
     //player
-    protected Player Player {get;} = player;
+    protected Player Player {get;}
     //managers
-    protected ProjectileManager ProjectileManager {get;} = new(player);
+    protected ProjectileManager ProjectileManager {get;}
     protected CollisionManager CollisionManager {get;} = new();
     protected EnemyManager EnemyManager {get;} = new();
-    protected HUDManager HudManager {get;} = new(player);
+    protected HUDManager HudManager {get;}
     //blocks
     protected List<Platform> Platforms { get; } = [];
     protected List<Plant> Plants { get; } = [];
@@ -25,6 +26,12 @@ public abstract class BaseLevel(Player player) : ILevel
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }
     public LevelEndReason EndReason { get; protected set; } = LevelEndReason.None;
+
+    public BaseLevel(Player player) {
+        Player = player;
+        ProjectileManager = new(this, player);
+        HudManager = new(player);
+    }
 
     public void Resize((int w, int h) size)
     {
@@ -37,7 +44,7 @@ public abstract class BaseLevel(Player player) : ILevel
         IsOver = false;
         EndReason = LevelEndReason.None;
 
-        player.Reset();
+        Player.Reset();
         ProjectileManager.Reset();
         CollisionManager.Reset();
         EnemyManager.Reset();
@@ -52,6 +59,12 @@ public abstract class BaseLevel(Player player) : ILevel
 
     protected virtual void UpdateLevelLogic(GameTime gameTime) { }
 
+    public void TryGrow(ProjectileType type, (int, int) coords) {
+        if (!CollisionManager.Blocks.Contains(coords)) {
+            Plants.Add(Projectile.ProjectileToPlant[type](CollisionManager, coords));
+        }
+    }
+
     public void Update(GameTime gameTime)
     {
         if (IsOver) return;
@@ -63,29 +76,29 @@ public abstract class BaseLevel(Player player) : ILevel
 
         //update entities
         ProjectileManager.Update(gameTime, CollisionManager);
-        player.Update(gameTime, CollisionManager);
-        EnemyManager.Update(gameTime, player, ProjectileManager, CollisionManager);
+        Player.Update(gameTime, CollisionManager);
+        EnemyManager.Update(gameTime, Player, ProjectileManager, CollisionManager);
 
         //check for player digging logic
-        if (player.IsBreakable)
+        if (Player.IsBreakable)
         {
             foreach (var p in Plants)
             {
-                if (p.TryRemoveCellBelow(new Vector2(player.Collider.Center.X, player.Collider.Bottom)))
+                if (p.TryRemoveCellBelow(new Vector2(Player.Collider.Center.X, Player.Collider.Bottom)))
                 {
-                    player.GetSeed();
+                    Player.GetSeed();
                     break;
                 }
             }
 
-            player.IsBreakable = false;
+            Player.IsBreakable = false;
         }
 
         Plants.ForEach(p => p.Update(gameTime));
 
         UpdateLevelLogic(gameTime);
 
-        if ((!IsOver && ScreenSize.h > 0 && player.Collider.Position.Y > ScreenSize.h) || player.IsDead)
+        if ((!IsOver && ScreenSize.h > 0 && Player.Collider.Position.Y > ScreenSize.h) || Player.IsDead)
         {
             IsOver = true;
             EndReason = LevelEndReason.PlayerDied;
@@ -101,6 +114,6 @@ public abstract class BaseLevel(Player player) : ILevel
         ProjectileManager.Draw(spriteBatch);
         HudManager.Draw(spriteBatch);
 
-        player.Draw(spriteBatch);
+        Player.Draw(spriteBatch);
     }
 }

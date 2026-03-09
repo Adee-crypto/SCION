@@ -1,29 +1,51 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Entities.Plants;
 using Sprint2.Extensions;
+using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Projectiles;
 
-public class Projectile(ProjectileSprite Sprite, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size) : IProjectile
+public enum ProjectileType
 {
-    private ProjectileSprite Sprite { get; }= Sprite;
+    Void,
+    Grass,
+    Apple,
+    Pineapple,
+}
+
+public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size) : IProjectile
+{
+public static Dictionary<ProjectileType, Func<CollisionManager, (int, int), Plant>> ProjectileToPlant { get; } = new() {
+    { ProjectileType.Grass, (c, r) => new GrassPlant(c, r) },
+    { ProjectileType.Apple, (c, r) => new ApplePlant(c, r) },
+    { ProjectileType.Pineapple, (c, r) => new PineapplePlant(c, r) },
+};
+
+    private readonly BaseLevel level = level; //this is terrible for coupling but idk
+    private readonly ProjectileType type = type;
+    private ProjectileSprite Sprite { get; }= new(type, lifeTime);
     public Collider Collider { get; } = new(gravity, mass, initialPosition, initialVelocity, size);
     public bool IsDead { get; private set; }
 
     public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
         if (IsDead) return;
+        if (Sprite.Ticker.TickAge >= Sprite.MaxLifetimeSeconds) Kill();
 
         Sprite.UpdateFrameState(gameTime);
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Collider.Update(dt, collisionManager);
-
-        if (Sprite.Ticker.TickAge >= Sprite.MaxLifetimeSeconds) Kill();
-
-        //ASSUMES PROJECTILES HAVE ZERO SIZE
-        if (collisionManager.Blocks.Contains(((int) (Collider.Left / Consts.BlockWidth), (int) (Collider.Right / Consts.BlockWidth)))) {
+        //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
+        var pastGridCoords = Funcs.GridCoords(Collider.Position);
+        (bool isCollision, var _) = Collider.Update(dt, collisionManager);
+        if (isCollision) {
+            if (ProjectileToPlant.ContainsKey(type)) {
+                level.TryGrow(type, pastGridCoords);
+            }
             Kill();
         }
 

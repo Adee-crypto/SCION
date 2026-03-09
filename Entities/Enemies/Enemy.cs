@@ -183,8 +183,7 @@ public class Enemy : Extensions.IDrawable
     {
         Vector2 initialPosition = Collider.Center + new Vector2(facing * 8, 0);
         Vector2 initialVelocity = new(facing * ProjectileSpeed, 0);
-        ProjectileSprite sprite = new(ProjectileType.Void, 5f);
-        projectileManager.Spawn(sprite, Consts.enemyProjectileGravity, Consts.projectileMass, initialPosition, initialVelocity, new(8, 8));
+        projectileManager.Spawn(ProjectileType.Void, 5f, Consts.enemyProjectileGravity, Consts.projectileMass, initialPosition, initialVelocity, new(8, 8));
     }
 
     public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager)
