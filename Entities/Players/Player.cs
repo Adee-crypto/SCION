@@ -77,14 +77,21 @@ public class Player : IPlayer
 
     public void Move(int direction)
     {
-        this.direction.X = direction;
-        Collider.SetVelocityX(Consts.playerXSpeed * direction);
+        if (isGrounded || this.direction.X != direction)
+        {
+            this.direction.X = direction;
+            Collider.SetVelocityX(Consts.playerXSpeed * direction);
+        }
+        else if (Collider.Velocity.X < Consts.playerXSpeed)
+        {
+            Collider.SetVelocityX(Consts.playerXSpeed * direction);
+        }
     }
 
     public void Jump()
     {
         if (isGrounded) Collider.SetVelocityY(Consts.playerJumpSpeed);
-    }
+    }   
 
     public void BreakBlock()
     {
@@ -155,9 +162,9 @@ public class Player : IPlayer
         if (isGrounded) Collider.SetVelocityX(0);
         else
         {
-            if (Math.Abs(Collider.Velocity.X) <= 2) Collider.SetVelocityX(0); 
-            else if (Collider.Velocity.X < 0) Collider.SetVelocityX(Collider.Velocity.X + 2);
-            else Collider.SetVelocityX(Collider.Velocity.X - 2);
+            if (Math.Abs(Collider.Velocity.X) <= 1.5f) Collider.SetVelocityX(0); 
+            else if (Collider.Velocity.X < 0) Collider.SetVelocityX(Collider.Velocity.X + 1.5f);
+            else Collider.SetVelocityX(Collider.Velocity.X - 1.5f);
         }
         if (playerState != State.Dead) playerState = State.None;
     }
