@@ -145,13 +145,24 @@ public class Player : IPlayer
         if (health == 0) playerState = State.Dead;
     }
 
+    public void UpdateReset()
+    {
+        if (isGrounded) Collider.SetVelocityX(0);
+        else
+        {
+            if (Math.Abs(Collider.Velocity.X) <= 1.5f) Collider.SetVelocityX(0);
+            else if (Collider.Velocity.X < 0) Collider.SetVelocityX(Collider.Velocity.X + 1.5f);
+            else Collider.SetVelocityX(Collider.Velocity.X - 1.5f);
+        }
+        if (playerState != State.Dead) playerState = State.None;
+    }
+
     public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
         if (playerState == State.Dead) return;
 
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        (bool isCollision, bool isGrounded) = Collider.Update(dt, collisionManager);
-        this.isGrounded = isGrounded;
+        this.isGrounded = Collider.Update(dt, collisionManager).isGrounded;
         UpdateBreakBlock(dt);
         UpdateHealth(IsDamaged, dt);
 
@@ -159,14 +170,7 @@ public class Player : IPlayer
         playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
         playerSprite.Update(gameTime);
 
-        if (isGrounded) Collider.SetVelocityX(0);
-        else
-        {
-            if (Math.Abs(Collider.Velocity.X) <= 1.5f) Collider.SetVelocityX(0); 
-            else if (Collider.Velocity.X < 0) Collider.SetVelocityX(Collider.Velocity.X + 1.5f);
-            else Collider.SetVelocityX(Collider.Velocity.X - 1.5f);
-        }
-        if (playerState != State.Dead) playerState = State.None;
+        UpdateReset();
     }
 
     public void Draw(SpriteBatch spriteBatch)
