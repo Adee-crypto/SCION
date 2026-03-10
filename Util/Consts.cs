@@ -10,7 +10,7 @@ public static class Consts
     public const float breakDuration = 1f;
     public static Vector2 playerHitbox {get;} = new(16-0.1f, 16-0.1f); //fix this perhaps
     public const float playerFrameTime = 0.2f;
-    public const float playerXSpeed = 100f;
+    public const float playerXSpeed = 120f;
     public const float playerJumpSpeed = -450f;
     public const float playerGravity = 980f;
     public const float playerMass = 1f;
