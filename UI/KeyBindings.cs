@@ -24,9 +24,9 @@ public static class KeyBindings
         };
         TapKeyBindings = new()
         {
-            {new[] {Keys.Escape}, () => game.TogglePause()},
-            {new[] {Keys.Q}, () => game.Exit()},
-            {new[] {Keys.R}, () => game.ResetLevel()},
+            {new[] {Keys.Escape}, game.TogglePause},
+            {new[] {Keys.Q}, game.Exit},
+            {new[] {Keys.R}, game.ResetLevel},
             {new[] {Keys.E}, () => Target(game)?.ToggleDamaged()} //also for testing
         };
     }

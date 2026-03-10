@@ -14,7 +14,8 @@ public sealed class StoryLevel : BaseLevel
     public StoryLevel(Player player, StoryLevelDef def) : base(player)
     {
         this.def = def;
-
+        player.Collider.InitialPosisiton = def.PlayerSpawnPos;
+        player.Collider.SetPosition(def.PlayerSpawnPos);
         rangedEnemy = new EnemyDef("Void Spawn", Assets.VoidspawnTexture, 100, 98, 96, 128, 96);
 
         Reset();

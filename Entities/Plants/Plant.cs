@@ -4,8 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
 using Sprint2.Levels;
-using Sprint2.Managers;
-using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
@@ -31,7 +29,6 @@ public abstract class Plant
     protected Species Species { get; }
     protected BlockList BudCells { get; set; } = new();
     protected BlockList StemCells { get; } = new();
-    // public BlockList Blocks => new BlockList().Union(BudCells).Union(StemCells);
     protected float Age { get; set; }
     protected int CellsGrown {get; set;}
     protected Ticker Ticker { get; }
@@ -66,28 +63,5 @@ public abstract class Plant
     {
         StemCells.Draw(spriteBatch, Color.Gray);
         BudCells.Draw(spriteBatch);
-    }
-
-    //FIX THIS TO ONLY BREAK IF PLAYER ACTUALLY TOUCHING BLOCK; work with collision?
-    public bool TryRemoveCellBelow(Vector2 bottomCenter)
-    {
-        (int cellX, int cellY) pos = Funcs.GridCoords(bottomCenter);
-        pos.cellY ++;
-        if (StemCells.Contains(pos))
-        {
-            StemCells.Remove(pos);
-            return true;
-        }
-        else if (StemCells.Contains((pos.cellX - 1, pos.cellY)) && bottomCenter.X % Consts.BlockWidth < Consts.BlockWidth / 2f)
-        {
-            StemCells.Remove((pos.cellX - 1, pos.cellY));
-            return true;
-        }
-        else if (StemCells.Contains((pos.cellX + 1, pos.cellY)) && bottomCenter.X % Consts.BlockWidth > Consts.BlockWidth / 2f)
-        {
-            StemCells.Remove((pos.cellX + 1, pos.cellY));
-            return true;
-        }
-        return false;
     }
 }
