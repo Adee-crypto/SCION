@@ -82,7 +82,7 @@ public class Player : IPlayer
             this.direction.X = direction;
             Collider.SetVelocityX(Consts.playerXSpeed * direction);
         }
-        else if (Collider.Velocity.X < Consts.playerXSpeed)
+        else if (Math.Abs(Collider.Velocity.X) < Consts.playerXSpeed)
         {
             Collider.SetVelocityX(Consts.playerXSpeed * direction);
         }
