@@ -25,9 +25,12 @@ public class Menu(SpriteFont font)
 
         if (!string.IsNullOrWhiteSpace(Title))
         {
+            float spacer = 20;
             Vector2 textSize = font.MeasureString(Title);
-            var topButton = buttons.MinBy(b => b.Position.Y);
-            float spacer = (topButton.Position.Y - topButton.Bounds.Height - 20f) > 0 ? (topButton.Position.Y - topButton.Bounds.Height - 20f) : 0f;
+            if (buttons.Count > 0) {
+                var topButton = buttons.MinBy(b => b.Position.Y);
+                spacer = (topButton.Position.Y - topButton.Bounds.Height - 20f) > 0 ? (topButton.Position.Y - topButton.Bounds.Height - 20f) : 0f;
+            }
             Vector2 titlePos = new((screenSize.w - textSize.X) / 2, spacer);
             spriteBatch.DrawString(font, Title, titlePos, Color.Black);
         }

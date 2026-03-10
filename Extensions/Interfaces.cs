@@ -91,6 +91,12 @@ public interface IPausableScreen
     void TogglePause();
 }
 
+public interface ISettingsPanel : IDrawable, IResizableScreen
+{
+    void Update();
+    void BuildPanel();
+}
+
 public interface ILevel : IUpdatable, IDrawable, IResizableScreen, IResettableScreen
 {
     bool IsOver { get; }
@@ -102,6 +108,13 @@ public enum LevelEndReason
     None,
     PlayerDied,
     Completed
+}
+
+public enum SettingsTab
+{
+    General,
+    Graphics,
+    Controls
 }
 
 // internal interface IEntitySprite : IUpdatable
