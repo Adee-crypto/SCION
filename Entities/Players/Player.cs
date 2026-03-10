@@ -83,10 +83,7 @@ public class Player : IPlayer
 
     public void Jump()
     {
-        if (isGrounded)
-        {
-            Collider.SetVelocityY(Consts.playerJumpSpeed);
-        }
+        if (isGrounded) Collider.SetVelocityY(Consts.playerJumpSpeed);
     }
 
     public void BreakBlock()
@@ -156,6 +153,12 @@ public class Player : IPlayer
         playerSprite.Update(gameTime);
 
         if (isGrounded) Collider.SetVelocityX(0);
+        else
+        {
+            if (Math.Abs(Collider.Velocity.X) <= 2) Collider.SetVelocityX(0); 
+            else if (Collider.Velocity.X < 0) Collider.SetVelocityX(Collider.Velocity.X + 2);
+            else Collider.SetVelocityX(Collider.Velocity.X - 2);
+        }
         if (playerState != State.Dead) playerState = State.None;
     }
 
