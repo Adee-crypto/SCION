@@ -73,11 +73,7 @@ public class SandboxPlant(BaseLevel level, (int, int) root) : Plant(level, Speci
         int[][] pattern = patterns[new Random().Next(patterns.Length)];
         // randomize offset
         int width = pattern[0].Length;
-        (int x, int y) offset = (width/2, width/2);
-        if (width % 2 == 0) {
-            offset.x += new Random().Next(0, 2);
-            offset.y += new Random().Next(0, 2);
-        }
+        (int x, int y) offset = (new Random().Next((width-1)/2, width/2+1), new Random().Next((width-1)/2, width/2+1));
 
         //Breadth first search to grow as much as possible into desired shape
         List<(int, int)> StemDeltaPos = [];
