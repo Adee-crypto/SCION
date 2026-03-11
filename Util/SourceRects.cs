@@ -43,6 +43,7 @@ public static class SourceRects
         { BlockType.Grass, TileAt(2, 9) },
         { BlockType.Apple, TileAt(2, 10) },
         { BlockType.Pineapple, TileAt(2, 11) },
+        { BlockType.Sandbox, TileAt(8, 0) },
         { BlockType.Dirt, TileAt(2, 0) },
         { BlockType.Stone, TileAt(1, 0) },
         { BlockType.StoneBrick, TileAt(6, 3) },
@@ -54,6 +55,7 @@ public static class SourceRects
         { ProjectileType.Grass, [TileAt(6, 16), TileAt(7, 16)] },
         { ProjectileType.Apple, [TileAt(9, 16), TileAt(8, 16)] },
         { ProjectileType.Pineapple, [TileAt(2, 16), TileAt(4, 16)] },
+        { ProjectileType.Sandbox, [TileAt(16, 2), TileAt(17, 2)] },
         { ProjectileType.Void, [TileAt(2, 16), TileAt(4, 16)] }
     };
 }

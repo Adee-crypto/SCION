@@ -69,7 +69,7 @@ public class Player : IPlayer
         breakTimer = 0f;
         aimer = new(10f);
         Seeds.Clear();
-        for (int i = 0; i < 5; i++) //prob change this
+        for (int i = 0; i < 50; i++) //prob change this
         {
             GetSeed();
         }
@@ -162,10 +162,8 @@ public class Player : IPlayer
         //Also these should be changed to be based off dt
         //ALSO from player feedback, change it so there's very high ground friction (not infinite friction like we have now)
         if (isGrounded) Collider.SetVelocityX(0);
-        else
-        {
-            Collider.SetVelocityX(Collider.Velocity.X*0.97f); 
-        }
+        else Collider.SetVelocityX(Collider.Velocity.X*0.97f);
+        
         if (playerState != State.Dead) playerState = State.None;
     }
 

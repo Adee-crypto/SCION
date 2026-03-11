@@ -12,6 +12,7 @@ public enum BlockType
     Grass,
     Apple,
     Pineapple,
+    Sandbox,
     //platforms
     Dirt,
     Stone,

@@ -16,6 +16,7 @@ public enum ProjectileType
     Grass,
     Apple,
     Pineapple,
+    Sandbox,
 }
 
 public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size) : IProjectile
@@ -24,6 +25,7 @@ public static Dictionary<ProjectileType, Func<BaseLevel, (int, int), Plant>> Pro
     { ProjectileType.Grass, (c, r) => new GrassPlant(c, r) },
     { ProjectileType.Apple, (c, r) => new ApplePlant(c, r) },
     { ProjectileType.Pineapple, (c, r) => new PineapplePlant(c, r) },
+    { ProjectileType.Sandbox, (c, r) => new SandboxPlant(c, r) },
 };
 
     private readonly BaseLevel level = level; //this is terrible for coupling but idk

@@ -11,5 +11,6 @@ public static class PlantUtil
         {Species.grass, 0.1f },
         {Species.apple, 0.2f },
         {Species.pineapple, 0.4f },
+        {Species.sandbox, 1f },
     };
 }

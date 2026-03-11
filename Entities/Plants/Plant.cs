@@ -9,7 +9,7 @@ namespace Sprint2.Entities.Plants;
 
 public enum Species
 {
-    grass, apple, pineapple
+    grass, apple, pineapple, sandbox
 };
 
 public abstract class Plant
@@ -18,12 +18,14 @@ public abstract class Plant
         {Species.grass, BlockType.Grass},
         {Species.apple, BlockType.Apple},
         {Species.pineapple, BlockType.Pineapple},
+        {Species.sandbox, BlockType.Sandbox},
     };
 
     public static Dictionary<Species, ProjectileType> SpeciesToProjectile {get;} = new() {
         {Species.grass, ProjectileType.Grass},
         {Species.apple, ProjectileType.Apple},
         {Species.pineapple, ProjectileType.Pineapple},
+        {Species.sandbox, ProjectileType.Sandbox},
     };
 
     protected Species Species { get; }
