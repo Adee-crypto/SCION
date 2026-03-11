@@ -28,6 +28,16 @@ public static class StoryLevelRegistry
                 ((l) => new(l, BlockType.CrackedStoneBrick, 0, 20, 50, 1)),
                 ((l) => new(l, BlockType.Stone, 10, 15, 8, 1)),
             ]
+        },
+        new StoryLevelDef
+        {
+            Index = 2,
+            PlayerSpawnPos = new Vector2(5, 10)*Consts.BlockWidth,
+            Platforms =
+            [
+                ((l) => new(l, BlockType.CrackedStoneBrick, 2, 20, 50, 1)),
+                ((l) => new(l, BlockType.Stone, 15, 15, 8, 1)),
+            ]
         }
     ];
 

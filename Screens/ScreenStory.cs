@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Sprint2.Entities.Players;
 using Sprint2.Extensions;
 using Sprint2.Managers;
@@ -30,11 +31,15 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
     private int currentLevelIndex;
     private PauseOverlay pause;
     public IPlayer CurrentPlayer => state == StoryState.Playing ? player : null;
+    // BEGIN DEBUG
+    private KeyboardState prevKeyboard;
+    // END DEBUG
 
     public ScreenStory(Game1 game, ScreenManager screenManager)
     {
         this.game = game;
         this.screenManager = screenManager;
+        prevKeyboard = Keyboard.GetState();
 
         menu = new(Assets.UiFont) { Title = "Story Mode", DimBackground = true };
         gameOverMenu = new(Assets.UiFont) { Title = "Game Over", DimBackground = true };
@@ -131,6 +136,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
     private void StartStoryLevel(int index)
     {
         levelManager.StartStory(player, index);
+        currentLevelIndex = index;
         levelManager.Resize((game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
         state = StoryState.Playing;
     }
@@ -171,6 +177,15 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
                 gameOverMenu.Update();
                 break;
         }
+
+        var keyboard = Keyboard.GetState();
+        if (keyboard.IsKeyDown(Keys.OemPeriod) && prevKeyboard.IsKeyUp(Keys.OemPeriod)) 
+        {
+            currentLevelIndex += 1;
+            currentLevelIndex %= 3;
+            StartStoryLevel(currentLevelIndex);
+        }
+        prevKeyboard = keyboard;
     }
 
     public void Draw(SpriteBatch spriteBatch)
