@@ -8,7 +8,7 @@ namespace Sprint2.Entities.Plants;
 
 public class GrassPlant(BaseLevel level, (int, int) root) : Plant(level, Species.grass, root)
 {
-    private readonly int maxCells = new Random().Next(5, 8);
+    private readonly int maxCells = Funcs.RandInt(5, 8);
 
     public override void Update(GameTime gameTime)
     {

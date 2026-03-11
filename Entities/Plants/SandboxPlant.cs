@@ -70,10 +70,10 @@ public class SandboxPlant(BaseLevel level, (int, int) root) : Plant(level, Speci
         BudCells.Clear();
 
         //Pick which pattern with equal probability
-        int[][] pattern = patterns[new Random().Next(patterns.Length)];
+        int[][] pattern = patterns[Funcs.RandInt(patterns.Length)];
         // randomize offset
         int width = pattern[0].Length;
-        (int x, int y) offset = (new Random().Next((width-1)/2, width/2+1), new Random().Next((width-1)/2, width/2+1));
+        (int x, int y) offset = (Funcs.RandInt((width-1)/2, width/2+1), Funcs.RandInt((width-1)/2, width/2+1));
 
         //Breadth first search to grow as much as possible into desired shape
         List<(int, int)> StemDeltaPos = [];

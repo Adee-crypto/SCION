@@ -8,7 +8,7 @@ namespace Sprint2.Entities.Plants;
 
 public class PineapplePlant(BaseLevel level, (int, int) root) : Plant(level, Species.pineapple, root)
 {
-    private readonly int maxCells = new Random().Next(7, 40);
+    private readonly int maxCells = Funcs.RandInt(7, 40);
     private (int x, int y) root = root;
 
     public override void Update(GameTime gameTime)

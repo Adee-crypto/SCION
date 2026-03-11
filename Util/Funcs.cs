@@ -7,6 +7,10 @@ namespace Sprint2.Util;
 
 public static class Funcs
 {
+    private static readonly Random random = new();
+
+    public static int RandInt(int max) => random.Next(max);
+    public static int RandInt(int min, int max) => random.Next(min, max);
     //Converts pixel coords to grid (block) coords
     public static (int, int) GridCoords(Vector2 pos) {
         return ((int) (pos.X/Consts.BlockWidth), (int) (pos.Y/Consts.BlockWidth));
