@@ -39,7 +39,9 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
     {
         this.game = game;
         this.screenManager = screenManager;
+        // BEGIN DEBUG
         prevKeyboard = Keyboard.GetState();
+        // END DEBUG
 
         menu = new(Assets.UiFont) { Title = "Story Mode", DimBackground = true };
         gameOverMenu = new(Assets.UiFont) { Title = "Game Over", DimBackground = true };
@@ -135,8 +137,8 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
 
     private void StartStoryLevel(int index)
     {
-        levelManager.StartStory(player, index);
         currentLevelIndex = index;
+        levelManager.StartStory(player, index);
         levelManager.Resize((game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
         state = StoryState.Playing;
     }
@@ -178,6 +180,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
                 break;
         }
 
+        // BEGIN DEBUG: Keybound Level switching logic
         var keyboard = Keyboard.GetState();
         if (keyboard.IsKeyDown(Keys.OemPeriod) && prevKeyboard.IsKeyUp(Keys.OemPeriod)) 
         {
@@ -186,6 +189,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
             StartStoryLevel(currentLevelIndex);
         }
         prevKeyboard = keyboard;
+        // END DEBUG
     }
 
     public void Draw(SpriteBatch spriteBatch)
