@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Sprint2.Extensions;
 using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
@@ -13,57 +14,82 @@ public class SandboxPlant(BaseLevel level, (int, int) root) : Plant(level, Speci
     private (int x, int y) root = root;
     private bool detonated;
 
-    private readonly (int,int)[] pattern = [
-        (0, 0),
-        (0, -1),
-        (-1, 0),
-        (1, 0),
-        (0, 1),
-        (0, -2),
-        (-1, -1),
-        (1, -1),
-        (-2, 0),
-        (2, 0),
-        (-1, 1),
-        (1, 1),
-        (0, 2),
-        (-1, -2),
-        (1, -2),
-        (-2, -1),
-        (2, -1),
-        (-2, 1),
-        (2, 1),
-        (-1, 2),
-        (1, 2),
+    private readonly int[][][] patterns = 
+    [
+    [
+        [0, 1, 1, 0],
+        [1, 1, 1, 1],
+        [1, 1, 1, 1],
+        [0, 1, 1, 0],
+    ],
+    [
+        [0, 1, 1, 1, 0],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [0, 1, 1, 1, 0],
+    ],
+    [
+        [0, 1, 1, 1, 0],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [0, 1, 1, 1, 0],
+    ],
+    [
+        [0, 0, 1, 1, 0, 0],
+        [0, 1, 1, 1, 1, 0],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1],
+        [0, 1, 1, 1, 1, 0],
+        [0, 0, 1, 1, 0, 0],
+    ],
     ];
 
     public override void Update(GameTime gameTime)
     {
-        if (!detonated && Ticker.TicksPassed(gameTime) > 0)
+        Ticker.TicksPassed(gameTime);
+        if (!detonated)
         {
-            Grow();
-            detonated = true;
+            if (Ticker.TickAge >= 6) {
+                Grow();
+                detonated = true;
+            } else if (Ticker.TickAge % 2 == 0) {
+                StemCells.Union(BudCells);
+                BudCells.Clear();
+            } else {
+                BudCells.Union(StemCells);
+                StemCells.Clear();
+            }
         }
     }
 
     protected override void Grow()
     {
+        StemCells.Clear();
         BudCells.Clear();
 
+        //Pick which pattern with equal probability
+        int[][] pattern = patterns[new Random().Next(patterns.Length)];
+        // randomize offset
+        int width = pattern[0].Length;
+        (int x, int y) offset = (width/2, width/2);
+        if (width % 2 == 0) {
+            offset.x += new Random().Next(0, 2);
+            offset.y += new Random().Next(0, 2);
+        }
+
+        //Breadth first search to grow as much as possible into desired shape
         List<(int, int)> StemDeltaPos = [];
-        List<(int, int)> BudDeltaPos = [(0,0)];
-
-
-        Console.WriteLine(pattern);
+        List<(int, int)> BudDeltaPos = [offset];
         while (BudDeltaPos.Count > 0) {
             (int x, int y) = BudDeltaPos[0];
-            StemDeltaPos.Add((x,y));
             BudDeltaPos.RemoveAt(0);
-            if (TryGrow(StemCells, (root.x+x,root.y+y))) {
+            StemDeltaPos.Add((x,y));
+            if (TryGrow(StemCells, (root.x+x-offset.x,root.y+y-offset.y))) {
                 foreach ((int dx, int dy) in PlantUtil.GrowDirs) {
-                    (int, int) nextBud = (dx+x,dy+y);
-                    Console.WriteLine($"{nextBud}");
-                    if (!StemDeltaPos.Contains(nextBud) && !BudCells.Contains(nextBud) && pattern.Contains(nextBud)) {
+                    (int x, int y) nextBud = (dx+x,dy+y);
+                    if (!StemDeltaPos.Contains(nextBud) && !BudCells.Contains(nextBud) && nextBud.y >= 0 && nextBud.y < width && nextBud.x >= 0 && nextBud.x < width && pattern[nextBud.y][nextBud.x] == 1) {
                         BudDeltaPos.Add(nextBud);
                     }
                 }

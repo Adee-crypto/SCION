@@ -23,7 +23,7 @@ public enum BlockType
 public class BlockList
 {
     public static bool IsBreakable(BlockType b) => b switch
-        {Grass or Apple or Pineapple or Dirt => true, _ => false };
+        {Grass or Apple or Pineapple or Sandbox or Dirt => true, _ => false };
 
     //instance data
     private readonly Dictionary<(int x, int y), BlockType> data = [];
