@@ -11,6 +11,7 @@ public class CollisionManager
     public List<BlockList> Blocks {get;} = [];
 
     public bool HasBlockAt((int, int) pos) => Blocks.Any(b => b.Contains(pos));
+    
     //checks that the block is breakable before breaking it
     public BlockType TryBreakBlockAt((int, int) pos) {
         foreach (var blockList in Blocks) {
@@ -28,7 +29,7 @@ public class CollisionManager
     public bool TryRemoveBlockAt((int, int) pos) => Blocks.Any(b => b.Remove(pos));
     public void Reset() => Blocks.Clear();
 
-    //CURRENTLY ASSUMES PLAYER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK
+    /// <summary>CURRENTLY ASSUMES PLAYER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK</summary>
     public (bool isCollision, bool isGrounded) ManageCollision(Collider collider, Vector2 deltaPos)
     {
         //*t*olerance

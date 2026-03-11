@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-
 namespace Sprint2.Managers;
 
 public class SettingsManager

@@ -37,18 +37,21 @@ public abstract class Plant
     };
 
     protected Species Species { get; }
+    protected (int x, int y) Root {get;}
     protected BlockList BudCells { get; set; } = new();
     protected BlockList StemCells { get; } = new();
     protected float Age { get; set; }
     protected int CellsGrown {get; set;}
+    protected int MaxCells {get; set;} = int.MaxValue;
     protected Ticker Ticker { get; }
     private readonly BaseLevel level; //terrible for coupling, fix somehow
 
     public Plant(BaseLevel level, Species species, (int, int) root)
     {
         this.level = level;
-        Ticker = new(PlantUtil.SpeciesGrowTimes[species]);
         Species = species;
+        Root = root;
+        Ticker = new(PlantUtil.SpeciesGrowTimes[species]);
         BudCells.Add(root, SpeciesToBlock[species]);
         level.AddBlockList(BudCells);
         level.AddBlockList(StemCells);
@@ -61,7 +64,7 @@ public abstract class Plant
 
     //returns if it can grow into newCellPos, then grows there
     protected bool TryGrow(BlockList newGrowth, (int, int) newCellPos) {
-        if (!level.HasBlockAt(newCellPos)) {
+        if (!level.HasBlockAt(newCellPos) && CellsGrown < MaxCells) {
             newGrowth.Add(newCellPos, SpeciesToBlock[Species]);
             CellsGrown++;
             return true;
