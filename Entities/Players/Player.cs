@@ -69,9 +69,9 @@ public class Player : IPlayer
         breakTimer = 0f;
         aimer = new(10f);
         Seeds.Clear();
-        for (int i = 0; i < 50; i++) //prob change this
+        for (int i = 0; i < 5; i++) //prob change this
         {
-            GetSeed();
+            GetRandomSeed();
         }
     }
 
@@ -98,9 +98,14 @@ public class Player : IPlayer
         if (isGrounded && Collider.Velocity.X == 0) playerState = State.BreakBlock;
     }
 
-    public void GetSeed() //This is pretty inefficient
+    public void GetRandomSeed() //This is pretty inefficient
     {
-        Seeds.Add(Plant.SpeciesToProjectile[Random.Shared.GetItems(Enum.GetValues<Species>(), 1)[0]]);
+        GetSeed(Random.Shared.GetItems(Enum.GetValues<Species>(), 1)[0]);
+    }
+    
+    public void GetSeed(Species type)
+    {
+        Seeds.Add(Plant.SpeciesToProjectile[type]);
     }
 
     public ProjectileType ThrowSeed()

@@ -8,6 +8,7 @@ namespace Sprint2.Entities;
 
 public enum BlockType
 {
+    None,
     //plants
     Grass,
     Apple,

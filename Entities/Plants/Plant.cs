@@ -14,11 +14,19 @@ public enum Species
 
 public abstract class Plant
 {
+    //these are getting out of hand
     public static Dictionary<Species, BlockType> SpeciesToBlock {get;} = new() {
         {Species.grass, BlockType.Grass},
         {Species.apple, BlockType.Apple},
         {Species.pineapple, BlockType.Pineapple},
         {Species.sandbox, BlockType.Sandbox},
+    };
+
+    public static Dictionary<BlockType, Species> BlockToSpecies {get;} = new() {
+        {BlockType.Grass, Species.grass},
+        {BlockType.Apple, Species.apple},
+        {BlockType.Pineapple, Species.pineapple},
+        {BlockType.Sandbox, Species.sandbox},
     };
 
     public static Dictionary<Species, ProjectileType> SpeciesToProjectile {get;} = new() {
