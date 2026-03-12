@@ -32,7 +32,7 @@ public class Enemy : Extensions.IDrawable
     public Enemy(Vector2 initialPosistion)
     {
         sprite = new EnemySprite();
-        Collider = new(98f, 1f, initialPosistion, Vector2.Zero, Consts.playerHitbox);
+        Collider = new(initialPosistion) {Size=Consts.playerHitbox};
         Reset();
     }
 
@@ -50,12 +50,12 @@ public class Enemy : Extensions.IDrawable
 
     public void Move(int direction)
     {
-        Collider.SetVelocityX(Consts.enemySpeed * direction);
+        Collider.SetVelocityX(Consts.enemyXForce * direction);
     }
 
     public void Jump()
     {
-        if (isGrounded) Collider.SetVelocityY(Consts.playerJumpSpeed);
+        if (isGrounded) Collider.SetVelocityY(Consts.playerYForce);
     }
 
     private void UpdatePatrol()
@@ -101,7 +101,7 @@ public class Enemy : Extensions.IDrawable
     {
         Vector2 initialPosition = Collider.Center + Consts.playerHitbox * new Vector2(direction.X * 0.5f, -0.25f);
         Vector2 initialVelocity = new(direction.X * 100f, 0);
-        projectileManager.Spawn(ProjectileType.Void, 5f, Consts.enemyProjectileGravity, Consts.projectileMass, initialPosition, initialVelocity, new(8, 8));
+        projectileManager.Spawn(ProjectileType.Void, 5f, initialPosition, initialVelocity);
     }
 
     public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager)

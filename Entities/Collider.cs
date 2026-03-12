@@ -1,18 +1,29 @@
 using Microsoft.Xna.Framework;
+using Sprint2.Entities.Projectiles;
 using Sprint2.Managers;
+using Sprint2.Util;
 using System;
 
 namespace Sprint2.Entities;
 
-public class Collider(float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size)
+public enum ColliderType {
+    None,
+    Player,
+    Enemy,
+    Projectile,
+}
+
+public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), ColliderType type=ColliderType.None)
 {
+    public ColliderType Type {get;}= type;
     //Newton would be proud
-    public float Gravity { get; private set; } = gravity;
-    public float Mass { get; private set; } = mass;
-    public Vector2 InitialPosisiton { get; set; } = initialPosition;
+    public float Gravity { get; private set; } = Consts.defaultGravity;
+    public float Mass { get; init; } = 1;
+    public Vector2 InitialPosition { private get; set; } = initialPosition;
     public Vector2 Position { get; private set; } = initialPosition;
+    public Vector2 InitialVelocity { private get; set; } = initialVelocity;
     public Vector2 Velocity { get; private set; } = initialVelocity;
-    public Vector2 Size { get; private set; } = size;
+    public Vector2 Size { get; init; }
     public Vector2 Momentum { get => Velocity * Mass; set { Velocity = value / Mass; } }
 
     //Helpful values
@@ -25,7 +36,7 @@ public class Collider(float gravity, float mass, Vector2 initialPosition, Vector
 
     public void Reset()
     {
-        Position = InitialPosisiton;
+        Position = InitialPosition;
         Velocity = Vector2.Zero;
     }
 
@@ -35,9 +46,7 @@ public class Collider(float gravity, float mass, Vector2 initialPosition, Vector
     }
 
     public bool Intersects(Collider other) {
-        Rectangle r1 = new Rectangle((int)Position.X, (int)Position.Y, (int)size.X, (int)size.Y);
-        Rectangle r2 = new Rectangle((int)other.Position.X, (int)other.Position.Y, (int)other.Size.X, (int)other.Size.Y);
-        return r1.Intersects(r2);
+        return (Left < other.Right || Right > other.Left) && (Top < other.Bottom || Bottom > other.Top);
     }
 
     public void SetPositionX(float x) => Position = new(x, Position.Y);

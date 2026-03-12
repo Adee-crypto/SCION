@@ -23,9 +23,9 @@ public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDra
         projectiles.Clear();
     }
 
-    public void Spawn(ProjectileType type, float lifeTime, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size)
+    public void Spawn(ProjectileType type, float lifeTime, Vector2 initialPosition, Vector2 initialVelocity)
     {
-        projectiles.Add(new Projectile(level, type, lifeTime, gravity, mass, initialPosition, initialVelocity, size));
+        projectiles.Add(new Projectile(level, type, lifeTime, initialPosition, initialVelocity));
     }
 
     public void Update(GameTime gameTime, CollisionManager collisionManager)
@@ -40,7 +40,7 @@ public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDra
                 direction.Normalize();
                 Vector2 initialPosition = playerCollider.Center + Consts.playerHitbox * new Vector2(direction.X * 0.5f, -0.25f);
                 Vector2 initialVelocity = direction * 300f;
-                Projectile projectile = new(level, player.ThrowSeed(), 5f, Consts.playerProjectileGravity, Consts.projectileMass, initialPosition, initialVelocity, new(8, 8));
+                Projectile projectile = new(level, player.ThrowSeed(), 5f, initialPosition, initialVelocity);
                 projectiles.Add(projectile);
                 player.Collider.Momentum -= projectile.Collider.Momentum;
             }

@@ -19,7 +19,7 @@ public enum ProjectileType
     Sandbox,
 }
 
-public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size) : IProjectile
+public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, Vector2 initialPosition, Vector2 initialVelocity) : IProjectile
 {
     public static Dictionary<ProjectileType, Func<BaseLevel, (int, int), Plant>> ProjectileToPlant { get; } = new() {
         { ProjectileType.Grass, (c, r) => new GrassPlant(c, r) },
@@ -31,7 +31,7 @@ public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, fl
     private readonly BaseLevel level = level; //this is terrible for coupling but idk
     public ProjectileType Type { get; } = type;
     private ProjectileSprite Sprite { get; }= new(type, lifeTime);
-    public Collider Collider { get; } = new(gravity, mass, initialPosition, initialVelocity, size);
+    public Collider Collider { get; } = new(initialPosition, initialVelocity: initialVelocity);
     public bool IsDead { get; private set; }
 
     public void Update(GameTime gameTime, CollisionManager collisionManager)
@@ -41,6 +41,7 @@ public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, fl
 
         Sprite.UpdateFrameState(gameTime);
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
         //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
         (bool isCollision, var _) = Collider.Update(dt, collisionManager);
         if (isCollision) {

@@ -73,12 +73,12 @@ public abstract class BaseLevel : ILevel
         }
     }
 
-    public BlockType TryDigBelow(Vector2 coords) {
+    public BlockType? TryDigBelow(Vector2 coords) {
         var (x, y) = Funcs.GridCoords(coords);
         y++; //want the cell *below* midpoint of bottom edge of player
 
         var output = CollisionManager.TryBreakBlockAt((x, y));
-        if (output == BlockType.None) {
+        if (output is null) {
             if (coords.X % Consts.BlockWidth < Consts.BlockWidth / 2f)
                 output = CollisionManager.TryBreakBlockAt((x-1, y));
             else
@@ -99,8 +99,8 @@ public abstract class BaseLevel : ILevel
         //check for player digging logic
         if (Player.IsBreakable) {
             var type = TryDigBelow(new(Player.Collider.Center.X, Player.Collider.Bottom));
-            if (type != BlockType.None) {
-                if (Plant.BlockToSpecies.TryGetValue(type, out Species value)) Player.GetSeed(value);
+            if (type is not null) {
+                if (Plant.BlockToSpecies.TryGetValue(type.Value, out Species value)) Player.GetSeed(value);
                 Player.IsBreakable = false;
             }
         }

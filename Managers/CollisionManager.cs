@@ -13,7 +13,7 @@ public class CollisionManager
     public bool HasBlockAt((int, int) pos) => Blocks.Any(b => b.Contains(pos));
     
     //checks that the block is breakable before breaking it
-    public BlockType TryBreakBlockAt((int, int) pos) {
+    public BlockType? TryBreakBlockAt((int, int) pos) {
         foreach (var blockList in Blocks) {
             if (blockList.Contains(pos)) {
                 BlockType type = blockList.TypeAt(pos);
@@ -24,7 +24,7 @@ public class CollisionManager
                 }
             }
         }
-        return BlockType.None;
+        return null;
     }
     public bool TryRemoveBlockAt((int, int) pos) => Blocks.Any(b => b.Remove(pos));
     public void Reset() => Blocks.Clear();

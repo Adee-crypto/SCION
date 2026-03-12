@@ -23,7 +23,7 @@ public enum State
 public class Player : IPlayer
 {
     //Motion + Physics
-    public Collider Collider { get; } = new(Consts.playerGravity, Consts.playerMass, Vector2.One * Consts.BlockWidth, Vector2.Zero, Consts.playerHitbox);
+    public Collider Collider { get; } = new(Vector2.One * Consts.BlockWidth) {Mass=Consts.playerMass, Size=Consts.playerHitbox};
     private Vector2 direction;
 
     //States
@@ -82,16 +82,16 @@ public class Player : IPlayer
         if (isGrounded || this.direction.X != direction)
         {
             this.direction.X = direction;
-            Collider.SetVelocityX(Consts.playerXSpeed * direction);
+            Collider.SetVelocityX(Consts.playerXForce * direction);
         }
-        else if (Math.Abs(Collider.Velocity.X) < Consts.playerXSpeed)
+        else if (Math.Abs(Collider.Velocity.X) < Consts.playerXForce)
         {
-            Collider.SetVelocityX(Consts.playerXSpeed * direction);
+            Collider.SetVelocityX(Consts.playerXForce * direction);
         }
     }
 
     public void Jump() {
-        if (isGrounded) Collider.SetVelocityY(Consts.playerJumpSpeed);
+        if (isGrounded) Collider.SetVelocityY(Consts.playerYForce);
     }   
 
     public void BreakBlock() {
