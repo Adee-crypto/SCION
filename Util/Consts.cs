@@ -10,9 +10,8 @@ public static class Consts
 
     //physics
     public const float defaultGravity = 980f;
+    public const float defaultProjectileGravity = 98f;
     public const float voidProjectileGravity = 0f;
-    // public const float playerGravity = 980f;
-    // public const float playerProjectileGravity = 98f;
 
     public const float playerXForce = 120f;
     public const float playerYForce = -450f;
@@ -21,7 +20,7 @@ public static class Consts
     
     public const float enemyXForce = 100f;
 
-    public const float projectileMass = 1f; // could be different using dictionary with projectileType
+    public const float projectileMass = .2f; // could be different using dictionary with projectileType
     
     //timing
     public const float breakDuration = 0.5f;

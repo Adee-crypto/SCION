@@ -67,7 +67,7 @@ public abstract class BaseLevel : ILevel
         int leftRightRand = Funcs.RandInt(0, 2)*2-1;
         foreach (var pos in new[]{(x, y-1), (x+leftRightRand, y), (x-leftRightRand, y), (x,y+1)}) {
             if (!CollisionManager.HasBlockAt(pos)) {
-                Plants.Add(Projectile.ProjectileToPlant[type](this, coords));
+                Plants.Add(ProjectileUtil.ProjectileToPlant[type](this, coords));
                 break;
             }
         }

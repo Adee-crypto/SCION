@@ -17,7 +17,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
 {
     public ColliderType Type {get;}= type;
     //Newton would be proud
-    public float Gravity { get; private set; } = Consts.defaultGravity;
+    public float Gravity { get; set; } = Consts.defaultGravity;
     public float Mass { get; init; } = 1;
     public Vector2 InitialPosition { private get; set; } = initialPosition;
     public Vector2 Position { get; private set; } = initialPosition;

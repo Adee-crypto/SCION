@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Entities.Colliders;
 using Sprint2.Entities.Plants;
 using Sprint2.Extensions;
 using Sprint2.Levels;
@@ -19,20 +20,26 @@ public enum ProjectileType
     Sandbox,
 }
 
-public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, Vector2 initialPosition, Vector2 initialVelocity) : IProjectile
+public class Projectile : IProjectile
 {
-    public static Dictionary<ProjectileType, Func<BaseLevel, (int, int), Plant>> ProjectileToPlant { get; } = new() {
-        { ProjectileType.Grass, (c, r) => new GrassPlant(c, r) },
-        { ProjectileType.Apple, (c, r) => new ApplePlant(c, r) },
-        { ProjectileType.Pineapple, (c, r) => new PineapplePlant(c, r) },
-        { ProjectileType.Sandbox, (c, r) => new SandboxPlant(c, r) },
-    };
-
-    private readonly BaseLevel level = level; //this is terrible for coupling but idk
-    public ProjectileType Type { get; } = type;
-    private ProjectileSprite Sprite { get; }= new(type, lifeTime);
-    public Collider Collider { get; } = new(initialPosition, initialVelocity: initialVelocity);
+    private readonly BaseLevel level; //this is terrible for coupling but idk
+    public ProjectileType Type { get; }
+    private ProjectileSprite Sprite { get; }
+    public Collider Collider { get; }
     public bool IsDead { get; private set; }
+
+    public Projectile(BaseLevel level, ProjectileType type, float lifeTime, Vector2 initialPosition, Vector2 initialVelocity)
+    {
+        this.level = level; //this is terrible for coupling but idk
+        Type = type;
+        Sprite = new(type, lifeTime);
+        Collider = ColliderUtil.Presets[ColliderType.Projectile](initialPosition, initialVelocity);
+
+        //add a lookup somewhere to change collider gravity based on projectile type
+        if (type == ProjectileType.Void) {
+            Collider.Gravity = 0;
+        }
+    }
 
     public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
@@ -45,7 +52,7 @@ public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, Ve
         //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
         (bool isCollision, var _) = Collider.Update(dt, collisionManager);
         if (isCollision) {
-            if (ProjectileToPlant.ContainsKey(Type)) { //eventually change this to check for type of collider too
+            if (ProjectileUtil.ProjectileToPlant.ContainsKey(Type)) { //eventually change this to check for type of collider too
                 level.TrySow(Type, Funcs.GridCoords(Collider.Position));
             }
             Kill();
