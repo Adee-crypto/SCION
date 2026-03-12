@@ -8,201 +8,116 @@ using System;
 
 namespace Sprint2.Entities.Enemies;
 
-public enum State
+public enum EnemyState
 {
     None,
     Attack,
-    BreakBlock,
     Dead
 };
 
 public class Enemy : Extensions.IDrawable
 {
-    //Motion + Physics
-    private Vector2 direction;
-    public Collider Collider { get; }
-
     //States
-    private EnemyDef def;
-    private State state;
-    private EnemySprite sprite = new();
+    private EnemySprite sprite;
+    private EnemyState state;
+
+    //physcis
+    public Collider Collider { get; }
+    private Vector2 direction;
     private bool isGrounded;
-    private float PatrolMaxX;
-    private float PatrolMinX;
+    private float movementX;
+    private float attackCoolDownTimer;
+    private float attackDurationTimer;
 
-    // TEST FIELDS
-    private double shotCooldownLeft;
-    private const double shootCooldown = 0.2;
-    private bool firedAttackPrev;
-    private const float ProjectileSpeed = 100f;
-    // END TEST FIELDS
-
-    public Enemy(EnemyDef type, Vector2 spawnPos)
+    public Enemy(Vector2 initialPosistion)
     {
-        Collider = new(98f, 0.1f, spawnPos, Vector2.Zero, Consts.BlockWidth * Vector2.One);
-        def = type;
+        sprite = new EnemySprite();
+        Collider = new(98f, 1f, initialPosistion, Vector2.Zero, Consts.playerHitbox);
         Reset();
     }
 
     public void Reset()
     {
         sprite.Reset();
+        state = EnemyState.None;
         Collider.Reset();
-        // enemySprite = new();
         direction = new(1, 0);
         isGrounded = false;
-        PatrolMaxX = Collider.InitialPosisiton.X + def.PatrolDistance;
-        PatrolMinX = Collider.InitialPosisiton.X - def.PatrolDistance;
-        shotCooldownLeft = 0;
-        firedAttackPrev = false;
+        movementX = 0;
+        attackCoolDownTimer = Consts.enemyAttackCoolDown;
+        attackDurationTimer = 0;
     }
 
     public void Move(int direction)
     {
-        this.direction.X = direction;
-        Collider.SetVelocityX(def.Speed * direction);
+        Collider.SetVelocityX(Consts.enemySpeed * direction);
     }
 
     public void Jump()
     {
-        if (isGrounded)
+        if (isGrounded) Collider.SetVelocityY(Consts.playerJumpSpeed);
+    }
+
+    private void UpdatePatrol()
+    {
+        if (state != EnemyState.None) return;
+        if (Math.Abs(movementX) >= Consts.enemyPatrolDistance)
         {
-            isGrounded = false;
-            Collider.SetVelocityY(Consts.playerJumpSpeed);
+            movementX = 0;
+            direction *= -1;
         }
+        Move((int)direction.X);
     }
 
     public void Attack()
     {
-        state = State.Attack;
+        if (state != EnemyState.Dead) state = EnemyState.Attack;
     }
 
-    private void PatrolStep()
+    private void UpdateAttack(float dt, Player player, ProjectileManager projectileManager)
     {
-        int facing = (direction.X >= 0) ? 1 : -1;
-        Move(facing);
-
-        if (Collider.Position.X >= PatrolMaxX)
+        if (attackDurationTimer > 0)
         {
-            Collider.SetPositionX(PatrolMaxX);
-            Move(-1);
-        }
-        else if (Collider.Position.X <= PatrolMinX)
-        {
-            Collider.SetPositionX(PatrolMinX);
-            Move(1);
-        }
-        state = State.None;
-    }
-
-    private void AttackStep(Collider playerCollider, ProjectileManager projectileManager)
-    {
-        float distance = playerCollider.Center.X - Collider.Center.X;
-
-        int facing = (distance >= 0) ? 1 : -1;
-        direction.X = facing;
-
-        float range = def.AttackRange;
-        float difference = distance - facing * range;
-
-        const float buffer = 2f;
-
-        if (MathF.Abs(difference) > buffer)
-        {
-            firedAttackPrev = false;
-            state = State.None;
-            float newSpeed = def.Speed;
-            Collider.SetVelocityX(newSpeed * MathF.Sign(difference));
+            attackDurationTimer -= dt;
+            Collider.SetVelocityX(0);
             return;
         }
 
-        Collider.SetVelocityX(0);
-        Attack();
+        float distanceX = Collider.Center.X - player.Collider.Center.X;
+        float distanceY = Collider.Center.Y - player.Collider.Center.Y;
+        bool facing = direction.X > 0 && distanceX < 0 || direction.X < 0 && distanceX > 0;
 
-        if (!firedAttackPrev && shotCooldownLeft <= 0)
+        if (facing && attackCoolDownTimer >= Consts.enemyAttackCoolDown && Math.Abs(distanceX) <= Consts.enemyRangeAttackDistance && Math.Abs(distanceY) <= 4)
         {
-            FireShot(projectileManager, facing);
-            firedAttackPrev = true;
-            shotCooldownLeft = shootCooldown;
+            attackCoolDownTimer = 0;
+            attackDurationTimer = Consts.enemyAttackDuration;
+            Attack();
+            if (Math.Abs(distanceX) > Consts.enemyAttackDistance) FireShot(projectileManager);
+            else player.TakeDamage(1);
         }
     }
 
-    private void ReturnStep()
+    private void FireShot(ProjectileManager projectileManager)
     {
-        if (Collider.Position.X > PatrolMaxX)
-        {
-            Move(-1);
-        }
-        else if (Collider.Position.X < PatrolMinX)
-        {
-            Move(1);
-        }
-        else
-        {
-            Collider.SetPositionX(0);
-        }
-        state = State.None;
-    }
-
-    private bool CanSeePlayer(Player player)
-    {
-        float enemyX = Collider.Center.X;
-        float playerX = player.Collider.Center.X;
-
-        float distance = playerX - enemyX;
-
-        bool inFront = (direction.X >= 0 && distance > 0) || (direction.X < 0 && distance < 0);
-
-        bool inView = MathF.Abs(distance) <= def.ViewDistance;
-
-        return inFront && inView;
-    }
-
-    private void Decide(Player player, ProjectileManager projectileManager)
-    {
-        bool seesPlayer = CanSeePlayer(player);
-
-        if (seesPlayer)
-        {
-            AttackStep(player.Collider, projectileManager);
-            return;
-        }
-
-        firedAttackPrev = false;
-
-        if (Collider.Position.X > PatrolMaxX || Collider.Position.X < PatrolMinX)
-        {
-            ReturnStep();
-            return;
-        }
-
-        PatrolStep();
-    }
-
-    private void FireShot(ProjectileManager projectileManager, int facing)
-    {
-        Vector2 initialPosition = Collider.Center + new Vector2(facing * 8, 0);
-        Vector2 initialVelocity = new(facing * ProjectileSpeed, 0);
+        Vector2 initialPosition = Collider.Center + Consts.playerHitbox * new Vector2(direction.X * 0.5f, -0.25f);
+        Vector2 initialVelocity = new(direction.X * 100f, 0);
         projectileManager.Spawn(ProjectileType.Void, 5f, Consts.enemyProjectileGravity, Consts.projectileMass, initialPosition, initialVelocity, new(8, 8));
     }
 
     public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager)
     {
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        // FOR TESTING
-        shotCooldownLeft -= dt;
-        if (shotCooldownLeft < 0) shotCooldownLeft = 0;
-        // END TESTING
+        movementX += dt * Collider.Velocity.X;
+        isGrounded = Collider.Update(dt, collisionManager).isGrounded;
 
-        Decide(player, projectileManager);
-
-        Collider.Update(dt, collisionManager);
+        attackCoolDownTimer += dt;
+        UpdatePatrol();
+        UpdateAttack(dt, player, projectileManager);
 
         sprite.UpdateState(state, direction, Collider.Velocity, false);
         sprite.Update(gameTime);
 
-        Collider.SetVelocityX(0);
-        if (state != State.Dead) state = State.None;
+        if (state != EnemyState.Dead) state = EnemyState.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)

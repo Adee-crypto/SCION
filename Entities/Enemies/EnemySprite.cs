@@ -23,7 +23,6 @@ public class EnemySprite : Animated
 {
     private SpriteState currentState;
     public bool IsDamaged { get; set; }
-
     public EnemySprite() => Reset();
 
     public void Reset()
@@ -33,22 +32,22 @@ public class EnemySprite : Animated
         ResetFrameState(SourceRects.EnemySourceRects[SpriteState.RightFacing]);
     }
 
-    public void UpdateState(State enemyState, Vector2 direction, Vector2 velocity, bool isDamaged)
+    public void UpdateState(EnemyState enemyState, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
         SpriteState newState;
 
-        if (enemyState == State.None)
+        if (enemyState == EnemyState.None)
         {
             if (velocity.X != 0)
                 newState = direction.X == 1 ? SpriteState.RightRunning : SpriteState.LeftRunning;
             else
                 newState = direction.X == 1 ? SpriteState.RightFacing : SpriteState.LeftFacing;
         }
-        else if (enemyState == State.Dead)
+        else if (enemyState == EnemyState.Dead)
         {
             newState = SpriteState.Dead;
         }
-        else if (enemyState == State.Attack)
+        else if (enemyState == EnemyState.Attack)
         {
             newState = direction.X == 1 ? SpriteState.RightAttack : SpriteState.LeftAttack;
         }

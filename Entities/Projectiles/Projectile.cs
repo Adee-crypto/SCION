@@ -21,15 +21,15 @@ public enum ProjectileType
 
 public class Projectile(BaseLevel level, ProjectileType type, float lifeTime, float gravity, float mass, Vector2 initialPosition, Vector2 initialVelocity, Vector2 size) : IProjectile
 {
-public static Dictionary<ProjectileType, Func<BaseLevel, (int, int), Plant>> ProjectileToPlant { get; } = new() {
-    { ProjectileType.Grass, (c, r) => new GrassPlant(c, r) },
-    { ProjectileType.Apple, (c, r) => new ApplePlant(c, r) },
-    { ProjectileType.Pineapple, (c, r) => new PineapplePlant(c, r) },
-    { ProjectileType.Sandbox, (c, r) => new SandboxPlant(c, r) },
-};
+    public static Dictionary<ProjectileType, Func<BaseLevel, (int, int), Plant>> ProjectileToPlant { get; } = new() {
+        { ProjectileType.Grass, (c, r) => new GrassPlant(c, r) },
+        { ProjectileType.Apple, (c, r) => new ApplePlant(c, r) },
+        { ProjectileType.Pineapple, (c, r) => new PineapplePlant(c, r) },
+        { ProjectileType.Sandbox, (c, r) => new SandboxPlant(c, r) },
+    };
 
     private readonly BaseLevel level = level; //this is terrible for coupling but idk
-    private readonly ProjectileType type = type;
+    public ProjectileType Type { get; } = type;
     private ProjectileSprite Sprite { get; }= new(type, lifeTime);
     public Collider Collider { get; } = new(gravity, mass, initialPosition, initialVelocity, size);
     public bool IsDead { get; private set; }
@@ -44,8 +44,8 @@ public static Dictionary<ProjectileType, Func<BaseLevel, (int, int), Plant>> Pro
         //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
         (bool isCollision, var _) = Collider.Update(dt, collisionManager);
         if (isCollision) {
-            if (ProjectileToPlant.ContainsKey(type)) { //eventually change this to check for type of collider too
-                level.TrySow(type, Funcs.GridCoords(Collider.Position));
+            if (ProjectileToPlant.ContainsKey(Type)) { //eventually change this to check for type of collider too
+                level.TrySow(Type, Funcs.GridCoords(Collider.Position));
             }
             Kill();
         }

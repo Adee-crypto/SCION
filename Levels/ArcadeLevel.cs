@@ -10,8 +10,6 @@ namespace Sprint2.Levels;
 
 public sealed class ArcadeLevel : BaseLevel
 {
-    private readonly EnemyDef rangedEnemy;
-
     private double elapsedTime;
     private double nextSpawnTime;
     private int wave;
@@ -19,8 +17,6 @@ public sealed class ArcadeLevel : BaseLevel
 
     public ArcadeLevel(Player player) : base(player)
     {
-        rangedEnemy = new EnemyDef("Void Spawn", Assets.VoidspawnTexture, 100, 98, 96, 128, 96);
-
         Reset();
     }
 
@@ -37,7 +33,7 @@ public sealed class ArcadeLevel : BaseLevel
     {
         Platforms.Add(new Platform(this, BlockType.StoneBrick, 0, 25, 50, 1));
         Plants.Add(new PineapplePlant(this, (20, 20)));
-        EnemyManager.Spawn(rangedEnemy, Consts.BlockWidth * new Vector2(40, 24));
+        EnemyManager.Spawn(Consts.BlockWidth * new Vector2(40, 10));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime)
@@ -53,7 +49,7 @@ public sealed class ArcadeLevel : BaseLevel
             {
                 float spawnX = 30 + i * 2;
                 float spawnY = 24;
-                EnemyManager.Spawn(rangedEnemy, new Vector2(spawnX, spawnY));
+                EnemyManager.Spawn(new Vector2(spawnX, spawnY));
             }
 
             double interval = Math.Max(0.75, 2 - wave * 0.2);

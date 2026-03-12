@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Players;
+using Sprint2.Entities.Projectiles;
 using System.Collections.Generic;
 
 namespace Sprint2.Managers;
@@ -12,9 +13,9 @@ public class EnemyManager : Extensions.IDrawable
 
     public EnemyManager() { }
 
-    public void Spawn(EnemyDef type, Vector2 spawnPos)
+    public void Spawn(Vector2 initialPosition)
     {
-        enemies.Add(new(type, spawnPos));
+        enemies.Add(new(initialPosition));
     }
 
     public void Reset()

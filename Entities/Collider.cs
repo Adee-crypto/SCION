@@ -35,7 +35,9 @@ public class Collider(float gravity, float mass, Vector2 initialPosition, Vector
     }
 
     public bool Intersects(Collider other) {
-        return (Left < other.Right || Right > other.Left) && (Top < other.Bottom || Bottom > other.Top);
+        Rectangle r1 = new Rectangle((int)Position.X, (int)Position.Y, (int)size.X, (int)size.Y);
+        Rectangle r2 = new Rectangle((int)other.Position.X, (int)other.Position.Y, (int)other.Size.X, (int)other.Size.Y);
+        return r1.Intersects(r2);
     }
 
     public void SetPositionX(float x) => Position = new(x, Position.Y);

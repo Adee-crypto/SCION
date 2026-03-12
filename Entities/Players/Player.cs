@@ -72,6 +72,11 @@ public class Player : IPlayer
         for (int i = 0; i < 5; i++) GetRandomSeed(); //prob change this
     }
 
+    public void TakeDamage(int damage) // could define damage
+    {
+        health -= damage;
+    }
+
     public void Move(int direction)
     {
         if (isGrounded || this.direction.X != direction)

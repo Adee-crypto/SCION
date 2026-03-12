@@ -9,15 +9,12 @@ namespace Sprint2.Levels;
 public sealed class StoryLevel : BaseLevel
 {
     private readonly StoryLevelDef def;
-    private readonly EnemyDef rangedEnemy;
 
     public StoryLevel(Player player, StoryLevelDef def) : base(player)
     {
         this.def = def;
         player.Collider.InitialPosisiton = def.PlayerSpawnPos;
         player.Collider.SetPosition(def.PlayerSpawnPos);
-        rangedEnemy = new EnemyDef("Void Spawn", Assets.VoidspawnTexture, 100, 98, 96, 128, 96);
-
         Reset();
     }
 
@@ -27,7 +24,7 @@ public sealed class StoryLevel : BaseLevel
             Platforms.Add(platform(this));
         }
         Plants.Add(new ApplePlant(this, (20, 20)));
-        EnemyManager.Spawn(rangedEnemy, Consts.BlockWidth * new Vector2(40, 24));
+        EnemyManager.Spawn(Consts.BlockWidth * new Vector2(40, 24));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime)

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
+using Sprint2.Entities.Projectiles;
 using Sprint2.Managers;
 
 namespace Sprint2.Extensions;
@@ -66,7 +67,9 @@ public interface IAim
 
 public interface IProjectile : IDrawable, IUpdatableObject, IPhysicsObject
 {
+    ProjectileType Type { get; }
     bool IsDead { get; }
+    void Kill();
 }
 
 public interface IResizableScreen

@@ -8,6 +8,7 @@ using Sprint2.Extensions;
 using Sprint2.Levels;
 using Sprint2.Util;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Sprint2.Managers;
 
@@ -37,11 +38,10 @@ public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDra
             if (direction.LengthSquared() > 0.0001f)
             {
                 direction.Normalize();
-                Vector2 initialPosition = playerCollider.Center + direction * 12f;
+                Vector2 initialPosition = playerCollider.Center + Consts.playerHitbox * new Vector2(direction.X * 0.5f, -0.25f);
                 Vector2 initialVelocity = direction * 300f;
                 Projectile projectile = new(level, player.ThrowSeed(), 5f, Consts.playerProjectileGravity, Consts.projectileMass, initialPosition, initialVelocity, new(8, 8));
                 projectiles.Add(projectile);
-                //knockback
                 player.Collider.Momentum -= projectile.Collider.Momentum;
             }
         }
@@ -49,6 +49,13 @@ public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDra
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
             projectiles[i].Update(gameTime, collisionManager);
+
+            if (projectiles[i] is Projectile p && !p.IsDead && p.Type == ProjectileType.Void && p.Collider.Intersects(playerCollider))
+            {
+                player.TakeDamage(1);
+                p.Kill();
+            }
+
             if (projectiles[i].IsDead) projectiles.RemoveAt(i);
         }
     }

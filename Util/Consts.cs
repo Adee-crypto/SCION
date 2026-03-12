@@ -15,6 +15,14 @@ public static class Consts
     public const float playerGravity = 980f;
     public const float playerMass = 1f;
 
+    //enemy
+    public const float enemyPatrolDistance = 128f;
+    public const float enemySpeed = 100f;
+    public const float enemyAttackDistance = 16f;
+    public const float enemyRangeAttackDistance = 64f;
+    public const float enemyAttackCoolDown = 0.5f;
+    public const float enemyAttackDuration = 0.1f;
+
     //projectiles
     public const float enemyProjectileGravity = 0f;
     public const float playerProjectileGravity = 98f;
