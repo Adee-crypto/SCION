@@ -62,7 +62,7 @@ public abstract class BaseLevel : ILevel
 
     protected virtual void UpdateLevelLogic(GameTime gameTime) { }
 
-    public void TrySow(ProjectileType type, (int, int) coords) {
+    public void TrySow(ProjectileType type, (int, int) coords) { //this is mildly silly
         var (x, y) = coords;
         int leftRightRand = Funcs.RandInt(0, 2)*2-1;
         foreach (var pos in new[]{(x, y-1), (x+leftRightRand, y), (x-leftRightRand, y), (x,y+1)}) {

@@ -46,7 +46,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
     }
 
     public bool Intersects(Collider other) {
-        return (Left < other.Right || Right > other.Left) && (Top < other.Bottom || Bottom > other.Top);
+        return (2 * Math.Abs(Center.X - other.Center.X) < (Size.X + other.Size.X)) && (2 * Math.Abs(Center.Y - other.Center.Y) < (Size.Y + other.Size.Y));
     }
 
     public void SetPositionX(float x) => Position = new(x, Position.Y);
