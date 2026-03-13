@@ -1,6 +1,6 @@
-﻿# Project Starseed Pilgrim
+﻿# Scion Scavenger
 
-A 2D atmospheric platformer built with **C#** and the **MonoGame** framework. Inspired by the growth mechanics of *Starseed Pilgrim*, this project features a world where the terrain is alive, growing, and reacting to the player.
+A 2D platformer built with **C#** and the **MonoGame** framework. Inspired by *Starseed Pilgrim*, this project features a world where the terrain is alive, growing, and reacting to the player.
 
 ---
 
