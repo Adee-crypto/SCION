@@ -26,7 +26,7 @@ public static class Consts
     public const float breakDuration = 0.5f;
     public const float playerFrameTime = 0.2f;
 
-    public const float enemyAttackCoolDown = 0.5f;
+    public const float enemyAttackCoolDown = 1f;
     public const float enemyAttackDuration = 0.1f;
 
     //distances

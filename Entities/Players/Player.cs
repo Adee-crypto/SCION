@@ -74,6 +74,7 @@ public class Player : IPlayer
 
     public void TakeDamage(int damage) // could define damage
     {
+        IsDamaged = true;
         health -= damage;
     }
 
@@ -150,7 +151,7 @@ public class Player : IPlayer
         if (playerState == State.Dead) return;
 
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        isGrounded = Collider.Update(dt, collisionManager).isGrounded;
+        isGrounded = Collider.UpdateMovement(dt, collisionManager).isGrounded;
         UpdateBreakBlock(dt);
         UpdateHealth(IsDamaged, dt);
 
@@ -158,12 +159,8 @@ public class Player : IPlayer
         playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
         playerSprite.Update(gameTime);
 
-        //this physics should be moved/dealt with in Collider or CollisionManager directly
-        //Also these should be changed to be based off dt
-        //ALSO from player feedback, change it so there's very high ground friction (not infinite friction like we have now)
-        if (isGrounded) Collider.SetVelocityX(0);
-        else Collider.SetVelocityX(Collider.Velocity.X*0.97f);
-        
+        Collider.UpdatePlayerVelocity(isGrounded);
+        IsDamaged = false;
         if (playerState != State.Dead) playerState = State.None;
     }
 

@@ -40,9 +40,15 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
         Velocity = Vector2.Zero;
     }
 
-    public (bool isCollision, bool isGrounded) Update(float dt, CollisionManager collisionManager) {
+    public (bool isCollision, bool isGrounded) UpdateMovement(float dt, CollisionManager collisionManager) {
         SetVelocityY(Velocity.Y + Gravity * dt);
         return collisionManager.ManageCollision(this, Velocity * dt); //maybe change this to return *type* of other collider too
+    }
+
+    public void UpdatePlayerVelocity(bool isGrounded)
+    {
+        if (isGrounded) SetVelocityX(0);
+        else SetVelocityX(Velocity.X * 0.97f);
     }
 
     public bool Intersects(Collider other) {

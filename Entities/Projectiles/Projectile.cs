@@ -50,7 +50,7 @@ public class Projectile : IProjectile
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
-        (bool isCollision, var _) = Collider.Update(dt, collisionManager);
+        (bool isCollision, var _) = Collider.UpdateMovement(dt, collisionManager);
         if (isCollision) {
             if (ProjectileUtil.ProjectileToPlant.ContainsKey(Type)) { //eventually change this to check for type of collider too
                 level.TrySow(Type, Funcs.GridCoords(Collider.Position));

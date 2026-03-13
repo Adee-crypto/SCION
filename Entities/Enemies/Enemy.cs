@@ -18,7 +18,7 @@ public enum EnemyState
 public class Enemy : Extensions.IDrawable
 {
     //States
-    private EnemySprite sprite;
+    private EnemySprite enemySprite;
     private EnemyState state;
 
     //physcis
@@ -31,14 +31,14 @@ public class Enemy : Extensions.IDrawable
 
     public Enemy(Vector2 initialPosistion)
     {
-        sprite = new EnemySprite();
+        enemySprite = new EnemySprite();
         Collider = new(initialPosistion) {Size=Consts.playerHitbox};
         Reset();
     }
 
     public void Reset()
     {
-        sprite.Reset();
+        enemySprite.Reset();
         state = EnemyState.None;
         Collider.Reset();
         direction = new(1, 0);
@@ -108,20 +108,20 @@ public class Enemy : Extensions.IDrawable
     {
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
         movementX += dt * Collider.Velocity.X;
-        isGrounded = Collider.Update(dt, collisionManager).isGrounded;
+        isGrounded = Collider.UpdateMovement(dt, collisionManager).isGrounded;
 
         attackCoolDownTimer += dt;
         UpdatePatrol();
         UpdateAttack(dt, player, projectileManager);
 
-        sprite.UpdateState(state, direction, Collider.Velocity, false);
-        sprite.Update(gameTime);
+        enemySprite.UpdateState(state, direction, Collider.Velocity, false);
+        enemySprite.Update(gameTime);
 
         if (state != EnemyState.Dead) state = EnemyState.None;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        sprite.Draw(spriteBatch, Collider.Position);
+        enemySprite.Draw(spriteBatch, Collider.Position);
     }
 }
