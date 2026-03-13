@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Entities.Players;
 using Sprint2.Extensions;
+using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.UI;
 using Sprint2.Util;
@@ -131,6 +132,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayer
 
     private void StartNewGame()
     {
+        StoryLevelRegistry.LoadLevelData();
         currentLevelIndex = 0;
         StartStoryLevel(currentLevelIndex);
     }
