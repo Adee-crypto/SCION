@@ -93,7 +93,11 @@ public class Enemy : Extensions.IDrawable
             attackDurationTimer = Consts.enemyAttackDuration;
             Attack();
             if (Math.Abs(distanceX) > Consts.enemyAttackDistance) FireShot(projectileManager);
-            else player.TakeDamage(1);
+            else
+            {
+                Collider.KnockBack(player.Collider);   
+                player.TakeDamage(1);
+            }
         }
     }
 

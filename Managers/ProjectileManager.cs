@@ -52,6 +52,7 @@ public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDra
 
             if (projectiles[i] is Projectile p && !p.IsDead && p.Type == ProjectileType.Void && p.Collider.Intersects(playerCollider))
             {
+                p.Collider.KnockBack(playerCollider);
                 player.TakeDamage(1);
                 p.Kill();
             }

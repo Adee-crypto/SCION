@@ -55,6 +55,12 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
         return (2 * Math.Abs(Center.X - other.Center.X) < (Size.X + other.Size.X)) && (2 * Math.Abs(Center.Y - other.Center.Y) < (Size.Y + other.Size.Y));
     }
 
+    public void KnockBack(Collider other)
+    {
+        int direction = Velocity.X < 0 ? -1 : 1;
+        other.Momentum += new Vector2(direction * 100f, -100f);
+    }
+
     public void SetPositionX(float x) => Position = new(x, Position.Y);
     public void SetPositionY(float y) => Position = new(Position.X, y);
     public void SetPosition(Vector2 newPosition) => Position = newPosition;
