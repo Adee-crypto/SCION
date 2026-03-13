@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,31 +10,38 @@ namespace Sprint2.Entities.Plants;
 
 public enum Species
 {
-    grass, apple, pineapple, sandbox
+    Grass, Apple, Pineapple, Sandbox
 };
 
 public abstract class Plant
 {
-    //these are getting out of hand
+    //there are WAY too many of these
     public static Dictionary<Species, BlockType> SpeciesToBlock {get;} = new() {
-        {Species.grass, BlockType.Grass},
-        {Species.apple, BlockType.Apple},
-        {Species.pineapple, BlockType.Pineapple},
-        {Species.sandbox, BlockType.Sandbox},
+        {Species.Grass, BlockType.Grass},
+        {Species.Apple, BlockType.Apple},
+        {Species.Pineapple, BlockType.Pineapple},
+        {Species.Sandbox, BlockType.Sandbox},
     };
 
     public static Dictionary<BlockType, Species> BlockToSpecies {get;} = new() {
-        {BlockType.Grass, Species.grass},
-        {BlockType.Apple, Species.apple},
-        {BlockType.Pineapple, Species.pineapple},
-        {BlockType.Sandbox, Species.sandbox},
+        {BlockType.Grass, Species.Grass},
+        {BlockType.Apple, Species.Apple},
+        {BlockType.Pineapple, Species.Pineapple},
+        {BlockType.Sandbox, Species.Sandbox},
     };
 
     public static Dictionary<Species, ProjectileType> SpeciesToProjectile {get;} = new() {
-        {Species.grass, ProjectileType.Grass},
-        {Species.apple, ProjectileType.Apple},
-        {Species.pineapple, ProjectileType.Pineapple},
-        {Species.sandbox, ProjectileType.Sandbox},
+        {Species.Grass, ProjectileType.Grass},
+        {Species.Apple, ProjectileType.Apple},
+        {Species.Pineapple, ProjectileType.Pineapple},
+        {Species.Sandbox, ProjectileType.Sandbox},
+    };
+
+    public static Dictionary<Species, Func<BaseLevel, (int, int), Plant>> SpeciesToPlantInit { get; } = new() {
+        { Species.Grass, (c, r) => new GrassPlant(c, r) },
+        { Species.Apple, (c, r) => new ApplePlant(c, r) },
+        { Species.Pineapple, (c, r) => new PineapplePlant(c, r) },
+        { Species.Sandbox, (c, r) => new SandboxPlant(c, r) },
     };
 
     protected Species Species { get; }

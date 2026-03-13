@@ -6,7 +6,7 @@ namespace Sprint2.Entities.Plants;
 
 public class PineapplePlant : Plant
 {
-    public PineapplePlant(BaseLevel level, (int, int) root) : base(level, Species.pineapple, root) {
+    public PineapplePlant(BaseLevel level, (int, int) root) : base(level, Species.Pineapple, root) {
         MaxCells = Funcs.RandInt(7, 40);
     }
     

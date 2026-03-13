@@ -23,7 +23,9 @@ public sealed class StoryLevel : BaseLevel
         foreach (var platform in def.Platforms) {
             Platforms.Add(platform(this));
         }
-        Plants.Add(new ApplePlant(this, (20, 20)));
+        foreach (var plant in def.Plants) {
+            Plants.Add(plant(this));
+        }
         EnemyManager.Spawn(Consts.BlockWidth * new Vector2(40, 24));
     }
 

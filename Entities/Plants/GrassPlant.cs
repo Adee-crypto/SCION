@@ -4,7 +4,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class GrassPlant(BaseLevel level, (int, int) root) : Plant(level, Species.grass, root)
+public class GrassPlant(BaseLevel level, (int, int) root) : Plant(level, Species.Grass, root)
 {
     private new readonly int MaxCells = Funcs.RandInt(5, 8);
 

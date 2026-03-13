@@ -8,9 +8,9 @@ public static class PlantUtil
 
     public static Dictionary<Species, float> SpeciesGrowTimes { get; } = new()
     {
-        {Species.grass, 0.1f },
-        {Species.apple, 0.2f },
-        {Species.pineapple, 0.4f },
-        {Species.sandbox, 0.2f }, //6 ticks until detonation
+        {Species.Grass, 0.1f },
+        {Species.Apple, 0.2f },
+        {Species.Pineapple, 0.4f },
+        {Species.Sandbox, 0.2f }, //6 ticks until detonation
     };
 }

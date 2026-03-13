@@ -1,9 +1,12 @@
 0
 25, 19
 Dirt, 23, 20, 5, 5, CrackedStoneBrick, 30, 25, 20, 1
+Grass, 23, 19, Grass, 28, 22, Grass, 29, 25, Grass, 30, 24
 1
 5, 10
-CrackedStoneBrick, 0, 20, 50, 1, Stone, 10, 15, 8, 1
+CrackedStoneBrick, 0, 25, 50, 1, Stone, 10, 15, 8, 1
+Apple, 0, 24, Apple, 10, 24, Pineapple, 30, 24, Pineapple, 34, 24, Pineapple, 39, 24
 2
 5, 10
-CrackedStoneBrick, 2, 20, 50, 1, Stone, 15, 15, 8, 1
+CrackedStoneBrick, 2, 25, 50, 1, Stone, 15, 15, 8, 1
+Sandbox, 0, 24, Sandbox, 10, 24, Sandbox, 20, 24, Sandbox, 30, 24, Sandbox, 40, 24, Sandbox, 50, 24

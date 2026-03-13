@@ -6,7 +6,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class SandboxPlant(BaseLevel level, (int, int) root) : Plant(level, Species.sandbox, root)
+public class SandboxPlant(BaseLevel level, (int, int) root) : Plant(level, Species.Sandbox, root)
 {
     private (int x, int y) root = root;
     private bool detonated;

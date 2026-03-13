@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
+using Sprint2.Entities.Plants;
 
 namespace Sprint2.Levels;
 
@@ -17,7 +18,7 @@ public static class StoryLevelRegistry
         string filePath = Path.Combine(baseDir, "Content", "StoryLevelData.csv");
         string[] lines = File.ReadAllLines(filePath);
 
-        for (int i = 0; i < lines.Length; i += 3) {
+        for (int i = 0; i < lines.Length; i += 4) {
 
             int index = int.Parse(lines[i].Trim(), CultureInfo.InvariantCulture);
 
@@ -27,13 +28,11 @@ public static class StoryLevelRegistry
                 float.Parse(spawnParts[1], CultureInfo.InvariantCulture)
             ) * Consts.BlockWidth;
 
+
             List<Func<BaseLevel, Platform>> platforms = [];
             string[] platformParts = lines[i + 2].Split(',');
-
-            // Step through the array 5 items at a time
             for (int p = 0; p < platformParts.Length; p += 5)
             {
-                // Capture local variables for the lambda closure
                 string typeStr = platformParts[p].Trim();
                 int x = int.Parse(platformParts[p + 1], CultureInfo.InvariantCulture);
                 int y = int.Parse(platformParts[p + 2], CultureInfo.InvariantCulture);
@@ -46,10 +45,31 @@ public static class StoryLevelRegistry
                 }
             }
 
+            List<Func<BaseLevel, Plant>> plants = [];
+            string[] plantParts = lines[i + 3].Split(',');
+            for (int p = 0; p < plantParts.Length; p += 3)
+            {
+                string typeStr = plantParts[p].Trim();
+                int x = int.Parse(plantParts[p + 1], CultureInfo.InvariantCulture);
+                int y = int.Parse(plantParts[p + 2], CultureInfo.InvariantCulture);
+
+                if (Enum.TryParse(typeStr, out Species species))
+                {
+                    plants.Add((l) => species switch { //TODO fix this with a dict from Plant.cs
+                        Species.Grass => new GrassPlant(l, (x, y)),
+                        Species.Apple => new ApplePlant(l, (x, y)),
+                        Species.Pineapple => new PineapplePlant(l, (x, y)),
+                        Species.Sandbox => new SandboxPlant(l, (x, y)),
+                        _ => throw new ArgumentException($"Unknown species: {species}")
+                    });
+                }
+            }
+
             Levels.Add(new StoryLevelDef {
                 Index = index,
                 PlayerSpawnPos = spawnPos,
-                Platforms = platforms
+                Platforms = platforms,
+                Plants = plants
             });
         }
         // ((l) => new(l, BlockType.Dirt, 23, 20, 5, 5)),
