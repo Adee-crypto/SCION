@@ -1,3 +1,4 @@
+<<<<<<< HEAD:CodeReviews/Sprint3Reviews/Sean/Maintainability2.txt
 Author: Sean Lipton
 Date: 2026-03-13
 Sprint: 3
@@ -6,3 +7,17 @@ Author of reviewed file:
 Time taken for review: 5 minutes
 
 good vs bad 
+=======
+Author: Sean Lipton
+Date: 2026-03-13
+Sprint: 3
+Reviewed file: ScreenArcade.cs
+Author of reviewed file: Justin Imber, Benny Jiang
+Time taken for review: 5 minutes
+
+There are many fields right now. Some of them seem like they should be combined into lists or even their own manager.
+For example, buttonSize and Spacer feel like they should be declared along with the menus in like "MenuManager" or something.
+This is better for maintainability, such as for adding submenus (e.g. a specific SFX tab or Keybinding tab within Settings).
+
+The casework in Update with the switch statement seems good, I don't imagine we'll need many more states than that.
+>>>>>>> 41e84b5 (+ 2 Sean maintainability reviews):CodeReviews/Sprint3/Sean/Maintainability2.txt
