@@ -3,7 +3,7 @@ Date: 2026-03-13
 Sprint: 3
 Reviewed file: Enemy.cs
 Author of reviewed file: Justin, Benny
-Time taken for review: 5 minutes
+Time taken for review: 5 minutes 
 
 The separation of patrol and attack logic into UpdatePatrol and UpdateAttack methods makes the overall Update flow easy to scan at a glance.
 

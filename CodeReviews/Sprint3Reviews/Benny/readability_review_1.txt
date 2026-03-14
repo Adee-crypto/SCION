@@ -3,7 +3,7 @@ Date: 2026-03-13
 Sprint: 3
 Reviewed file: Collider.cs
 Author of reviewed file: Sean, Benny
-Time taken for review: 5 minutes
+Time taken for review: 5 minutes 
 
 The grouping of computed properties (Center, Left, Right, Top, Bottom, Angle) in one block is clean and easy to navigate — these are exactly the values a reader would expect to find on a collider class.
 

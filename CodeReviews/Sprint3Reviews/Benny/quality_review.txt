@@ -3,7 +3,7 @@ Date: 2026-03-13
 Sprint: 3
 Reviewed file: CollisionManager.cs
 Author of reviewed file: Sean, Benny
-Time taken for review: 10 minutes
+Time taken for review: 10 minutes 
 
 The use of a List<BlockList> with delegation methods like HasBlockAt and TryBreakBlockAt keeps the collision surface area narrow, meaning new block behaviors can be added to BlockList without touching the manager's core logic.
 
