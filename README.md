@@ -1,40 +1,36 @@
 ﻿# Scion Scavenger
 
-A 2D platformer built with **C#** and the **MonoGame** framework. Inspired by *Starseed Pilgrim*, this project features a world where the terrain is alive, growing, and reacting to the player.
+Will growth outpace decay?
 
----
+## Overview
+Scion Scavenger is a platformer where the environment is constantly built through organic growth and eroded by the Void. Rather than navigating a static map, players interact with different plant species that spread across the screen in ways unique to their species. The goal is to halt the world's consumption by an unknown enemy.
 
-## 🌌 Overview
-Project Starseed is a platformer where the environment is built through organic growth. Rather than navigating a static map, players interact with different plant species that spread across the screen using a cellular expansion algorithm. This project serves as a foundation for a game where "gardening" is the primary way to navigate and solve puzzles.
-
-## 🛠️ Key Features
+## Key Features
 * **Cellular Growth Engine:** A custom `Plant` system where cells (buds and stems) expand based on randomized neighbor logic.
-* **State-Driven Animation:** A robust `LinkSprite` class that manages 8 distinct animation states (Running, Falling, Attacking, etc.) with precise frame-timing.
+* **State-Driven Animation:** A robust `PlayerSprite` class that manages 8 distinct animation states (Running, Falling, Attacking, etc.) with precise frame-timing.
 * **Physics-Based Platforming:** Custom AABB collision detection handling gravity, ground detection, and momentum.
 * **Dynamic UI System:** A scalable `PauseMenu` featuring interactive, hover-aware buttons and a screen-dimming overlay.
-* **Command Pattern Controllers:** Separated Keyboard and Mouse logic that distinguishes between "held" and "tapped" inputs for a responsive feel.
+* **Command Pattern Controllers:** Separated Keyboard and Mouse logic that distinguishes "held" and "tapped" inputs.
 
 
 
-## 🎮 Controls
+## Controls
 | Action | Key / Input |
 | :--- | :--- |
 | **Move Left / Right** | `A` / `D` or `Left` / `Right` Arrow |
 | **Jump** | `W` or `Up` Arrow |
-| **Dig** (only on stem) | `S` or `Down` Arrow |
-| **Attack** | `Z` or `N` |
+| **Dig** | `S` or `Down` Arrow |
 | **Shoot seed** | `Left Click` |
 | **Pause Game** | `Esc` |
-| **Quit Game** | `Q` |
-| **Menu Interaction** | `Mouse Hover` & `Left Click` |
 | **Restart Level** | `R` |
-| **Debug: Force Growth** | `1` (Hold) |
-| **Debug: Cycle Plant Type** | `2` (Tap) |
-| **Debug: Cycle Enemy Type** | `P` (Tap) & `O` (Tap) |
-| **Debug: Damage Player** | `E` (Hold) |
+| **Quit Game** | `Q` |
+| **Menu Navigation** | `Mouse Hover` & `Left Click` |
+| **Debug: Cycle Story Level** | `.` (Tap) |
+| **Debug: Damage Player** | `E` (Tap) |
+| **(deprecated) Debug: Display Attack State** | `Z` or `N` |
 
 
-## 🚀 Getting Started
+## How to Install
 1.  **Prerequisites:** Install the [MonoGame Framework](https://www.monogame.net/).
 2.  **Clone the Repository:**
     ```bash
@@ -44,14 +40,28 @@ Project Starseed is a platformer where the environment is built through organic 
 
 ---
 
-## 📝 Development Status
-**Current Version:** Sprint 2 (Prototyping)
-* ✅ Basic Player Movement & Physics
-* ✅ Animation State Machine
-* ✅ Multi-species Plant Growth Logic
-* ✅ Functional Pause & Reset UI
-* 🔄 *In Progress: Block breaking and seed-planting mechanics.*
+## Development Status
+**Current Version:** Sprint 3
+* ✅ Player controls
+* ✅ Enemy AI
+* ✅ Newtonian momentum-based collisions
+* ✅ Enemy projectiles damage player
+* ✅ Player projectiles plant plants
+* ✅ Animation state machines
+* ✅ Various randomized plant species
+* ✅ UI Buttons: Pause, Reset, Game mode, settings (WIP), save & load (WIP)
+* 🔄 *In Progress: Player projectiles damage enemies.*
+* 🔄 *In Progress: Randomly generated level biomes.*
+* 🔄 *In Progress: More species.*
+* 🔄 *In Progress: Customize projectile physics (different weights, air resistances).*
+* 🔄 *In Progress: Customize static physics (sticky plants, bouncy plants, hard plants).*
+* 🔄 *In Progress: SFX.*
+* 🔄 *In Progress: Polished sprites.*
+* 🔄 *In Progress: Arcade mode (+ camera movement).*
+* 🔄 *In Progress: Void growth mechanics.*
+* 🔄 *In Progress: Fix minor collision bugs (plants being shot through platforms, player being teleported left when a plant grows into them).*
 
 ---
 
-*Developed using C# and MonoGame.*# CSE3902Sprint2
+*Developed using C# and MonoGame.*
+Inspired by *Starseed Pilgrim*
