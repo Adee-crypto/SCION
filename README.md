@@ -39,7 +39,6 @@ Scion Scavenger is a platformer where the environment is constantly built throug
 3.  **Open & Build:** Open the project in Visual Studio, restore NuGet packages, and press **F5** to run.
 
 ---
-
 ## Development Status
 **Current Version:** Sprint 3
 * ✅ Player controls
@@ -61,7 +60,8 @@ Scion Scavenger is a platformer where the environment is constantly built throug
 * 🔄 *In Progress: Void growth mechanics.*
 * 🔄 *In Progress: Fix minor collision bugs (plants being shot through platforms, player being teleported left when a plant grows into them).*
 
----
+Misc devlepment notes:
+* Instead of using specific task-tracking software, due to our small team, we use a Google Doc and strikethrough tasks as we complete them. We communicate heavily over Discord so we don't get in each other's way and can take on any role when someone's stuck
 
 *Developed using C# and MonoGame.*
 Inspired by *Starseed Pilgrim*
