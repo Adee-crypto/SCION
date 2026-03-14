@@ -1,13 +1,3 @@
-<<<<<<< HEAD:CodeReviews/Sprint3Reviews/Sean/Maintainability2.txt
-Author: Sean Lipton
-Date: 2026-03-13
-Sprint: 3
-Reviewed file: 
-Author of reviewed file: 
-Time taken for review: 5 minutes
-
-good vs bad 
-=======
 Author: Sean Lipton
 Date: 2026-03-13
 Sprint: 3
@@ -20,4 +10,3 @@ For example, buttonSize and Spacer feel like they should be declared along with 
 This is better for maintainability, such as for adding submenus (e.g. a specific SFX tab or Keybinding tab within Settings).
 
 The casework in Update with the switch statement seems good, I don't imagine we'll need many more states than that.
->>>>>>> 41e84b5 (+ 2 Sean maintainability reviews):CodeReviews/Sprint3/Sean/Maintainability2.txt
