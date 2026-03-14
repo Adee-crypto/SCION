@@ -1,0 +1,12 @@
+Author: Benny
+Date: 2026-03-13
+Sprint: 3
+Reviewed file: Collider.cs
+Author of reviewed file: Sean, Benny
+Time taken for review: 5 minutes
+
+The grouping of computed properties (Center, Left, Right, Top, Bottom, Angle) in one block is clean and easy to navigate — these are exactly the values a reader would expect to find on a collider class.
+
+The SetVelocityX/Y and SetPositionX/Y helper methods are a readable workaround for the immutability of Vector2, and their intent is immediately obvious.
+
+The magic numbers 100f and -100f in KnockBack, and 0.97f in UpdatePlayerVelocity, would be more readable as named constants in Consts, both to convey their meaning and to make them easier to tune later.

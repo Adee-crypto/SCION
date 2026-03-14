@@ -31,6 +31,9 @@
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </None>
 </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CodeReviews\Sprint3Reviews\Benny\" />
+  </ItemGroup>
   <PropertyGroup>
     <AnalysisMode>Recommended</AnalysisMode>
   </PropertyGroup>
