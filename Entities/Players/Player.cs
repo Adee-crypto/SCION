@@ -80,15 +80,18 @@ public class Player : IPlayer
 
     public void Move(int direction)
     {
-        if (isGrounded || this.direction.X != direction)
-        {
-            this.direction.X = direction;
-            Collider.SetVelocityX(Consts.playerXForce * direction);
-        }
-        else if (Math.Abs(Collider.Velocity.X) < Consts.playerXForce)
-        {
-            Collider.SetVelocityX(Consts.playerXForce * direction);
-        }
+        Collider.SetVelocityX(Collider.Velocity.X + Consts.playerXForce * direction);
+        Collider.SetVelocityX(Consts.playerXForce * direction);
+        //previous direct velocity control
+        // if (isGrounded || this.direction.X != direction)
+        // {
+        //     this.direction.X = direction;
+        //     Collider.SetVelocityX(Consts.playerXForce * direction);
+        // }
+        // else if (Math.Abs(Collider.Velocity.X) < Consts.playerXForce)
+        // {
+        //     Collider.SetVelocityX(Consts.playerXForce * direction);
+        // }
     }
 
     public void Jump() {
@@ -158,7 +161,7 @@ public class Player : IPlayer
         aimer?.Update(Collider.Center, Mouse.GetState());
         playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
         playerSprite.Update(gameTime);
-
+        
         Collider.UpdatePlayerVelocity(isGrounded);
         IsDamaged = false;
         if (playerState != State.Dead) playerState = State.None;

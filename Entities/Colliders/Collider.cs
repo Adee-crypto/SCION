@@ -47,8 +47,18 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
 
     public void UpdatePlayerVelocity(bool isGrounded)
     {
-        if (isGrounded) SetVelocityX(0);
-        else SetVelocityX(Velocity.X * 0.97f);
+        if (isGrounded) {
+            //we'll see if we need to add V velocity friction
+            //constant kinetic friction force
+            if (Velocity.X < 0) {
+                SetVelocityX(Math.Max(Velocity.X-0.2f, 0f));
+            } else {
+                SetVelocityX(Math.Min(Velocity.X+0.2f, 0f));
+            }
+        } else {
+            System.Console.WriteLine("in the air presumably");
+            SetVelocity(Velocity * 0.95f);
+        }
     }
 
     public bool Intersects(Collider other) {

@@ -20,7 +20,7 @@ public static class Consts
     
     public const float enemyXForce = 100f;
 
-    public const float projectileMass = .2f; // could be different using dictionary with projectileType
+    public const float projectileMass = 0.5f; // could be different using dictionary with projectileType
     
     //timing
     public const float breakDuration = 0.5f;
