@@ -42,7 +42,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
 
     public (bool isCollision, bool isGrounded) UpdateMovement(float dt, CollisionManager collisionManager) {
         SetVelocityY(Velocity.Y + Gravity * dt);
-        return collisionManager.ManageCollision(this, Velocity * dt); //maybe change this to return *type* of other collider too
+        return collisionManager.ManageBlockCollision(this, Velocity * dt); //maybe change this to return *type* of other collider too
     }
 
     public void UpdatePlayerVelocity(bool isGrounded)
@@ -56,8 +56,8 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
                 SetVelocityX(Math.Min(Velocity.X+0.2f, 0f));
             }
         } else {
-            System.Console.WriteLine("in the air presumably");
-            SetVelocity(Velocity * 0.95f);
+            // System.Console.WriteLine("in the air presumably");
+            SetVelocity(Velocity * 0.97f);
         }
     }
 

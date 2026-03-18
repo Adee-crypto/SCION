@@ -32,7 +32,7 @@ public class Enemy : Extensions.IDrawable
     public Enemy(Vector2 initialPosistion)
     {
         enemySprite = new EnemySprite();
-        Collider = new(initialPosistion) {Size=Consts.playerHitbox};
+        Collider = new(initialPosistion, type:ColliderType.Enemy) {Size=Consts.playerHitbox};
         Reset();
     }
 

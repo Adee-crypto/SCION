@@ -38,7 +38,7 @@ public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDra
             if (direction.LengthSquared() > 0.0001f)
             {
                 direction.Normalize();
-                Vector2 initialPosition = playerCollider.Center + Consts.playerHitbox * new Vector2(direction.X * 0.5f, -0.25f);
+                Vector2 initialPosition = playerCollider.Center;// + Consts.playerHitbox * new Vector2(direction.X * 0.5f, -0.25f);
                 Vector2 initialVelocity = direction * 300f;
                 Projectile projectile = new(level, player.ThrowSeed(), 5f, initialPosition, initialVelocity);
                 projectiles.Add(projectile);

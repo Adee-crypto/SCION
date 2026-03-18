@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Entities.Colliders;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
@@ -23,7 +24,7 @@ public enum State
 public class Player : IPlayer
 {
     //Motion + Physics
-    public Collider Collider { get; } = new(Vector2.One * Consts.BlockWidth) {Mass=Consts.playerMass, Size=Consts.playerHitbox};
+    public Collider Collider { get; } = ColliderUtil.Presets[ColliderType.Player](new(), new());
     private Vector2 direction;
 
     //States
@@ -161,8 +162,8 @@ public class Player : IPlayer
         aimer?.Update(Collider.Center, Mouse.GetState());
         playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
         playerSprite.Update(gameTime);
-        
         Collider.UpdatePlayerVelocity(isGrounded);
+        // Console.WriteLine(Collider.Velocity + ", " + Collider.Position);
         IsDamaged = false;
         if (playerState != State.Dead) playerState = State.None;
     }
