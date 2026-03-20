@@ -81,25 +81,15 @@ public class Player : IPlayer
 
     public void Move(int direction)
     {
-        Collider.SetVelocityX(Collider.Velocity.X + Consts.playerXForce * direction);
-        Collider.SetVelocityX(Consts.playerXForce * direction);
-        //previous direct velocity control
-        // if (isGrounded || this.direction.X != direction)
-        // {
-        //     this.direction.X = direction;
-        //     Collider.SetVelocityX(Consts.playerXForce * direction);
-        // }
-        // else if (Math.Abs(Collider.Velocity.X) < Consts.playerXForce)
-        // {
-        //     Collider.SetVelocityX(Consts.playerXForce * direction);
-        // }
+        this.direction.X = direction;
+        Collider.SetVelocityX(Collider.Velocity.X + (isGrounded ? Consts.playerGroundXForce : Consts.playerAirXForce) * direction);
     }
 
-    public void Jump() {
+    public void TryJump() {
         if (isGrounded) Collider.SetVelocityY(Consts.playerYForce);
     }   
 
-    public void BreakBlock() {
+    public void TryBreakBlock() {
         if (isGrounded && Collider.Velocity.X == 0) playerState = State.BreakBlock;
     }
 
@@ -162,8 +152,8 @@ public class Player : IPlayer
         aimer?.Update(Collider.Center, Mouse.GetState());
         playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
         playerSprite.Update(gameTime);
-        Collider.UpdatePlayerVelocity(isGrounded);
-        // Console.WriteLine(Collider.Velocity + ", " + Collider.Position);
+        Collider.UpdatePlayerVelocity(isGrounded, dt);
+
         IsDamaged = false;
         if (playerState != State.Dead) playerState = State.None;
     }

@@ -1,11 +1,13 @@
 using Microsoft.Xna.Framework;
 using Sprint2.Entities;
+using Sprint2.Managers;
 using Sprint2.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
 using Sprint2.Entities.Plants;
+using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Levels;
 
@@ -29,7 +31,7 @@ public static class StoryLevelRegistry
             ) * Consts.BlockWidth;
 
 
-            List<Func<BaseLevel, Platform>> platforms = [];
+            List<(BlockType, int, int, int, int)> platforms = [];
             string[] platformParts = lines[i + 2].Split(',');
             for (int p = 0; p < platformParts.Length; p += 5)
             {
@@ -41,11 +43,11 @@ public static class StoryLevelRegistry
 
                 if (Enum.TryParse(typeStr, out BlockType bType))
                 {
-                    platforms.Add((l) => new Platform(l, bType, x, y, w, h));
+                    platforms.Add((bType, x, y, w, h));
                 }
             }
 
-            List<Func<BaseLevel, Plant>> plants = [];
+            List<Func<BlockManager, Plant>> plants = [];
             string[] plantParts = lines[i + 3].Split(',');
             for (int p = 0; p < plantParts.Length; p += 3)
             {
@@ -55,11 +57,11 @@ public static class StoryLevelRegistry
 
                 if (Enum.TryParse(typeStr, out Species species))
                 {
-                    plants.Add((l) => species switch { //TODO fix this with a dict from Plant.cs
-                        Species.Grass => new GrassPlant(l, (x, y)),
-                        Species.Apple => new ApplePlant(l, (x, y)),
-                        Species.Pineapple => new PineapplePlant(l, (x, y)),
-                        Species.Sandbox => new SandboxPlant(l, (x, y)),
+                    plants.Add((b) => species switch { //TODO fix this with a dict from Plant.cs
+                        Species.Grass => new GrassPlant(b, (x, y)),
+                        Species.Apple => new ApplePlant(b, (x, y)),
+                        Species.Pineapple => new PineapplePlant(b, (x, y)),
+                        Species.Sandbox => new SandboxPlant(b, (x, y)),
                         _ => throw new ArgumentException($"Unknown species: {species}")
                     });
                 }

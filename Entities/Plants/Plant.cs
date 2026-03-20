@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
 using Sprint2.Levels;
+using Sprint2.Managers;
+using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Entities.Plants;
 
@@ -37,32 +39,32 @@ public abstract class Plant
         {Species.Sandbox, ProjectileType.Sandbox},
     };
 
-    public static Dictionary<Species, Func<BaseLevel, (int, int), Plant>> SpeciesToPlantInit { get; } = new() {
-        { Species.Grass, (c, r) => new GrassPlant(c, r) },
-        { Species.Apple, (c, r) => new ApplePlant(c, r) },
-        { Species.Pineapple, (c, r) => new PineapplePlant(c, r) },
-        { Species.Sandbox, (c, r) => new SandboxPlant(c, r) },
+    public static Dictionary<Species, Func<BlockManager, (int, int), Plant>> SpeciesToPlantInit { get; } = new() {
+        { Species.Grass, (b, r) => new GrassPlant(b, r) },
+        { Species.Apple, (b, r) => new ApplePlant(b, r) },
+        { Species.Pineapple, (b, r) => new PineapplePlant(b, r) },
+        { Species.Sandbox, (b, r) => new SandboxPlant(b, r) },
     };
 
     protected Species Species { get; }
     protected (int x, int y) Root {get;}
-    protected BlockList BudCells { get; set; } = new();
-    protected BlockList StemCells { get; } = new();
+    protected HashSet<(int x, int y)> BudCells { get; set; } = [];
+    protected HashSet<(int x, int y)> StemCells { get; } = [];
     protected float Age { get; set; }
     protected int CellsGrown {get; set;}
     protected int MaxCells {get; set;} = int.MaxValue;
     protected Ticker Ticker { get; }
-    private readonly BaseLevel level; //terrible for coupling, fix somehow
+    private readonly BlockManager blockManager;
 
-    public Plant(BaseLevel level, Species species, (int, int) root)
+    /// <summary>root MUST be free in blockManager</summary>
+    public Plant(BlockManager blockManager, (int, int) root, Species species)
     {
-        this.level = level;
+        this.blockManager = blockManager;
         Species = species;
         Root = root;
         Ticker = new(PlantUtil.SpeciesGrowTimes[species]);
-        BudCells.Add(root, SpeciesToBlock[species]);
-        level.AddBlockList(BudCells);
-        level.AddBlockList(StemCells);
+        BudCells.Add(root);
+        blockManager.Add(root, SpeciesToBlock[species]);
     }
 
     public abstract void Update(GameTime gameTime);
@@ -71,18 +73,13 @@ public abstract class Plant
     protected abstract void Grow();
 
     //returns if it can grow into newCellPos, then grows there
-    protected bool TryGrow(BlockList newGrowth, (int, int) newCellPos) {
-        if (!level.HasBlockAt(newCellPos) && CellsGrown < MaxCells) {
-            newGrowth.Add(newCellPos, SpeciesToBlock[Species]);
+    protected bool TryGrow(HashSet<(int, int)> newGrowth, (int, int) newCellPos) {
+        if (!blockManager.HasBlockAt(newCellPos) && CellsGrown < MaxCells) {
+            newGrowth.Add(newCellPos);
+            blockManager.Add(newCellPos, SpeciesToBlock[Species]);
             CellsGrown++;
             return true;
         }
         return false;
-    }
-
-    public void Draw(SpriteBatch spriteBatch)
-    {
-        StemCells.Draw(spriteBatch, Color.Gray);
-        BudCells.Draw(spriteBatch);
     }
 }

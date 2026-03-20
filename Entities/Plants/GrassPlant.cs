@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Sprint2.Levels;
+using Sprint2.Managers;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class GrassPlant(BaseLevel level, (int, int) root) : Plant(level, Species.Grass, root)
+public class GrassPlant(BlockManager blockManager, (int, int) root) : Plant(blockManager, root, Species.Grass)
 {
     private new readonly int MaxCells = Funcs.RandInt(5, 8);
 
@@ -13,16 +15,16 @@ public class GrassPlant(BaseLevel level, (int, int) root) : Plant(level, Species
     }
 
     protected override void Grow() {
-        BlockList newGrowth = new();
+        HashSet<(int, int)> newGrowth = [];
         if (CellsGrown < MaxCells) {
-            foreach ((int x, int y) in BudCells.Positions()) {
+            foreach ((int x, int y) in BudCells) {
                 TryGrow(newGrowth, (x, y - 1));
             }
         }
 
         //Move buds to stem, and replenish new buds
-        StemCells.Union(BudCells);
+        StemCells.UnionWith(BudCells);
         BudCells.Clear();
-        BudCells.Union(newGrowth);
+        BudCells.UnionWith(newGrowth);
     }
 }

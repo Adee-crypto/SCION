@@ -17,13 +17,13 @@ public abstract class BaseLevel : ILevel
     protected Player Player {get;}
     //managers
     protected ProjectileManager ProjectileManager {get;}
-    protected CollisionManager CollisionManager {get;} = new();
-    public void AddBlockList(BlockList blocks) => CollisionManager.Blocks.Add(blocks); //bad for coupling if public
-    public bool HasBlockAt((int, int) pos) => CollisionManager.HasBlockAt(pos); //bad for coupling if public
+    // public void AddBlockList(BlockList blocks) => CollisionManager.Blocks.Add(blocks); //bad for coupling if public
+    // public bool HasBlockAt((int, int) pos) => CollisionManager.HasBlockAt(pos); //bad for coupling if public
     protected EnemyManager EnemyManager {get;} = new();
     protected HUDManager HudManager {get;}
-    //blocks
-    protected List<Platform> Platforms { get; } = [];
+    protected BlockManager BlockManager {get;} = new();
+    protected CollisionManager CollisionManager {get;}
+    //static level elements (all with blocks for now)
     protected List<Plant> Plants { get; } = [];
     //state variables
     protected (int w, int h) ScreenSize { get; private set; }
@@ -34,6 +34,7 @@ public abstract class BaseLevel : ILevel
         Player = player;
         ProjectileManager = new(this, player);
         HudManager = new(player);
+        CollisionManager = new(BlockManager);
     }
 
     public void Resize((int w, int h) size)
@@ -49,10 +50,9 @@ public abstract class BaseLevel : ILevel
 
         Player.Reset();
         ProjectileManager.Reset();
-        CollisionManager.Reset();
         EnemyManager.Reset();
+        BlockManager.Reset();
 
-        Platforms.Clear();
         Plants.Clear();
 
         BuildLevel();
@@ -66,25 +66,11 @@ public abstract class BaseLevel : ILevel
         var (x, y) = coords;
         int leftRightRand = Funcs.RandInt(0, 2)*2-1;
         foreach (var pos in new[]{(x, y-1), (x+leftRightRand, y), (x-leftRightRand, y), (x,y+1)}) {
-            if (!CollisionManager.HasBlockAt(pos)) {
-                Plants.Add(ProjectileUtil.ProjectileToPlant[type](this, coords));
+            if (!BlockManager.HasBlockAt(pos)) {
+                Plants.Add(ProjectileUtil.ProjectileToPlant[type](BlockManager, coords));
                 break;
             }
         }
-    }
-
-    public BlockType? TryDigBelow(Vector2 coords) {
-        var (x, y) = Funcs.GridCoords(coords);
-        y++; //want the cell *below* midpoint of bottom edge of player
-
-        var output = CollisionManager.TryBreakBlockAt((x, y));
-        if (output is null) {
-            if (coords.X % Consts.BlockWidth < Consts.BlockWidth / 2f)
-                output = CollisionManager.TryBreakBlockAt((x-1, y));
-            else
-                output = CollisionManager.TryBreakBlockAt((x+1, y));
-        }
-        return output;
     }
 
     public void Update(GameTime gameTime)
@@ -98,11 +84,10 @@ public abstract class BaseLevel : ILevel
 
         //check for player digging logic
         if (Player.IsBreakable) {
-            var type = TryDigBelow(new(Player.Collider.Center.X, Player.Collider.Bottom));
-            if (type is not null) {
-                if (Plant.BlockToSpecies.TryGetValue(type.Value, out Species value)) Player.GetSeed(value);
-                Player.IsBreakable = false;
-            }
+            if (BlockManager.TryDigBelow(new(Player.Collider.Center.X, Player.Collider.Bottom)) is BlockManager.Block block
+                && Plant.BlockToSpecies.TryGetValue(block.Type, out Species value))
+                    Player.GetSeed(value);
+            Player.IsBreakable = false;
         }
 
         Plants.ForEach(p => p.Update(gameTime));
@@ -118,12 +103,10 @@ public abstract class BaseLevel : ILevel
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        Platforms.ForEach(p => p.Draw(spriteBatch));
-        Plants.ForEach(p => p.Draw(spriteBatch));
-
         EnemyManager.Draw(spriteBatch);
         ProjectileManager.Draw(spriteBatch);
         HudManager.Draw(spriteBatch);
+        BlockManager.Draw(spriteBatch);
 
         Player.Draw(spriteBatch);
     }

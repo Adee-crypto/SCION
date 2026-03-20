@@ -1,12 +1,14 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Sprint2.Levels;
+using Sprint2.Managers;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
 public class PineapplePlant : Plant
 {
-    public PineapplePlant(BaseLevel level, (int, int) root) : base(level, Species.Pineapple, root) {
+    public PineapplePlant(BlockManager blockManager, (int, int) root) : base(blockManager, root, Species.Pineapple) {
         MaxCells = Funcs.RandInt(7, 40);
     }
     
@@ -20,9 +22,9 @@ public class PineapplePlant : Plant
 
     protected override void Grow()
     {
-        BlockList newGrowth = new();
+        HashSet<(int, int)> newGrowth = [];
         if (CellsGrown < MaxCells) { //slightly redundant since TryGrow also checks this
-            foreach ((int x, int y) in BudCells.Positions())
+            foreach ((int x, int y) in BudCells)
             {
                 //calculates parity
                 if ((x+Root.x+y+Root.y) % 2 == 0) {
@@ -36,8 +38,8 @@ public class PineapplePlant : Plant
         }
 
         //Move buds to stem, and replenish new buds
-        StemCells.Union(BudCells);
+        StemCells.UnionWith(BudCells);
         BudCells.Clear();
-        BudCells.Union(newGrowth);
+        BudCells.UnionWith(newGrowth);
     }
 }

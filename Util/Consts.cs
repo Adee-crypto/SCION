@@ -12,8 +12,13 @@ public static class Consts
     public const float defaultGravity = 980f;
     public const float defaultProjectileGravity = 98f;
     public const float voidProjectileGravity = 0f;
+    /// <summary> Fraction of original velocity, unitless (should probably change to depend on dt) </summary>
+    public const float AirResistance = 0.96f;
+    /// <summary> constant friction force, m/s^2 </summary>
+    public const float GroundResistance = 100f;
 
-    public const float playerXForce = 120f;
+    public const float playerAirXForce = 10f;
+    public const float playerGroundXForce = 10f;
     public const float playerYForce = -450f;
     public const float playerMass = 1f;
     public static Vector2 playerHitbox {get;} = new(16-0.1f, 16-0.1f); //fix this offset perhaps

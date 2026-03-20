@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Sprint2.Extensions;
 using Sprint2.Levels;
+using Sprint2.Managers;
 using Sprint2.Util;
+using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Entities.Plants;
 
-public class SandboxPlant(BaseLevel level, (int, int) root) : Plant(level, Species.Sandbox, root)
+public class SandboxPlant(BlockManager blockManager, (int, int) root) : Plant(blockManager, root, Species.Sandbox)
 {
     private (int x, int y) root = root;
     private bool detonated;
@@ -45,18 +47,15 @@ public class SandboxPlant(BaseLevel level, (int, int) root) : Plant(level, Speci
 
     public override void Update(GameTime gameTime)
     {
-        Ticker.TicksPassed(gameTime);
+        int ticks = Ticker.TicksPassed(gameTime);
         if (!detonated)
         {
             if (Ticker.TickAge >= 6) {
+                blockManager.SetColorAt(root, Color.White);
                 Grow();
                 detonated = true;
-            } else if (Ticker.TickAge % 2 == 0) {
-                StemCells.Union(BudCells);
-                BudCells.Clear();
-            } else {
-                BudCells.Union(StemCells);
-                StemCells.Clear();
+            } else if (ticks > 0){ //colors swap upon a new tick
+                blockManager.SetColorAt(root, Ticker.TickAge % 2 == 0 ? Color.White : Color.Gray);
             }
         }
     }
@@ -72,19 +71,17 @@ public class SandboxPlant(BaseLevel level, (int, int) root) : Plant(level, Speci
         int width = pattern[0].Length;
         (int x, int y) offset = (Funcs.RandInt((width-1)/2, width/2+1), Funcs.RandInt((width-1)/2, width/2+1));
 
-        //Breadth first search to grow as much as possible into desired shape
+        //Breadth first search to grow as much as possible into desired shape from root
         List<(int, int)> StemDeltaPos = [];
         List<(int, int)> BudDeltaPos = [offset];
         while (BudDeltaPos.Count > 0) {
             (int x, int y) = BudDeltaPos[0];
             BudDeltaPos.RemoveAt(0);
             StemDeltaPos.Add((x,y));
-            if (TryGrow(StemCells, (root.x+x-offset.x,root.y+y-offset.y))) {
-                foreach ((int dx, int dy) in PlantUtil.GrowDirs) {
-                    (int x, int y) nextBud = (dx+x,dy+y);
-                    if (!StemDeltaPos.Contains(nextBud) && !BudCells.Contains(nextBud) && nextBud.y >= 0 && nextBud.y < width && nextBud.x >= 0 && nextBud.x < width && pattern[nextBud.y][nextBud.x] == 1) {
-                        BudDeltaPos.Add(nextBud);
-                    }
+            foreach ((int dx, int dy) in PlantUtil.GrowDirs) {
+                (int x, int y) nextBud = (dx+x,dy+y);
+                if (!blockManager.HasBlockAt(nextBud) && nextBud.y >= 0 && nextBud.y < width && nextBud.x >= 0 && nextBud.x < width && pattern[nextBud.y][nextBud.x] == 1 && TryGrow(StemCells, (root.x+nextBud.x-offset.x,root.y+nextBud.y-offset.y))) {
+                    BudDeltaPos.Add(nextBud);
                 }
             }
         }

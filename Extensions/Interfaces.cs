@@ -46,9 +46,9 @@ public interface IPhysicsObject
 public interface IPlayer : IDrawable, IUpdatableObject, IPhysicsObject, IAim
 {
     void Move(int direction);
-    void Jump();
+    void TryJump();
     void Attack();
-    void BreakBlock();
+    void TryBreakBlock();
     void ToggleDamaged();
     void Reset();
     void UpdateHealth(bool isDamaged, float time);

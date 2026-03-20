@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
-using Sprint2.Entities;
 using Sprint2.Entities.Projectiles;
+using static Sprint2.Managers.BlockManager.Block;
 using System.Collections.Generic;
 using Enemies = Sprint2.Entities.Enemies;
 using Players = Sprint2.Entities.Players;
@@ -9,10 +9,8 @@ namespace Sprint2.Util;
 
 public static class SourceRects
 {
-    private static Rectangle TileAt(int x, int y)
-    {
-        return new(x * 16, y * 16, 16, 16);
-    }
+    //for now the testsheet.png has 16x16 tiles
+    private static Rectangle TileAt(int x, int y) => new(x * 16, y * 16, 16, 16);
 
     public static Dictionary<Players.SpriteState, Rectangle[]> PlayerSourceRects { get; } = new() {
         { Players.SpriteState.LeftFacing, [TileAt(2, 0)] },

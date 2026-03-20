@@ -21,10 +21,10 @@ public sealed class StoryLevel : BaseLevel
     protected override void BuildLevel()
     {
         foreach (var platform in def.Platforms) {
-            Platforms.Add(platform(this));
+            BlockManager.AddRectangleArray(platform);
         }
         foreach (var plant in def.Plants) {
-            Plants.Add(plant(this));
+            Plants.Add(plant(BlockManager));
         }
         EnemyManager.Spawn(Consts.BlockWidth * new Vector2(40, 24));
     }

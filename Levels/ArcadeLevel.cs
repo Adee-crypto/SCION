@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Sprint2.Entities;
-using Sprint2.Entities.Enemies;
+using Sprint2.Managers;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
 using Sprint2.Util;
@@ -31,11 +31,11 @@ public sealed class ArcadeLevel : BaseLevel
 
     protected override void BuildLevel()
     {
-        Platforms.Add(new Platform(this, BlockType.StoneBrick, 0, 25, 50, 1));
-        Plants.Add(new GrassPlant(this, (10, 20)));
-        Plants.Add(new PineapplePlant(this, (20, 20)));
-        Plants.Add(new ApplePlant(this, (30, 20)));
-        Plants.Add(new SandboxPlant(this, (40, 20)));
+        BlockManager.AddRectangleArray(BlockManager.Block.BlockType.StoneBrick, 0, 25, 50, 1);
+        Plants.Add(new GrassPlant(BlockManager, (10, 20)));
+        Plants.Add(new PineapplePlant(BlockManager, (20, 20)));
+        Plants.Add(new ApplePlant(BlockManager, (30, 20)));
+        Plants.Add(new SandboxPlant(BlockManager, (40, 20)));
         EnemyManager.Spawn(Consts.BlockWidth * new Vector2(40, 10));
     }
 

@@ -18,9 +18,9 @@ public static class KeyBindings
         {
             {new[] {Keys.Left, Keys.A}, () => Target(game)?.Move(-1)},
             {new[] {Keys.Right, Keys.D}, () => Target(game)?.Move(1)},
-            {new[] {Keys.Up, Keys.W}, () => Target(game)?.Jump()},
+            {new[] {Keys.Up, Keys.W}, () => Target(game)?.TryJump()},
             {new[] {Keys.Z, Keys.N}, () => Target(game)?.Attack()},
-            {new[] {Keys.Down, Keys.S}, () => Target(game)?.BreakBlock()}
+            {new[] {Keys.Down, Keys.S}, () => Target(game)?.TryBreakBlock()}
         };
         TapKeyBindings = new()
         {

@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Sprint2.Levels;
+using Sprint2.Managers;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
-public class ApplePlant(BaseLevel level, (int, int) root) : Plant(level, Species.Apple, root)
+public class ApplePlant(BlockManager blockManager, (int, int) root) : Plant(blockManager, root, Species.Apple)
 {
     private new readonly int MaxCells = Funcs.RandInt(10, 21);
 
@@ -18,9 +20,9 @@ public class ApplePlant(BaseLevel level, (int, int) root) : Plant(level, Species
 
     protected override void Grow()
     {
-        BlockList newGrowth = new();
+        HashSet<(int, int)> newGrowth = [];
         if (CellsGrown < MaxCells) {
-            foreach ((int x, int y) in BudCells.Positions())
+            foreach ((int x, int y) in BudCells)
             {
                 foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.GrowDirs))
                 {
@@ -30,8 +32,8 @@ public class ApplePlant(BaseLevel level, (int, int) root) : Plant(level, Species
         }
 
         //Move buds to stem, and replenish new buds
-        StemCells.Union(BudCells);
+        StemCells.UnionWith(BudCells);
         BudCells.Clear();
-        BudCells.Union(newGrowth);
+        BudCells.UnionWith(newGrowth);
     }
 }
