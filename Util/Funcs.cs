@@ -2,18 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Sprint2.Entities.Plants;
 
 namespace Sprint2.Util;
 
 public static class Funcs
 {
-    private static readonly Random random = new();
-
-    public static float Random() => random.NextSingle();
-    /// <returns>1 or -1 with 50/50 prob</returns>
-    public static int PlusMinus() => random.Next(2) == 0 ? -1 : 1;
-    public static int RandInt(int max) => random.Next(max);
-    public static int RandInt(int min, int max) => random.Next(min, max);
 
     //Converts pixel coords to grid (block) coords
     /// <param name="pos"></param>
@@ -38,6 +33,18 @@ public static class Funcs
         return (GridCoord(pos) + 1) * Consts.BlockWidth;
     }
 
+    public class VectorComparer<T>(Vector2 origin): IComparer<Vector2> {
+        public int Compare(Vector2 p, Vector2 q) => (p-origin).LengthSquared().CompareTo((q-origin).LengthSquared());
+    }
+
+    //random
+    private static readonly Random random = new();
+    public static float Random() => random.NextSingle();
+    /// <returns>1 or -1 with 50/50 prob</returns>
+    public static int PlusMinus() => random.Next(2) == 0 ? -1 : 1;
+    public static int RandInt(int max) => random.Next(max);
+    public static int RandInt(int min, int max) => random.Next(min, max);
+
     public static IEnumerable<T> ListShuffle<T>(IEnumerable<T> list)
     {
         foreach (int i in RandRange(list.Count()))
@@ -49,10 +56,21 @@ public static class Funcs
     /// <summary>DO NOT USE FOR LARGE N</summary>
     public static IEnumerable<int> RandRange(int n) {
         return Enumerable.Range(0, n).OrderBy(x => random.Next());
-   }
-
-    public class VectorComparer<T>(Vector2 origin): IComparer<Vector2> {
-        public int Compare(Vector2 p, Vector2 q) => (p-origin).LengthSquared().CompareTo((q-origin).LengthSquared());
     }
 
+
+    //Pitch shifting
+    public static float SpeciesScale(Species species) => species switch
+    {
+        Species.Grass => RandMajor7Add9Add13(),
+        Species.Pineapple => RandPentatonic(),
+        Species.Sandbox => RandMajor7Add9Add13(),
+        Species.Apple => RandMajor7Add9Add13(),
+        _ => RandDim7(),
+    };
+
+    public static float RandPentatonic() => (new int[] {0, -2, -4, -7, -9})[RandInt(5)]/12f;
+    public static float RandMajor7Add9Add13() => ((new int[] {0, 4, 7, 11, 14, 18})[RandInt(5)]-9)/12f;
+    public static float RandDim7() => ((new int[] {0, 3, 6, 10, 15})[RandInt(5)]-7)/12f;
+    
 }

@@ -49,6 +49,12 @@
 /processorParam:TextureFormat=Color
 /build:DefaultButton.png
 
+#begin GrassGrow.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GrassGrow.mp3
+
 #begin Link.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -127,4 +133,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:VoidSpawns.png
+
+#begin Woowo.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Woowo.mp3
 

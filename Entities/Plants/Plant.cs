@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Sprint2.Extensions;
 using Sprint2.Managers;
+using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
@@ -57,6 +58,7 @@ public abstract class Plant
     /// <summary> returns if it can grow into newCellPos, then grows there </summary>
     protected bool TryGrow((int, int) newCellPos) {
         if (IsGrowing && !BlockManager.HasBlockAt(newCellPos)) {
+            Assets.PlantGrowthSFX(Species).Play(1, Funcs.SpeciesScale(Species), 0);
             BudCells.Add(newCellPos);
             BlockManager.Add(newCellPos, PlantUtil.SpeciesToBlock[Species], Color.White);
             CellsGrown++;

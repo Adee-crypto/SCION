@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Controllers;
 using Sprint2.Extensions;
@@ -65,6 +66,8 @@ public class Game1 : Game
 
         Assets.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
         Assets.PixelTexture.SetData([Color.White]);
+
+        Assets.GrassSound = Content.Load<SoundEffect>("Woowo");
 
         OnResize(null, null);
 
