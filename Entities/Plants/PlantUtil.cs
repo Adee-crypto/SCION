@@ -10,7 +10,6 @@ namespace Sprint2.Entities.Plants;
 public static class PlantUtil
 {
     public static readonly Species[] species = [Species.Apple, Species.Grass, Species.Pineapple, Species.Sandbox];
-    public static List<(int, int)> GrowDirs { get; } = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
     public static Species RandomSpecies() => species[Funcs.RandInt(species.Length)];
 

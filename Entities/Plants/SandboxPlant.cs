@@ -64,7 +64,7 @@ public class SandboxPlant(BlockManager blockManager, (int, int) root) : Plant(bl
         while (BudCells.Count > 0) {
             (int x, int y) = BudCells[0];
             BudCells.RemoveAt(0);
-            foreach ((int dx, int dy) in PlantUtil.GrowDirs) {
+            foreach ((int dx, int dy) in Consts.orthoDirs) {
                 (int x, int y) nextBud = (x+dx, y+dy);
                 (int x, int y) patternPos = (nextBud.x - Root.x + offset.x, nextBud.y - Root.y + offset.y);
                 if (patternPos.y >= 0 && patternPos.y < width && patternPos.x >= 0 && patternPos.x < width && pattern[patternPos.y][patternPos.x] == 1)

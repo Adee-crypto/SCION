@@ -4,6 +4,8 @@ namespace Sprint2.Util;
 
 public static class Consts
 {
+    public static readonly (int, int)[] orthoDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+    
     //Screen dimensions
     public static (int w, int h) DefaultScreenSize { get; } = (1000, 800);
     public const int BlockWidth = 16;
@@ -24,6 +26,7 @@ public static class Consts
     public static Vector2 playerHitbox {get;} = new(16-0.1f, 16-0.1f); //fix this offset perhaps
     
     public const float enemyXForce = 100f;
+
 
     public const float projectileMass = 0.5f; // could be different using dictionary with projectileType
     

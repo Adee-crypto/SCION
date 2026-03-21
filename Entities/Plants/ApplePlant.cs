@@ -17,11 +17,12 @@ public class ApplePlant(BlockManager blockManager, (int, int) root) : Plant(bloc
         BudCells.Clear();
         
         foreach ((int x, int y) in oldBudCells) {
-            MatureCell((x, y));
-            if (IsGrowing)
-                foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.GrowDirs)) {
-                    if (TryGrow((x + dx, y + dy))) break;
-                }
+            TryMatureCell((x, y));
+            if (!IsGrowing) break;
+            
+            foreach ((int dx, int dy) in Funcs.ListShuffle(Consts.orthoDirs)) {
+                if (TryGrow((x + dx, y + dy))) break;
+            }
         }
     }
 }

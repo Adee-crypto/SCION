@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Sprint2.Managers;
+using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
@@ -16,10 +17,10 @@ public class VoidPlant(BlockManager blockManager, (int, int) root) : Plant(block
         BudCells.Clear();
         
         foreach ((int x, int y) in oldBudCells) {
-            MatureCell((x, y));
-            foreach ((int dx, int dy) in PlantUtil.GrowDirs) {
+            TryMatureCell((x, y));
+            foreach ((int dx, int dy) in Consts.orthoDirs) {
                 var newPos = (x + dx, y + dy);
-                if (BlockManager.HasBlockAt(newPos)) {
+                if (BlockManager.HasBlockAt(newPos) && !BudCells.Contains(newPos)) {
                     BlockManager.Infect(newPos);
                     BudCells.Add(newPos);
                 }

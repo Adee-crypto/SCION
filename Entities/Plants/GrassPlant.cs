@@ -12,7 +12,7 @@ public class GrassPlant(BlockManager blockManager, (int, int) root) : Plant(bloc
     protected override void Grow() {
         (int x, int y) = BudCells[0];
         BudCells.Clear();
-        MatureCell((x, y));
+        TryMatureCell((x, y));
         TryGrow((x, y - 1));
     }
 }

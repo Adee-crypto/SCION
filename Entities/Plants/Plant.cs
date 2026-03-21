@@ -43,13 +43,15 @@ public abstract class Plant
     protected abstract void Grow();
 
     protected void MatureAllBuds() {
-        BudCells.ForEach(MatureCell);
+        BudCells.ForEach(TryMatureCell);
         BudCells.Clear();
     }
 
-    protected void MatureCell((int, int) pos) {
-        BlockManager.SetColor(pos, Color.Gray);
-        StemCells.Add(pos);
+    protected void TryMatureCell((int, int) pos) {
+        if (BlockManager.HasBlockAt(pos)) {
+            BlockManager.SetColor(pos, Color.Gray);
+            StemCells.Add(pos);
+        }
     }
 
     /// <summary> returns if it can grow into newCellPos, then grows there </summary>
