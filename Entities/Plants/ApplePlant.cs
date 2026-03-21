@@ -18,11 +18,10 @@ public class ApplePlant(BlockManager blockManager, (int, int) root) : Plant(bloc
         
         foreach ((int x, int y) in oldBudCells) {
             MatureCell((x, y));
-            if (IsGrowing) {
+            if (IsGrowing)
                 foreach ((int dx, int dy) in Funcs.ListShuffle(PlantUtil.GrowDirs)) {
-                    if (TryGrow(BudCells, (x + dx, y + dy))) break;
+                    if (TryGrow((x + dx, y + dy))) break;
                 }
-            }
         }
     }
 }

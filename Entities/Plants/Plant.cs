@@ -42,18 +42,26 @@ public abstract class Plant
     //handles all growing logic
     protected abstract void Grow();
 
+    protected void MatureAllBuds() {
+        BudCells.ForEach(MatureCell);
+        BudCells.Clear();
+    }
+
     protected void MatureCell((int, int) pos) {
         BlockManager.SetColorAt(pos, Color.Gray);
         StemCells.Add(pos);
     }
 
     /// <summary> returns if it can grow into newCellPos, then grows there </summary>
-    protected bool TryGrow(List<(int, int)> newGrowth, (int, int) newCellPos) {
-        if (!BlockManager.HasBlockAt(newCellPos) && CellsGrown < MaxCells) {
-            newGrowth.Add(newCellPos);
+    protected bool TryGrow((int, int) newCellPos) {
+        if (IsGrowing && !BlockManager.HasBlockAt(newCellPos)) {
+            BudCells.Add(newCellPos);
             BlockManager.Add(newCellPos, PlantUtil.SpeciesToBlock[Species], Color.White);
             CellsGrown++;
-            if (CellsGrown >= MaxCells) IsGrowing = false;
+            if (CellsGrown >= MaxCells) {
+                MatureAllBuds();
+                IsGrowing = false;
+            }
             return true;
         }
         return false;

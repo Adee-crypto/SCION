@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Sprint2.Managers;
-using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 
@@ -12,12 +10,9 @@ public class GrassPlant(BlockManager blockManager, (int, int) root) : Plant(bloc
     }
 
     protected override void Grow() {
-        List<(int, int)> oldBudCells = [.. BudCells];
+        (int x, int y) = BudCells[0];
         BudCells.Clear();
-
-        foreach ((int x, int y) in oldBudCells) {
-            MatureCell((x, y));
-            if (IsGrowing) TryGrow(BudCells, (x, y - 1));
-        }
+        MatureCell((x, y));
+        TryGrow((x, y - 1));
     }
 }

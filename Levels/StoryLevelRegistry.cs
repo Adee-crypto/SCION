@@ -15,9 +15,8 @@ public static class StoryLevelRegistry
     private static List<StoryLevelDef> Levels { get; } = [];
 
     public static void LoadLevelData() {
-        string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        string filePath = Path.Combine(baseDir, "Content", "StoryLevelData.csv");
-        string[] lines = File.ReadAllLines(filePath);
+        //this probably shouldn't be finding the directory via Base like this
+        string[] lines = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "Content/StoryLevelData.csv");
 
         for (int i = 0; i < lines.Length; i += 4) {
 
@@ -56,13 +55,7 @@ public static class StoryLevelRegistry
 
                 if (Enum.TryParse(typeStr, out Species species))
                 {
-                    plants.Add((b) => species switch { //TODO fix this with a dict from Plant.cs
-                        Species.Grass => new GrassPlant(b, (x, y)),
-                        Species.Apple => new ApplePlant(b, (x, y)),
-                        Species.Pineapple => new PineapplePlant(b, (x, y)),
-                        Species.Sandbox => new SandboxPlant(b, (x, y)),
-                        _ => throw new ArgumentException($"Unknown species: {species}")
-                    });
+                    plants.Add(b => PlantUtil.SpeciesToPlantInit[species](b, (x, y)));
                 }
             }
 
