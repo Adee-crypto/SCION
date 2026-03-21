@@ -7,24 +7,17 @@ namespace Sprint2.Entities.Plants;
 
 public class GrassPlant(BlockManager blockManager, (int, int) root) : Plant(blockManager, root, Species.Grass)
 {
-    private new readonly int MaxCells = Funcs.RandInt(5, 8);
-
     public override void Update(GameTime gameTime) {
         if (IsGrowing) for (int i = 0; i < Ticker.TicksPassed(gameTime); i++) Grow();
     }
 
     protected override void Grow() {
-        HashSet<(int, int)> newGrowth = [];
-
-        foreach ((int x, int y) in BudCells) {
-            BlockManager.SetColorAt((x, y), Color.Gray);
-            if (IsGrowing && CellsGrown < MaxCells) TryGrow(newGrowth, (x, y - 1));
-            else IsGrowing = false;
-        }
-
-        //Move buds to stem, and replenish new buds
-        StemCells.UnionWith(BudCells);
+        List<(int, int)> oldBudCells = [.. BudCells];
         BudCells.Clear();
-        BudCells.UnionWith(newGrowth);
+
+        foreach ((int x, int y) in oldBudCells) {
+            MatureCell((x, y));
+            if (IsGrowing) TryGrow(BudCells, (x, y - 1));
+        }
     }
 }

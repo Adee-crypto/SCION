@@ -12,12 +12,12 @@ namespace Sprint2.Levels;
 public abstract class BaseLevel : ILevel
 {
     //player
-    protected Player Player {get;}
+    public Player Player {get;}
     //managers TODO: can these be made protected again in a way that works with composed classes (projectile, plants, etc.)?
     public ProjectileManager ProjectileManager {get;}
     // public void AddBlockList(BlockList blocks) => CollisionManager.Blocks.Add(blocks); //bad for coupling if public
     // public bool HasBlockAt((int, int) pos) => CollisionManager.HasBlockAt(pos); //bad for coupling if public
-    public EnemyManager EnemyManager {get;} = new();
+    public EnemyManager EnemyManager {get;}
     public HUDManager HudManager {get;}
     public BlockManager BlockManager {get;} = new();
     public CollisionManager CollisionManager {get;}
@@ -31,6 +31,7 @@ public abstract class BaseLevel : ILevel
     public BaseLevel(Player player) {
         Player = player;
         ProjectileManager = new(this, player);
+        EnemyManager = new(this);
         HudManager = new(player);
         CollisionManager = new(BlockManager);
     }
@@ -60,7 +61,7 @@ public abstract class BaseLevel : ILevel
 
     protected virtual void UpdateLevelLogic(GameTime gameTime) { }
 
-    public void TrySow(ProjectileType type, (int, int) prevCoords, (int, int) collisionCoords) {
+    public void TrySow(ProjectileType type, (int, int) prevCoords) {
         if (!BlockManager.HasBlockAt(prevCoords))
             Plants.Add(ProjectileUtil.ProjectileToPlant[type](BlockManager, prevCoords));
     }
@@ -72,7 +73,7 @@ public abstract class BaseLevel : ILevel
         //update entities
         ProjectileManager.Update(gameTime);
         Player.Update(gameTime, CollisionManager);
-        EnemyManager.Update(gameTime, Player, ProjectileManager, CollisionManager);
+        EnemyManager.Update(gameTime);
 
         //check for player digging logic
         if (Player.IsBreakable) {

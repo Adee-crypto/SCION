@@ -20,7 +20,9 @@ public class BlockManager {
             Dirt,
             Stone,
             StoneBrick,
-            CrackedStoneBrick
+            CrackedStoneBrick,
+            //void
+            Void
         }
         
         public readonly bool IsBreakable => Type switch
@@ -36,6 +38,7 @@ public class BlockManager {
     public Block BlockAt((int, int) pos) => blocks[pos];
     // public void SetAt((int, int) pos, Block block) => blocks[pos] = block;
     public void SetColorAt((int, int) pos, Color c) => blocks[pos] = new(BlockAt(pos).Type) {Color = c};
+    public void Infect((int, int) pos) => blocks[pos] = new(Void);
     public bool Add((int, int) pos, Block.BlockType type) => blocks.TryAdd(pos, new(type));
     public bool Add((int, int) pos, Block.BlockType type, Color c) => blocks.TryAdd(pos, new(type) {Color = c});
     public bool Remove((int, int) pos) => blocks.Remove(pos);

@@ -11,19 +11,19 @@ public enum Species {
 
 public abstract class Plant
 {
+    protected BlockManager BlockManager {get;}
+
     //init fields
-    protected Species Species { get; init; }
-    protected (int x, int y) Root {get; init;}
+    protected Species Species { get; }
+    protected int MaxCells { get; }
+    protected (int x, int y) Root { get; }
 
-    //cells
-    protected HashSet<(int x, int y)> BudCells { get; set; } = [];
-    protected HashSet<(int x, int y)> StemCells { get; } = [];
-    protected int CellsGrown {get; set;}
-    protected int MaxCells {get; set;} = int.MaxValue;
-
+    //data & state
+    protected List<(int x, int y)> BudCells { get; } = [];
+    protected List<(int x, int y)> StemCells { get; } = [];
+    protected int CellsGrown {get; set; }
     protected bool IsGrowing {get; set;} = true;
     protected Ticker Ticker { get; }
-    protected BlockManager BlockManager {get;}
 
     /// <summary>root MUST be free in blockManager</summary>
     public Plant(BlockManager blockManager, (int, int) root, Species species)
@@ -31,6 +31,7 @@ public abstract class Plant
         BlockManager = blockManager;
         Species = species;
         Root = root;
+        MaxCells = PlantUtil.SpeciesMaxCells(species);
         Ticker = new(PlantUtil.SpeciesGrowTimes[species]);
         BudCells.Add(root);
         blockManager.Add(root, PlantUtil.SpeciesToBlock[species]);
@@ -41,12 +42,18 @@ public abstract class Plant
     //handles all growing logic
     protected abstract void Grow();
 
-    //returns if it can grow into newCellPos, then grows there
-    protected bool TryGrow(HashSet<(int, int)> newGrowth, (int, int) newCellPos) {
+    protected void MatureCell((int, int) pos) {
+        BlockManager.SetColorAt(pos, Color.Gray);
+        StemCells.Add(pos);
+    }
+
+    /// <summary> returns if it can grow into newCellPos, then grows there </summary>
+    protected bool TryGrow(List<(int, int)> newGrowth, (int, int) newCellPos) {
         if (!BlockManager.HasBlockAt(newCellPos) && CellsGrown < MaxCells) {
             newGrowth.Add(newCellPos);
             BlockManager.Add(newCellPos, PlantUtil.SpeciesToBlock[Species], Color.White);
             CellsGrown++;
+            if (CellsGrown >= MaxCells) IsGrowing = false;
             return true;
         }
         return false;

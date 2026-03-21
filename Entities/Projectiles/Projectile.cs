@@ -51,7 +51,9 @@ public class Projectile : IProjectile
         // System.Console.WriteLine(Collider.Position);
         if (coords is not null) {
             if (ProjectileUtil.ProjectileToPlant.ContainsKey(Type)) { //eventually change this to check for type of collider too
-                level.TrySow(Type, prevCoords, coords.Value);
+                level.TrySow(Type, prevCoords);
+            } else if (Type == ProjectileType.Void) {
+                level.BlockManager.Infect(coords.Value);
             }
             Kill();
         }

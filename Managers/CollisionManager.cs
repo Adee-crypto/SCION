@@ -12,20 +12,26 @@ public class CollisionManager(BlockManager blockManager)
     // *t*olerance
     private const float t = 0.001f;
 
-    /// <summary>CURRENTLY ASSUMES COLLIDER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK</summary>
     public bool IsCollision(Collider c) => IsCollision(c.Position, c.Size);
 
-    /// <summary>CURRENTLY ASSUMES COLLIDER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK</summary>
-    public bool IsCollision(Vector2 pos, Vector2 size) {
+    public bool IsCollision(Vector2 pos, Vector2 size) => GetCollisionCoords(pos, size).Count > 0;
+
+    public HashSet<(int, int)> GetCollisionCoords(Vector2 pos, Vector2 size) {
+        HashSet<(int, int)> output = [];
         int leftIndex = Funcs.GridCoord(pos.X+t);
         int rightIndex = Funcs.GridCoord(pos.X+size.X-t);
         int topIndex = Funcs.GridCoord(pos.Y+t);
         int bottomIndex = Funcs.GridCoord(pos.Y+size.Y-t);
 
-        return blockManager.HasBlockAt((leftIndex, topIndex)) || blockManager.HasBlockAt((rightIndex, topIndex)) || blockManager.HasBlockAt((leftIndex, bottomIndex)) || blockManager.HasBlockAt((rightIndex, bottomIndex));
+        for (int y = topIndex; y <= bottomIndex; y++) {
+            for (int x = leftIndex; x <= rightIndex; x++) {
+                if (blockManager.HasBlockAt((x, y))) output.Add((x, y));
+            }
+        }
+
+        return output;
     }
 
-    /// <summary>CURRENTLY ASSUMES COLLIDER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK</summary>
     public ((int, int)? collisionCoords, bool isGrounded) ManageBlockCollision(Collider collider, Vector2 deltaPos) {
 
         Vector2 newPos = collider.Position + deltaPos;

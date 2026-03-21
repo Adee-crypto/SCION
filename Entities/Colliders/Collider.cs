@@ -47,8 +47,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
     public void UpdatePlayerVelocity(bool isGrounded, float dt)
     {
         if (isGrounded) {
-            //we'll see if we need to add V velocity friction
-
+            //we'll see if we need to add proportional velocity friction
             if (Velocity.X < 0) { //ground kinetic friction
                 SetVelocityX(Math.Min(Velocity.X + Consts.GroundResistance * dt, 0f));
             } else {

@@ -2,19 +2,19 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Players;
+using Sprint2.Levels;
 using System.Collections.Generic;
 
 namespace Sprint2.Managers;
 
-public class EnemyManager : Extensions.IDrawable
+public class EnemyManager(BaseLevel level) : Extensions.IDrawable
 {
+    private readonly BaseLevel level = level;
     private readonly List<Enemy> enemies = [];
-
-    public EnemyManager() { }
 
     public void Spawn(Vector2 initialPosition)
     {
-        enemies.Add(new(initialPosition));
+        enemies.Add(new(level, initialPosition));
     }
 
     public void Reset()
@@ -22,9 +22,9 @@ public class EnemyManager : Extensions.IDrawable
         enemies.Clear();
     }
 
-    public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager)
+    public void Update(GameTime gameTime)
     {
-        enemies.ForEach(e => e.Update(gameTime, player, projectileManager, collisionManager));
+        enemies.ForEach(e => e.Update(gameTime));
     }
 
     public void Draw(SpriteBatch spriteBatch)

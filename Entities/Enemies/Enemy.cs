@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
+using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
 using System;
@@ -17,11 +18,12 @@ public enum EnemyState
 
 public class Enemy : Extensions.IDrawable
 {
+    private BaseLevel Level {get;set;}
     //States
-    private EnemySprite enemySprite;
+    private readonly EnemySprite enemySprite;
     private EnemyState state;
 
-    //physcis
+    //physics
     public Collider Collider { get; }
     private Vector2 direction;
     private bool isGrounded;
@@ -29,8 +31,9 @@ public class Enemy : Extensions.IDrawable
     private float attackCoolDownTimer;
     private float attackDurationTimer;
 
-    public Enemy(Vector2 initialPosistion)
+    public Enemy(BaseLevel level, Vector2 initialPosistion)
     {
+        Level = level;
         enemySprite = new EnemySprite();
         Collider = new(initialPosistion, type:ColliderType.Enemy) {Size=Consts.playerHitbox};
         Reset();
@@ -108,15 +111,15 @@ public class Enemy : Extensions.IDrawable
         projectileManager.Spawn(ProjectileType.Void, 5f, initialPosition, initialVelocity);
     }
 
-    public void Update(GameTime gameTime, Player player, ProjectileManager projectileManager, CollisionManager collisionManager)
+    public void Update(GameTime gameTime)
     {
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
         movementX += dt * Collider.Velocity.X;
-        isGrounded = Collider.UpdateMovement(dt, collisionManager).isGrounded;
+        isGrounded = Collider.UpdateMovement(dt, Level.CollisionManager).isGrounded;
 
         attackCoolDownTimer += dt;
         UpdatePatrol();
-        UpdateAttack(dt, player, projectileManager);
+        UpdateAttack(dt, Level.Player, Level.ProjectileManager);
 
         enemySprite.UpdateState(state, direction, Collider.Velocity, false);
         enemySprite.Update(gameTime);

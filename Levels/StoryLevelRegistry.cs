@@ -12,7 +12,7 @@ namespace Sprint2.Levels;
 
 public static class StoryLevelRegistry
 {
-    public static List<StoryLevelDef> Levels {get; private set;} = [];
+    private static List<StoryLevelDef> Levels { get; } = [];
 
     public static void LoadLevelData() {
         string baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -66,19 +66,9 @@ public static class StoryLevelRegistry
                 }
             }
 
-            Levels.Add(new StoryLevelDef {
-                Index = index,
-                PlayerSpawnPos = spawnPos,
-                Platforms = platforms,
-                Plants = plants
-            });
+            Levels.Add(new(index, spawnPos, [.. platforms], [.. plants]));
         }
-        // ((l) => new(l, BlockType.Dirt, 23, 20, 5, 5)),
-        // ((l) => new(l, BlockType.CrackedStoneBrick, 30, 25, 20, 1)),
     }
 
-    public static StoryLevelDef Get(int index)
-    {
-        return Levels[Math.Clamp(index, 0, Levels.Count - 1)];
-    }
+    public static StoryLevelDef Get(int index) => Levels[Math.Clamp(index, 0, Levels.Count - 1)];
 }

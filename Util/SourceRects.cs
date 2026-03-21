@@ -46,6 +46,7 @@ public static class SourceRects
         { BlockType.Stone, TileAt(1, 0) },
         { BlockType.StoneBrick, TileAt(6, 3) },
         { BlockType.CrackedStoneBrick, TileAt(5, 6) },
+        { BlockType.Void, TileAt(7, 11) },
     };
 
     public static Dictionary<ProjectileType, Rectangle[]> ProjectileSourceRects { get; } = new()

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Managers;
+using Sprint2.Util;
 using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Entities.Plants;
@@ -45,5 +46,13 @@ public static class PlantUtil
         {Species.Apple, 0.2f },
         {Species.Pineapple, 0.4f },
         {Species.Sandbox, 0.2f }, //6 ticks until detonation
+    };
+
+    public static int SpeciesMaxCells(Species species) => species switch {
+        Species.Grass => Funcs.RandInt(5, 8),
+        Species.Apple => Funcs.RandInt(10, 21),
+        Species.Pineapple => Funcs.RandInt(7, 40),
+        Species.Sandbox => int.MaxValue,
+        _ => throw new NotImplementedException(),
     };
 }

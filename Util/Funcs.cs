@@ -9,6 +9,9 @@ public static class Funcs
 {
     private static readonly Random random = new();
 
+    public static float Random() => random.NextSingle();
+    /// <returns>1 or -1 with 50/50 prob</returns>
+    public static int PlusMinus() => random.Next(2) == 0 ? -1 : 1;
     public static int RandInt(int max) => random.Next(max);
     public static int RandInt(int min, int max) => random.Next(min, max);
 
@@ -44,10 +47,9 @@ public static class Funcs
     }
 
     /// <summary>DO NOT USE FOR LARGE N</summary>
-    public static IEnumerable<int> RandRange(int n)
-    {
-        return Enumerable.Range(0, n).OrderBy(x => Random.Shared.Next());
-    }
+    public static IEnumerable<int> RandRange(int n) {
+        return Enumerable.Range(0, n).OrderBy(x => random.Next());
+   }
 
     public class VectorComparer<T>(Vector2 origin): IComparer<Vector2> {
         public int Compare(Vector2 p, Vector2 q) => (p-origin).LengthSquared().CompareTo((q-origin).LengthSquared());
