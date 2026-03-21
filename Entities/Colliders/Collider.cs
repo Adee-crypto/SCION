@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Sprint2.Entities.Projectiles;
 using Sprint2.Managers;
 using Sprint2.Util;
 using System;
@@ -40,7 +39,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
         Velocity = Vector2.Zero;
     }
 
-    public (bool isCollision, bool isGrounded) UpdateMovement(float dt, CollisionManager collisionManager) {
+    public ((int, int)? collisionCoords, bool isGrounded) UpdateMovement(float dt, CollisionManager collisionManager) {
         SetVelocityY(Velocity.Y + Gravity * dt);
         return collisionManager.ManageBlockCollision(this, Velocity * dt); //maybe change this to return *type* of other collider too
     }

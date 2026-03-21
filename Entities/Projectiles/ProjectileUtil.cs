@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Sprint2.Entities.Plants;
-using Sprint2.Entities.Projectiles;
-using Sprint2.Levels;
 using Sprint2.Managers;
 
 namespace Sprint2.Entities.Projectiles;

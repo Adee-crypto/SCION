@@ -10,7 +10,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPlayerProvider, IPausableScreen
+public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausableScreen, IPlayerProvider
 {
     private enum StoryState
     {

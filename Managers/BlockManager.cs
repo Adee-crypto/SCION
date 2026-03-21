@@ -37,6 +37,7 @@ public class BlockManager {
     // public void SetAt((int, int) pos, Block block) => blocks[pos] = block;
     public void SetColorAt((int, int) pos, Color c) => blocks[pos] = new(BlockAt(pos).Type) {Color = c};
     public bool Add((int, int) pos, Block.BlockType type) => blocks.TryAdd(pos, new(type));
+    public bool Add((int, int) pos, Block.BlockType type, Color c) => blocks.TryAdd(pos, new(type) {Color = c});
     public bool Remove((int, int) pos) => blocks.Remove(pos);
 
     /// <summary>used when player tries to dig a block</summary>

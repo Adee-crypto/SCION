@@ -96,7 +96,7 @@ public class Player : IPlayer
     //This is pretty inefficient
     public void GetRandomSeed() => GetSeed(Random.Shared.GetItems(Enum.GetValues<Species>(), 1)[0]);
     
-    public void GetSeed(Species type) => Seeds.Add(Plant.SpeciesToProjectile[type]);
+    public void GetSeed(Species type) => Seeds.Add(PlantUtil.SpeciesToProjectile[type]);
 
     public ProjectileType ThrowSeed()
     {

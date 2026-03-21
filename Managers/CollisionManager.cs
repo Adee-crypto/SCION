@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -14,6 +13,9 @@ public class CollisionManager(BlockManager blockManager)
     private const float t = 0.001f;
 
     /// <summary>CURRENTLY ASSUMES COLLIDER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK</summary>
+    public bool IsCollision(Collider c) => IsCollision(c.Position, c.Size);
+
+    /// <summary>CURRENTLY ASSUMES COLLIDER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK</summary>
     public bool IsCollision(Vector2 pos, Vector2 size) {
         int leftIndex = Funcs.GridCoord(pos.X+t);
         int rightIndex = Funcs.GridCoord(pos.X+size.X-t);
@@ -24,7 +26,7 @@ public class CollisionManager(BlockManager blockManager)
     }
 
     /// <summary>CURRENTLY ASSUMES COLLIDER IS LESS THAN THE WIDTH AND HEIGHT OF A BLOCK</summary>
-    public (bool isCollision, bool isGrounded) ManageBlockCollision(Collider collider, Vector2 deltaPos) {
+    public ((int, int)? collisionCoords, bool isGrounded) ManageBlockCollision(Collider collider, Vector2 deltaPos) {
 
         Vector2 newPos = collider.Position + deltaPos;
         Vector2 size = collider.Size;
@@ -32,7 +34,7 @@ public class CollisionManager(BlockManager blockManager)
         //check if no collision
         if (!IsCollision(newPos, size)) {
             collider.SetPosition(newPos);
-            return (false, false);
+            return (null, false);
         }
 
         float leftX = Funcs.ShoveTowardOrigin(newPos.X, size.X)-t;
@@ -64,7 +66,7 @@ public class CollisionManager(BlockManager blockManager)
                 if (offsets.Any(o => o.X == 0)) collider.SetVelocityY(0);
                 if (offsets.Any(o => o.Y == 0)) collider.SetVelocityX(0);
                 collider.SetPosition(pos);
-                return (true, offsets.Any(o => o.Y < 0));
+                return (Funcs.GridCoords(newPos), offsets.Any(o => o.Y < 0));
             }
         }
     }

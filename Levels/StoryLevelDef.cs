@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Sprint2.Entities;
 using Sprint2.Entities.Plants;
 using Sprint2.Managers;
 using static Sprint2.Managers.BlockManager.Block;

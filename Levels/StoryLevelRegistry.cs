@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Sprint2.Entities;
 using Sprint2.Managers;
 using Sprint2.Util;
 using System;

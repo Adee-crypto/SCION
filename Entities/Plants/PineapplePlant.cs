@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
 
@@ -14,18 +13,16 @@ public class PineapplePlant : Plant
     
     public override void Update(GameTime gameTime)
     {
-        for (int i = 0; i < Ticker.TicksPassed(gameTime); i++)
-        {
-            Grow();
-        }
+        if (IsGrowing) for (int i = 0; i < Ticker.TicksPassed(gameTime); i++) Grow();
     }
 
     protected override void Grow()
     {
         HashSet<(int, int)> newGrowth = [];
-        if (CellsGrown < MaxCells) { //slightly redundant since TryGrow also checks this
-            foreach ((int x, int y) in BudCells)
-            {
+
+        foreach ((int x, int y) in BudCells) {
+            BlockManager.SetColorAt((x, y), Color.Gray);
+            if (IsGrowing && CellsGrown < MaxCells) {
                 //calculates parity
                 if ((x+Root.x+y+Root.y) % 2 == 0) {
                     TryGrow(newGrowth, (x+1, y));
@@ -34,7 +31,7 @@ public class PineapplePlant : Plant
                     TryGrow(newGrowth, (x, y-1));
                     TryGrow(newGrowth, (x, y+1));
                 }
-            }
+            } else IsGrowing = false;
         }
 
         //Move buds to stem, and replenish new buds

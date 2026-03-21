@@ -14,6 +14,7 @@ public class Ticker(double freq)
         Remainder = 0;
     }
 
+    /// <summary>effictively an update method, must be called for fields to update</summary>
     public int TicksPassed(GameTime gameTime)
     {
         Remainder += gameTime.ElapsedGameTime.TotalSeconds;

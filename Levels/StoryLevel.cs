@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Sprint2.Entities.Enemies;
-using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
 using Sprint2.Util;
 

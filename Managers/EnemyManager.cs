@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Enemies;
 using Sprint2.Entities.Players;
-using Sprint2.Entities.Projectiles;
 using System.Collections.Generic;
 
 namespace Sprint2.Managers;

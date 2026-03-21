@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Colliders;
-using Sprint2.Entities.Plants;
 using Sprint2.Extensions;
 using Sprint2.Levels;
-using Sprint2.Managers;
 using Sprint2.Util;
 
 namespace Sprint2.Entities.Projectiles;
@@ -41,19 +37,21 @@ public class Projectile : IProjectile
         }
     }
 
-    public void Update(GameTime gameTime, CollisionManager collisionManager)
+    public void Update(GameTime gameTime)
     {
         if (IsDead) return;
         if (Sprite.Ticker.TickAge >= Sprite.MaxLifetimeSeconds) Kill();
 
-        Sprite.UpdateFrameState(gameTime);
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Sprite.UpdateFrameState(gameTime);
+        var prevCoords = Funcs.GridCoords(Collider.Position);
+        var coords = Collider.UpdateMovement(dt, level.CollisionManager).collisionCoords;
 
         //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
-        (bool isCollision, var _) = Collider.UpdateMovement(dt, collisionManager);
-        if (isCollision) {
+        // System.Console.WriteLine(Collider.Position);
+        if (coords is not null) {
             if (ProjectileUtil.ProjectileToPlant.ContainsKey(Type)) { //eventually change this to check for type of collider too
-                level.TrySow(Type, Funcs.GridCoords(Collider.Position));
+                level.TrySow(Type, prevCoords, coords.Value);
             }
             Kill();
         }

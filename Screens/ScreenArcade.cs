@@ -8,7 +8,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPlayerProvider, IPausableScreen
+public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPausableScreen, IPlayerProvider
 {
     private enum ArcadeState
     {

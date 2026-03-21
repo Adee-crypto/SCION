@@ -1,17 +1,14 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Sprint2.Extensions;
-using Sprint2.Levels;
 using Sprint2.Managers;
 using Sprint2.Util;
-using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Entities.Plants;
 
 public class SandboxPlant(BlockManager blockManager, (int, int) root) : Plant(blockManager, root, Species.Sandbox)
 {
     private (int x, int y) root = root;
-    private bool detonated;
 
     private readonly int[][][] patterns = 
     [
@@ -48,14 +45,13 @@ public class SandboxPlant(BlockManager blockManager, (int, int) root) : Plant(bl
     public override void Update(GameTime gameTime)
     {
         int ticks = Ticker.TicksPassed(gameTime);
-        if (!detonated)
-        {
+        if (IsGrowing) {
             if (Ticker.TickAge >= 6) {
-                blockManager.SetColorAt(root, Color.White);
+                BlockManager.SetColorAt(root, Color.White);
                 Grow();
-                detonated = true;
+                IsGrowing = true;
             } else if (ticks > 0){ //colors swap upon a new tick
-                blockManager.SetColorAt(root, Ticker.TickAge % 2 == 0 ? Color.White : Color.Gray);
+                BlockManager.SetColorAt(root, Ticker.TickAge % 2 == 0 ? Color.White : Color.Gray);
             }
         }
     }
@@ -80,7 +76,7 @@ public class SandboxPlant(BlockManager blockManager, (int, int) root) : Plant(bl
             StemDeltaPos.Add((x,y));
             foreach ((int dx, int dy) in PlantUtil.GrowDirs) {
                 (int x, int y) nextBud = (dx+x,dy+y);
-                if (!blockManager.HasBlockAt(nextBud) && nextBud.y >= 0 && nextBud.y < width && nextBud.x >= 0 && nextBud.x < width && pattern[nextBud.y][nextBud.x] == 1 && TryGrow(StemCells, (root.x+nextBud.x-offset.x,root.y+nextBud.y-offset.y))) {
+                if (!BlockManager.HasBlockAt(nextBud) && nextBud.y >= 0 && nextBud.y < width && nextBud.x >= 0 && nextBud.x < width && pattern[nextBud.y][nextBud.x] == 1 && TryGrow(StemCells, (root.x+nextBud.x-offset.x,root.y+nextBud.y-offset.y))) {
                     BudDeltaPos.Add(nextBud);
                 }
             }

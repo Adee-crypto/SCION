@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities;
 using Sprint2.Entities.Projectiles;
-using Sprint2.Managers;
 
 namespace Sprint2.Extensions;
 
@@ -14,11 +13,6 @@ public interface IDrawable
 public interface IUpdatable
 {
     void Update(GameTime gameTime);
-}
-
-public interface IUpdatableObject
-{
-    void Update(GameTime gameTime, CollisionManager collisionManager);
 }
 
 public interface IPhysicsObject
@@ -43,7 +37,7 @@ public interface IPhysicsObject
 //     bool IsRightClickHeld();
 // }
 
-public interface IPlayer : IDrawable, IUpdatableObject, IPhysicsObject, IAim
+public interface IPlayer : IDrawable, IPhysicsObject, IAim//, IUpdatable
 {
     void Move(int direction);
     void TryJump();
@@ -65,7 +59,7 @@ public interface IAim
     Vector2 AimDirection { get; }
 }
 
-public interface IProjectile : IDrawable, IUpdatableObject, IPhysicsObject
+public interface IProjectile : IDrawable, IUpdatable, IPhysicsObject
 {
     ProjectileType Type { get; }
     bool IsDead { get; }
