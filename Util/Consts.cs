@@ -17,11 +17,12 @@ public static class Consts
     /// <summary> Fraction of original velocity, unitless (should probably change to depend on dt) </summary>
     public const float AirResistance = 0.96f;
     /// <summary> constant friction force, m/s^2 </summary>
-    public const float GroundResistance = 100f;
+    public const float GroundResistance = 600f;
 
-    public const float playerAirXForce = 10f;
-    public const float playerGroundXForce = 10f;
-    public const float playerYForce = -450f;
+    public const float playerGroundXForce = 60f;
+    public const float playerAirXForce = 300f;
+    public const float playerTargetWalkVelocity = 120f;
+    public const float playerYForce = -24000f;
     public const float playerMass = 1f;
     public static Vector2 playerHitbox {get;} = new(16-0.1f, 16-0.1f); //fix this offset perhaps
     

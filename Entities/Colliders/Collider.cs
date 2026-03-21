@@ -17,12 +17,14 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
     public ColliderType Type {get;}= type;
     //Newton would be proud
     public float Gravity { get; set; } = Consts.defaultGravity;
+    public Vector2 Size { get; init; }
     public float Mass { get; init; } = 1;
     public Vector2 InitialPosition { private get; set; } = initialPosition;
     public Vector2 Position { get; private set; } = initialPosition;
     public Vector2 InitialVelocity { private get; set; } = initialVelocity;
     public Vector2 Velocity { get; private set; } = initialVelocity;
-    public Vector2 Size { get; init; }
+    public Vector2 Acceleration { get; private set; }
+    public Vector2 Force { get => Acceleration * Mass; set {Acceleration = value/ Mass; } }
     public Vector2 Momentum { get => Velocity * Mass; set { Velocity = value / Mass; } }
 
     //Helpful values
@@ -36,11 +38,16 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
     public void Reset()
     {
         Position = InitialPosition;
-        Velocity = Vector2.Zero;
+        Velocity = InitialVelocity;
+        Acceleration = Vector2.Zero;
     }
 
     public ((int, int)? collisionCoords, bool isGrounded) UpdateMovement(float dt, CollisionManager collisionManager) {
-        SetVelocityY(Velocity.Y + Gravity * dt);
+        //add all acceleration to velocity and clear it
+        Acceleration += Vector2.UnitY * Gravity;
+        Velocity += Acceleration * dt;
+        Acceleration = Vector2.Zero;
+        //update position
         return collisionManager.ManageBlockCollision(this, Velocity * dt); //maybe change this to return *type* of other collider too
     }
 
@@ -54,7 +61,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
                 SetVelocityX(Math.Max(Velocity.X - Consts.GroundResistance * dt, 0f));
             }
         } else { //air resistance
-            SetVelocity(Velocity * Consts.AirResistance);
+            Acceleration -= Velocity * Consts.AirResistance;
         }
     }
 

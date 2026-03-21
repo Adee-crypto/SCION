@@ -81,12 +81,17 @@ public class Player : IPlayer
 
     public void Move(int direction)
     {
-        this.direction.X = direction;
-        Collider.SetVelocityX(Collider.Velocity.X + (isGrounded ? Consts.playerGroundXForce : Consts.playerAirXForce) * direction);
+        float xForce;
+        if (isGrounded) {
+            xForce = Consts.playerGroundXForce * (Consts.playerTargetWalkVelocity - Math.Abs(Collider.Velocity.X));
+        } else {
+            xForce = Consts.playerAirXForce;
+        }
+        Collider.Force += Vector2.UnitX * direction * xForce;
     }
 
     public void TryJump() {
-        if (isGrounded) Collider.SetVelocityY(Consts.playerYForce);
+        if (isGrounded) Collider.Force += Vector2.UnitY * Consts.playerYForce;
     }   
 
     public void TryBreakBlock() {
