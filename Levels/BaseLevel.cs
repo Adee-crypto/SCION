@@ -66,6 +66,8 @@ public abstract class BaseLevel : ILevel
             Plants.Add(ProjectileUtil.ProjectileToPlant[type](BlockManager, prevCoords));
     }
 
+    public void Infect((int, int) pos) => Plants.Add(new VoidPlant(BlockManager, pos));
+
     public void Update(GameTime gameTime)
     {
         if (IsOver) return;

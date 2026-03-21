@@ -93,8 +93,7 @@ public class Player : IPlayer
         if (isGrounded && Collider.Velocity.X == 0) playerState = State.BreakBlock;
     }
 
-    //This is pretty inefficient
-    public void GetRandomSeed() => GetSeed(Random.Shared.GetItems(Enum.GetValues<Species>(), 1)[0]);
+    public void GetRandomSeed() => GetSeed(PlantUtil.RandomSpecies());
     
     public void GetSeed(Species type) => Seeds.Add(PlantUtil.SpeciesToProjectile[type]);
 

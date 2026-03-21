@@ -9,7 +9,10 @@ namespace Sprint2.Entities.Plants;
 
 public static class PlantUtil
 {
+    public static readonly Species[] species = [Species.Apple, Species.Grass, Species.Pineapple, Species.Sandbox];
     public static List<(int, int)> GrowDirs { get; } = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+
+    public static Species RandomSpecies() => species[Funcs.RandInt(species.Length)];
 
     //there are WAY too many of these
     public static Dictionary<Species, BlockType> SpeciesToBlock {get;} = new() {
@@ -17,6 +20,7 @@ public static class PlantUtil
         {Species.Apple, BlockType.Apple},
         {Species.Pineapple, BlockType.Pineapple},
         {Species.Sandbox, BlockType.Sandbox},
+        {Species.Void, BlockType.Void},
     };
 
     public static Dictionary<BlockType, Species> BlockToSpecies {get;} = new() {
@@ -46,13 +50,13 @@ public static class PlantUtil
         {Species.Apple, 0.2f },
         {Species.Pineapple, 0.4f },
         {Species.Sandbox, 0.2f }, //6 ticks until detonation
+        {Species.Void, 1f },
     };
 
     public static int SpeciesMaxCells(Species species) => species switch {
         Species.Grass => Funcs.RandInt(5, 8),
         Species.Apple => Funcs.RandInt(10, 21),
         Species.Pineapple => Funcs.RandInt(7, 40),
-        Species.Sandbox => int.MaxValue,
-        _ => throw new NotImplementedException(),
+        _ => int.MaxValue,
     };
 }

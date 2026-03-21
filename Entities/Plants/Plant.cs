@@ -6,7 +6,7 @@ using Sprint2.Managers;
 namespace Sprint2.Entities.Plants;
 
 public enum Species {
-    Grass, Apple, Pineapple, Sandbox
+    Grass, Apple, Pineapple, Sandbox, Void
 };
 
 public abstract class Plant
@@ -34,7 +34,7 @@ public abstract class Plant
         MaxCells = PlantUtil.SpeciesMaxCells(species);
         Ticker = new(PlantUtil.SpeciesGrowTimes[species]);
         BudCells.Add(root);
-        blockManager.Add(root, PlantUtil.SpeciesToBlock[species]);
+        blockManager.Set(root, PlantUtil.SpeciesToBlock[species]);
     }
 
     public abstract void Update(GameTime gameTime);
@@ -48,7 +48,7 @@ public abstract class Plant
     }
 
     protected void MatureCell((int, int) pos) {
-        BlockManager.SetColorAt(pos, Color.Gray);
+        BlockManager.SetColor(pos, Color.Gray);
         StemCells.Add(pos);
     }
 

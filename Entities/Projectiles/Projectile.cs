@@ -53,7 +53,7 @@ public class Projectile : IProjectile
             if (ProjectileUtil.ProjectileToPlant.ContainsKey(Type)) { //eventually change this to check for type of collider too
                 level.TrySow(Type, prevCoords);
             } else if (Type == ProjectileType.Void) {
-                level.BlockManager.Infect(coords.Value);
+                level.Infect(coords.Value);
             }
             Kill();
         }

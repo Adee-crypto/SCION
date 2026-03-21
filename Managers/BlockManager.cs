@@ -36,12 +36,13 @@ public class BlockManager {
     public void Reset() => blocks.Clear();
     public bool HasBlockAt((int, int) pos) => blocks.ContainsKey(pos);
     public Block BlockAt((int, int) pos) => blocks[pos];
-    // public void SetAt((int, int) pos, Block block) => blocks[pos] = block;
-    public void SetColorAt((int, int) pos, Color c) => blocks[pos] = new(BlockAt(pos).Type) {Color = c};
-    public void Infect((int, int) pos) => blocks[pos] = new(Void);
+    public void SetColor((int, int) pos, Color c) => blocks[pos] = new(BlockAt(pos).Type) {Color = c};
+    public void Set((int, int) pos, Block.BlockType type) => blocks[pos] = new(type);
     public bool Add((int, int) pos, Block.BlockType type) => blocks.TryAdd(pos, new(type));
     public bool Add((int, int) pos, Block.BlockType type, Color c) => blocks.TryAdd(pos, new(type) {Color = c});
     public bool Remove((int, int) pos) => blocks.Remove(pos);
+    
+    public void Infect((int, int) pos) => Set(pos, Void);
 
     /// <summary>used when player tries to dig a block</summary>
     public Block? TryBreakAt((int, int) pos) {

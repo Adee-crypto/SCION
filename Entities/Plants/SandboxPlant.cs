@@ -43,9 +43,9 @@ public class SandboxPlant(BlockManager blockManager, (int, int) root) : Plant(bl
         int ticks = Ticker.TicksPassed(gameTime);
         if (IsGrowing && ticks > 0) {
             if (Ticker.TickAge < 6) { //colors swaps each tick
-                BlockManager.SetColorAt(root, Ticker.TickAge % 2 == 0 ? Color.White : Color.Gray);
+                BlockManager.SetColor(root, Ticker.TickAge % 2 == 0 ? Color.White : Color.Gray);
             } else {
-                BlockManager.SetColorAt(root, Color.White);
+                BlockManager.SetColor(root, Color.White);
                 Grow();
                 IsGrowing = false;
             }
