@@ -14,15 +14,21 @@ public enum ColliderType {
 
 public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), ColliderType type=ColliderType.None)
 {
+    //Init fields
     public ColliderType Type {get;}= type;
-    //Newton would be proud
     public float Gravity { get; set; } = Consts.defaultGravity;
     public Vector2 Size { get; init; }
     public float Mass { get; init; } = 1;
-    public Vector2 InitialPosition { private get; set; } = initialPosition;
+
+    //Dynamics
+    private Vector2 InitialPosition = initialPosition;
+    private Vector2 InitialVelocity = initialVelocity;
     public Vector2 Position { get; private set; } = initialPosition;
-    public Vector2 InitialVelocity { private get; set; } = initialVelocity;
+    public void SetPosition(Vector2 newPosition) => Position = newPosition; //this is explicit to discourage use
     public Vector2 Velocity { get; private set; } = initialVelocity;
+    public void SetVelocityX(float x) => Velocity = new(x, Velocity.Y); //this is explicit to discourage use
+    public void SetVelocityY(float y) => Velocity = new(Velocity.X, y); //this is explicit to discourage use
+    public void SetVelocity(Vector2 newVelocity) => Velocity = newVelocity; //this is explicit to discourage use
     public Vector2 Acceleration { get; private set; }
     public Vector2 Force { get => Acceleration * Mass; set {Acceleration = value/ Mass; } }
     public Vector2 Momentum { get => Velocity * Mass; set { Velocity = value / Mass; } }
@@ -75,12 +81,5 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
         other.Momentum += new Vector2(direction * 100f, -100f);
     }
 
-    public void SetPositionX(float x) => Position = new(x, Position.Y);
-    public void SetPositionY(float y) => Position = new(Position.X, y);
-    public void SetPosition(Vector2 newPosition) => Position = newPosition;
-
-    public void SetVelocityX(float x) => Velocity = new(x, Velocity.Y);
-    public void SetVelocityY(float y) => Velocity = new(Velocity.X, y);
-    public void SetVelocity(Vector2 newVelocity) => Velocity = newVelocity;
 
 }

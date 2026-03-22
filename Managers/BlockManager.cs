@@ -8,8 +8,10 @@ namespace Sprint2.Managers;
 
 public class BlockManager {
 
-    public struct Block(Block.BlockType type)
+    public record struct Block(Block.BlockType Type, Color Color)
     {
+        public Block(BlockType type) : this(type, Color.White) {}
+        
         public enum BlockType {
             //plants
             Grass,
@@ -22,24 +24,22 @@ public class BlockManager {
             StoneBrick,
             CrackedStoneBrick,
             //void
+            
             Void
         }
         
         public readonly bool IsBreakable => Type switch
             {Grass or Apple or Pineapple or Sandbox or Dirt => true, _ => false };
-
-        public BlockType Type {get; set;} = type;
-        public Color Color {get; set;} = Color.White;
     }
     
     private readonly Dictionary<(int x, int y), Block> blocks = [];
     public void Reset() => blocks.Clear();
     public bool HasBlockAt((int, int) pos) => blocks.ContainsKey(pos);
     public Block BlockAt((int, int) pos) => blocks[pos];
-    public void SetColor((int, int) pos, Color c) => blocks[pos] = new(BlockAt(pos).Type) {Color = c};
+    public void SetColor((int, int) pos, Color c) => blocks[pos] = new(BlockAt(pos).Type, c);
     public void Set((int, int) pos, Block.BlockType type) => blocks[pos] = new(type);
     public bool Add((int, int) pos, Block.BlockType type) => blocks.TryAdd(pos, new(type));
-    public bool Add((int, int) pos, Block.BlockType type, Color c) => blocks.TryAdd(pos, new(type) {Color = c});
+    public bool Add((int, int) pos, Block.BlockType type, Color c) => blocks.TryAdd(pos, new(type, c));
     public bool Remove((int, int) pos) => blocks.Remove(pos);
     
     public void Infect((int, int) pos) => Set(pos, Void);

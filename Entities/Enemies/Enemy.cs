@@ -58,7 +58,7 @@ public class Enemy : Extensions.IDrawable
 
     public void Jump()
     {
-        if (isGrounded) Collider.SetVelocityY(Consts.playerYForce);
+        if (isGrounded) Collider.Force += Vector2.UnitY * Consts.playerYForce;
     }
 
     private void UpdatePatrol()

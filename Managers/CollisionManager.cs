@@ -23,6 +23,7 @@ public class CollisionManager(BlockManager blockManager)
         int topIndex = Funcs.GridCoord(pos.Y+t);
         int bottomIndex = Funcs.GridCoord(pos.Y+size.Y-t);
 
+        //checks all tiles intersecting with hitbox
         for (int y = topIndex; y <= bottomIndex; y++) {
             for (int x = leftIndex; x <= rightIndex; x++) {
                 if (blockManager.HasBlockAt((x, y))) output.Add((x, y));
