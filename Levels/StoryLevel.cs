@@ -11,7 +11,7 @@ public sealed class StoryLevel : BaseLevel
     public StoryLevel(Player player, StoryLevelDef def) : base(player)
     {
         this.def = def;
-        player.Collider.InitialPosition = def.PlayerSpawnPos;
+        player.Collider.SetInitialPosition(def.PlayerSpawnPos);
         player.Collider.SetPosition(def.PlayerSpawnPos);
         Reset();
     }
