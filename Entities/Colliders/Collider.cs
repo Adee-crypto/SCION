@@ -22,7 +22,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
 
     //Dynamics
     private Vector2 InitialPosition = initialPosition;
-    public void SetInitialPosition(Vector2 initialPosition) { InitialPosition = initialPosition; }
+    public void SetInitialPosition(Vector2 initialPosition) { InitialPosition = initialPosition; } //this is explicit to discourage use
     private Vector2 InitialVelocity = initialVelocity;
     public void SetInitialVelocity(Vector2 initialVelocity) { InitialVelocity = initialVelocity; }
     public Vector2 Position { get; private set; } = initialPosition;
