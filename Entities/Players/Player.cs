@@ -88,6 +88,7 @@ public class Player : IPlayer
             xForce = Consts.playerAirXForce;
         }
         Collider.Force += Vector2.UnitX * direction * xForce;
+        this.direction.X = direction;
     }
 
     public void TryJump() {
