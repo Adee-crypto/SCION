@@ -3,16 +3,10 @@ using Sprint2.Extensions;
 
 namespace Sprint2.Util;
 
-public class TunableFloat : ITunable
+public class TunableFloat(float defaultVal) : ITunableFloat
 {
-    public float DefaultValue { get; }
-    public float Value { get; set; }
-
-    public TunableFloat(float defaultVal)
-    {
-        DefaultValue = defaultVal;
-        Value = defaultVal;
-    }
+    public float DefaultValue { get; } = defaultVal;
+    public float Value { get; set; } = defaultVal;
 
     public void Reset()
     {

@@ -114,10 +114,17 @@ public enum SettingsTab
     Controls
 }
 
-public interface ITunable
+public interface ITunableFloat
 {
     float DefaultValue { get; }
     float Value { get; set; }
+    void Reset();
+}
+
+public interface ITunableInt
+{
+    int DefaultValue { get; }
+    int Value { get; set; }
     void Reset();
 }
 

@@ -5,7 +5,7 @@ namespace Sprint2.Util;
 public static class Consts
 {
     //player stats
-    public const float defaultPlayerHealth = 5;
+    public const int defaultPlayerHealth = 5;
 
     //other
     public static readonly (int, int)[] orthoDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];

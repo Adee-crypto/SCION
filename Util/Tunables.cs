@@ -5,7 +5,7 @@ namespace Sprint2.Util;
 public static class Tunables
 {
     //player stats
-    public static TunableFloat PlayerMaxHealth {get;} = new(Consts.defaultPlayerHealth);
+    public static TunableInt PlayerMaxHealth {get;} = new(Consts.defaultPlayerHealth);
 
     //physics
     public static TunableFloat DefaultGravity {get;} = new(Consts.defaultGravity);
