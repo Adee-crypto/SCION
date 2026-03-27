@@ -48,12 +48,12 @@ public class CollisionManager(BlockManager blockManager)
         float rightX = Funcs.ShoveAwayOrigin(newPos.X)+t;
         float topY = Funcs.ShoveTowardOrigin(newPos.Y, size.Y)-t;
         float bottomY = Funcs.ShoveAwayOrigin(newPos.Y)+t;
-        SortedDictionary<Vector2, List<Vector2>> nearestSpots = new(new Funcs.VectorComparer<Vector2>(newPos)) {
+        SortedDictionary<Vector2, List<Vector2>> nearestSpots = new(new Funcs.VectorComparer<Vector2>(newPos));
             //orthogonal cases
-            { new(newPos.X, topY),    [new(0, -Consts.BlockWidth)] },
-            { new(newPos.X, bottomY), [new(0, Consts.BlockWidth)] },
-            { new(leftX, newPos.Y),   [new(-Consts.BlockWidth, 0)] },
-            { new(rightX, newPos.Y),  [new(Consts.BlockWidth, 0)] },};
+            nearestSpots[new(newPos.X, topY)] =    [new(0, -Consts.BlockWidth)];
+            nearestSpots[new(newPos.X, bottomY)] = [new(0, Consts.BlockWidth)];
+            nearestSpots[new(leftX, newPos.Y)] =   [new(-Consts.BlockWidth, 0)];
+            nearestSpots[new(rightX, newPos.Y)] =  [new(Consts.BlockWidth, 0)];
             //diagonal cases override in case of key collision
             nearestSpots[new(leftX, topY)] =     [new(0, -Consts.BlockWidth), new(-Consts.BlockWidth, 0)];
             nearestSpots[new(rightX, topY)] =    [new(0, -Consts.BlockWidth), new(Consts.BlockWidth, 0)];
