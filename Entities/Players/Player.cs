@@ -38,7 +38,7 @@ public class Player : IPlayer
     private float breakTimer;
 
     //Stats
-    private readonly int maxHealth = 5;
+    private readonly int maxHealth = (int)Tunables.PlayerMaxHealth.Value;
     public int MaxHealth => maxHealth;
     private int health;
     public int Health => health;
