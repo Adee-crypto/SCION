@@ -83,16 +83,16 @@ public class Player : IPlayer
     {
         float xForce;
         if (isGrounded) {
-            xForce = Consts.playerGroundXForce * (Consts.playerTargetWalkVelocity - Math.Abs(Collider.Velocity.X));
+            xForce = Tunables.PlayerGroundXForce.Value * (Tunables.PlayerTargetWalkVelocity.Value - Math.Abs(Collider.Velocity.X));
         } else {
-            xForce = Consts.playerAirXForce;
+            xForce = Tunables.PlayerAirXForce.Value;
         }
         Collider.Force += Vector2.UnitX * direction * xForce;
         this.direction.X = direction;
     }
 
     public void TryJump() {
-        if (isGrounded) Collider.Force += Vector2.UnitY * Consts.playerYForce;
+        if (isGrounded) Collider.Force += Vector2.UnitY * Tunables.PlayerYForce.Value;
     }   
 
     public void TryBreakBlock() {
@@ -122,7 +122,7 @@ public class Player : IPlayer
         if (playerState == State.BreakBlock)
         {
             breakTimer += time;
-            if (breakTimer >= Consts.breakDuration)
+            if (breakTimer >= Tunables.BreakDuration.Value)
             {
                 breakTimer = 0f;
                 IsBreakable = true;

@@ -114,6 +114,13 @@ public enum SettingsTab
     Controls
 }
 
+public interface ITunable
+{
+    float DefaultValue { get; }
+    float Value { get; set; }
+    void Reset();
+}
+
 // internal interface IEntitySprite : IUpdatable
 // {
 //     void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);

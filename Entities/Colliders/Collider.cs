@@ -16,7 +16,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
 {
     //Init fields
     public ColliderType Type {get;}= type;
-    public float Gravity { get; set; } = Consts.defaultGravity;
+    public float Gravity { get; set; } = Tunables.DefaultGravity.Value;
     public Vector2 Size { get; init; }
     public float Mass { get; init; } = 1;
 
@@ -64,12 +64,12 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
         if (isGrounded) {
             //we'll see if we need to add proportional velocity friction
             if (Velocity.X < 0) { //ground kinetic friction
-                SetVelocityX(Math.Min(Velocity.X + Consts.GroundResistance * dt, 0f));
+                SetVelocityX(Math.Min(Velocity.X + Tunables.GroundResistance.Value * dt, 0f));
             } else {
-                SetVelocityX(Math.Max(Velocity.X - Consts.GroundResistance * dt, 0f));
+                SetVelocityX(Math.Max(Velocity.X - Tunables.GroundResistance.Value * dt, 0f));
             }
         } else { //air resistance
-            Acceleration -= Velocity * Consts.AirResistance;
+            Acceleration -= Velocity * Tunables.AirResistance.Value;
         }
     }
 

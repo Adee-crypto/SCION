@@ -47,24 +47,24 @@ public class Enemy : Extensions.IDrawable
         direction = new(1, 0);
         isGrounded = false;
         movementX = 0;
-        attackCoolDownTimer = Consts.enemyAttackCoolDown;
+        attackCoolDownTimer = Tunables.EnemyAttackCoolDown.Value;
         attackDurationTimer = 0;
     }
 
     public void Move(int direction)
     {
-        Collider.SetVelocityX(Consts.enemyXForce * direction);
+        Collider.SetVelocityX(Tunables.EnemyXForce.Value * direction);
     }
 
     public void Jump()
     {
-        if (isGrounded) Collider.Force += Vector2.UnitY * Consts.playerYForce;
+        if (isGrounded) Collider.Force += Vector2.UnitY * Tunables.PlayerYForce.Value;
     }
 
     private void UpdatePatrol()
     {
         if (state != EnemyState.None) return;
-        if (Math.Abs(movementX) >= Consts.enemyPatrolDistance)
+        if (Math.Abs(movementX) >= Tunables.EnemyPatrolDistance.Value)
         {
             movementX = 0;
             direction *= -1;
@@ -90,12 +90,12 @@ public class Enemy : Extensions.IDrawable
         float distanceY = Collider.Center.Y - player.Collider.Center.Y;
         bool facing = direction.X > 0 && distanceX < 0 || direction.X < 0 && distanceX > 0;
 
-        if (facing && attackCoolDownTimer >= Consts.enemyAttackCoolDown && Math.Abs(distanceX) <= Consts.enemyRangeAttackDistance && Math.Abs(distanceY) <= 4)
+        if (facing && attackCoolDownTimer >= Tunables.EnemyAttackCoolDown.Value && Math.Abs(distanceX) <= Tunables.EnemyRangeAttackDistance.Value && Math.Abs(distanceY) <= 4)
         {
             attackCoolDownTimer = 0;
-            attackDurationTimer = Consts.enemyAttackDuration;
+            attackDurationTimer = Tunables.EnemyAttackDuration.Value;
             Attack();
-            if (Math.Abs(distanceX) > Consts.enemyAttackDistance) FireShot(projectileManager);
+            if (Math.Abs(distanceX) > Tunables.EnemyAttackDistance.Value) FireShot(projectileManager);
             else
             {
                 Collider.KnockBack(player.Collider);   
