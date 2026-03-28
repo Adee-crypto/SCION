@@ -16,10 +16,11 @@ public static class PlantUtil
     //there are WAY too many of these
     public static Dictionary<Species, BlockType> SpeciesToBlock {get;} = new() {
         {Species.Grass, BlockType.Grass},
-        {Species.Apple, BlockType.Apple},
+        {Species.Apple, BlockType.Apple},s
         {Species.Pineapple, BlockType.Pineapple},
         {Species.Sandbox, BlockType.Sandbox},
         {Species.Void, BlockType.Void},
+        { Species.Cherry, BlockType.Cherry },
     };
 
     public static Dictionary<BlockType, Species> BlockToSpecies {get;} = new() {
@@ -27,6 +28,7 @@ public static class PlantUtil
         {BlockType.Apple, Species.Apple},
         {BlockType.Pineapple, Species.Pineapple},
         {BlockType.Sandbox, Species.Sandbox},
+        { BlockType.Cherry, Species.Cherry },
     };
 
     public static Dictionary<Species, ProjectileType> SpeciesToProjectile {get;} = new() {
@@ -34,6 +36,7 @@ public static class PlantUtil
         {Species.Apple, ProjectileType.Apple},
         {Species.Pineapple, ProjectileType.Pineapple},
         {Species.Sandbox, ProjectileType.Sandbox},
+
     };
 
     public static Dictionary<Species, Func<BlockManager, (int, int), Plant>> SpeciesToPlantInit { get; } = new() {
@@ -41,6 +44,7 @@ public static class PlantUtil
         { Species.Apple, (b, r) => new ApplePlant(b, r) },
         { Species.Pineapple, (b, r) => new PineapplePlant(b, r) },
         { Species.Sandbox, (b, r) => new SandboxPlant(b, r) },
+        { Species.Cherry, (b, r) => new CherryPlant(b, r) },
     };
     
     public static Dictionary<Species, float> SpeciesGrowTimes { get; } = new()
@@ -50,6 +54,7 @@ public static class PlantUtil
         {Species.Pineapple, 0.4f },
         {Species.Sandbox, 0.2f }, //6 ticks until detonation
         {Species.Void, 1f },
+        { Species.Cherry, 0f },
     };
 
     public static int SpeciesMaxCells(Species species) => species switch {
@@ -57,5 +62,6 @@ public static class PlantUtil
         Species.Apple => Funcs.RandInt(10, 21),
         Species.Pineapple => Funcs.RandInt(7, 40),
         _ => int.MaxValue,
+        Species.Cherry => 144,
     };
 }

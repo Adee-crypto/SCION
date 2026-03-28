@@ -18,6 +18,7 @@ public class BlockManager {
             Apple,
             Pineapple,
             Sandbox,
+            Cherry,
             //platforms
             Dirt,
             Stone,

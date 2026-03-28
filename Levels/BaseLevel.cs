@@ -61,9 +61,23 @@ public abstract class BaseLevel : ILevel
 
     protected virtual void UpdateLevelLogic(GameTime gameTime) { }
 
-    public void TrySow(ProjectileType type, (int, int) prevCoords) {
+    public void TrySow(ProjectileType type, (int, int) prevCoords)
+    {
         if (!BlockManager.HasBlockAt(prevCoords))
             Plants.Add(ProjectileUtil.ProjectileToPlant[type](BlockManager, prevCoords));
+    }
+
+    public void TryPlantCherry()
+    {
+        if (Player.IsDead || IsOver) return;
+
+        // Root position = grid coords under the player's feet (bottom center)
+        var root = Funcs.GridCoords(new Vector2(Player.Collider.Center.X, Player.Collider.Bottom));
+
+        Plants.Add(new CherryPlant(BlockManager, root));
+
+        // Force collision resolution so the player is pushed on top of the new structure
+        CollisionManager.ManageBlockCollision(Player.Collider, Vector2.Zero);
     }
 
     public void Infect((int, int) pos) => Plants.Add(new VoidPlant(BlockManager, pos));

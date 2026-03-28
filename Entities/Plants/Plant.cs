@@ -7,7 +7,7 @@ using Sprint2.Util;
 namespace Sprint2.Entities.Plants;
 
 public enum Species {
-    Grass, Apple, Pineapple, Sandbox, Void
+    Grass, Apple, Pineapple, Sandbox, Void, Cherry
 };
 
 public abstract class Plant
