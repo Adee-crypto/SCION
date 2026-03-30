@@ -61,19 +61,17 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
 
     public void UpdatePlayerVelocity(bool isGrounded, float dt)
     {
-        if (isGrounded) {
-            //we'll see if we need to add proportional velocity friction
-            if (Velocity.X < 0) { //ground kinetic friction
-                SetVelocityX(Math.Min(Velocity.X + Tunables.GroundResistance.Value * dt, 0f));
-            } else {
-                SetVelocityX(Math.Max(Velocity.X - Tunables.GroundResistance.Value * dt, 0f));
-            }
-        } else { //air resistance
-            Acceleration -= Velocity * Tunables.AirResistance.Value;
-        }
+        if (isGrounded)
+        {
+            if (Velocity.X < 0) SetVelocityX(Math.Min(Velocity.X + Tunables.GroundResistance.Value * dt, 0f));
+            else SetVelocityX(Math.Max(Velocity.X - Tunables.GroundResistance.Value * dt, 0f));
+            
+        } 
+        else Acceleration -= Velocity * Tunables.AirResistance.Value;
     }
 
-    public bool Intersects(Collider other) {
+    public bool Intersects(Collider other)
+    {
         return (2 * Math.Abs(Center.X - other.Center.X) < (Size.X + other.Size.X)) && (2 * Math.Abs(Center.Y - other.Center.Y) < (Size.Y + other.Size.Y));
     }
 
@@ -82,6 +80,4 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
         int direction = Velocity.X < 0 ? -1 : 1;
         other.Momentum += new Vector2(direction * 100f, -100f);
     }
-
-
 }

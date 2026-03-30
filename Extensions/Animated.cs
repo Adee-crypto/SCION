@@ -16,7 +16,7 @@ public abstract class Animated
         FrameSourceRects = newFrames;
     }
 
-    public void UpdateFrameState(GameTime gameTime)
+    public void UpdateFrame(GameTime gameTime)
     {
         FrameIndex = (FrameIndex + Ticker.TicksPassed(gameTime)) % FrameSourceRects.Length;
     }

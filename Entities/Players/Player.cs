@@ -148,18 +148,17 @@ public class Player : IPlayer
     public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
         if (playerState == State.Dead) return;
-
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
         isGrounded = Collider.UpdateMovement(dt, collisionManager).isGrounded;
         UpdateBreakBlock(dt);
         UpdateHealth(IsDamaged, dt);
 
-        aimer?.Update(Collider.Center, Mouse.GetState());
-        playerSprite.UpdateState(playerState, direction, Collider.Velocity, IsDamaged);
-        playerSprite.Update(gameTime);
-        Collider.UpdatePlayerVelocity(isGrounded, dt);
+        aimer.Update(Collider.Center, Mouse.GetState());
+        playerSprite.Update(gameTime, playerState, direction, Collider.Velocity, IsDamaged);
 
         IsDamaged = false;
+        Collider.UpdatePlayerVelocity(isGrounded, dt);
         if (playerState != State.Dead) playerState = State.None;
     }
 

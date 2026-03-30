@@ -79,7 +79,11 @@ public class PlayerSprite : Animated
         else color = Color.White;
     }
 
-    public void Update(GameTime gameTime) => UpdateFrameState(gameTime);
+    public void Update(GameTime gameTime, State linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
+    {
+        UpdateState(linkAction, direction, velocity, isDamaged);
+        UpdateFrame(gameTime);
+    }
 
     public void Draw(SpriteBatch spriteBatch, Vector2 pos)
     {

@@ -64,7 +64,7 @@ public class EnemySprite : Animated
         }
     }
 
-    public void Update(GameTime gameTime) => UpdateFrameState(gameTime);
+    public void Update(GameTime gameTime) => UpdateFrame(gameTime);
 
     public void Draw(SpriteBatch spriteBatch, Vector2 pos)
     {

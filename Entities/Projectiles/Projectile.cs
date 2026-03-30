@@ -45,7 +45,7 @@ public class Projectile : IProjectile
         if (Sprite.Ticker.TickAge >= Sprite.MaxLifetimeSeconds) Kill();
 
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Sprite.UpdateFrameState(gameTime);
+        Sprite.UpdateFrame(gameTime);
         var prevCoords = Funcs.GridCoords(Collider.Position);
         var coords = Collider.UpdateMovement(dt, level.CollisionManager).collisionCoords;
 
