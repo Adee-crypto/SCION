@@ -111,7 +111,8 @@ public enum SettingsTab
 {
     General,
     Graphics,
-    Controls
+    Controls,
+    Dev
 }
 
 public interface ITunableFloat

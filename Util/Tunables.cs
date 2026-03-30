@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace Sprint2.Util;
@@ -35,4 +36,32 @@ public static class Tunables
     public static TunableFloat EnemyPatrolDistance {get;} = new(Consts.enemyPatrolDistance);
     public static TunableFloat EnemyAttackDistance {get;} = new(Consts.enemyAttackDistance);
     public static TunableFloat EnemyRangeAttackDistance {get;} = new(Consts.enemyRangeAttackDistance);
+
+    //float list
+    public static IReadOnlyList<(string Name, TunableFloat Value)> FloatSettings { get; } = [
+      ("Default Gravity", DefaultGravity),
+      ("Default Projectile Gravity", DefaultProjectileGravity),
+      ("Void Projectile Gravity", VoidProjectileGravity),
+      ("Air Resistance", AirResistance),
+      ("Ground Resistance", GroundResistance),
+      ("Player Ground X Force", PlayerGroundXForce),
+      ("Player Air X Force", PlayerAirXForce),
+      ("Player Target Walk Velocity", PlayerTargetWalkVelocity),
+      ("Player Y Force", PlayerYForce),
+      ("Player Mass", PlayerMass),
+      ("Enemy X Force", EnemyXForce),
+      ("Projectile Mass", ProjectileMass),
+      ("Break Duration", BreakDuration),
+      ("Player Frame Time", PlayerFrameTime),
+      ("Enemy Attack Cooldown", EnemyAttackCoolDown),
+      ("Enemy Attack Duration", EnemyAttackDuration),
+      ("Enemy Patrol Distance", EnemyPatrolDistance),
+      ("Enemy Attack Distance", EnemyAttackDistance),
+      ("Enemy Range Attack Distance", EnemyRangeAttackDistance)  
+    ];
+
+    //int list
+    public static IReadOnlyList<(string Name, TunableInt Value)> IntSettings { get; } = [
+      ("Player Max Health", PlayerMaxHealth)  
+    ];
 }

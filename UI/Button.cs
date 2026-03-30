@@ -29,6 +29,15 @@ public class Button
         textPos = pos + 0.5f * (size - font.MeasureString(buttonText));
     }
 
+    public void SetBounds(Rectangle newBounds)
+    {
+        bounds = newBounds;
+        textPos = new Vector2(
+            bounds.X + (bounds.Width - font.MeasureString(text).X) / 2f,
+            bounds.Y + (bounds.Height - font.MeasureString(text).Y) / 2f
+        );
+    }
+
     public void Resize((int w, int h) screenSize)
     {
         Vector2 size = new(bounds.Width, bounds.Height);

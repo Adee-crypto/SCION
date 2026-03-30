@@ -29,6 +29,7 @@ public class ScreenSettings : IScreen, IResizableScreen
             { SettingsTab.General, new GeneralPanel(game) },
             { SettingsTab.Graphics, new GraphicsPanel(game) },
             { SettingsTab.Controls, new ControlsPanel(game) },
+            { SettingsTab.Dev, new DevPanel(game) }
         };
     }
 
@@ -76,6 +77,17 @@ public class ScreenSettings : IScreen, IResizableScreen
             () => {
                 currentTab = SettingsTab.Controls;
                 menu.Title = "Settings: Controls";
+            }, 
+            buttonSize, 
+            new Vector2(x, y + (buttonSize.Y + spacer) * 2)
+        ));
+        menu.AddButton(new(
+            Assets.UiFont, 
+            Assets.ButtonTexture, 
+            "Dev",
+            () => {
+                currentTab = SettingsTab.Dev;
+                menu.Title = "Settings: Dev";
             }, 
             buttonSize, 
             new Vector2(x, y + (buttonSize.Y + spacer) * 2)

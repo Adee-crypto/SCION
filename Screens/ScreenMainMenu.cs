@@ -29,10 +29,34 @@ public class ScreenMainMenu : IScreen, IResizableScreen
         float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
         float y = game.GraphicsDevice.Viewport.Height * 0.3f;
 
-        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Story Mode", () => screenManager.SetScreen(new ScreenStory(game, screenManager)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 0)));
-        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Arcade Mode", () => screenManager.SetScreen(new ScreenArcade(game, screenManager)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 1)));
-        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Settings", () => screenManager.SetScreen(new ScreenSettings(game, screenManager)), buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 2)));
-        menu.AddButton(new(Assets.UiFont, Assets.ButtonTexture, "Quit Game", game.Exit, buttonSize, new Vector2(x, y + (buttonSize.Y + spacer) * 3)));
+        menu.AddButton(new(
+            Assets.UiFont, 
+            Assets.ButtonTexture, 
+            "Story Mode", 
+            () => screenManager.SetScreen(new ScreenStory(game, screenManager)), 
+            buttonSize, 
+            new Vector2(x, y + (buttonSize.Y + spacer) * 0)));
+        menu.AddButton(new(
+            Assets.UiFont, 
+            Assets.ButtonTexture, 
+            "Arcade Mode", 
+            () => screenManager.SetScreen(new ScreenArcade(game, screenManager)), 
+            buttonSize, 
+            new Vector2(x, y + (buttonSize.Y + spacer) * 1)));
+        menu.AddButton(new(
+            Assets.UiFont, 
+            Assets.ButtonTexture, 
+            "Settings", 
+            () => screenManager.SetScreen(new ScreenSettings(game, screenManager)), 
+            buttonSize, 
+            new Vector2(x, y + (buttonSize.Y + spacer) * 2)));
+        menu.AddButton(new(
+            Assets.UiFont, 
+            Assets.ButtonTexture, 
+            "Quit Game", 
+            game.Exit, 
+            buttonSize, 
+            new Vector2(x, y + (buttonSize.Y + spacer) * 3)));
     }
 
     public void OnExit() { }

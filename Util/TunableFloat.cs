@@ -1,4 +1,3 @@
-using System.Threading;
 using Sprint2.Extensions;
 
 namespace Sprint2.Util;

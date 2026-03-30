@@ -16,7 +16,7 @@ public static class PlantUtil
     //there are WAY too many of these
     public static Dictionary<Species, BlockType> SpeciesToBlock {get;} = new() {
         {Species.Grass, BlockType.Grass},
-        {Species.Apple, BlockType.Apple},s
+        {Species.Apple, BlockType.Apple},
         {Species.Pineapple, BlockType.Pineapple},
         {Species.Sandbox, BlockType.Sandbox},
         {Species.Void, BlockType.Void},
@@ -61,7 +61,7 @@ public static class PlantUtil
         Species.Grass => Funcs.RandInt(5, 8),
         Species.Apple => Funcs.RandInt(10, 21),
         Species.Pineapple => Funcs.RandInt(7, 40),
-        _ => int.MaxValue,
         Species.Cherry => 144,
+        _ => int.MaxValue,
     };
 }
