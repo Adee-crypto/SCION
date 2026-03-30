@@ -22,28 +22,37 @@ public enum SpriteState
 public class PlayerSprite : Animated
 {
     private SpriteState currentState;
-    public bool IsDamaged { get; set; }
+    private Color color;
 
     public PlayerSprite()
     {
         currentState = SpriteState.RightFacing;
-        IsDamaged = false;
+        color = Color.White;
         ResetFrameState(SourceRects.PlayerSourceRects[SpriteState.RightFacing]);
     }
 
     public void UpdateState(State linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
         SpriteState newState;
-        IsDamaged = isDamaged;
-
         if (linkAction == State.None)
         {
             if (velocity.Y != 0)
-                newState = direction.X == 1 ? SpriteState.RightFalling : SpriteState.LeftFalling;
+            {
+                if (direction.X == 1) newState = SpriteState.RightFalling;
+                else newState = SpriteState.LeftFacing;
+
+            }
             else if (velocity.X != 0)
-                newState = direction.X == 1 ? SpriteState.RightRunning : SpriteState.LeftRunning;
+            {
+                if (direction.X == 1) newState = SpriteState.RightRunning;
+                else newState = SpriteState.LeftRunning;
+
+            }
             else
-                newState = direction.X == 1 ? SpriteState.RightFacing : SpriteState.LeftFacing;
+            {
+                if (direction.X == 1) newState = SpriteState.RightFacing;
+                else newState = SpriteState.LeftFacing;
+            }
         }
         else if (linkAction == State.Dead)
         {
@@ -51,7 +60,9 @@ public class PlayerSprite : Animated
         }
         else if (linkAction == State.Attack)
         {
-            newState = direction.X == 1 ? SpriteState.RightAttack : SpriteState.LeftAttack;
+            if (direction.X == 1) newState = SpriteState.RightAttack;
+            else newState = SpriteState.LeftAttack;
+
         }
         else
         {
@@ -63,12 +74,15 @@ public class PlayerSprite : Animated
             currentState = newState;
             ResetFrameState(SourceRects.PlayerSourceRects[currentState]);
         }
+
+        if (isDamaged) color = Color.Red;
+        else color = Color.White;
     }
 
     public void Update(GameTime gameTime) => UpdateFrameState(gameTime);
 
     public void Draw(SpriteBatch spriteBatch, Vector2 pos)
     {
-        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, IsDamaged ? Color.Red : Color.White);
+        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, color);
     }
 }

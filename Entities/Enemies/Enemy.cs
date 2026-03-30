@@ -121,7 +121,7 @@ public class Enemy : Extensions.IDrawable
         UpdatePatrol();
         UpdateAttack(dt, Level.Player, Level.ProjectileManager);
 
-        enemySprite.UpdateState(state, direction, Collider.Velocity, false);
+        enemySprite.UpdateState(state, direction, Collider.Velocity);
         enemySprite.Update(gameTime);
 
         if (state != EnemyState.Dead) state = EnemyState.None;

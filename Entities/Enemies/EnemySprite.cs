@@ -22,38 +22,39 @@ public enum SpriteState
 public class EnemySprite : Animated
 {
     private SpriteState currentState;
-    public bool IsDamaged { get; set; }
     public EnemySprite() => Reset();
 
     public void Reset()
     {
         currentState = SpriteState.RightFacing;
-        IsDamaged = false;
         ResetFrameState(SourceRects.EnemySourceRects[SpriteState.RightFacing]);
     }
 
-    public void UpdateState(EnemyState enemyState, Vector2 direction, Vector2 velocity, bool isDamaged)
+    public void UpdateState(EnemyState enemyState, Vector2 direction, Vector2 velocity)
     {
         SpriteState newState;
 
         if (enemyState == EnemyState.None)
         {
             if (velocity.X != 0)
-                newState = direction.X == 1 ? SpriteState.RightRunning : SpriteState.LeftRunning;
+            {
+                if (direction.X == 1) newState = SpriteState.RightRunning;
+                else newState = SpriteState.LeftRunning;  
+            }
             else
-                newState = direction.X == 1 ? SpriteState.RightFacing : SpriteState.LeftFacing;
+            {
+                if (direction.X == 1) newState = SpriteState.RightFacing;
+                else newState = SpriteState.LeftFacing;
+            }
         }
         else if (enemyState == EnemyState.Dead)
         {
             newState = SpriteState.Dead;
         }
-        else if (enemyState == EnemyState.Attack)
-        {
-            newState = direction.X == 1 ? SpriteState.RightAttack : SpriteState.LeftAttack;
-        }
         else
         {
-            newState = SpriteState.RightFacing;
+            if (direction.X == 1) newState = SpriteState.RightAttack;
+            else newState = SpriteState.LeftAttack;
         }
 
         if (currentState != newState)
@@ -67,6 +68,6 @@ public class EnemySprite : Animated
 
     public void Draw(SpriteBatch spriteBatch, Vector2 pos)
     {
-        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, IsDamaged ? Color.Red : Color.Black);
+        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, Color.Black);
     }
 }
