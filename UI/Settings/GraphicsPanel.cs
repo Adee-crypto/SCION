@@ -5,16 +5,15 @@ using Sprint2.Util;
 
 namespace Sprint2.UI.Settings;
 
-public class GraphicsPanel : ButtonListPanel
+public class GraphicsPanel : SettingsListPanel
 {
     public GraphicsPanel(Game1 game) : base(game)
     {
         BuildPanel();
     }
 
-    protected override void BuildButtons()
+    protected override void BuildRows()
     {
-        AddButtonRow("Full-Screen", () => { }, 0);
-        AddButtonRow("Particles", () => { }, 1);
+        // TODO: Implement Graphics Settings
     }
 }

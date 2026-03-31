@@ -5,17 +5,20 @@ using Sprint2.Util;
 
 namespace Sprint2.UI.Settings;
 
-public class GeneralPanel : ButtonListPanel
+public class GeneralPanel : SettingsListPanel
 {
     public GeneralPanel(Game1 game) : base(game)
     {
         BuildPanel();
     }
 
-    protected override void BuildButtons()
+    protected override void BuildRows()
     {
-        AddButtonRow("Master Volume", () => { }, 0);
-        AddButtonRow("Music Volume", () => { }, 1);
-        AddButtonRow("FX Volume", () => { }, 2);
+        // TODO: Implement General Settings
+        
+        /*Rows.Add(new SliderRow("Master Volume", 0f, 100f,
+            () => Tunables.MasterVolume.Value,
+            v => Tunables.MasterVolume.Value = v
+        ));*/
     }
 }

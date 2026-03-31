@@ -22,7 +22,7 @@ public abstract class BasePanel : ISettingsPanel
     protected virtual int PanelPadding => 16;
     protected virtual int HeaderHeight => 40;
     protected virtual int FooterPadding => 16;
-    protected virtual int SCrollStep => 32;
+    protected virtual int ScrollStep => 32;
 
     protected BasePanel(Game1 game)
     {
@@ -74,8 +74,8 @@ public abstract class BasePanel : ISettingsPanel
 
         if (ContentBounds.Contains(mouse.Position))
         {
-            if (wheelDiff > 0) ScrollOffset -= SCrollStep;
-            if (wheelDiff < 0) ScrollOffset += SCrollStep;
+            if (wheelDiff > 0) ScrollOffset -= ScrollStep;
+            if (wheelDiff < 0) ScrollOffset += ScrollStep;
             ClampScroll();
         }
     }

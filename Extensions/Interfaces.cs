@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Sprint2.Entities;
 using Sprint2.Entities.Projectiles;
 
@@ -92,6 +93,22 @@ public interface ISettingsPanel : IDrawable, IResizableScreen
 {
     void Update();
     void BuildPanel();
+}
+
+public interface ISettingsRow
+{
+    int Height { get;}
+
+    void SetBounds(Rectangle bounds);
+
+    void Update(
+        MouseState mouse, 
+        MouseState previousMouse, 
+        KeyboardState keyboard, 
+        KeyboardState previousKeyboard
+    );
+
+    void Draw(SpriteBatch spriteBatch);
 }
 
 public interface ILevel : IUpdatable, IDrawable, IResizableScreen, IResettableScreen
