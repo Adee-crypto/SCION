@@ -14,6 +14,10 @@ public class VoidPlant(BlockManager blockManager, (int, int) root) : Plant(block
 
     protected override void Grow()
     {
+
+        // TODO: Check for nearby GravebindRootPlant cells and reduce infection chance
+        // The closer to Gravebind root means stronger resistance
+
         List<(int, int)> oldBudCells = [.. BudCells];
         
         foreach ((int x, int y) in oldBudCells) {

@@ -19,6 +19,8 @@ public class BlockManager {
             Pineapple,
             Sandbox,
             Cherry,
+            Gravebind,
+            Catalyst,
             //platforms
             Dirt,
             Stone,
