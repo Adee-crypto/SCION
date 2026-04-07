@@ -12,7 +12,7 @@ public static class ProjectileUtil
         { ProjectileType.Apple, (c, r) => new ApplePlant(c, r) },
         { ProjectileType.Pineapple, (c, r) => new PineapplePlant(c, r) },
         { ProjectileType.Sandbox, (c, r) => new SandboxPlant(c, r) },
-        { ProjectileType.Gravebind, (c, r) => new GravebindRootPlant(c, r) },
+        //{ ProjectileType.Gravebind, (c, r) => new GravebindRootPlant(c, r) },
         // Cherry and Catalyst not throwable
     };
 }
