@@ -37,6 +37,7 @@ public class Player : IPlayer
 
     //States
     private State playerState;
+    public State PlayerState => playerState;
     public bool IsDead => playerState == State.Dead;
     private PlayerSprite playerSprite;
     private bool isGrounded;
@@ -61,9 +62,6 @@ public class Player : IPlayer
     private Item item;
     public Item Item => item;
 
-    public bool HasSword { get; private set; }
-    private readonly SwordSprite swordSprite = new();
-
     public Player()
     {
         Reset();
@@ -85,12 +83,10 @@ public class Player : IPlayer
         Seeds.Clear();
         for (int i = 0; i < 5; i++) GetRandomSeed(); //prob change this
         item = Item.Seed;
-        HasSword = false;
     }
 
     public void PickUpSword()
     {
-        HasSword = true;
         item = Item.Sword;
     }
 
@@ -203,6 +199,5 @@ public class Player : IPlayer
         spriteBatch.DrawString(Assets.UiFont, text, Collider.Position + new Vector2(1, 18), Color.Black, 0f, new(), 0.75f, SpriteEffects.None, 0f);
         
         if (item == Item.Seed) aimer?.Draw(spriteBatch, Collider.Center);
-        if (item == Item.Sword && HasSword) swordSprite.Draw(spriteBatch, Collider.Center, direction, playerState == State.Attack);
     }
 }

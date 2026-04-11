@@ -13,8 +13,8 @@ namespace Sprint2.Levels;
 
 public abstract class BaseLevel : ILevel
 {
-    //player
     public Player Player {get;}
+    public Sword Sword { get; set; }
     //managers TODO: can these be made protected again in a way that works with composed classes (projectile, plants, etc.)?
     public ProjectileManager ProjectileManager {get;}
     // public void AddBlockList(BlockList blocks) => CollisionManager.Blocks.Add(blocks); //bad for coupling if public
@@ -23,9 +23,10 @@ public abstract class BaseLevel : ILevel
     public HUDManager HudManager {get;}
     public BlockManager BlockManager {get;} = new();
     public CollisionManager CollisionManager {get;}
+
     //static level elements (all with blocks for now)
     protected List<Plant> Plants { get; } = [];
-    protected Sword Sword { get; set; }
+
     //state variables
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }
@@ -33,6 +34,7 @@ public abstract class BaseLevel : ILevel
 
     public BaseLevel(Player player) {
         Player = player;
+        Sword = new(player);
         ProjectileManager = new(this, player);
         EnemyManager = new(this);
         HudManager = new(player);
@@ -51,6 +53,7 @@ public abstract class BaseLevel : ILevel
         EndReason = LevelEndReason.None;
 
         Player.Reset();
+        Sword.Reset();
         ProjectileManager.Reset();
         EnemyManager.Reset();
         BlockManager.Reset();
@@ -92,10 +95,8 @@ public abstract class BaseLevel : ILevel
         //update entities
         ProjectileManager.Update(gameTime);
         Player.Update(gameTime, CollisionManager);
+        Sword.Update(gameTime, Player);
         EnemyManager.Update(gameTime);
-
-        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Sword?.Update(dt, Player);
 
         //check for player digging logic
         if (Player.IsBreakable) {
@@ -122,7 +123,7 @@ public abstract class BaseLevel : ILevel
         ProjectileManager.Draw(spriteBatch);
         HudManager.Draw(spriteBatch);
         BlockManager.Draw(spriteBatch);
-        Sword?.Draw(spriteBatch);
         Player.Draw(spriteBatch);
+        Sword.Draw(spriteBatch);
     }
 }
