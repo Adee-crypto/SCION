@@ -29,7 +29,7 @@ public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDra
     public void Update(GameTime gameTime)
     {
         //Launch projectile
-        if (MouseController.IsLeftClick() && player.Seeds.Count > 0)
+        if (MouseController.IsLeftClick() && player.Seeds.Count > 0 && player.Item == Item.Seed)
         {
             Vector2 direction = player.AimDirection;
 

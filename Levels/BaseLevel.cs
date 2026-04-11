@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Sprint2.Entities.Items;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
@@ -24,6 +25,7 @@ public abstract class BaseLevel : ILevel
     public CollisionManager CollisionManager {get;}
     //static level elements (all with blocks for now)
     protected List<Plant> Plants { get; } = [];
+    protected Sword Sword { get; set; }
     //state variables
     protected (int w, int h) ScreenSize { get; private set; }
     public bool IsOver { get; protected set; }
@@ -92,6 +94,9 @@ public abstract class BaseLevel : ILevel
         Player.Update(gameTime, CollisionManager);
         EnemyManager.Update(gameTime);
 
+        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Sword?.Update(dt, Player);
+
         //check for player digging logic
         if (Player.IsBreakable) {
             if (BlockManager.TryDigBelow(new(Player.Collider.Center.X, Player.Collider.Bottom)) is BlockManager.Block block
@@ -117,7 +122,7 @@ public abstract class BaseLevel : ILevel
         ProjectileManager.Draw(spriteBatch);
         HudManager.Draw(spriteBatch);
         BlockManager.Draw(spriteBatch);
-
+        Sword?.Draw(spriteBatch);
         Player.Draw(spriteBatch);
     }
 }

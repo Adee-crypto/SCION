@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Entities.Colliders;
+using Sprint2.Entities.Items;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
@@ -32,6 +33,7 @@ public class Player : IPlayer
     //Motion + Physics
     public Collider Collider { get; } = ColliderUtil.Presets[ColliderType.Player](new(), new());
     private Vector2 direction;
+    public Vector2 Direction => direction;
 
     //States
     private State playerState;
@@ -57,6 +59,10 @@ public class Player : IPlayer
     public List<ProjectileType> Seeds { get; set; } = [];
     private const int maximumSeedsDrawable = 5;
     private Item item;
+    public Item Item => item;
+
+    public bool HasSword { get; private set; }
+    private readonly SwordSprite swordSprite = new();
 
     public Player()
     {
@@ -79,6 +85,13 @@ public class Player : IPlayer
         Seeds.Clear();
         for (int i = 0; i < 5; i++) GetRandomSeed(); //prob change this
         item = Item.Seed;
+        HasSword = false;
+    }
+
+    public void PickUpSword()
+    {
+        HasSword = true;
+        item = Item.Sword;
     }
 
     public void ChangeItem(int num)
@@ -121,7 +134,7 @@ public class Player : IPlayer
     {
         ProjectileType seedSpecies = Seeds[0];
         Seeds.RemoveAt(0);
-        return seedSpecies;
+        return seedSpecies; 
     }
 
     public void ToggleDamaged() => IsDamaged = !IsDamaged;
@@ -188,6 +201,8 @@ public class Player : IPlayer
         playerSprite.Draw(spriteBatch, Collider.Position);
         string text = $"{Seeds.Count}";
         spriteBatch.DrawString(Assets.UiFont, text, Collider.Position + new Vector2(1, 18), Color.Black, 0f, new(), 0.75f, SpriteEffects.None, 0f);
+        
         if (item == Item.Seed) aimer?.Draw(spriteBatch, Collider.Center);
+        if (item == Item.Sword && HasSword) swordSprite.Draw(spriteBatch, Collider.Center, direction, playerState == State.Attack);
     }
 }
