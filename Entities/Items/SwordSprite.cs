@@ -23,16 +23,18 @@ public class SwordSprite
     {
         if (player.HasSword && player.Item == Item.Sword)
         {
+            offset = Vector2.Zero;
             if (player.PlayerState == State.Attack)
             {
-                if (player.Direction.X >= 0) rotation = MathHelper.PiOver2;
-                else rotation = -MathHelper.PiOver2;
-                offset = player.Direction * player.Collider.Size.X;
+                rotation = player.Direction.X * MathHelper.PiOver2;
+                offset.X = player.Direction.X * player.Collider.Size.X;
+                if (player.Direction.X > 0) offset.Y += 2; // two pixels deviation due to rotation
             }
             else
             {
-                rotation = 0;
-                offset = -(player.Direction * player.Collider.Size.X / 2f);
+                rotation = MathHelper.Pi;
+                offset.X = -(player.Direction.X * player.Collider.Size.X / 2f);
+                if (player.Direction.X > 0) offset.X -= 2; // two pixels deviation due to rotation
             }
         }
     }
@@ -40,7 +42,7 @@ public class SwordSprite
     public void Draw(SpriteBatch spriteBatch, Vector2 Pos)
     {
         Vector2 drawPos = Pos + offset;
-        Vector2 origin = new(SwordSourceRect.Width / 2f, SwordSourceRect.Height / 2f);
+        Vector2 origin = new Vector2(SwordSourceRect.Width, SwordSourceRect.Height) * 0.5f;
 
         spriteBatch.Draw(
             Assets.SwordTexture,

@@ -19,7 +19,7 @@ public class Sword
     public Sword(Player player)
     {
         swordSprite = new();
-        collider = new(Vector2.Zero);
+        collider = new(Vector2.Zero) { Size = new Vector2(8, 16)};
         this.player = player;
         bobTimer = 0;
     }
@@ -44,10 +44,7 @@ public class Sword
             bobTimer += (float)gameTime.ElapsedGameTime.TotalSeconds * BobSpeed;
             collider.SetPosition(new Vector2(collider.InitialPosition.X, collider.InitialPosition.Y + (float)Math.Sin(bobTimer) * BobAmplitude));
 
-            if (collider.Intersects(player.Collider))
-            {
-                player.PickUpSword();
-            }
+            if (collider.Intersects(player.Collider)) player.PickUpSword();          
         }
 
         swordSprite.Update(gameTime, player);
