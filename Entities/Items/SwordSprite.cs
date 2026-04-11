@@ -28,7 +28,7 @@ public class SwordSprite
             {
                 rotation = player.Direction.X * MathHelper.PiOver2;
                 offset.X = player.Direction.X * player.Collider.Size.X;
-                if (player.Direction.X > 0) offset.Y += 2; // two pixels deviation due to rotation
+                if (player.Direction.X > 0) offset.Y += 1; // one pixel deviation due to rotation
             }
             else
             {
