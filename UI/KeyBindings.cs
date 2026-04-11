@@ -27,7 +27,9 @@ public static class KeyBindings
             {new[] {Keys.Escape}, game.TogglePause},
             {new[] {Keys.Q}, game.Exit},
             {new[] {Keys.R}, game.ResetLevel},
-            {new[] {Keys.E}, () => Target(game)?.ToggleDamaged()} //also for testing
+            {new[] {Keys.E}, () => Target(game)?.ToggleDamaged()}, //also for testing
+            {new[] {Keys.D1}, () => Target(game)?.ChangeItem(1)},
+            {new[] {Keys.D2}, () => Target(game)?.ChangeItem(2)}
         };
     }
 }

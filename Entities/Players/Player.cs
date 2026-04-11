@@ -21,6 +21,12 @@ public enum State
     Dead
 };
 
+public enum Item
+{
+    Sword,
+    Seed
+}
+
 public class Player : IPlayer
 {
     //Motion + Physics
@@ -50,6 +56,7 @@ public class Player : IPlayer
     //Inventory
     public List<ProjectileType> Seeds { get; set; } = [];
     private const int maximumSeedsDrawable = 5;
+    private Item item;
 
     public Player()
     {
@@ -71,6 +78,13 @@ public class Player : IPlayer
         aimer = new(10f);
         Seeds.Clear();
         for (int i = 0; i < 5; i++) GetRandomSeed(); //prob change this
+        item = Item.Seed;
+    }
+
+    public void ChangeItem(int num)
+    {
+        if (num == 1) item = Item.Sword;
+        else item = Item.Seed;
     }
 
     public void TakeDamage(int damage) // could define damage
@@ -154,7 +168,7 @@ public class Player : IPlayer
         UpdateBreakBlock(dt);
         UpdateHealth(IsDamaged, dt);
 
-        aimer.Update(Collider.Center, Mouse.GetState());
+        if (item == Item.Seed) aimer.Update(Collider.Center, Mouse.GetState());
         playerSprite.Update(gameTime, playerState, direction, Collider.Velocity, IsDamaged);
 
         IsDamaged = false;
@@ -174,6 +188,6 @@ public class Player : IPlayer
         playerSprite.Draw(spriteBatch, Collider.Position);
         string text = $"{Seeds.Count}";
         spriteBatch.DrawString(Assets.UiFont, text, Collider.Position + new Vector2(1, 18), Color.Black, 0f, new(), 0.75f, SpriteEffects.None, 0f);
-        aimer?.Draw(spriteBatch, Collider.Center);
+        if (item == Item.Seed) aimer?.Draw(spriteBatch, Collider.Center);
     }
 }

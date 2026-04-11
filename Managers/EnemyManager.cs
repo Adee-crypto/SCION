@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Enemies;
+using Sprint2.Extensions;
 using Sprint2.Levels;
 using System.Collections.Generic;
 
@@ -29,5 +30,19 @@ public class EnemyManager(BaseLevel level) : Extensions.IDrawable
     public void Draw(SpriteBatch spriteBatch)
     {
         enemies.ForEach(e => e.Draw(spriteBatch));
+    }
+
+    public void CheckProjectileHit(IProjectile projectile)
+    {
+        if (projectile.IsDead) return;
+        foreach (var enemy in enemies)
+        {
+            if (enemy.Collider.Intersects(projectile.Collider))
+            {
+                enemy.TakeDamage(1);
+                projectile.Kill();
+                return;
+            }
+        }
     }
 }

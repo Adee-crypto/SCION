@@ -55,6 +55,11 @@ public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDra
                 p.Kill();
             }
 
+            if (projectiles[i] is Projectile pp && !pp.IsDead && pp.Type != ProjectileType.Void)
+            {
+                level.EnemyManager.CheckProjectileHit(pp);
+            }
+
             if (projectiles[i].IsDead) projectiles.RemoveAt(i);
         }
     }

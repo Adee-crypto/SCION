@@ -51,17 +51,18 @@ public class Projectile : IProjectile
 
         //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
         // System.Console.WriteLine(Collider.Position);
-        if (coords is not null) {
-            if (ProjectileUtil.ProjectileToPlant.ContainsKey(Type)) { //eventually change this to check for type of collider too
+        if (coords is not null)
+        {
+            if (ProjectileUtil.ProjectileToPlant.ContainsKey(Type))
+            { //eventually change this to check for type of collider too
                 level.TrySow(Type, prevCoords);
-            } else if (Type == ProjectileType.Void && level.BlockManager.BlockAt(coords.Value).Type != BlockType.Void) {
+            }
+            else if (Type == ProjectileType.Void && level.BlockManager.BlockAt(coords.Value).Type != BlockType.Void)
+            {
                 level.Infect(coords.Value);
             }
             Kill();
         }
-
-        //DOESNT HANDLE PROJECTILE-TO-ENTITY COLLISION YET
-
     }
 
     public void Kill() => IsDead = true;

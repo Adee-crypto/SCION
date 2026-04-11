@@ -23,6 +23,10 @@ public class Enemy : Extensions.IDrawable
     private readonly EnemySprite enemySprite;
     private EnemyState state;
 
+    //health
+    private int health;
+    public int Health => health;
+
     //physics
     public Collider Collider { get; }
     private Vector2 direction;
@@ -49,6 +53,18 @@ public class Enemy : Extensions.IDrawable
         movementX = 0;
         attackCoolDownTimer = Tunables.EnemyAttackCoolDown.Value;
         attackDurationTimer = 0;
+        health = 5;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (state == EnemyState.Dead) return;
+        health -= damage;
+        if (health <= 0)
+        {
+            health = 0;
+            state = EnemyState.Dead;
+        }
     }
 
     public void Move(int direction)
@@ -113,6 +129,8 @@ public class Enemy : Extensions.IDrawable
 
     public void Update(GameTime gameTime)
     {
+        if (state == EnemyState.Dead) return;
+
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
         movementX += dt * Collider.Velocity.X;
         isGrounded = Collider.UpdateMovement(dt, Level.CollisionManager).isGrounded;
@@ -129,6 +147,7 @@ public class Enemy : Extensions.IDrawable
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        if (state == EnemyState.Dead) return;
         enemySprite.Draw(spriteBatch, Collider.Position);
     }
 }

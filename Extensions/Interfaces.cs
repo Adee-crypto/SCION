@@ -48,6 +48,7 @@ public interface IPlayer : IDrawable, IPhysicsObject, IAim//, IUpdatable
     void Reset();
     void UpdateHealth(bool isDamaged, float time);
     void UpdateBreakBlock(float time);
+    void ChangeItem(int num);
 }
 
 public interface IPlayerProvider
