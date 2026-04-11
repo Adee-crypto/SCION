@@ -59,10 +59,4 @@ public class Sword
             layerDepth: 0f
         );
     }
-
-    public void DrawHeld(SpriteBatch spriteBatch, Vector2 playerPos, Vector2 direction, bool isAttacking)
-    {
-        if (!IsPickedUp) return;
-        swordSprite.Draw(spriteBatch, playerPos, direction, isAttacking);
-    }
 }
