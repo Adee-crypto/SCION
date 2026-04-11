@@ -61,6 +61,7 @@ public class Player : IPlayer
     private const int maximumSeedsDrawable = 5;
     private Item item;
     public Item Item => item;
+    public bool HasSword { get; set; }
 
     public Player()
     {
@@ -83,16 +84,18 @@ public class Player : IPlayer
         Seeds.Clear();
         for (int i = 0; i < 5; i++) GetRandomSeed(); //prob change this
         item = Item.Seed;
+        HasSword = false;
     }
 
     public void PickUpSword()
     {
         item = Item.Sword;
+        HasSword = true;
     }
 
     public void ChangeItem(int num)
     {
-        if (num == 1) item = Item.Sword;
+        if (num == 1 && HasSword) item = Item.Sword;  
         else item = Item.Seed;
     }
 
@@ -137,7 +140,7 @@ public class Player : IPlayer
 
     public void Attack()
     {
-        if (playerState != State.Dead) playerState = State.Attack;
+        if (playerState != State.Dead && HasSword && item == Item.Sword) playerState = State.Attack;
     }
 
     public void UpdateBreakBlock(float time)

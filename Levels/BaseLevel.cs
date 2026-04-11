@@ -94,8 +94,8 @@ public abstract class BaseLevel : ILevel
 
         //update entities
         ProjectileManager.Update(gameTime);
-        Player.Update(gameTime, CollisionManager);
         Sword.Update(gameTime, Player);
+        Player.Update(gameTime, CollisionManager);
         EnemyManager.Update(gameTime);
 
         //check for player digging logic

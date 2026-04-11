@@ -10,6 +10,7 @@ public enum ColliderType {
     Player,
     Enemy,
     Projectile,
+    Sword
 }
 
 public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), ColliderType type=ColliderType.None)
@@ -21,7 +22,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity=new(), Co
     public float Mass { get; init; } = 1;
 
     //Dynamics
-    private Vector2 InitialPosition = initialPosition;
+    public Vector2 InitialPosition { get; private set; } = initialPosition;
     public void SetInitialPosition(Vector2 initialPosition) { InitialPosition = initialPosition; } //this is explicit to discourage use
     private Vector2 InitialVelocity = initialVelocity;
     public void SetInitialVelocity(Vector2 initialVelocity) { InitialVelocity = initialVelocity; }
