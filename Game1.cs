@@ -50,6 +50,9 @@ public class Game1 : Game
 
         KeyBindings.AttachKeyBindings(this); // Must be done after Game1's fields are initialized
 
+        MediaPlayer.Volume = 0.2f;
+        MediaPlayer.IsRepeating = true;
+
         base.Initialize();
     }
 

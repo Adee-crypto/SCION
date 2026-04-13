@@ -61,10 +61,6 @@ public abstract class BaseLevel : ILevel
 
         Plants.Clear();
 
-        MediaPlayer.Volume = 0.2f;
-        MediaPlayer.IsRepeating = true;
-        MediaPlayer.Play(Assets.BackgroundMusic);
-
         BuildLevel();
     }
 
@@ -97,7 +93,9 @@ public abstract class BaseLevel : ILevel
     public void Update(GameTime gameTime)
     {
         if (IsOver) return;
-        
+
+        if (MediaPlayer.State != MediaState.Playing) MediaPlayer.Play(Assets.BackgroundMusic);
+
         //update entities
         ProjectileManager.Update(gameTime);
         Sword.Update(gameTime, Player);
