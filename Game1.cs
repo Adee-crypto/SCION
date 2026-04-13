@@ -59,7 +59,7 @@ public class Game1 : Game
         Assets.ArrowTexture = Content.Load<Texture2D>("AimerArrow2");
         Assets.SwordTexture = Content.Load<Texture2D>("SwordItem");
         Assets.BlockSpriteSheet = Content.Load<Texture2D>("testsheet");
-        Assets.BlockSpriteSheet = Content.Load<Texture2D>("testsheet");
+        Assets.BlockPlayerSpriteSheet = Content.Load<Texture2D>("SPRITESHEET");
         Assets.ButtonTexture = Content.Load<Texture2D>("DefaultButton");
         Assets.ResetTexture = Content.Load<Texture2D>("ResetButton");
         Assets.UiFont = Content.Load<SpriteFont>("UIFont");

@@ -89,7 +89,7 @@ public class BlockManager {
     {
         foreach (var ((x, y), block) in blocks)
         {
-            batch.Draw(Assets.BlockSpriteSheet, new Vector2(x, y) * Consts.BlockWidth, SourceRects.BlockSourceRects[block.Type], block.Color);
+            batch.Draw(Assets.BlockPlayerSpriteSheet, new Vector2(x, y) * Consts.BlockWidth, SourceRects.BlockSourceRects[block.Type], block.Color);
         }
     }
 }
