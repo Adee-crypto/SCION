@@ -76,8 +76,8 @@ public static class Funcs
 
     public static void MuteAndUnmuteMusic()
     {
-        if (MediaPlayer.Volume > 0) MediaPlayer.Volume = 0;
-        else MediaPlayer.Volume = 0.2f;
+        if (MediaPlayer.State == MediaState.Paused) MediaPlayer.Resume();
+        else MediaPlayer.Pause();
     }
     
 }
