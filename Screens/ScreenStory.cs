@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Sprint2.Entities.Players;
 using Sprint2.Extensions;
 using Sprint2.Levels;
@@ -153,7 +154,12 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausab
         levelManager?.Resize(size);
     }
 
-    public void TogglePause() => isPaused = !isPaused;
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        if (isPaused) MediaPlayer.Pause();
+        else MediaPlayer.Resume();
+    }
 
     public void Reset()
     {

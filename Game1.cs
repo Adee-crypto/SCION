@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Sprint2.Controllers;
 using Sprint2.Extensions;
 using Sprint2.Screens;
@@ -70,6 +71,8 @@ public class Game1 : Game
 
         Assets.GrassSound = Content.Load<SoundEffect>("Woowo");
 
+        Assets.BackgroundMusic = Content.Load<Song>("Bgm");
+
         OnResize(null, null);
 
         screenManager.SetScreen(new ScreenMainMenu(this, screenManager));
@@ -77,7 +80,10 @@ public class Game1 : Game
 
     public void TogglePause()
     {
-        if (screenManager.Current is IPausableScreen pausable) pausable.TogglePause();
+        if (screenManager.Current is IPausableScreen pausable)
+        {
+            pausable.TogglePause();
+        }
     }
 
     public void ResetLevel()

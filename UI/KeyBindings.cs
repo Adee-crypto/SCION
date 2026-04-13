@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Extensions;
+using Sprint2.Util;
 using System;
 using System.Collections.Generic;
 
@@ -29,7 +30,8 @@ public static class KeyBindings
             {new[] {Keys.R}, game.ResetLevel},
             {new[] {Keys.E}, () => Target(game)?.ToggleDamaged()}, //also for testing
             {new[] {Keys.D1}, () => Target(game)?.ChangeItem(1)},
-            {new[] {Keys.D2}, () => Target(game)?.ChangeItem(2)}
+            {new[] {Keys.D2}, () => Target(game)?.ChangeItem(2)},
+            {new[] {Keys.M}, Funcs.MuteAndUnmuteMusic}
         };
     }
 }

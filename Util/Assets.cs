@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Sprint2.Entities.Plants;
 
 namespace Sprint2.Util;
@@ -21,6 +22,8 @@ public static class Assets
     public static SpriteFont UiFont { get; set; }
     
     //SFX
+    public static Song BackgroundMusic { get; set; }
+
     public static SoundEffect GrassSound { get; set; }
 
     public static SoundEffect PlantGrowthSFX(Species species) => species switch

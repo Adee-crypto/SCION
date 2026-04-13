@@ -37,6 +37,12 @@
 /processorParam:TextureFormat=Color
 /build:AimerArrow2.png
 
+#begin Bgm.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Bgm.mp3
+
 #begin DefaultButton.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Sprint2.Entities.Plants;
 
 namespace Sprint2.Util;
@@ -72,5 +73,11 @@ public static class Funcs
     public static float RandPentatonic() => (new int[] {0, -2, -4, -7, -9})[RandInt(5)]/12f;
     public static float RandMajor7Add9Add13() => ((new int[] {0, 4, 7, 11, 14, 18})[RandInt(5)]-9)/12f;
     public static float RandDim7() => ((new int[] {0, 3, 6, 10, 15})[RandInt(5)]-7)/12f;
+
+    public static void MuteAndUnmuteMusic()
+    {
+        if (MediaPlayer.Volume > 0) MediaPlayer.Volume = 0;
+        else MediaPlayer.Volume = 0.2f;
+    }
     
 }

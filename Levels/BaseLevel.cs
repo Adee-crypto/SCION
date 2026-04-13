@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Sprint2.Entities.Items;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Players;
@@ -60,6 +61,10 @@ public abstract class BaseLevel : ILevel
 
         Plants.Clear();
 
+        MediaPlayer.Volume = 0.2f;
+        MediaPlayer.IsRepeating = true;
+        MediaPlayer.Play(Assets.BackgroundMusic);
+
         BuildLevel();
     }
 
@@ -76,6 +81,7 @@ public abstract class BaseLevel : ILevel
     public void TryPlantCherry()
     {
         if (Player.IsDead || IsOver) return;
+        
 
         // Root position = grid coords under the player's feet (bottom center)
         var root = Funcs.GridCoords(new Vector2(Player.Collider.Center.X, Player.Collider.Bottom));
@@ -91,7 +97,7 @@ public abstract class BaseLevel : ILevel
     public void Update(GameTime gameTime)
     {
         if (IsOver) return;
-
+        
         //update entities
         ProjectileManager.Update(gameTime);
         Sword.Update(gameTime, Player);
@@ -113,6 +119,7 @@ public abstract class BaseLevel : ILevel
         if ((!IsOver && ScreenSize.h > 0 && Player.Collider.Position.Y > ScreenSize.h) || Player.IsDead)
         {
             IsOver = true;
+            MediaPlayer.Stop();
             EndReason = LevelEndReason.PlayerDied;
         }
     }
