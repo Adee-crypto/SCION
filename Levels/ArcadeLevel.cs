@@ -35,7 +35,7 @@ public sealed class ArcadeLevel : BaseLevel
         Plants.Add(new PineapplePlant(BlockManager, (20, 20)));
         Plants.Add(new ApplePlant(BlockManager, (30, 20)));
         Plants.Add(new SandboxPlant(BlockManager, (40, 20)));
-        EnemyManager.Spawn(Consts.BlockWidth * new Vector2(40, 10));
+        EnemyManager.Spawn(Consts.BlockWidth * new Vector2(30, 10));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime)
@@ -49,8 +49,8 @@ public sealed class ArcadeLevel : BaseLevel
             int count = 1 + wave / 2;
             for (int i = 0; i < count; i++)
             {
-                float spawnX = 30 + i * 2;
-                float spawnY = 24;
+                float spawnX = 20 + i * 2;
+                float spawnY = 10;
                 EnemyManager.Spawn(new Vector2(spawnX, spawnY));
             }
 

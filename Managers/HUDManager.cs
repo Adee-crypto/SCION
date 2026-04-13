@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Players;
 using Sprint2.HUD;
@@ -20,7 +21,7 @@ public class HUDManager
         healthBar.Draw(spriteBatch);
     }
 
-    public void Resize((int w, int h) size)
+    public void Resize(Vector2 size)
     {
         healthBar.Resize(size);
     }

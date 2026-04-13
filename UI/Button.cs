@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Sprint2.Controllers;
 using Sprint2.Util;
 using System;
@@ -38,24 +37,9 @@ public class Button
         );
     }
 
-    public void Resize((int w, int h) screenSize)
-    {
-        Vector2 size = new(bounds.Width, bounds.Height);
-        Vector2 pos = new(bounds.X, bounds.Y);
-        if (screenSize != Consts.DefaultScreenSize)
-        {
-            float widthRatio = screenSize.w / (float)Consts.DefaultScreenSize.w;
-            float heightRatio = screenSize.h / (float)Consts.DefaultScreenSize.h;
-            size *= new Vector2(widthRatio, heightRatio);
-            pos *= new Vector2(widthRatio, heightRatio);
-        }
-        bounds = new((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y);
-        textPos = pos + 0.5f * (size - font.MeasureString(text));
-    }
-
     public void Update()
     {
-        hover = bounds.Contains(Mouse.GetState().Position);
+        hover = bounds.Contains(MouseController.VirtualMousePos);
         if (hover && MouseController.IsLeftClick()) onClick?.Invoke();
     }
 

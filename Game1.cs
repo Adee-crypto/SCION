@@ -18,7 +18,11 @@ public class Game1 : Game
     //graphics
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
-    private (int w, int h) ScreenSize { get; set; } = Consts.DefaultScreenSize;
+    private (int w, int h) ScreenSize {get;set;} = Consts.DefaultScreenSize;
+    private Vector2 ScreenSizeVec => new(ScreenSize.w, ScreenSize.h);
+    public Vector2 VirtualScreenSize => Vector2.Transform(new(ScreenSize.w, ScreenSize.h), Matrix.Invert(transform)); //MAKE PRIVATE
+    private Matrix transform;
+    private float scale;
 
     //game state & data
     private readonly ScreenManager screenManager = new();
@@ -42,9 +46,17 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = ScreenSize.w;
         _graphics.PreferredBackBufferHeight = ScreenSize.h;
         _graphics.ApplyChanges();
+<<<<<<< HEAD
 
         //resizing anything else
         if (screenManager.Current is IResizable resizable) resizable.Resize(ScreenSize);
+=======
+        //recalculate transformation matrix with letterboxing
+        scale = Math.Min(ScreenSize.w / Consts.LevelSize.X, ScreenSize.h / Consts.LevelSize.Y);
+        // transform = Matrix.CreateTranslation(new(ScreenSizeVec/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0));
+        transform = Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(ScreenSizeVec/2, 0));
+        MouseController.SetTransform(Matrix.Invert(transform));
+>>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
     }
 
     protected override void Initialize()
@@ -129,7 +141,7 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.White);
-        spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transform);
         screenManager.Draw(spriteBatch);
         overlayManager.Draw(spriteBatch);
 

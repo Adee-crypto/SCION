@@ -180,7 +180,7 @@ public class Player : IPlayer
         UpdateBreakBlock(dt);
         UpdateHealth(IsDamaged, dt);
 
-        if (item == Item.Seed) aimer.Update(Collider.Center, Mouse.GetState());
+        if (item == Item.Seed) aimer.Update(Collider.Center);
         playerSprite.Update(gameTime, playerState, direction, Collider.Velocity, IsDamaged);
 
         IsDamaged = false;

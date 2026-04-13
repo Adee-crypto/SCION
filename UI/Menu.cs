@@ -17,11 +17,10 @@ public class Menu(SpriteFont font)
     public void AddButton(Button button) => buttons.Add(button);
     public void ClearButtons() => buttons.Clear();
     public void Update() => buttons.ForEach(b => b.Update());
-    public void Resize((int, int) size) => buttons.ForEach(b => b.Resize(size));
 
-    public void Draw(SpriteBatch spriteBatch, (int w, int h) screenSize)
+    public void Draw(SpriteBatch spriteBatch, Vector2 screenSize)
     {
-        if (DimBackground) spriteBatch.Draw(Assets.PixelTexture, new Rectangle(0, 0, screenSize.w, screenSize.h), Color.Black * 0.5f);
+        if (DimBackground) spriteBatch.Draw(Assets.PixelTexture, new Rectangle(Vector2.Zero.ToPoint(), screenSize.ToPoint()), Color.Black * 0.5f);
 
         if (!string.IsNullOrWhiteSpace(Title))
         {
@@ -31,7 +30,7 @@ public class Menu(SpriteFont font)
                 var topButton = buttons.MinBy(b => b.Position.Y);
                 spacer = (topButton.Position.Y - topButton.Bounds.Height - 20f) > 0 ? (topButton.Position.Y - topButton.Bounds.Height - 20f) : 0f;
             }
-            Vector2 titlePos = new((screenSize.w - textSize.X) / 2, spacer);
+            Vector2 titlePos = new((Consts.DefaultScreenSize.w - textSize.X) / 2, spacer);
             spriteBatch.DrawString(font, Title, titlePos, Color.Black);
         }
 

@@ -90,13 +90,6 @@ public abstract class BasePanel : ISettingsPanel
     protected abstract void DrawContent(SpriteBatch spriteBatch);
     protected abstract void DrawScrollbar(SpriteBatch spriteBatch);
 
-    public virtual void Resize((int w, int h) size)
-    {
-        RebuildLayout();
-        ClampScroll();
-        BuildPanel();
-    }
-
     public virtual void Update()
     {
         MouseState mouse = Mouse.GetState();

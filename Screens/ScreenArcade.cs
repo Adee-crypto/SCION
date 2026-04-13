@@ -10,7 +10,11 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
+<<<<<<< HEAD
 public class ScreenArcade : IScreen, IResizable, IResettableScreen, IPausableScreen, IPlayerProvider
+=======
+public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayerProvider
+>>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
 {
     private enum ArcadeState
     {
@@ -56,8 +60,8 @@ public class ScreenArcade : IScreen, IResizable, IResettableScreen, IPausableScr
     {
         menu.ClearButtons();
 
-        float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
-        float y = game.GraphicsDevice.Viewport.Height * 0.4f;
+        float x = (Consts.DefaultScreenSize.w - buttonSize.X) / 2f;
+        float y = Consts.DefaultScreenSize.h * 0.4f;
 
         menu.AddButton(new(
             Assets.UiFont,
@@ -113,10 +117,10 @@ public class ScreenArcade : IScreen, IResizable, IResettableScreen, IPausableScr
     private void StartArcadeRun()
     {
         levelManager.StartArcade(player);
-        levelManager.Resize((game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
         state = ArcadeState.Playing;
     }
 
+<<<<<<< HEAD
     public void Resize((int w, int h) size)
     {
         BuildMenu();
@@ -124,6 +128,8 @@ public class ScreenArcade : IScreen, IResizable, IResettableScreen, IPausableScr
         levelManager?.Resize(size);
     }
 
+=======
+>>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
     public void TogglePause()
     {
         isPaused = !isPaused;
@@ -157,6 +163,7 @@ public class ScreenArcade : IScreen, IResizable, IResettableScreen, IPausableScr
 
     public void Draw(SpriteBatch spriteBatch)
     {
+<<<<<<< HEAD
         var size = (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
 
         switch (state)
@@ -171,6 +178,13 @@ public class ScreenArcade : IScreen, IResizable, IResettableScreen, IPausableScr
                 gameOverMenu.Draw(spriteBatch, size);
                 break;
         }
+=======
+        if (state == ArcadeState.Playing) levelManager.Draw(spriteBatch);
+        else if (state == ArcadeState.Menu) menu.Draw(spriteBatch, game.VirtualScreenSize);
+        else gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
+
+        if (isPaused) pause.Draw(spriteBatch, game.VirtualScreenSize);
+>>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
     }
 
 }

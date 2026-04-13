@@ -95,11 +95,6 @@ public class DevPanel : ISettingsPanel
         RecalculateScrollLimits();
     }
 
-    public void Resize((int w, int h) size)
-    {
-        BuildPanel();
-    }
-
     public void Update()
     {
         MouseState mouse = Mouse.GetState();

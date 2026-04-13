@@ -42,9 +42,8 @@ public abstract class BaseLevel : ILevel
         CollisionManager = new(BlockManager);
     }
 
-    public void Resize((int w, int h) size)
+    public void Resize(Vector2 size)
     {
-        ScreenSize = size;
         HudManager.Resize(size);
     }
 

@@ -22,13 +22,11 @@ public class HealthBar
         this.size = size;
     }
 
-    public void Resize((int w, int h) screenSize)
+    public void Resize(Vector2 screenSize)
     {
-        float changeWidth = screenSize.w / (float)Consts.DefaultScreenSize.w;
-        float changeHeight = screenSize.h / (float)Consts.DefaultScreenSize.h;
-
-        size = new(initialSize.X * changeWidth, initialSize.Y * changeHeight);
-        position = new(initialPosition.X * changeWidth, initialPosition.Y * changeHeight);
+        Vector2 change = screenSize / Consts.DefaultScreenSizeVec;
+        size = initialSize * change;
+        position = initialPosition * change;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -37,7 +35,7 @@ public class HealthBar
         spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int)position.X - 2, (int)position.Y - 2, (int)size.X + 4, (int)size.Y + 4), Color.Black);
 
         // Draw background
-        spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y), Color.DarkGray);
+        spriteBatch.Draw(Assets.PixelTexture, new Rectangle(position.ToPoint(), size.ToPoint()), Color.DarkGray);
 
         // Calculate health ratio
         float healthRatio = player.Health / (float)player.MaxHealth;
