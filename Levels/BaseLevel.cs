@@ -94,7 +94,7 @@ public abstract class BaseLevel : ILevel
     {
         if (IsOver) return;
 
-        if (MediaPlayer.State != MediaState.Playing) MediaPlayer.Play(Assets.BackgroundMusic);
+        if (MediaPlayer.State != MediaState.Playing && MediaPlayer.State != MediaState.Paused) MediaPlayer.Play(Assets.BackgroundMusic);
 
         //update entities
         ProjectileManager.Update(gameTime);
