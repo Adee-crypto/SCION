@@ -37,6 +37,11 @@ public static class Tunables
     public static TunableFloat EnemyAttackDistance {get;} = new(Consts.enemyAttackDistance);
     public static TunableFloat EnemyRangeAttackDistance {get;} = new(Consts.enemyRangeAttackDistance);
 
+    //num game settings
+    public static TunableFloat MasterVolume {get;} = new(100f);
+    public static TunableFloat MusicVolume {get;} = new(100f);
+    public static TunableFloat SFXVolume {get;} = new(100f);
+
     //float list
     public static IReadOnlyList<(string Name, TunableFloat Value)> FloatSettings { get; } = [
       ("Default Gravity", DefaultGravity),
@@ -57,7 +62,10 @@ public static class Tunables
       ("Enemy Attack Duration", EnemyAttackDuration),
       ("Enemy Patrol Distance", EnemyPatrolDistance),
       ("Enemy Attack Distance", EnemyAttackDistance),
-      ("Enemy Range Attack Distance", EnemyRangeAttackDistance)  
+      ("Enemy Range Attack Distance", EnemyRangeAttackDistance),
+      ("Master Volume", MasterVolume),
+      ("Music Volume", MusicVolume),
+      ("SFX Volume", SFXVolume)
     ];
 
     //int list

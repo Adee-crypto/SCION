@@ -14,11 +14,27 @@ public class GeneralPanel : SettingsListPanel
 
     protected override void BuildRows()
     {
-        // TODO: Implement General Settings
-        
-        /*Rows.Add(new SliderRow("Master Volume", 0f, 100f,
+        Rows.Add(new SliderRow(
+            "Master Volume",
+            0f,
+            100f,
             () => Tunables.MasterVolume.Value,
             v => Tunables.MasterVolume.Value = v
-        ));*/
+        ));
+        Rows.Add(new SliderRow(
+            "Music Volume",
+            0f,
+            100f,
+            () => Tunables.MusicVolume.Value,
+            v => Tunables.MusicVolume.Value = v
+        ));
+        Rows.Add(new SliderRow(
+            "SFX Volume",
+            0f,
+            100f,
+            () => Tunables.SFXVolume.Value,
+            v => Tunables.SFXVolume.Value = v
+        ));
+        
     }
 }
