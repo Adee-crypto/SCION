@@ -39,7 +39,7 @@ public static class Funcs
     }
 
     //random
-    private static readonly Random random = new();
+    private static Random random = new();
     public static float Random() => random.NextSingle();
     /// <returns>1 or -1 with 50/50 prob</returns>
     public static int PlusMinus() => random.Next(2) == 0 ? -1 : 1;

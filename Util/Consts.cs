@@ -12,7 +12,7 @@ public static class Consts
     
     //Screen dimensions
     public static (int w, int h) DefaultScreenSize { get; } = (1000, 800);
-    public const int BlockWidth = 16;
+    public const int BlockWidth = 24;
 
     //physics
     public const float defaultGravity = 980f;
@@ -26,7 +26,7 @@ public static class Consts
     public const float playerGroundXForce = 60f;
     public const float playerAirXForce = 300f;
     public const float playerTargetWalkVelocity = 120f;
-    public const float playerYForce = -24000f;
+    public const float playerYForce = -24000f*1.2247f;
     public const float playerMass = 1f;
     public static Vector2 playerHitbox {get;} = new(16-0.1f, 16-0.1f); //fix this offset perhaps
     

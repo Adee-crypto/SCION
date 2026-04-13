@@ -11,6 +11,7 @@ public static class SourceRects
 {
     //for now the testsheet.png has 16x16 tiles
     private static Rectangle TileAt(int x, int y) => new(x * 16, y * 16, 16, 16);
+    private static Rectangle TileAt24(int x, int y) => new(x * 24, y * 24 + 33, 24, 24);
 
     public static Dictionary<Players.SpriteState, Rectangle[]> PlayerSourceRects { get; } = new() {
         { Players.SpriteState.LeftFacing, [TileAt(2, 0)] },
@@ -38,18 +39,18 @@ public static class SourceRects
 
     public static Dictionary<BlockType, Rectangle> BlockSourceRects { get; } = new()
     {
-        { BlockType.Grass, TileAt(2, 9) },
-        { BlockType.Apple, TileAt(2, 10) },
-        { BlockType.Pineapple, TileAt(2, 11) },
-        { BlockType.Sandbox, TileAt(8, 0) },
-        { BlockType.Dirt, TileAt(2, 0) },
-        { BlockType.Stone, TileAt(1, 0) },
-        { BlockType.StoneBrick, TileAt(6, 3) },
-        { BlockType.CrackedStoneBrick, TileAt(5, 6) },
-        { BlockType.Void, TileAt(7, 11) },
-        { BlockType.Cherry, TileAt(3, 9) },
-        { BlockType.Gravebind, TileAt(4, 12) },  // Change to Appropriate blocktype
-        { BlockType.Catalyst,  TileAt(6, 12) },  // Change to Appropriate blocktype
+        { BlockType.Grass, TileAt24(1, 0) },
+        { BlockType.Apple, TileAt24(2, 1) },
+        { BlockType.Pineapple, TileAt24(3, 0) },
+        { BlockType.Sandbox, TileAt24(0, 0) },
+        { BlockType.Dirt, TileAt24(4, 1) },
+        { BlockType.Stone, TileAt24(1, 0) },
+        { BlockType.StoneBrick, TileAt24(1, 1) },
+        { BlockType.CrackedStoneBrick, TileAt24(1, 1) }, //fix this being duplicate, we prob dnot actually need 3 stone variants
+        { BlockType.Void, TileAt24(2, 2) },
+        // { BlockType.Cherry, TileAt(3, 9) },
+        // { BlockType.Gravebind, TileAt(4, 12) },  // Change to Appropriate blocktype
+        // { BlockType.Catalyst,  TileAt(6, 12) },  // Change to Appropriate blocktype
     };
 
     public static Dictionary<ProjectileType, Rectangle[]> ProjectileSourceRects { get; } = new()
