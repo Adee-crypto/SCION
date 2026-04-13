@@ -1,3 +1,4 @@
+using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
@@ -9,7 +10,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPausableScreen, IPlayerProvider
+public class ScreenArcade : IScreen, IResizable, IResettableScreen, IPausableScreen, IPlayerProvider
 {
     private enum ArcadeState
     {
@@ -27,7 +28,6 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPausa
     private LevelManager levelManager;
     private bool isPaused;
     public bool IsPaused => isPaused;
-    private PauseOverlay pause;
     private Player player;
     public IPlayer CurrentPlayer => state == ArcadeState.Playing ? player : null;
     public ScreenArcade(Game1 game, ScreenManager screenManager)
@@ -46,7 +46,6 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPausa
         player = new Player();
         levelManager = new LevelManager();
 
-        pause = new PauseOverlay(game);
         BuildMenu();
         BuildGameOverMenu();
     }
@@ -122,7 +121,6 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPausa
     {
         BuildMenu();
         BuildGameOverMenu();
-        pause.Resize(size);
         levelManager?.Resize(size);
     }
 
@@ -140,11 +138,7 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPausa
 
     public void Update(GameTime gameTime)
     {
-        if (isPaused)
-        {
-            pause.Update(gameTime);
-            return;
-        }
+        if (isPaused) return;
 
         switch (state)
         {
@@ -165,11 +159,18 @@ public class ScreenArcade : IScreen, IResizableScreen, IResettableScreen, IPausa
     {
         var size = (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
 
-        if (state == ArcadeState.Playing) levelManager.Draw(spriteBatch);
-        else if (state == ArcadeState.Menu) menu.Draw(spriteBatch, size);
-        else gameOverMenu.Draw(spriteBatch, size);
-
-        if (isPaused) pause.Draw(spriteBatch, size);
+        switch (state)
+        {
+            case ArcadeState.Menu:
+                menu.Draw(spriteBatch, size);
+                break;
+            case ArcadeState.Playing:
+                levelManager.Draw(spriteBatch);
+                break;
+            case ArcadeState.GameOver:
+                gameOverMenu.Draw(spriteBatch, size);
+                break;
+        }
     }
 
 }

@@ -6,6 +6,7 @@ using Sprint2.Controllers;
 using Sprint2.Extensions;
 using Sprint2.Screens;
 using Sprint2.UI;
+using Sprint2.UI.Overlays;
 using Sprint2.Util;
 using System;
 
@@ -21,7 +22,9 @@ public class Game1 : Game
 
     //game state & data
     private readonly ScreenManager screenManager = new();
+    private readonly OverlayManager overlayManager = new();
     public ScreenManager ScreenManager => screenManager;
+    public OverlayManager OverlayManager => overlayManager;
 
     public Game1()
     {
@@ -41,7 +44,7 @@ public class Game1 : Game
         _graphics.ApplyChanges();
 
         //resizing anything else
-        if (screenManager.Current is IResizableScreen resizable) resizable.Resize(ScreenSize);
+        if (screenManager.Current is IResizable resizable) resizable.Resize(ScreenSize);
     }
 
     protected override void Initialize()
@@ -83,10 +86,24 @@ public class Game1 : Game
 
     public void TogglePause()
     {
-        if (screenManager.Current is IPausableScreen pausable)
+        if (screenManager.Current is not IPausableScreen pausable) return;
+
+        if (overlayManager.HasOverlays)
         {
-            pausable.TogglePause();
+            if (overlayManager.Peek() is PauseOverlay)
+            {
+                overlayManager.Pop();
+                pausable.TogglePause();
+            } else
+            {
+                overlayManager.Pop();
+            }
+            
+            return;
         }
+
+        pausable.TogglePause();
+        overlayManager.Push(new PauseOverlay(this, overlayManager));
     }
 
     public void ResetLevel()
@@ -104,6 +121,7 @@ public class Game1 : Game
         }
 
         screenManager.Update(gameTime);
+        overlayManager.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -113,6 +131,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.White);
         spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         screenManager.Draw(spriteBatch);
+        overlayManager.Draw(spriteBatch);
 
         spriteBatch.End();
         base.Draw(gameTime);

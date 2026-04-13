@@ -2,15 +2,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Extensions;
 using Sprint2.UI;
+using Sprint2.UI.Overlays;
 using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-public class ScreenMainMenu : IScreen, IResizableScreen
+public class ScreenMainMenu : IScreen, IResizable
 {
     private readonly Game1 game;
     private readonly ScreenManager screenManager;
     private readonly Menu menu;
+
     public ScreenMainMenu(Game1 game, ScreenManager screenManager)
     {
         this.game = game;
@@ -21,6 +23,12 @@ public class ScreenMainMenu : IScreen, IResizableScreen
 
     public void OnEnter()
     {
+        BuildMenu();
+    }
+
+    public void OnExit() { }
+
+    private void BuildMenu() {
         menu.ClearButtons();
 
         Vector2 buttonSize = new(200, 50);
@@ -35,31 +43,33 @@ public class ScreenMainMenu : IScreen, IResizableScreen
             "Story Mode", 
             () => screenManager.SetScreen(new ScreenStory(game, screenManager)), 
             buttonSize, 
-            new Vector2(x, y + (buttonSize.Y + spacer) * 0)));
+            new Vector2(x, y + (buttonSize.Y + spacer) * 0)
+        ));
         menu.AddButton(new(
             Assets.UiFont, 
             Assets.ButtonTexture, 
             "Arcade Mode", 
             () => screenManager.SetScreen(new ScreenArcade(game, screenManager)), 
             buttonSize, 
-            new Vector2(x, y + (buttonSize.Y + spacer) * 1)));
+            new Vector2(x, y + (buttonSize.Y + spacer) * 1)
+        ));
         menu.AddButton(new(
             Assets.UiFont, 
             Assets.ButtonTexture, 
             "Settings", 
-            () => screenManager.SetScreen(new ScreenSettings(game, screenManager)), 
+            () => game.OverlayManager.Push(new SettingsOverlay(game, game.OverlayManager)), 
             buttonSize, 
-            new Vector2(x, y + (buttonSize.Y + spacer) * 2)));
+            new Vector2(x, y + (buttonSize.Y + spacer) * 2)
+        ));
         menu.AddButton(new(
             Assets.UiFont, 
             Assets.ButtonTexture, 
             "Quit Game", 
             game.Exit, 
             buttonSize, 
-            new Vector2(x, y + (buttonSize.Y + spacer) * 3)));
+            new Vector2(x, y + (buttonSize.Y + spacer) * 3)
+        ));
     }
-
-    public void OnExit() { }
 
     public void Resize((int w, int h) size) => OnEnter();
 

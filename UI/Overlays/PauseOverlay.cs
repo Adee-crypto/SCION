@@ -1,25 +1,32 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Extensions;
-using Sprint2.UI;
+using Sprint2.Screens;
 using Sprint2.Util;
 
-namespace Sprint2.Screens;
+namespace Sprint2.UI.Overlays;
 
-public class PauseOverlay : IResizableScreen
+public class PauseOverlay : IOverlay, IResizable
 {
     private readonly Game1 game;
+    private readonly OverlayManager overlayManager;
     private readonly Menu menu;
     private readonly Vector2 buttonSize = new(300, 75);
     private readonly float spacer = 18f;
-    public PauseOverlay(Game1 game)
+    public PauseOverlay(Game1 game, OverlayManager overlayManager)
     {
         this.game = game;
+        this.overlayManager = overlayManager;
 
         menu = new(Assets.UiFont) { Title = "GAME PAUSED", DimBackground = true };
+    }
+
+    public void OnOpen()
+    {
         BuildMenu();
     }
+
+    public void OnClose() { }
 
     private void BuildMenu()
     {
@@ -39,10 +46,18 @@ public class PauseOverlay : IResizableScreen
         menu.AddButton(new(
             Assets.UiFont,
             Assets.ButtonTexture,
-            "Main Menu",
-            () => game.ScreenManager.SetScreen(new ScreenMainMenu(game, game.ScreenManager)),
+            "Settings",
+            () => overlayManager.Push(new SettingsOverlay(game, overlayManager)),
             buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 1)
+        ));
+        menu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Main Menu",
+            ReturnToMainMenu,
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 2)
         ));
         menu.AddButton(new(
             Assets.UiFont,
@@ -50,8 +65,16 @@ public class PauseOverlay : IResizableScreen
             "Quit Game",
             game.Exit,
             buttonSize,
-            new Vector2(x, y + (buttonSize.Y + spacer) * 2)
+            new Vector2(x, y + (buttonSize.Y + spacer) * 3)
         ));
+    }
+
+    private void ReturnToMainMenu()
+    {
+        if (game.ScreenManager.Current is IPausableScreen pausable && pausable.IsPaused) pausable.TogglePause();
+
+        overlayManager.Clear();
+        game.ScreenManager.SetScreen(new ScreenMainMenu(game, game.ScreenManager));
     }
 
     public void Resize((int w, int h) size)
@@ -64,9 +87,9 @@ public class PauseOverlay : IResizableScreen
         menu.Update();
     }
 
-    public void Draw(SpriteBatch spriteBatch, (int w, int h) size)
+    public void Draw(SpriteBatch spriteBatch)
     {
-        menu.Draw(spriteBatch, size);
+        menu.Draw(spriteBatch, (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
     }
 
 }

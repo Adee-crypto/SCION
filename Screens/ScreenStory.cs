@@ -11,7 +11,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausableScreen, IPlayerProvider
+public class ScreenStory : IScreen, IResizable, IResettableScreen, IPausableScreen, IPlayerProvider
 {
     private enum StoryState
     {
@@ -25,14 +25,16 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausab
     private readonly Menu gameOverMenu;
     private readonly Vector2 buttonSize = new(300, 75);
     private readonly float spacer = 18f;
+
     private StoryState state;
     private LevelManager levelManager;
     private Player player;
     private bool isPaused;
-    public bool IsPaused => isPaused;
     private int currentLevelIndex;
-    private PauseOverlay pause;
+
+    public bool IsPaused => isPaused;
     public IPlayer CurrentPlayer => state == StoryState.Playing ? player : null;
+    
     // BEGIN DEBUG
     private KeyboardState prevKeyboard;
     // END DEBUG
@@ -41,6 +43,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausab
     {
         this.game = game;
         this.screenManager = screenManager;
+        
         // BEGIN DEBUG
         prevKeyboard = Keyboard.GetState();
         // END DEBUG
@@ -58,7 +61,6 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausab
 
         currentLevelIndex = 0;
 
-        pause = new PauseOverlay(game);
         BuildMenu();
         BuildGameOverMenu();
     }
@@ -150,7 +152,6 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausab
     {
         BuildMenu();
         BuildGameOverMenu();
-        pause.Resize(size);
         levelManager?.Resize(size);
     }
 
@@ -168,11 +169,7 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausab
 
     public void Update(GameTime gameTime)
     {
-        if (isPaused)
-        {
-            pause.Update(gameTime);
-            return;
-        }
+        if (isPaused) return;
 
         switch (state)
         {
@@ -204,11 +201,19 @@ public class ScreenStory : IScreen, IResizableScreen, IResettableScreen, IPausab
     {
         var size = (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
 
-        if (state == StoryState.Playing) levelManager.Draw(spriteBatch);
-        else if (state == StoryState.Menu) menu.Draw(spriteBatch, size);
-        else gameOverMenu.Draw(spriteBatch, size);
+        switch (state)
+        {
+            case StoryState.Playing:
+                levelManager.Draw(spriteBatch);
+                break;
+            case StoryState.Menu:
+                menu.Draw(spriteBatch, size);
+                break;
+            case StoryState.GameOver:
+                gameOverMenu.Draw(spriteBatch, size);
+                break;
+        }
 
-        if (isPaused) pause.Draw(spriteBatch, size);
     }
 
 }

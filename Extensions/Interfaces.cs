@@ -68,7 +68,7 @@ public interface IProjectile : IDrawable, IUpdatable, IPhysicsObject
     void Kill();
 }
 
-public interface IResizableScreen
+public interface IResizable
 {
     void Resize((int w, int h) size);
 }
@@ -84,13 +84,19 @@ public interface IScreen : IUpdatable, IDrawable
     void OnExit();
 }
 
+public interface IOverlay : IUpdatable, IDrawable
+{
+    void OnOpen();
+    void OnClose();
+}
+
 public interface IPausableScreen
 {
     bool IsPaused { get; }
     void TogglePause();
 }
 
-public interface ISettingsPanel : IDrawable, IResizableScreen
+public interface ISettingsPanel : IDrawable, IResizable
 {
     void Update();
     void BuildPanel();
@@ -112,7 +118,7 @@ public interface ISettingsRow
     void Draw(SpriteBatch spriteBatch);
 }
 
-public interface ILevel : IUpdatable, IDrawable, IResizableScreen, IResettableScreen
+public interface ILevel : IUpdatable, IDrawable, IResizable, IResettableScreen
 {
     bool IsOver { get; }
     LevelEndReason EndReason { get; }
