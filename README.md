@@ -25,6 +25,7 @@ Scion Scavenger is a platformer where the environment is constantly built throug
 | **Restart Level** | `R` |
 | **Quit Game** | `Q` |
 | **Menu Navigation** | `Mouse Hover` & `Left Click` |
+| **(Un)Mute Music** | `M` |
 | **Debug: Cycle Story Level** | `.` (Tap) |
 | **Debug: Damage Player** | `E` (Tap) |
 | **(deprecated) Debug: Display Attack State** | `Z` or `N` |
