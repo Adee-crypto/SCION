@@ -1,10 +1,10 @@
 Author: Sean Lipton
-Date: 2026-03-13
-Sprint: 3
-Reviewed file: ControlsPanel.cs
+Date: 2026-04-13
+Sprint: 4
+Reviewed file: Tunables.cs
 Author of reviewed file: Justin Imber
 Time taken for review: 5 minutes 
 
-Everything is intantiated clearly. Even though there are some long lines (like all the panel.AddButton calls), they are all grouped and it's clear where and why their parameters differ.
-Resize calling Buildpanel but not passing its parameters is weird, probably just a simple oversight though.
-Though Update and Draw are short and simple, it does obscure a bit the purpose of this class in the hierarchy.
+Despite the many lines, incredibly obvious pattern that does not make it difficult to structurally decipher.
+However, since everything is kind of grouped together like that, there's not really a distinction between different types of physics constants.
+So, some comments splitting up things into blocks, just like in Consts (which it is very similar to already) would help us to find what we're looking for more quickly in the future.
