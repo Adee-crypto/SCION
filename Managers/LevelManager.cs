@@ -19,10 +19,11 @@ public class LevelManager
         current = new ArcadeLevel(player);
     }
 
-    public void StartStory(Player player, int levelIndex)
+    public void StartStory(Player player, (int, int) coords)
     {
-        var def = StoryLevelRegistry.Get(levelIndex);
-        current = new StoryLevel(player, def);
+        var def = StoryLevelRegistry.Get(coords);
+        if (def is StoryLevelDef s)
+            current = new StoryLevel(player, s);
     }
 
     public void Reset()

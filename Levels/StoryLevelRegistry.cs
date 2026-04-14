@@ -7,12 +7,14 @@ using System.IO;
 using System.Globalization;
 using Sprint2.Entities.Plants;
 using static Sprint2.Managers.BlockManager.Block;
+using System.Linq;
 
 namespace Sprint2.Levels;
 
 public static class StoryLevelRegistry
 {
-    private static List<StoryLevelDef> Levels { get; } = [];
+    private static Dictionary<(int, int), StoryLevelDef> Levels { get; } = [];
+    public static List<(int, int)> LevelCoords {get; private set; }
 
     public static void LoadLevelData() {
         //this probably shouldn't be finding the directory via Base like this
@@ -20,7 +22,11 @@ public static class StoryLevelRegistry
 
         for (int i = 0; i < lines.Length; i += 4) {
 
-            int index = int.Parse(lines[i].Trim(), CultureInfo.InvariantCulture);
+            string[] coordsStr = lines[i].Split(',');
+            (int, int) coords = (
+                int.Parse(coordsStr[0], CultureInfo.InvariantCulture), 
+                int.Parse(coordsStr[1], CultureInfo.InvariantCulture)
+            );
 
             string[] spawnParts = lines[i + 1].Split(',');
             Vector2 spawnPos = new Vector2(
@@ -58,10 +64,13 @@ public static class StoryLevelRegistry
                     plants.Add(b => PlantUtil.SpeciesToPlantInit[species](b, (x, y)));
                 }
             }
-
-            Levels.Add(new(index, spawnPos, [.. platforms], [.. plants]));
+            Levels[coords] = new(coords, spawnPos, [.. platforms], [.. plants]);
         }
+        LevelCoords = [.. Levels.Keys];
     }
 
-    public static StoryLevelDef Get(int index) => Levels[Math.Clamp(index, 0, Levels.Count - 1)];
+    public static StoryLevelDef? Get((int,int) coords) {
+        if(Levels.TryGetValue(coords, out StoryLevelDef value)) return value;
+        return null;
+    }
 }

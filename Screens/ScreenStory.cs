@@ -30,7 +30,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     private LevelManager levelManager;
     private Player player;
     private bool isPaused;
-    private int currentLevelIndex;
+    private (int, int) currentLevelCoords;
 
     public bool IsPaused => isPaused;
     public IPlayer CurrentPlayer => state == StoryState.Playing ? player : null;
@@ -59,7 +59,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         player = new Player();
         levelManager = new LevelManager();
 
-        currentLevelIndex = 0;
+        currentLevelCoords = (0, 0);
 
         BuildMenu();
         BuildGameOverMenu();
@@ -111,7 +111,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
             Assets.UiFont,
             Assets.ButtonTexture,
             "Retry Level",
-            () => StartStoryLevel(currentLevelIndex),
+            () => StartStoryLevel(currentLevelCoords),
             buttonSize,
             new Vector2(x, y + (buttonSize.Y + spacer) * 0)
         ));
@@ -136,15 +136,15 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     private void StartNewGame()
     {
         StoryLevelRegistry.LoadLevelData();
-        currentLevelIndex = 0;
-        StartStoryLevel(currentLevelIndex);
+        currentLevelCoords = (0,0);
+        StartStoryLevel(currentLevelCoords);
     }
 
-    private void StartStoryLevel(int index)
+    private void StartStoryLevel((int, int) coords)
     {
-        currentLevelIndex = index;
-        levelManager.StartStory(player, index);
         state = StoryState.Playing;
+        currentLevelCoords = coords;
+        levelManager.StartStory(player, coords);
     }
 
     public void TogglePause()
@@ -169,8 +169,21 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 menu.Update();
                 break;
             case StoryState.Playing:
+                if (player.LevelChangeCoords != (0, 0)) {
+                    var nextLevelCoords = (currentLevelCoords.Item1+player.LevelChangeCoords.Item1, currentLevelCoords.Item2+player.LevelChangeCoords.Item2);
+                    var nextDef = StoryLevelRegistry.Get(nextLevelCoords);
+                    if (nextDef is StoryLevelDef next) {
+                        levelManager.StartStory(player, nextLevelCoords);
+                        currentLevelCoords = nextLevelCoords;
+                    } else {
+                        state = StoryState.GameOver;
+                        gameOverMenu.Update();
+                    }
+                }
                 levelManager.Update(gameTime);
-                if (levelManager.IsGameOver) state = StoryState.GameOver;
+                if (levelManager.IsGameOver) {
+                    state = StoryState.GameOver;
+                    gameOverMenu.Update();}
                 break;
             case StoryState.GameOver:
                 gameOverMenu.Update();
@@ -181,9 +194,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         var keyboard = Keyboard.GetState();
         if (keyboard.IsKeyDown(Keys.OemPeriod) && prevKeyboard.IsKeyUp(Keys.OemPeriod)) 
         {
-            currentLevelIndex += 1;
-            currentLevelIndex %= 3;
-            StartStoryLevel(currentLevelIndex);
+            currentLevelCoords = StoryLevelRegistry.LevelCoords[(StoryLevelRegistry.LevelCoords.IndexOf(currentLevelCoords) + 1) % StoryLevelRegistry.LevelCoords.Count];
+            StartStoryLevel(currentLevelCoords);
         }
         prevKeyboard = keyboard;
         // END DEBUG
