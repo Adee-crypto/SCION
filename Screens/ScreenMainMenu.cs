@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Sprint2.Extensions;
 using Sprint2.UI;
 using Sprint2.UI.Overlays;
@@ -19,6 +20,8 @@ public class ScreenMainMenu : IScreen//, IResizableScreen
         this.screenManager = screenManager;
 
         menu = new(Assets.UiFont) { Title = "Main Menu", DimBackground = false };
+
+        MediaPlayer.Stop();
     }
 
     public void OnEnter()
