@@ -32,6 +32,7 @@
   </None>
 </ItemGroup>
   <ItemGroup>
+    <Folder Include="AnalysisAndReviews\Sprint4\reviews\" />
     <Folder Include="BoringStuff\Reflection\" />
     <Folder Include="CodeReviews\Sprint3Reviews\Benny\" />
   </ItemGroup>
