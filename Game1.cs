@@ -47,8 +47,7 @@ public class Game1 : Game
         _graphics.PreferredBackBufferHeight = ScreenSize.h;
         _graphics.ApplyChanges();
         //recalculate transformation matrix with letterboxing
-        scale = Math.Min(ScreenSize.w / Consts.LevelSize.X, ScreenSize.h / Consts.LevelSize.Y);
-        // transform = Matrix.CreateTranslation(new(ScreenSizeVec/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0));
+        scale = Math.Min(ScreenSize.w / Consts.LevelSize.X, ScreenSize.h / Consts.LevelSize.Y)*0.9f;
         transform = Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(RawScreenSizeVec/2, 0));
         MouseController.SetTransform(Matrix.Invert(transform));
     }
