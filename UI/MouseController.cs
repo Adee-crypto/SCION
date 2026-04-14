@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Sprint2.Controllers;
 
@@ -6,6 +7,11 @@ public static class MouseController// : IMouseController
 {
     private static MouseState currentMouseState;
     private static MouseState previousMouseState;
+
+    public static Point RawMousePos => currentMouseState.Position;
+    private static Matrix transform;
+    public static void SetTransform(Matrix transform) => MouseController.transform = transform;  
+    public static Point VirtualMousePos => Vector2.Transform(RawMousePos.ToVector2(), transform).ToPoint();
 
     public static void Update()
     {

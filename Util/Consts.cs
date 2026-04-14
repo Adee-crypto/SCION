@@ -9,9 +9,11 @@ public static class Consts
 
     //other
     public static readonly (int, int)[] orthoDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
-    
+
     //Screen dimensions
     public static (int w, int h) DefaultScreenSize { get; } = (1000, 800);
+    public static Vector2 DefaultScreenSizeVec { get; } = new(1000, 800);
+    public static Vector2 LevelSize { get; } = new(1000, 800);
     public const int BlockWidth = 24;
 
     //physics
@@ -29,7 +31,8 @@ public static class Consts
     public const float playerYForce = -24000f*1.2247f;
     public const float playerMass = 1f;
     public static Vector2 playerHitbox {get;} = new(16-0.1f, 16-0.1f); //fix this offset perhaps
-    
+    public static int LevelSizeVec { get; internal set; }
+
     public const float enemyXForce = 100f;
 
 

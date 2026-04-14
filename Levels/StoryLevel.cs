@@ -30,9 +30,9 @@ public sealed class StoryLevel : BaseLevel
             Plants.Add(plant(BlockManager));
         }
 
-        EnemyManager.Spawn(Consts.BlockWidth * new Vector2(35, 19));
+        EnemyManager.Spawn(Consts.BlockWidth * new Vector2(25, 10));
 
-        Sword.Spawn(Consts.BlockWidth * new Vector2(30, 19));
+        Sword.Spawn(Consts.BlockWidth * new Vector2(25, 24));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime) { }

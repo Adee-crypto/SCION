@@ -7,7 +7,11 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
+<<<<<<< HEAD
 public class ScreenMainMenu : IScreen, IResizable
+=======
+public class ScreenMainMenu : IScreen//, IResizableScreen
+>>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
 {
     private readonly Game1 game;
     private readonly ScreenManager screenManager;
@@ -34,8 +38,8 @@ public class ScreenMainMenu : IScreen, IResizable
         Vector2 buttonSize = new(200, 50);
         float spacer = 18f;
 
-        float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
-        float y = game.GraphicsDevice.Viewport.Height * 0.3f;
+        float x = (Consts.DefaultScreenSize.w - buttonSize.X) / 2f;
+        float y = Consts.DefaultScreenSize.h * 0.3f;
 
         menu.AddButton(new(
             Assets.UiFont, 
@@ -71,7 +75,11 @@ public class ScreenMainMenu : IScreen, IResizable
         ));
     }
 
+<<<<<<< HEAD
     public void Resize((int w, int h) size) => OnEnter();
+=======
+    public void OnExit() { }
+>>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
 
     public void Update(GameTime gameTime)
     {
@@ -80,7 +88,7 @@ public class ScreenMainMenu : IScreen, IResizable
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        menu.Draw(spriteBatch, (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
+        menu.Draw(spriteBatch, game.VirtualScreenSize);
     }
 
 }

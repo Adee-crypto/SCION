@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Sprint2.Controllers;
 using Sprint2.Util;
 using System;
 
@@ -12,10 +12,9 @@ public class Aimer(float distanceFromPlayer = 20f)
     public float Angle { get; set; } // Angle in radians
     public float DistanceFromPlayer { get; set; } = distanceFromPlayer;
 
-    public void Update(Vector2 playerCenter, MouseState mouse)
+    public void Update(Vector2 playerCenter)
     {
-        Vector2 mousePos = new(mouse.X, mouse.Y);
-        Vector2 aimerPos = mousePos - playerCenter;
+        Vector2 aimerPos = MouseController.VirtualMousePos.ToVector2() - playerCenter;
 
         if (aimerPos.LengthSquared() > 0.0001f) Direction = Vector2.Normalize(aimerPos);
 

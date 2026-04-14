@@ -11,7 +11,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-public class ScreenStory : IScreen, IResizable, IResettableScreen, IPausableScreen, IPlayerProvider
+public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerProvider//, IResizableScreen
 {
     private enum StoryState
     {
@@ -71,8 +71,8 @@ public class ScreenStory : IScreen, IResizable, IResettableScreen, IPausableScre
     {
         menu.ClearButtons();
 
-        float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
-        float y = game.GraphicsDevice.Viewport.Height * 0.4f;
+        float x = (Consts.DefaultScreenSize.w - buttonSize.X) / 2f;
+        float y = Consts.DefaultScreenSize.h * 0.4f;
 
         menu.AddButton(new(
             Assets.UiFont,
@@ -144,15 +144,7 @@ public class ScreenStory : IScreen, IResizable, IResettableScreen, IPausableScre
     {
         currentLevelIndex = index;
         levelManager.StartStory(player, index);
-        levelManager.Resize((game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
         state = StoryState.Playing;
-    }
-
-    public void Resize((int w, int h) size)
-    {
-        BuildMenu();
-        BuildGameOverMenu();
-        levelManager?.Resize(size);
     }
 
     public void TogglePause()
@@ -199,18 +191,16 @@ public class ScreenStory : IScreen, IResizable, IResettableScreen, IPausableScre
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        var size = (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
-
         switch (state)
         {
             case StoryState.Playing:
                 levelManager.Draw(spriteBatch);
                 break;
             case StoryState.Menu:
-                menu.Draw(spriteBatch, size);
+                menu.Draw(spriteBatch, game.VirtualScreenSize);
                 break;
             case StoryState.GameOver:
-                gameOverMenu.Draw(spriteBatch, size);
+                gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
                 break;
         }
 
