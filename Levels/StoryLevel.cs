@@ -32,7 +32,7 @@ public sealed class StoryLevel : BaseLevel
 
         EnemyManager.Spawn(Consts.BlockWidth * new Vector2(25, 10));
 
-        Sword.Spawn(Consts.BlockWidth * new Vector2(25, 24));
+        Sword.Spawn(Consts.BlockWidth * new Vector2(30, 19));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime) { }
