@@ -19,7 +19,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch spriteBatch;
     private (int w, int h) ScreenSize {get;set;} = Consts.DefaultScreenSize;
-    private Vector2 ScreenSizeVec => new(ScreenSize.w, ScreenSize.h);
+    public Vector2 RawScreenSizeVec => new(ScreenSize.w, ScreenSize.h);
     public Vector2 VirtualScreenSize => Vector2.Transform(new(ScreenSize.w, ScreenSize.h), Matrix.Invert(transform)); //MAKE PRIVATE
     private Matrix transform;
     private float scale;
@@ -49,7 +49,7 @@ public class Game1 : Game
         //recalculate transformation matrix with letterboxing
         scale = Math.Min(ScreenSize.w / Consts.LevelSize.X, ScreenSize.h / Consts.LevelSize.Y);
         // transform = Matrix.CreateTranslation(new(ScreenSizeVec/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0));
-        transform = Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(ScreenSizeVec/2, 0));
+        transform = Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(RawScreenSizeVec/2, 0));
         MouseController.SetTransform(Matrix.Invert(transform));
     }
 
@@ -84,6 +84,7 @@ public class Game1 : Game
         Assets.GrassSound = Content.Load<SoundEffect>("Woowo");
 
         Assets.BackgroundMusic = Content.Load<Song>("Bgm");
+        Levels.StoryLevelRegistry.LoadLevelData();
 
         OnResize(null, null);
 

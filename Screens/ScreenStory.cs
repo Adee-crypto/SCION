@@ -33,7 +33,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     private LevelManager levelManager;
     private Player player;
     private bool isPaused;
-    private (int, int) currentLevelCoords;
+    private (int, int) currentLevelCoords = (0, 0);
 
     public bool IsPaused => isPaused;
     public IPlayer CurrentPlayer => state == StoryState.Playing ? player : null;
@@ -291,6 +291,16 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
             var fullscreenRect = new Rectangle(0, 0, (int)viewport.X, (int)viewport.Y);
 
             spriteBatch.Draw(Assets.PixelTexture, fullscreenRect, Color.White * levelSwapFadeAlpha);
+        }
+        foreach (var delta in Consts.orthoDirs) {
+            var AdjCoord = (delta.Item1+currentLevelCoords.Item1,delta.Item2+currentLevelCoords.Item2);
+            if (!StoryLevelRegistry.LevelCoords.Contains(AdjCoord)) {
+                if (delta.Item1 == 0) {
+                    spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int) (-2*Consts.LevelSize.X), (int) (Consts.LevelSize.Y*delta.Item2*0.98f), (int) Consts.LevelSize.X*5, (int) Consts.LevelSize.Y), Color.Black);
+                } else {
+                    spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int) (Consts.LevelSize.X*delta.Item1*0.98f), (int) (-2*Consts.LevelSize.Y), (int) Consts.LevelSize.X, (int) Consts.LevelSize.Y*5), Color.Black);
+                }
+            }
         }
         // END DEBUG
 
