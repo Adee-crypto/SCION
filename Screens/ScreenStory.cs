@@ -280,7 +280,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
                 break;
             case StoryState.Won:
-                winMenu.Update();
+                winMenu.Draw(spriteBatch, game.VirtualScreenSize);
                 break;
         }
 
