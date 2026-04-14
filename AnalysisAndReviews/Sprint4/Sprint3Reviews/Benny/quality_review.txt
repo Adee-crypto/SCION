@@ -1,10 +1,9 @@
 Author: Benny
-Date: 2026-03-13
-Sprint: 3
-Reviewed file: CollisionManager.cs
-Author of reviewed file: Sean, Benny
-Time taken for review: 10 minutes 
+Date: 2026-04-13
+Sprint: 4
+Reviewed file: Sword.cs
+Author of reviewed file: Benny
+Time taken for review: 5 mins
 
-The use of a List<BlockList> with delegation methods like HasBlockAt and TryBreakBlockAt keeps the collision surface area narrow, meaning new block behaviors can be added to BlockList without touching the manager's core logic.
-
-The ManageCollision method handles both X and Y axes but duplicates the index recalculation (leftIndex, rightIndex, topIndex, bottomIndex) for each axis. Extracting this into a small helper would reduce the risk of the two blocks drifting out of sync when changes are made.
+Implemented `spawn()` to customize the object's spawn position. Constants can be moved into the `Const` class in the future.
+The else if branch in Draw already guarantees player.HasSword is true, making the redundant check player.HasSword && in that branch unnecessary.
