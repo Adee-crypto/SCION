@@ -16,12 +16,14 @@ public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayer
     {
         Menu,
         Playing,
-        GameOver
+        GameOver,
+        Won
     }
     private readonly Game1 game;
     private readonly ScreenManager screenManager;
     private readonly Menu menu;
     private readonly Menu gameOverMenu;
+    private readonly Menu winMenu;
     private readonly Vector2 buttonSize = new(300, 75);
     private readonly float spacer = 18f;
     private ArcadeState state;
@@ -37,6 +39,7 @@ public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayer
 
         menu = new(Assets.UiFont) { Title = "Arcade Mode", DimBackground = true };
         gameOverMenu = new(Assets.UiFont) { Title = "Game Over", DimBackground = true };
+        winMenu = new(Assets.UiFont) { Title = "You Won!\nWhat would you like\nto do next?", DimBackground = true };
     }
 
     public void OnEnter()
@@ -48,6 +51,7 @@ public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayer
 
         BuildMenu();
         BuildGameOverMenu();
+        BuildWinMenu();
     }
 
     public void OnExit() { }
@@ -110,6 +114,39 @@ public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayer
         ));
     }
 
+    private void BuildWinMenu()
+    {
+        winMenu.ClearButtons();
+
+        float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
+        float y = game.GraphicsDevice.Viewport.Height * 0.4f;
+
+        winMenu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Play Again",
+            StartArcadeRun,
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 0)
+        ));
+        winMenu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Main Menu",
+            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)),
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 1)
+        ));
+        winMenu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Quit Game",
+            game.Exit,
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 2)
+        ));
+    }
+
     private void StartArcadeRun()
     {
         levelManager.StartArcade(player);
@@ -144,13 +181,14 @@ public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayer
             case ArcadeState.GameOver:
                 gameOverMenu.Update();
                 break;
+            case ArcadeState.Won:
+                winMenu.Update();
+                break;
         }
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        var size = (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
-
         switch (state)
         {
             case ArcadeState.Menu:
@@ -161,6 +199,9 @@ public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayer
                 break;
             case ArcadeState.GameOver:
                 gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
+                break;
+            case ArcadeState.Won:
+                winMenu.Draw(spriteBatch, game.VirtualScreenSize);
                 break;
         }
     }

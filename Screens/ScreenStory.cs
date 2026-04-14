@@ -17,12 +17,14 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     {
         Menu,
         Playing,
-        GameOver
+        GameOver,
+        Won
     }
     private readonly Game1 game;
     private readonly ScreenManager screenManager;
     private readonly Menu menu;
     private readonly Menu gameOverMenu;
+    private readonly Menu winMenu;
     private readonly Vector2 buttonSize = new(300, 75);
     private readonly float spacer = 18f;
 
@@ -50,6 +52,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
         menu = new(Assets.UiFont) { Title = "Story Mode", DimBackground = true };
         gameOverMenu = new(Assets.UiFont) { Title = "Game Over", DimBackground = true };
+        winMenu = new(Assets.UiFont) { Title = "You Won!\nWhat would you like\nto do next?", DimBackground = true };
     }
 
     public void OnEnter()
@@ -63,6 +66,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
         BuildMenu();
         BuildGameOverMenu();
+        BuildWinMenu();
     }
 
     public void OnExit() { }
@@ -133,6 +137,39 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         ));
     }
 
+    private void BuildWinMenu()
+    {
+        winMenu.ClearButtons();
+
+        float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
+        float y = game.GraphicsDevice.Viewport.Height * 0.4f;
+
+        winMenu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Play Again",
+            () => StartStoryLevel(currentLevelCoords),
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 0)
+        ));
+        winMenu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Main Menu",
+            () => screenManager.SetScreen(new ScreenMainMenu(game, screenManager)),
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 1)
+        ));
+        winMenu.AddButton(new(
+            Assets.UiFont,
+            Assets.ButtonTexture,
+            "Quit Game",
+            game.Exit,
+            buttonSize,
+            new Vector2(x, y + (buttonSize.Y + spacer) * 2)
+        ));
+    }
+
     private void StartNewGame()
     {
         StoryLevelRegistry.LoadLevelData();
@@ -188,6 +225,9 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
             case StoryState.GameOver:
                 gameOverMenu.Update();
                 break;
+            case StoryState.Won:
+                winMenu.Update();
+                break;
         }
 
         // BEGIN DEBUG: Keybound Level switching logic
@@ -213,6 +253,9 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 break;
             case StoryState.GameOver:
                 gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
+                break;
+            case StoryState.Won:
+                winMenu.Update();
                 break;
         }
 
