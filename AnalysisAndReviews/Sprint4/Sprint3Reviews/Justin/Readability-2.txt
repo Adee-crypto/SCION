@@ -1,0 +1,11 @@
+Justin Imber
+13 March 2026
+Sprint 3
+
+File being reviewed: PineapplePlant.cs
+Author of file being reviewed: Sean Lipton
+
+Number of minutes taken to complete the review: 5
+
+Specific comments on what is readable and what is not:
+Everything is fairly readable. All functions/methods are concise and understandable. This could be said for every current plant type class (Apple, Grass, Pineapple). "x+Root.x+y+Root.y" is a bit hard on the eyes, but nothing a bit of spacing or variable renaming can't fix.

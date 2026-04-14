@@ -1,0 +1,14 @@
+Justin Imber
+13 March 2026
+Sprint 3
+
+File being reviewed: BlockList.cs
+Author of file being reviewed: Sean Lipton
+
+Number of minutes taken to complete the review: 5
+
+Specific comments on code quality:
+All methods/functions are concise and serve a unique purpose. The purpose of all fields are apparent and necessary.
+
+A hypothetical change to make to the game related to file being reviewed and how the current implementation could or could not easily support that change:
+A hypothetical and likely change that will occur is the names/types of blocks in the block list being different, which would be easy to change.
