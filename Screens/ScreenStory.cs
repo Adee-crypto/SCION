@@ -295,6 +295,16 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
         foreach (var delta in Consts.orthoDirs) {
             var AdjCoord = (delta.Item1+currentLevelCoords.Item1,delta.Item2+currentLevelCoords.Item2);
+            if (StoryLevelRegistry.LevelCoords.Contains(AdjCoord)) {
+                if (delta.Item1 == 0) {
+                    spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int) (-2*Consts.LevelSize.X), (int) (Consts.LevelSize.Y*delta.Item2), (int) Consts.LevelSize.X*5, (int) Consts.LevelSize.Y), Color.LightPink);
+                } else {
+                    spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int) (Consts.LevelSize.X*delta.Item1), (int) (-2*Consts.LevelSize.Y), (int) Consts.LevelSize.X, (int) Consts.LevelSize.Y*5), Color.LightPink);
+                }
+            }
+        }
+        foreach (var delta in Consts.orthoDirs) {
+            var AdjCoord = (delta.Item1+currentLevelCoords.Item1,delta.Item2+currentLevelCoords.Item2);
             if (!StoryLevelRegistry.LevelCoords.Contains(AdjCoord)) {
                 if (delta.Item1 == 0) {
                     spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int) (-2*Consts.LevelSize.X), (int) (Consts.LevelSize.Y*delta.Item2), (int) Consts.LevelSize.X*5, (int) Consts.LevelSize.Y), Color.Black);
