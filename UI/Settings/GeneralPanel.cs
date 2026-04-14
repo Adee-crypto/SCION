@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Sprint2.Extensions;
 using Sprint2.Util;
 
@@ -26,14 +28,20 @@ public class GeneralPanel : SettingsListPanel
             0f,
             100f,
             () => Tunables.MusicVolume.Value,
-            v => Tunables.MusicVolume.Value = v
+            v => {
+                Tunables.MusicVolume.Value = v;
+                MediaPlayer.Volume = v / 100f * Tunables.MasterVolume.Value;
+            }
         ));
         Rows.Add(new SliderRow(
             "SFX Volume",
             0f,
             100f,
             () => Tunables.SFXVolume.Value,
-            v => Tunables.SFXVolume.Value = v
+            v => {
+                Tunables.SFXVolume.Value = v;
+                SoundEffect.MasterVolume = v / 100f * Tunables.MasterVolume.Value;
+            }
         ));
         
     }
