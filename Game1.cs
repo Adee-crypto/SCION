@@ -82,7 +82,7 @@ public class Game1 : Game
 
         Assets.GrassSound = Content.Load<SoundEffect>("Woowo");
 
-        Assets.BackgroundMusic = Content.Load<Song>("Bgm");
+        Assets.BackgroundMusic = Content.Load<Song>("backgroundambience");
         Levels.StoryLevelRegistry.LoadLevelData();
 
         OnResize(null, null);

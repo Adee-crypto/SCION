@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -215,17 +216,25 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                     var nextLevelCoords = (currentLevelCoords.Item1+player.LevelChangeCoords.Item1, currentLevelCoords.Item2+player.LevelChangeCoords.Item2);
                     var nextDef = StoryLevelRegistry.Get(nextLevelCoords);
                     if (nextDef is StoryLevelDef next) {
+                        if (nextLevelCoords == StoryLevelRegistry.LevelCoords.Last()) {
+                            state = StoryState.Won;
+                            Update(gameTime);
+                            return;
+                        }
                         levelManager.StartStory(player, nextLevelCoords);
                         currentLevelCoords = nextLevelCoords;
                     } else {
                         state = StoryState.GameOver;
-                        gameOverMenu.Update();
+                        Update(gameTime);
+                        return;
                     }
                 }
                 levelManager.Update(gameTime);
                 if (levelManager.IsGameOver) {
                     state = StoryState.GameOver;
-                    gameOverMenu.Update();}
+                    Update(gameTime);
+                    return;
+                }
                 break;
             case StoryState.GameOver:
                 gameOverMenu.Update();
