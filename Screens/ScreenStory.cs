@@ -178,7 +178,6 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
     private void StartNewGame()
     {
-        StoryLevelRegistry.LoadLevelData();
         currentLevelCoords = (0,0);
         StartStoryLevel(currentLevelCoords);
     }
@@ -221,6 +220,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                             Update(gameTime);
                             return;
                         }
+                        StartTransition();
                         levelManager.StartStory(player, nextLevelCoords);
                         currentLevelCoords = nextLevelCoords;
                     } else {
@@ -245,16 +245,11 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         }
 
         // BEGIN DEBUG: Keybound Level switching logic
+        
         var keyboard = Keyboard.GetState();
         if (keyboard.IsKeyDown(Keys.OemPeriod) && prevKeyboard.IsKeyUp(Keys.OemPeriod)) 
         {
-            if (!levelSwapFading)
-            {
-                pendingLevelCoords = StoryLevelRegistry.LevelCoords[(StoryLevelRegistry.LevelCoords.IndexOf(currentLevelCoords) + 1) % StoryLevelRegistry.LevelCoords.Count];
-
-                levelSwapFading = true;
-                levelSwapFadeAlpha = 0f;
-            }
+            StartTransition();
         }
 
         if (levelSwapFading)
@@ -275,32 +270,21 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         // END DEBUG
     }
 
+    public void StartTransition()
+    {
+        if (!levelSwapFading)
+            {
+                pendingLevelCoords = StoryLevelRegistry.LevelCoords[(StoryLevelRegistry.LevelCoords.IndexOf(currentLevelCoords) + 1) % StoryLevelRegistry.LevelCoords.Count];
+
+                levelSwapFading = true;
+                levelSwapFadeAlpha = 0f;
+            }
+    }
+
     public void Draw(SpriteBatch spriteBatch)
     {
-        switch (state)
-        {
-            case StoryState.Playing:
-                levelManager.Draw(spriteBatch);
-                break;
-            case StoryState.Menu:
-                menu.Draw(spriteBatch, game.VirtualScreenSize);
-                break;
-            case StoryState.GameOver:
-                gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
-                break;
-            case StoryState.Won:
-                winMenu.Draw(spriteBatch, game.VirtualScreenSize);
-                break;
-        }
 
         // BEGIN DEBUG
-        if (levelSwapFading && levelSwapFadeAlpha > 0f)
-        {
-            var viewport = game.VirtualScreenSize;
-            var fullscreenRect = new Rectangle(0, 0, (int)viewport.X, (int)viewport.Y);
-
-            spriteBatch.Draw(Assets.PixelTexture, fullscreenRect, Color.White * levelSwapFadeAlpha);
-        }
 
         foreach (var delta in Consts.orthoDirs) {
             var AdjCoord = (delta.Item1+currentLevelCoords.Item1,delta.Item2+currentLevelCoords.Item2);
@@ -322,7 +306,30 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 }
             }
         }
+
+        if (levelSwapFading && levelSwapFadeAlpha > 0f)
+        {
+            var viewport = game.VirtualScreenSize;
+            var fullscreenRect = new Rectangle((int) (-2*viewport.X), (int) (-2*viewport.Y), (int) (5*viewport.X),(int) (5*viewport.Y));
+
+            spriteBatch.Draw(Assets.PixelTexture, fullscreenRect, Color.White * levelSwapFadeAlpha);
+        }
         // END DEBUG
+        switch (state)
+        {
+            case StoryState.Playing:
+                levelManager.Draw(spriteBatch);
+                break;
+            case StoryState.Menu:
+                menu.Draw(spriteBatch, game.VirtualScreenSize);
+                break;
+            case StoryState.GameOver:
+                gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
+                break;
+            case StoryState.Won:
+                winMenu.Draw(spriteBatch, game.VirtualScreenSize);
+                break;
+        }
 
     }
 
