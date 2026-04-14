@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Controllers;
 using Sprint2.Extensions;
 using Sprint2.Util;
 
@@ -24,7 +25,7 @@ public class ActionRow(string actionLabel, Action theAction) : ISettingsRow
 
     public void Update(MouseState mouse, MouseState previousMouse, KeyboardState keyboard, KeyboardState previousKeyboard)
     {
-        hover = bounds.Contains(mouse.Position);
+        hover = bounds.Contains(MouseController.VirtualMousePos);
 
         bool clicked = mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Released;
 

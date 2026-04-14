@@ -1,8 +1,8 @@
 using System;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Controllers;
 using Sprint2.Extensions;
 using Sprint2.Util;
 
@@ -59,11 +59,11 @@ public class SliderRow(string rowLabel, float minVal, float maxVal, Func<float> 
         bool pressed = mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Released;
         bool released = mouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed;
 
-        if (pressed && (knobBounds.Contains(mouse.Position) || sliderTrack.Contains(mouse.Position))) dragging = true;
+        if (pressed && (knobBounds.Contains(MouseController.VirtualMousePos) || sliderTrack.Contains(MouseController.VirtualMousePos))) dragging = true;
         if (released) dragging = false;
         if (dragging)
         {
-            float percent = (mouse.X - sliderTrack.X) / (float)sliderTrack.Width;
+            float percent = (MouseController.VirtualMousePos.X - sliderTrack.X) / (float)sliderTrack.Width;
             percent = Math.Clamp(percent, 0f, 1f);
 
             float value = MathHelper.Lerp(min, max, percent);

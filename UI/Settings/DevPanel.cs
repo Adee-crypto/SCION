@@ -4,6 +4,7 @@ using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Controllers;
 using Sprint2.Extensions;
 using Sprint2.Util;
 
@@ -136,7 +137,7 @@ public class DevPanel : ISettingsPanel
     private void HandleScroll(MouseState mouse)
     {
         int wheelDelta = mouse.ScrollWheelValue - previousMouse.ScrollWheelValue;
-        if (wheelDelta == 0 || !contentBounds.Contains(mouse.Position)) return;
+        if (wheelDelta == 0 || !contentBounds.Contains(MouseController.VirtualMousePos)) return;
 
         scrollOffset -= wheelDelta / 6;
         scrollOffset = Math.Clamp(scrollOffset, 0, maxScroll);
@@ -150,7 +151,7 @@ public class DevPanel : ISettingsPanel
 
         if (!leftJustPressed) return;
 
-        Point pos = mouse.Position;
+        Point pos = MouseController.VirtualMousePos;
         bool clickedSomething = false;
 
         int y = contentBounds.Y - scrollOffset;

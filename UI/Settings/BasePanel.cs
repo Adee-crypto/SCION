@@ -1,10 +1,13 @@
 using System;
+using System.Runtime.InteropServices.Marshalling;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Controllers;
 using Sprint2.Extensions;
+using Sprint2.Util;
 
-namespace Sprint2.Util.Settings;
+namespace Sprint2.UI.Settings;
 
 public abstract class BasePanel : ISettingsPanel
 {
@@ -71,7 +74,7 @@ public abstract class BasePanel : ISettingsPanel
     {
         int wheelDiff = mouse.ScrollWheelValue - PreviousMouse.ScrollWheelValue;
 
-        if (ContentBounds.Contains(mouse.Position))
+        if (ContentBounds.Contains(MouseController.VirtualMousePos))
         {
             if (wheelDiff > 0) ScrollOffset -= ScrollStep;
             if (wheelDiff < 0) ScrollOffset += ScrollStep;

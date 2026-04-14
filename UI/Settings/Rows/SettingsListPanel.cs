@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Extensions;
-using Sprint2.Util.Settings;
 
 namespace Sprint2.UI.Settings;
 

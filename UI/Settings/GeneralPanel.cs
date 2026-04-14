@@ -21,7 +21,10 @@ public class GeneralPanel : SettingsListPanel
             0f,
             100f,
             () => Tunables.MasterVolume.Value,
-            v => Tunables.MasterVolume.Value = v
+            v => {
+                Tunables.MasterVolume.Value = v;
+                AdjustVolumes();
+            }
         ));
         Rows.Add(new SliderRow(
             "Music Volume",
@@ -30,7 +33,7 @@ public class GeneralPanel : SettingsListPanel
             () => Tunables.MusicVolume.Value,
             v => {
                 Tunables.MusicVolume.Value = v;
-                MediaPlayer.Volume = v / 100f * Tunables.MasterVolume.Value;
+                AdjustVolumes();
             }
         ));
         Rows.Add(new SliderRow(
@@ -40,9 +43,19 @@ public class GeneralPanel : SettingsListPanel
             () => Tunables.SFXVolume.Value,
             v => {
                 Tunables.SFXVolume.Value = v;
-                SoundEffect.MasterVolume = v / 100f * Tunables.MasterVolume.Value;
+                AdjustVolumes();
             }
         ));
         
+    }
+
+    private void AdjustVolumes()
+    {
+        float master = Tunables.MasterVolume.Value / 100f;
+        float music = Tunables.MusicVolume.Value / 100f;
+        float sfx = Tunables.SFXVolume.Value / 100f;
+
+        MediaPlayer.Volume = master * music;
+        SoundEffect.MasterVolume = master * sfx;
     }
 }

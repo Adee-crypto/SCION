@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sprint2.Controllers;
 using Sprint2.Extensions;
 using Sprint2.Util;
 
@@ -33,7 +34,7 @@ public class ToggleRow(string stringLabel, Func<bool> getValueFunc, Action<bool>
 
     public void Update(MouseState mouse, MouseState previousMouse, KeyboardState keyboard, KeyboardState previousKeyboard)
     {
-        hover = toggleBounds.Contains(mouse.Position);
+        hover = toggleBounds.Contains(MouseController.VirtualMousePos);
 
         bool clicked = mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Released;
 
