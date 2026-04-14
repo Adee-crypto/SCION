@@ -49,7 +49,7 @@ public class GeneralPanel : SettingsListPanel
         
     }
 
-    private void AdjustVolumes()
+    private static void AdjustVolumes()
     {
         float master = Tunables.MasterVolume.Value / 100f;
         float music = Tunables.MusicVolume.Value / 100f;

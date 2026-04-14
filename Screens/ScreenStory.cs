@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -39,6 +40,10 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     
     // BEGIN DEBUG
     private KeyboardState prevKeyboard;
+    private float levelSwapFadeAlpha;
+    private bool levelSwapFading;
+    private const float LevelSwapSpeed = 1.25f;
+    private (int x, int y) pendingLevelCoords;
     // END DEBUG
 
     public ScreenStory(Game1 game, ScreenManager screenManager)
@@ -234,9 +239,29 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         var keyboard = Keyboard.GetState();
         if (keyboard.IsKeyDown(Keys.OemPeriod) && prevKeyboard.IsKeyUp(Keys.OemPeriod)) 
         {
-            currentLevelCoords = StoryLevelRegistry.LevelCoords[(StoryLevelRegistry.LevelCoords.IndexOf(currentLevelCoords) + 1) % StoryLevelRegistry.LevelCoords.Count];
-            StartStoryLevel(currentLevelCoords);
+            if (!levelSwapFading)
+            {
+                pendingLevelCoords = StoryLevelRegistry.LevelCoords[(StoryLevelRegistry.LevelCoords.IndexOf(currentLevelCoords) + 1) % StoryLevelRegistry.LevelCoords.Count];
+
+                levelSwapFading = true;
+                levelSwapFadeAlpha = 0f;
+            }
         }
+
+        if (levelSwapFading)
+        {
+            levelSwapFadeAlpha += LevelSwapSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (levelSwapFadeAlpha >= 1f)
+            {
+                levelSwapFadeAlpha = 0f;
+                levelSwapFading = false;
+
+                currentLevelCoords = pendingLevelCoords;
+                StartStoryLevel(currentLevelCoords);
+            }
+        }
+
         prevKeyboard = keyboard;
         // END DEBUG
     }
@@ -258,6 +283,16 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 winMenu.Update();
                 break;
         }
+
+        // BEGIN DEBUG
+        if (levelSwapFading && levelSwapFadeAlpha > 0f)
+        {
+            var viewport = game.VirtualScreenSize;
+            var fullscreenRect = new Rectangle(0, 0, (int)viewport.X, (int)viewport.Y);
+
+            spriteBatch.Draw(Assets.PixelTexture, fullscreenRect, Color.White * levelSwapFadeAlpha);
+        }
+        // END DEBUG
 
     }
 

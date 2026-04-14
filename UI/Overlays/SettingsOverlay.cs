@@ -102,8 +102,6 @@ public class SettingsOverlay : IOverlay
         ));
     }
 
-    public void OnExit() { }
-
     public void Update(GameTime gameTime)
     {
         menu.Update();
