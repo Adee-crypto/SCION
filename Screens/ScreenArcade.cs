@@ -10,11 +10,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-<<<<<<< HEAD
-public class ScreenArcade : IScreen, IResizable, IResettableScreen, IPausableScreen, IPlayerProvider
-=======
 public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayerProvider
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
 {
     private enum ArcadeState
     {
@@ -120,16 +116,6 @@ public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayer
         state = ArcadeState.Playing;
     }
 
-<<<<<<< HEAD
-    public void Resize((int w, int h) size)
-    {
-        BuildMenu();
-        BuildGameOverMenu();
-        levelManager?.Resize(size);
-    }
-
-=======
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
     public void TogglePause()
     {
         isPaused = !isPaused;
@@ -163,28 +149,20 @@ public class ScreenArcade : IScreen, IResettableScreen, IPausableScreen, IPlayer
 
     public void Draw(SpriteBatch spriteBatch)
     {
-<<<<<<< HEAD
         var size = (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
 
         switch (state)
         {
             case ArcadeState.Menu:
-                menu.Draw(spriteBatch, size);
+                menu.Draw(spriteBatch, game.VirtualScreenSize);
                 break;
             case ArcadeState.Playing:
                 levelManager.Draw(spriteBatch);
                 break;
             case ArcadeState.GameOver:
-                gameOverMenu.Draw(spriteBatch, size);
+                gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
                 break;
         }
-=======
-        if (state == ArcadeState.Playing) levelManager.Draw(spriteBatch);
-        else if (state == ArcadeState.Menu) menu.Draw(spriteBatch, game.VirtualScreenSize);
-        else gameOverMenu.Draw(spriteBatch, game.VirtualScreenSize);
-
-        if (isPaused) pause.Draw(spriteBatch, game.VirtualScreenSize);
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
     }
 
 }

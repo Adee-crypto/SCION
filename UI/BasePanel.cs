@@ -38,8 +38,7 @@ public abstract class BasePanel : ISettingsPanel
 
     protected virtual void RebuildLayout()
     {
-        int w = Game.GraphicsDevice.Viewport.Width;
-        int h = Game.GraphicsDevice.Viewport.Height;
+        (int w, int h) = Game.VirtualScreenSize.ToPoint();
 
         PanelBounds = new Rectangle(
             (int)(w * 0.52f),

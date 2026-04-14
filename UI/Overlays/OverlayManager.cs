@@ -37,13 +37,13 @@ public class OverlayManager
         }
     }
 
-    public void Resize((int w, int h) size)
-    {
-        foreach (IOverlay overlay in overlays)
-        {
-            if (overlay is IResizable resizable) resizable.Resize(size);
-        }
-    }
+    // public void Resize((int w, int h) size)
+    // {
+    //     foreach (IOverlay overlay in overlays)
+    //     {
+    //         if (overlay is IOverlay resizable) resizable.Resize(size);
+    //     }
+    // }
 
     public IOverlay Peek()
     {

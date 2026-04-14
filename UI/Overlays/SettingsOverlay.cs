@@ -8,11 +8,7 @@ using Sprint2.Util;
 
 namespace Sprint2.UI.Overlays;
 
-<<<<<<< HEAD:UI/Overlays/SettingsOverlay.cs
-public class SettingsOverlay : IOverlay, IResizable
-=======
-public class ScreenSettings : IScreen//, IResizableScreen
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it):Screens/ScreenSettings.cs
+public class SettingsOverlay : IOverlay
 {
     private readonly Game1 game;
     private readonly OverlayManager overlayManager;
@@ -106,15 +102,7 @@ public class ScreenSettings : IScreen//, IResizableScreen
         ));
     }
 
-<<<<<<< HEAD:UI/Overlays/SettingsOverlay.cs
-    public void Resize((int w, int h) size)
-    {
-        BuildMenu();
-        foreach (ISettingsPanel panel in panels.Values) panel.Resize(size);
-    }
-=======
     public void OnExit() { }
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it):Screens/ScreenSettings.cs
 
     public void Update(GameTime gameTime)
     {
@@ -124,17 +112,12 @@ public class ScreenSettings : IScreen//, IResizableScreen
 
     public void Draw(SpriteBatch spriteBatch)
     {
-<<<<<<< HEAD:UI/Overlays/SettingsOverlay.cs
-        Rectangle backdrop = new(0, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
+        Rectangle backdrop = new(Vector2.Zero.ToPoint(), game.VirtualScreenSize.ToPoint());
         
         if (IsOverMainMenu) spriteBatch.Draw(Assets.PixelTexture, backdrop, Color.White);
 
-        menu.Draw(spriteBatch, (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
-        CurrentPanel.Draw(spriteBatch);
-=======
         menu.Draw(spriteBatch, game.VirtualScreenSize);
-        panels[currentTab].Draw(spriteBatch);
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it):Screens/ScreenSettings.cs
+        CurrentPanel.Draw(spriteBatch);
     }
 
 }
