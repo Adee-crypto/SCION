@@ -64,7 +64,6 @@ public static class StoryLevelRegistry
                     plants.Add(b => PlantUtil.SpeciesToPlantInit[species](b, (x, y)));
                 }
             }
-            Console.WriteLine(coords);
             Levels[coords] = new(coords, spawnPos, [.. platforms], [.. plants]);
         }
         LevelCoords = [.. Levels.Keys];

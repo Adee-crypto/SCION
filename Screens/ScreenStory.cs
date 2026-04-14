@@ -142,9 +142,9 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
     private void StartStoryLevel((int, int) coords)
     {
+        state = StoryState.Playing;
         currentLevelCoords = coords;
         levelManager.StartStory(player, coords);
-        state = StoryState.Playing;
     }
 
     public void TogglePause()
@@ -169,8 +169,21 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 menu.Update();
                 break;
             case StoryState.Playing:
+                if (player.LevelChangeCoords != (0, 0)) {
+                    var nextLevelCoords = (currentLevelCoords.Item1+player.LevelChangeCoords.Item1, currentLevelCoords.Item2+player.LevelChangeCoords.Item2);
+                    var nextDef = StoryLevelRegistry.Get(nextLevelCoords);
+                    if (nextDef is StoryLevelDef next) {
+                        levelManager.StartStory(player, nextLevelCoords);
+                        currentLevelCoords = nextLevelCoords;
+                    } else {
+                        state = StoryState.GameOver;
+                        gameOverMenu.Update();
+                    }
+                }
                 levelManager.Update(gameTime);
-                if (levelManager.IsGameOver) state = StoryState.GameOver;
+                if (levelManager.IsGameOver) {
+                    state = StoryState.GameOver;
+                    gameOverMenu.Update();}
                 break;
             case StoryState.GameOver:
                 gameOverMenu.Update();
