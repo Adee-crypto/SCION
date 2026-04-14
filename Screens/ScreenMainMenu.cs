@@ -7,11 +7,7 @@ using Sprint2.Util;
 
 namespace Sprint2.Screens;
 
-<<<<<<< HEAD
-public class ScreenMainMenu : IScreen, IResizable
-=======
 public class ScreenMainMenu : IScreen//, IResizableScreen
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
 {
     private readonly Game1 game;
     private readonly ScreenManager screenManager;
@@ -74,12 +70,6 @@ public class ScreenMainMenu : IScreen//, IResizableScreen
             new Vector2(x, y + (buttonSize.Y + spacer) * 3)
         ));
     }
-
-<<<<<<< HEAD
-    public void Resize((int w, int h) size) => OnEnter();
-=======
-    public void OnExit() { }
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it)
 
     public void Update(GameTime gameTime)
     {

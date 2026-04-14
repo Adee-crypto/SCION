@@ -75,8 +75,7 @@ public class DevPanel : ISettingsPanel
 
     public void BuildPanel()
     {
-        int w = game.GraphicsDevice.Viewport.Width;
-        int h = game.GraphicsDevice.Viewport.Height;
+        (int w, int h) = game.VirtualScreenSize.ToPoint();
 
         panelBounds = new Rectangle(
             (int)(w * 0.32f),

@@ -6,11 +6,7 @@ using Sprint2.Util;
 
 namespace Sprint2.UI.Overlays;
 
-<<<<<<< HEAD:UI/Overlays/PauseOverlay.cs
-public class PauseOverlay : IOverlay, IResizable
-=======
-public class PauseOverlay// : IResizableScreen
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it):UI/PauseOverlay.cs
+public class PauseOverlay : IOverlay
 {
     private readonly Game1 game;
     private readonly OverlayManager overlayManager;
@@ -73,7 +69,6 @@ public class PauseOverlay// : IResizableScreen
         ));
     }
 
-<<<<<<< HEAD:UI/Overlays/PauseOverlay.cs
     private void ReturnToMainMenu()
     {
         if (game.ScreenManager.Current is IPausableScreen pausable && pausable.IsPaused) pausable.TogglePause();
@@ -87,20 +82,14 @@ public class PauseOverlay// : IResizableScreen
         BuildMenu();
     }
 
-=======
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it):UI/PauseOverlay.cs
     public void Update(GameTime gameTime)
     {
         menu.Update();
     }
 
-<<<<<<< HEAD:UI/Overlays/PauseOverlay.cs
     public void Draw(SpriteBatch spriteBatch)
-=======
-    public void Draw(SpriteBatch spriteBatch, Vector2 size)
->>>>>>> 59edc3d (resizing logic simplified, fully works for ingame objects, some UI still needs fixing depending on what we want to do with it):UI/PauseOverlay.cs
     {
-        menu.Draw(spriteBatch, (game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height));
+        menu.Draw(spriteBatch, game.VirtualScreenSize);
     }
 
 }
