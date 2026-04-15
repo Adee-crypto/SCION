@@ -126,9 +126,27 @@ public class Player : IPlayer
         if (isGrounded && Collider.Velocity.X == 0) playerState = State.BreakBlock;
     }
 
-    public void GetRandomSeed() => GetSeed(PlantUtil.RandomSpecies());
-    
-    public void GetSeed(Species type) => Seeds.Add(PlantUtil.SpeciesToProjectile[type]);
+    public void GetRandomSeed()
+    {
+        Species randomSpecies = PlantUtil.RandomSpecies();
+
+        // Skip non-throwable plants (Catalyst and Gravebind)
+        while (randomSpecies == Species.Catalyst || randomSpecies == Species.Gravebind)
+        {
+            randomSpecies = PlantUtil.RandomSpecies();
+        }
+
+        GetSeed(randomSpecies);
+    }
+
+    public void GetSeed(Species type)
+    {
+        if (PlantUtil.SpeciesToProjectile.TryGetValue(type, out ProjectileType projectile))
+        {
+            Seeds.Add(projectile);
+        }
+        // Catalyst and Gravebind are not throwable, so we silently ignore them
+    }
 
     public ProjectileType ThrowSeed()
     {

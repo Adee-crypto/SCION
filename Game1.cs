@@ -66,28 +66,39 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        //Content.RootDirectory = @"E:\vsp\CSE3902Sprint2\Content\bin\DesktopGL"; /* Benny: it is for my desktop use, delete it if bug */
-        Assets.PlayerTexture = Content.Load<Texture2D>("Link");
-        Assets.ArrowTexture = Content.Load<Texture2D>("AimerArrow2");
-        Assets.SwordTexture = Content.Load<Texture2D>("SwordItem");
-        Assets.BlockSpriteSheet = Content.Load<Texture2D>("testsheet");
-        Assets.BlockPlayerSpriteSheet = Content.Load<Texture2D>("SPRITESHEET");
-        Assets.ButtonTexture = Content.Load<Texture2D>("DefaultButton");
-        Assets.ResetTexture = Content.Load<Texture2D>("ResetButton");
-        Assets.UiFont = Content.Load<SpriteFont>("UIFont");
-        Assets.VoidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
+        spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        Assets.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
-        Assets.PixelTexture.SetData([Color.White]);
+        try
+        {
+            Assets.PlayerTexture = Content.Load<Texture2D>("Link");
+            Assets.ArrowTexture = Content.Load<Texture2D>("AimerArrow2");
+            Assets.SwordTexture = Content.Load<Texture2D>("SwordItem");
+            Assets.BlockSpriteSheet = Content.Load<Texture2D>("testsheet");
+            Assets.BlockPlayerSpriteSheet = Content.Load<Texture2D>("SPRITESHEET");
+            Assets.ButtonTexture = Content.Load<Texture2D>("DefaultButton");
+            Assets.ResetTexture = Content.Load<Texture2D>("ResetButton");
+            Assets.UiFont = Content.Load<SpriteFont>("UIFont");
+            Assets.VoidspawnTexture = Content.Load<Texture2D>("VoidSpawns");
 
-        Assets.GrassSound = Content.Load<SoundEffect>("Woowo");
+            Assets.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
+            Assets.PixelTexture.SetData([Color.White]);
 
-        Assets.BackgroundMusic = Content.Load<Song>("backgroundambience");
-        Levels.StoryLevelRegistry.LoadLevelData(); //TODO MOVE THIS TO WHEN IT ACTUALLY NEEDS TO BE LOADED
+            Assets.GrassSound = Content.Load<SoundEffect>("Woowo");
+            Assets.BackgroundMusic = Content.Load<Song>("backgroundambience");
 
-        OnResize(null, null);
+            Levels.StoryLevelRegistry.LoadLevelData();  
 
-        screenManager.SetScreen(new ScreenMainMenu(this, screenManager));
+            OnResize(null, null);
+
+            screenManager.SetScreen(new ScreenMainMenu(this, screenManager));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("=== LOAD CONTENT ERROR ===");
+            Console.WriteLine(ex.ToString());
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            throw;   // This will stop in debugger so you can see the stack trace
+        }
     }
 
     public void TogglePause()

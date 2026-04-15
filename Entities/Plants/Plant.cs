@@ -7,7 +7,7 @@ using Sprint2.Util;
 namespace Sprint2.Entities.Plants;
 
 public enum Species {
-    Grass, Apple, Pineapple, Sandbox, Void, Cherry
+    Grass, Apple, Pineapple, Sandbox, Void, Cherry, Gravebind, Catalyst
 };
 
 public abstract class Plant
@@ -16,7 +16,7 @@ public abstract class Plant
 
     //init fields
     protected Species Species { get; }
-    protected int MaxCells { get; }
+    protected int MaxCells { get; private set; }
     protected (int x, int y) Root { get; }
 
     //data & state

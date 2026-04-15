@@ -48,9 +48,9 @@ public static class SourceRects
         { BlockType.StoneBrick, TileAt24(1, 1) },
         { BlockType.CrackedStoneBrick, TileAt24(1, 1) }, //fix this being duplicate, we prob dnot actually need 3 stone variants
         { BlockType.Void, TileAt24(2, 2) },
-        // { BlockType.Cherry, TileAt(3, 9) },
-        // { BlockType.Gravebind, TileAt(4, 12) },  // Change to Appropriate blocktype
-        // { BlockType.Catalyst,  TileAt(6, 12) },  // Change to Appropriate blocktype
+        { BlockType.Cherry, TileAt24(3, 9) },
+        { BlockType.Gravebind, TileAt24(4, 12) },  // Change to Appropriate blocktype
+        { BlockType.Catalyst,  TileAt24(6, 12) },  // Change to Appropriate blocktype
     };
 
     public static Dictionary<ProjectileType, Rectangle[]> ProjectileSourceRects { get; } = new()
