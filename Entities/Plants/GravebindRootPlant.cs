@@ -101,7 +101,7 @@ public class GravebindRootPlant : Plant
         return false;
     }
 
-    private void ApplyVoidResistance()
+    private static void ApplyVoidResistance()
     {
         // TODO: Integrate with VoidPlant.Grow() later
     }
