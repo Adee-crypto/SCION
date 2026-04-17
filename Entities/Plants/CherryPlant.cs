@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Sprint2.Managers;
 using Sprint2.Util;
 
@@ -17,14 +18,18 @@ public class CherryPlant(BlockManager blockManager, (int, int) root) : Plant(blo
 
     protected override void Grow()
     {
-        const int size = 12;
-        const int half = size / 2;
+        const int baseSize = 12;
 
-        // One-shot: Instantaneous like a bomb
-        for (int dy = 0; dy < size; dy++)
+        // Catalyst increases growth space (larger instant "bomb" area)
+        float amp = CatalystFlowerPlant.GetAmplificationFactor(BlockManager, Root, "spread");
+        int effectiveSize = (int)MathF.Ceiling(baseSize * amp);
+        int half = effectiveSize / 2;
+
+        // One-shot: Instantaneous large growth (like a bomb)
+        for (int dy = 0; dy < effectiveSize; dy++)
         {
             int y = Root.y - dy;                    // grow upward
-            for (int dx = -half; dx < half; dx++)   // centered horizontally (±6)
+            for (int dx = -half; dx < half; dx++)   // centered horizontally
             {
                 int x = Root.x + dx;
                 (int, int) cell = (x, y);
@@ -34,14 +39,14 @@ public class CherryPlant(BlockManager blockManager, (int, int) root) : Plant(blo
                     // Add the block instantly (white, no animation)
                     BlockManager.Add(cell, PlantUtil.SpeciesToBlock[Species]);
 
-                    // Add sound effects
+                    // TODO: Add sound effects here if desired
                 }
             }
         }
 
-        // Fully grown
-        CellsGrown = size * size;   // 144
-        MatureAllBuds();            
+        // Fully grown (scaled by catalyst)
+        CellsGrown = effectiveSize * effectiveSize;
+        MatureAllBuds();
         IsGrowing = false;
     }
 }
