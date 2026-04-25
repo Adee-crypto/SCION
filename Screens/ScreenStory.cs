@@ -20,7 +20,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         Menu,
         Playing,
         GameOver,
-        Won
+        Won,
+        Freeze
     }
     private readonly Game1 game;
     private readonly ScreenManager screenManager;
@@ -217,22 +218,20 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                     if (nextDef is StoryLevelDef next) {
                         if (nextLevelCoords == StoryLevelRegistry.LevelCoords.Last()) {
                             state = StoryState.Won;
-                            Update(gameTime);
                             return;
                         }
                         StartTransition();
-                        levelManager.StartStory(player, nextLevelCoords);
-                        currentLevelCoords = nextLevelCoords;
+                        
+                        // levelManager.StartStory(player, nextLevelCoords);
+                        pendingLevelCoords = nextLevelCoords;
                     } else {
-                        state = StoryState.GameOver;
-                        Update(gameTime);
+                        // state = StoryState.GameOver;
                         return;
                     }
                 }
                 levelManager.Update(gameTime);
                 if (levelManager.IsGameOver) {
                     state = StoryState.GameOver;
-                    Update(gameTime);
                     return;
                 }
                 break;
@@ -241,6 +240,9 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 break;
             case StoryState.Won:
                 winMenu.Update();
+                break;
+            case StoryState.Freeze:
+                levelManager.frozen = true;
                 break;
         }
 
@@ -260,6 +262,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
             {
                 levelSwapFadeAlpha = 0f;
                 levelSwapFading = false;
+                state = StoryState.Playing;
+                levelManager.frozen = false;
 
                 currentLevelCoords = pendingLevelCoords;
                 StartStoryLevel(currentLevelCoords);
@@ -272,6 +276,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
     public void StartTransition()
     {
+        state = StoryState.Freeze;
         if (!levelSwapFading)
             {
                 pendingLevelCoords = StoryLevelRegistry.LevelCoords[(StoryLevelRegistry.LevelCoords.IndexOf(currentLevelCoords) + 1) % StoryLevelRegistry.LevelCoords.Count];
