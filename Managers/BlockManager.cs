@@ -6,13 +6,23 @@ using static Sprint2.Managers.BlockManager.Block.BlockType;
 
 namespace Sprint2.Managers;
 
-public class BlockManager {
+public enum SurfaceType
+{
+    Normal,
+    Bouncy,
+    Slippery,
+    Sticky
+}
+
+public class BlockManager
+{
 
     public record struct Block(Block.BlockType Type, Color Color)
     {
-        public Block(BlockType type) : this(type, Color.White) {}
-        
-        public enum BlockType {
+        public Block(BlockType type) : this(type, Color.White) { }
+
+        public enum BlockType
+        {
             //plants
             Grass,
             Apple,
@@ -27,14 +37,14 @@ public class BlockManager {
             StoneBrick,
             CrackedStoneBrick,
             //void
-            
+
             Void
         }
-        
+
         public readonly bool IsBreakable => Type switch
-            {Grass or Apple or Pineapple or Sandbox or Dirt => true, _ => false };
+        { Grass or Apple or Pineapple or Sandbox or Dirt => true, _ => false };
     }
-    
+
     private readonly Dictionary<(int x, int y), Block> blocks = [];
     public void Reset() => blocks.Clear();
     public bool HasBlockAt((int, int) pos) => blocks.ContainsKey(pos);
@@ -44,14 +54,17 @@ public class BlockManager {
     public bool Add((int, int) pos, Block.BlockType type) => blocks.TryAdd(pos, new(type));
     public bool Add((int, int) pos, Block.BlockType type, Color c) => blocks.TryAdd(pos, new(type, c));
     public bool Remove((int, int) pos) => blocks.Remove(pos);
-    
+
     public void Infect((int, int) pos) => Set(pos, Void);
 
     /// <summary>used when player tries to dig a block</summary>
-    public Block? TryBreakAt((int, int) pos) {
-        if (HasBlockAt(pos)) {
+    public Block? TryBreakAt((int, int) pos)
+    {
+        if (HasBlockAt(pos))
+        {
             Block b = BlockAt(pos);
-            if (b.IsBreakable) {
+            if (b.IsBreakable)
+            {
                 Remove(pos);
                 return b;
             }
@@ -60,12 +73,14 @@ public class BlockManager {
     }
 
     /// <summary> Used only for player digging </summary>
-    public Block? TryDigBelow(Vector2 coords) {
+    public Block? TryDigBelow(Vector2 coords)
+    {
         var (x, y) = Funcs.GridCoords(coords);
         y++; //want the cell *below* midpoint of bottom edge of player
 
         var output = TryBreakAt((x, y));
-        if (output is null) {
+        if (output is null)
+        {
             bool breakLeft = coords.X % Consts.BlockWidth < Consts.BlockWidth / 2f;
             return TryBreakAt((x + (breakLeft ? -1 : 1), y));
         }
@@ -73,13 +88,17 @@ public class BlockManager {
     }
 
     /// <summary>splat</summary>
-    public void AddRectangleArray((Block.BlockType type, int x, int y, int w, int h) data) {
+    public void AddRectangleArray((Block.BlockType type, int x, int y, int w, int h) data)
+    {
         AddRectangleArray(data.type, data.x, data.y, data.w, data.h);
     }
 
-    public void AddRectangleArray(Block.BlockType type, int x, int y, int w, int h) {
-        for (int j = 0; j < h; j++) {
-            for (int i = 0; i < w; i++) {
+    public void AddRectangleArray(Block.BlockType type, int x, int y, int w, int h)
+    {
+        for (int j = 0; j < h; j++)
+        {
+            for (int i = 0; i < w; i++)
+            {
                 Add((x + i, y + j), type);
             }
         }
@@ -92,4 +111,16 @@ public class BlockManager {
             batch.Draw(Assets.BlockPlayerSpriteSheet, new Vector2(x, y) * Consts.BlockWidth, SourceRects.BlockSourceRects[block.Type], block.Color);
         }
     }
+
+    
+    public static SurfaceType GetSurfaceType(Block.BlockType type) => type switch
+    {
+        
+
+        
+         // (Add Plant here)                        => SurfaceType.Bouncy,
+         // (Add Plant here) => SurfaceType.Slippery,
+         // (Add Plant here)                     => SurfaceType.Sticky,
+         _                                      => SurfaceType.Normal
+    };
 }

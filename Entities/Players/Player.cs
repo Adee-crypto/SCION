@@ -36,7 +36,7 @@ public class Player : IPlayer
     public Vector2 Direction => direction;
 
     //States
-    public (int, int) LevelChangeCoords {get; private set;}
+    public (int, int) LevelChangeCoords { get; private set; }
     private State playerState;
     public State PlayerState => playerState;
     public bool IsDead => playerState == State.Dead;
@@ -96,7 +96,7 @@ public class Player : IPlayer
 
     public void ChangeItem(int num)
     {
-        if (num == 1 && HasSword) item = Item.Sword;  
+        if (num == 1 && HasSword) item = Item.Sword;
         else item = Item.Seed;
     }
 
@@ -109,20 +109,25 @@ public class Player : IPlayer
     public void Move(int direction)
     {
         float xForce;
-        if (isGrounded) {
+        if (isGrounded)
+        {
             xForce = Tunables.PlayerGroundXForce.Value * (Tunables.PlayerTargetWalkVelocity.Value - Math.Abs(Collider.Velocity.X));
-        } else {
+        }
+        else
+        {
             xForce = Tunables.PlayerAirXForce.Value;
         }
         Collider.Force += Vector2.UnitX * direction * xForce;
         this.direction.X = direction;
     }
 
-    public void TryJump() {
+    public void TryJump()
+    {
         if (isGrounded) Collider.Force += Vector2.UnitY * Tunables.PlayerYForce.Value;
-    }   
+    }
 
-    public void TryBreakBlock() {
+    public void TryBreakBlock()
+    {
         if (isGrounded && Collider.Velocity.X == 0) playerState = State.BreakBlock;
     }
 
@@ -152,7 +157,7 @@ public class Player : IPlayer
     {
         ProjectileType seedSpecies = Seeds[0];
         Seeds.RemoveAt(0);
-        return seedSpecies; 
+        return seedSpecies;
     }
 
     public void ToggleDamaged() => IsDamaged = !IsDamaged;
@@ -197,7 +202,8 @@ public class Player : IPlayer
         if (playerState == State.Dead) return;
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        isGrounded = Collider.UpdateMovement(dt, collisionManager).isGrounded;
+        var (_, groundedResult, surface) = Collider.UpdateMovement(dt, collisionManager);
+        isGrounded = groundedResult;
         UpdateBreakBlock(dt);
         UpdateHealth(IsDamaged, dt);
 
@@ -205,8 +211,9 @@ public class Player : IPlayer
         playerSprite.Update(gameTime, playerState, direction, Collider.Velocity, IsDamaged);
 
         IsDamaged = false;
-        Collider.UpdatePlayerVelocity(isGrounded, dt);
-        if (playerState != State.Dead) {
+        Collider.UpdatePlayerVelocity(isGrounded, surface, dt);
+        if (playerState != State.Dead)
+        {
             playerState = State.None;
             if (Collider.Position.X < 0) LevelChangeCoords = (-1, 0);
             else if (Collider.Position.X > Consts.DefaultScreenSize.w) LevelChangeCoords = (1, 0);
@@ -228,7 +235,7 @@ public class Player : IPlayer
         playerSprite.Draw(spriteBatch, Collider.Position);
         string text = $"{Seeds.Count}";
         spriteBatch.DrawString(Assets.UiFont, text, Collider.Position + new Vector2(1, 18), Color.Black, 0f, new(), 0.75f, SpriteEffects.None, 0f);
-        
+
         if (item == Item.Seed) aimer?.Draw(spriteBatch, Collider.Center);
     }
 }

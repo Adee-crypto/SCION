@@ -16,16 +16,19 @@ public class CollisionManager(BlockManager blockManager)
 
     public bool IsCollision(Vector2 pos, Vector2 size) => GetCollisionCoords(pos, size).Count > 0;
 
-    public HashSet<(int, int)> GetCollisionCoords(Vector2 pos, Vector2 size) {
+    public HashSet<(int, int)> GetCollisionCoords(Vector2 pos, Vector2 size)
+    {
         HashSet<(int, int)> output = [];
-        int leftIndex = Funcs.GridCoord(pos.X+t);
-        int rightIndex = Funcs.GridCoord(pos.X+size.X-t);
-        int topIndex = Funcs.GridCoord(pos.Y+t);
-        int bottomIndex = Funcs.GridCoord(pos.Y+size.Y-t);
+        int leftIndex = Funcs.GridCoord(pos.X + t);
+        int rightIndex = Funcs.GridCoord(pos.X + size.X - t);
+        int topIndex = Funcs.GridCoord(pos.Y + t);
+        int bottomIndex = Funcs.GridCoord(pos.Y + size.Y - t);
 
         //checks all tiles intersecting with hitbox
-        for (int y = topIndex; y <= bottomIndex; y++) {
-            for (int x = leftIndex; x <= rightIndex; x++) {
+        for (int y = topIndex; y <= bottomIndex; y++)
+        {
+            for (int x = leftIndex; x <= rightIndex; x++)
+            {
                 if (blockManager.HasBlockAt((x, y))) output.Add((x, y));
             }
         }
@@ -33,47 +36,68 @@ public class CollisionManager(BlockManager blockManager)
         return output;
     }
 
-    public ((int, int)? collisionCoords, bool isGrounded) ManageBlockCollision(Collider collider, Vector2 deltaPos) {
+    public ((int, int)? collisionCoords, bool isGrounded, SurfaceType surface) ManageBlockCollision(Collider collider, Vector2 deltaPos)
+    {
 
         Vector2 newPos = collider.Position + deltaPos;
         Vector2 size = collider.Size;
 
         //check if no collision
-        if (!IsCollision(newPos, size)) {
+        if (!IsCollision(newPos, size))
+        {
             collider.SetPosition(newPos);
-            return (null, false);
+            return (null, false, SurfaceType.Normal);
         }
 
-        float leftX = Funcs.ShoveTowardOrigin(newPos.X, size.X)-t;
-        float rightX = Funcs.ShoveAwayOrigin(newPos.X)+t;
-        float topY = Funcs.ShoveTowardOrigin(newPos.Y, size.Y)-t;
-        float bottomY = Funcs.ShoveAwayOrigin(newPos.Y)+t;
+        float leftX = Funcs.ShoveTowardOrigin(newPos.X, size.X) - t;
+        float rightX = Funcs.ShoveAwayOrigin(newPos.X) + t;
+        float topY = Funcs.ShoveTowardOrigin(newPos.Y, size.Y) - t;
+        float bottomY = Funcs.ShoveAwayOrigin(newPos.Y) + t;
         SortedDictionary<Vector2, List<Vector2>> nearestSpots = new(new Funcs.VectorComparer<Vector2>(newPos));
-            //orthogonal cases
-            nearestSpots[new(newPos.X, topY)] =    [new(0, -Consts.BlockWidth)];
-            nearestSpots[new(newPos.X, bottomY)] = [new(0, Consts.BlockWidth)];
-            nearestSpots[new(leftX, newPos.Y)] =   [new(-Consts.BlockWidth, 0)];
-            nearestSpots[new(rightX, newPos.Y)] =  [new(Consts.BlockWidth, 0)];
-            //diagonal cases override in case of key collision
-            nearestSpots[new(leftX, topY)] =     [new(0, -Consts.BlockWidth), new(-Consts.BlockWidth, 0)];
-            nearestSpots[new(rightX, topY)] =    [new(0, -Consts.BlockWidth), new(Consts.BlockWidth, 0)];
-            nearestSpots[new(leftX, bottomY)] =  [new(0, Consts.BlockWidth),  new(-Consts.BlockWidth, 0)];
-            nearestSpots[new(rightX, bottomY)] = [new(0, Consts.BlockWidth),  new(Consts.BlockWidth, 0)];
+        //orthogonal cases
+        nearestSpots[new(newPos.X, topY)] = [new(0, -Consts.BlockWidth)];
+        nearestSpots[new(newPos.X, bottomY)] = [new(0, Consts.BlockWidth)];
+        nearestSpots[new(leftX, newPos.Y)] = [new(-Consts.BlockWidth, 0)];
+        nearestSpots[new(rightX, newPos.Y)] = [new(Consts.BlockWidth, 0)];
+        //diagonal cases override in case of key collision
+        nearestSpots[new(leftX, topY)] = [new(0, -Consts.BlockWidth), new(-Consts.BlockWidth, 0)];
+        nearestSpots[new(rightX, topY)] = [new(0, -Consts.BlockWidth), new(Consts.BlockWidth, 0)];
+        nearestSpots[new(leftX, bottomY)] = [new(0, Consts.BlockWidth), new(-Consts.BlockWidth, 0)];
+        nearestSpots[new(rightX, bottomY)] = [new(0, Consts.BlockWidth), new(Consts.BlockWidth, 0)];
 
         //TLDR glorified BFS where only certain directions are explored depending on the coords
         //Why: will *always* find the closest cell by euclidean distance
-        while (true) {
+        while (true)
+        {
             (var pos, var offsets) = nearestSpots.First();
             nearestSpots.Remove(pos);
-            if (IsCollision(pos, size)) { //add neighbors via custom BFS directions defined upon initialization
-                foreach (var offset in offsets) {
-                    nearestSpots[pos+offset] = offsets; //would be nice if this wasn't overwriting data constantly but sometimes we don't get what we want
+            if (IsCollision(pos, size))
+            { //add neighbors via custom BFS directions defined upon initialization
+                foreach (var offset in offsets)
+                {
+                    nearestSpots[pos + offset] = offsets; //would be nice if this wasn't overwriting data constantly but sometimes we don't get what we want
                 }
-            } else { //Free spot finally found
+            }
+            else
+            { //Free spot finally found
+                bool groundHit = offsets.Any(o => o.Y < 0);
+                (int, int) originalGridCoords = Funcs.GridCoords(newPos);
+
+                // Determine surface type from the block directly below the landing point.
+              
+                SurfaceType surface = SurfaceType.Normal;
+                if (groundHit)
+                {
+                    // Get the surface type depending upon the block returned
+                    (int gx, int gy) = Funcs.GridCoords(pos + new Vector2(size.X / 2f, size.Y + t));
+                    if (blockManager.HasBlockAt((gx, gy)))
+                        surface = BlockManager.GetSurfaceType(blockManager.BlockAt((gx, gy)).Type);
+                }
+
                 if (offsets.Any(o => o.X == 0)) collider.SetVelocityY(0);
                 if (offsets.Any(o => o.Y == 0)) collider.SetVelocityX(0);
                 collider.SetPosition(pos);
-                return (Funcs.GridCoords(newPos), offsets.Any(o => o.Y < 0));
+                return (originalGridCoords, groundHit, surface);
             }
         }
     }
