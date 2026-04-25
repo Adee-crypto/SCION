@@ -79,7 +79,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity = new(), 
                     break;
 
                 case SurfaceType.Slippery:
-                    // Work neede. Zero friction
+                    // No Work needed to reduce horizontal velocity
                     break;
 
                 case SurfaceType.Sticky:
