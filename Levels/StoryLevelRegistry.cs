@@ -57,8 +57,12 @@ public static class StoryLevelRegistry
                             case "r": //rock block
                                 platforms.Add((BlockType.Stone, x, y, 1, 1));
                                 if (y > 0 && cells[cellRow-1][cellCol].Length == 0) {
-                                    for (int i = 0; i < Math.Min(Funcs.RandInt(2, 4), y); i++){
+                                    int soilHeight = Math.Min(Funcs.RandInt(3, 5), y);
+                                    for (int i = 0; i < soilHeight-1; i++){
                                         platforms.Add((BlockType.Dirt, x, y-i-1, 1, 1));
+                                    }
+                                    if (Funcs.Random() < 0.1) {
+                                        plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Apple](b, (localX, localY-soilHeight)));                                
                                     }
                                 }
                                 break;
