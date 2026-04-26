@@ -12,6 +12,7 @@ namespace Sprint2.Levels;
 
 public static class StoryLevelRegistry
 {
+    //Move to consts or something?
     private const int gridCols = 4, gridRows = 4, levelW = 40, levelH = 30;
     private static readonly BlockType[] biomeBlocks = [BlockType.Muck, BlockType.Dirt, BlockType.Snow];
     private static readonly Species[] biomeSpecies = [Species.Apple, Species.Grass, Species.Pineapple];
