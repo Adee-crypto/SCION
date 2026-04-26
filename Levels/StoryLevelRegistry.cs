@@ -12,9 +12,27 @@ namespace Sprint2.Levels;
 
 public static class StoryLevelRegistry
 {
+    private const int gridCols = 4, gridRows = 4, levelW = 40, levelH = 30;
+    private static readonly BlockType[] biomeBlocks = [BlockType.Muck, BlockType.Dirt, BlockType.Snow];
+    private static readonly Species[] biomeSpecies = [Species.Apple, Species.Grass, Species.Pineapple];
+    private static readonly (float bot, float top)[] bands = [(0, 0.3f), (0.6f, 1.3f), (1.7f, 4f)];
+
     private static Dictionary<(int, int), StoryLevelDef> Levels { get; } = [];
     public static bool Contains((int, int) coords) => Levels.ContainsKey(coords);
     public static StoryLevelDef Get((int,int) coords) => Levels[coords];
+
+    private static int GenBiomeIndex(int cellRow) {
+        float alt = gridRows - cellRow*1f/levelH;
+        for (int i = 0; i < bands.Length; i++) {
+            (var b, var t) = bands[i];
+            if (alt < b && i != 0) {
+                return Funcs.Random() < (alt - bands[i-1].top)/(b - bands[i-1].top) ? i : i-1;
+            } else if (alt < t) {
+                return i;
+            }
+        }
+        return bands.Length-1;
+    }
 
     public static void LoadLevelData()
     {
@@ -24,11 +42,6 @@ public static class StoryLevelRegistry
             cells[i] = lines[i].Split(',');
         }
 
-        // TODO move to consts or just not be random idk
-        int gridCols = 4;
-        int gridRows = 4;
-        int levelW = 40;
-        int levelH = 30;
         //Iterate through level coordinates
         for (int gr = 0; gr < gridRows; gr++) {
             for (int gc = 0; gc < gridCols; gc++) {
@@ -54,15 +67,18 @@ public static class StoryLevelRegistry
                             case "m": //muck block
                                 platforms.Add((BlockType.Dirt, x, y, 1, 1));
                                 break;
-                            case "r": //rock block
+                            case "r": //stone block
                                 platforms.Add((BlockType.Stone, x, y, 1, 1));
-                                if (y > 0 && cells[cellRow-1][cellCol].Length == 0) {
-                                    int soilHeight = Math.Min(Funcs.RandInt(3, 5), y);
-                                    for (int i = 0; i < soilHeight-1; i++){
-                                        platforms.Add((BlockType.Dirt, x, y-i-1, 1, 1));
-                                    }
-                                    if (Funcs.Random() < 0.1) {
-                                        plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Apple](b, (localX, localY-soilHeight)));                                
+                                if (cellRow > 0 && cells[cellRow-1][cellCol].Length == 0) {
+                                    int soilHeight = Math.Min(Funcs.RandInt(3, 5), cellRow);
+                                    if (soilHeight > 0) {
+                                        for (int i = 0; i < soilHeight; i++) {
+                                            int biomeIndex = GenBiomeIndex(cellRow);
+                                            platforms.Add((biomeBlocks[biomeIndex], x, y-i-1, 1, 1));
+                                            if (i == soilHeight - 1 && Funcs.Random() < 0.15) {
+                                                plants.Add(b => PlantUtil.SpeciesToPlantInit[biomeSpecies[biomeIndex]](b, (localX, localY-soilHeight)));                                
+                                            }
+                                        }
                                     }
                                 }
                                 break;
