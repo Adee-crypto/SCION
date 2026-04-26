@@ -11,9 +11,9 @@ public static class Consts
     public static readonly (int, int)[] orthoDirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
     //Screen dimensions
-    public static (int w, int h) DefaultScreenSize { get; } = (1000, 800);
-    public static Vector2 DefaultScreenSizeVec { get; } = new(1000, 800);
-    public static Vector2 LevelSize { get; } = new(1000, 800);
+    public static (int w, int h) DefaultScreenSize { get; } = (960, 720);
+    public static Vector2 DefaultScreenSizeVec { get; } = new(DefaultScreenSize.w, DefaultScreenSize.h);
+    public static Vector2 LevelSize { get; } = new(960, 720);
     public const int BlockWidth = 24;
 
     //physics

@@ -35,7 +35,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     private LevelManager levelManager;
     private Player player;
     private bool isPaused;
-    private (int, int) currentLevelCoords = (0, 0);
+    private (int x, int y) currentLevelCoords = (0, 0);
+    private (int x, int y) pendingLevelCoords;
 
     public bool IsPaused => isPaused;
     public IPlayer CurrentPlayer => state == StoryState.Playing ? player : null;
@@ -45,7 +46,6 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     private float levelSwapFadeAlpha;
     private bool levelSwapFading;
     private const float LevelSwapSpeed = 1.25f;
-    private (int x, int y) pendingLevelCoords;
     // END DEBUG
 
     public ScreenStory(Game1 game, ScreenManager screenManager)
@@ -185,9 +185,14 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
     private void StartStoryLevel((int, int) coords)
     {
-        state = StoryState.Playing;
-        currentLevelCoords = coords;
-        levelManager.StartStory(player, coords);
+        if (StoryLevelRegistry.Contains(coords)) {
+            state = StoryState.Playing;
+            currentLevelCoords = coords;
+            levelManager.StartStory(player, coords);
+        } else {
+            state = StoryState.GameOver;
+            player.Kill();
+        }
     }
 
     public void TogglePause()
@@ -202,6 +207,12 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         levelManager?.Reset();
     }
 
+    public void Move(int x, int y)
+    {
+        pendingLevelCoords = (currentLevelCoords.x + x, currentLevelCoords.y + y);
+        StartTransition();
+    }
+
     public void Update(GameTime gameTime)
     {
         if (isPaused) return;
@@ -212,23 +223,10 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 menu.Update();
                 break;
             case StoryState.Playing:
-                if (player.LevelChangeCoords != (0, 0)) {
-                    var nextLevelCoords = (currentLevelCoords.Item1+player.LevelChangeCoords.Item1, currentLevelCoords.Item2+player.LevelChangeCoords.Item2);
-                    var nextDef = StoryLevelRegistry.Get(nextLevelCoords);
-                    if (nextDef is StoryLevelDef next) {
-                        if (nextLevelCoords == StoryLevelRegistry.LevelCoords.Last()) {
-                            state = StoryState.Won;
-                            return;
-                        }
-                        StartTransition();
-                        
-                        // levelManager.StartStory(player, nextLevelCoords);
-                        pendingLevelCoords = nextLevelCoords;
-                    } else {
-                        // state = StoryState.GameOver;
-                        return;
-                    }
-                }
+                if (player.Collider.Position.X < 0) Move(-1, 0);
+                else if (player.Collider.Position.X > Consts.DefaultScreenSize.w) Move(1, 0);
+                else if (player.Collider.Position.Y > Consts.DefaultScreenSize.h) Move(0, 1);
+                else if (player.Collider.Position.Y < 0) Move(0, -1);
                 levelManager.Update(gameTime);
                 if (levelManager.IsGameOver) {
                     state = StoryState.GameOver;
@@ -249,9 +247,14 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         // BEGIN DEBUG: Keybound Level switching logic
         
         var keyboard = Keyboard.GetState();
-        if (keyboard.IsKeyDown(Keys.OemPeriod) && prevKeyboard.IsKeyUp(Keys.OemPeriod)) 
-        {
-            StartTransition();
+        if (keyboard.IsKeyDown(Keys.J) && prevKeyboard.IsKeyUp(Keys.J)) {
+            StartStoryLevel((currentLevelCoords.x-1, currentLevelCoords.y));
+        } else if (keyboard.IsKeyDown(Keys.L) && prevKeyboard.IsKeyUp(Keys.L)) {
+            StartStoryLevel((currentLevelCoords.x+1, currentLevelCoords.y));
+        } else if (keyboard.IsKeyDown(Keys.I) && prevKeyboard.IsKeyUp(Keys.I)) {
+            StartStoryLevel((currentLevelCoords.x, currentLevelCoords.y-1));
+        } else if (keyboard.IsKeyDown(Keys.K) && prevKeyboard.IsKeyUp(Keys.K)) {
+            StartStoryLevel((currentLevelCoords.x, currentLevelCoords.y+1));
         }
 
         if (levelSwapFading)
@@ -264,9 +267,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 levelSwapFading = false;
                 state = StoryState.Playing;
                 levelManager.frozen = false;
-
-                currentLevelCoords = pendingLevelCoords;
-                StartStoryLevel(currentLevelCoords);
+                StartStoryLevel(pendingLevelCoords);
             }
         }
 
@@ -278,12 +279,10 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     {
         state = StoryState.Freeze;
         if (!levelSwapFading)
-            {
-                pendingLevelCoords = StoryLevelRegistry.LevelCoords[(StoryLevelRegistry.LevelCoords.IndexOf(currentLevelCoords) + 1) % StoryLevelRegistry.LevelCoords.Count];
-
-                levelSwapFading = true;
-                levelSwapFadeAlpha = 0f;
-            }
+        {
+            levelSwapFading = true;
+            levelSwapFadeAlpha = 0f;
+        }
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -292,8 +291,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         // BEGIN DEBUG
 
         foreach (var delta in Consts.orthoDirs) {
-            var AdjCoord = (delta.Item1+currentLevelCoords.Item1,delta.Item2+currentLevelCoords.Item2);
-            if (StoryLevelRegistry.LevelCoords.Contains(AdjCoord)) {
+            var AdjCoord = (delta.Item1+currentLevelCoords.x, delta.Item2+currentLevelCoords.y);
+            if (StoryLevelRegistry.Contains(AdjCoord)) {
                 if (delta.Item1 == 0) {
                     spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int) (-2*Consts.LevelSize.X), (int) (Consts.LevelSize.Y*delta.Item2), (int) Consts.LevelSize.X*5, (int) Consts.LevelSize.Y), Color.LightPink);
                 } else {
@@ -302,8 +301,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
             }
         }
         foreach (var delta in Consts.orthoDirs) {
-            var AdjCoord = (delta.Item1+currentLevelCoords.Item1,delta.Item2+currentLevelCoords.Item2);
-            if (!StoryLevelRegistry.LevelCoords.Contains(AdjCoord)) {
+            var AdjCoord = (delta.Item1+currentLevelCoords.x,delta.Item2+currentLevelCoords.y);
+            if (!StoryLevelRegistry.Contains(AdjCoord)) {
                 if (delta.Item1 == 0) {
                     spriteBatch.Draw(Assets.PixelTexture, new Rectangle((int) (-2*Consts.LevelSize.X), (int) (Consts.LevelSize.Y*delta.Item2), (int) Consts.LevelSize.X*5, (int) Consts.LevelSize.Y), Color.Black);
                 } else {

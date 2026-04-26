@@ -13,63 +13,55 @@ namespace Sprint2.Levels;
 public static class StoryLevelRegistry
 {
     private static Dictionary<(int, int), StoryLevelDef> Levels { get; } = [];
-    public static List<(int, int)> LevelCoords {get; private set; }
+    public static bool Contains((int, int) coords) => Levels.ContainsKey(coords);
+    public static StoryLevelDef Get((int,int) coords) => Levels[coords];
 
-    public static void LoadLevelData() {
-        //this probably shouldn't be finding the directory via Base like this
-        string[] lines = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "Content/StoryLevelData.csv");
+    public static void LoadLevelData()
+    {
+        string[] lines = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "Content/StoryMap.csv");
+        // TODO move to consts or just not be random idk
 
-        for (int i = 0; i < lines.Length; i += 4) {
+        int gridCols = 4;
+        int gridRows = 4;
+        int levelW = 40;
+        int levelH = 30;
+        //Iterate through level coordinates
+        for (int gr = 0; gr < gridRows; gr++) {
+            for (int gc = 0; gc < gridCols; gc++) {
+                (int, int) coords = (gc, gr);
+                List<(BlockType, int, int, int, int)> platforms = [];
+                List<Func<BlockManager, Plant>> plants = [];
+                Vector2 spawnPos = Vector2.Zero;
 
-            string[] coordsStr = lines[i].Split(',');
-            (int, int) coords = (
-                int.Parse(coordsStr[0], CultureInfo.InvariantCulture), 
-                int.Parse(coordsStr[1], CultureInfo.InvariantCulture)
-            );
-
-            string[] spawnParts = lines[i + 1].Split(',');
-            Vector2 spawnPos = new Vector2(
-                float.Parse(spawnParts[0], CultureInfo.InvariantCulture), 
-                float.Parse(spawnParts[1], CultureInfo.InvariantCulture)
-            ) * Consts.BlockWidth;
-
-
-            List<(BlockType, int, int, int, int)> platforms = [];
-            string[] platformParts = lines[i + 2].Split(',');
-            for (int p = 0; p < platformParts.Length; p += 5)
-            {
-                string typeStr = platformParts[p].Trim();
-                int x = int.Parse(platformParts[p + 1], CultureInfo.InvariantCulture);
-                int y = int.Parse(platformParts[p + 2], CultureInfo.InvariantCulture);
-                int w = int.Parse(platformParts[p + 3], CultureInfo.InvariantCulture);
-                int h = int.Parse(platformParts[p + 4], CultureInfo.InvariantCulture);
-
-                if (Enum.TryParse(typeStr, out BlockType bType))
-                {
-                    platforms.Add((bType, x, y, w, h));
+                // Iterate through level's cells
+                for (int y = 0; y < levelH; y++) {
+                    string[] rowData = lines[(gr * levelH) + y].Split(',');
+                    for (int x = 0; x < levelW; x++) {
+                        string cell = rowData[(gc * levelW) + x].Trim();
+                        switch (cell) {
+                            case "0": //player initial position
+                                spawnPos = new Vector2(x, y) * Consts.BlockWidth;
+                                break;
+                            case "d": //dirt block
+                                platforms.Add((BlockType.Dirt, x, y, 1, 1));
+                                break;
+                            case "m": //mud block
+                                platforms.Add((BlockType.Dirt, x, y, 1, 1));
+                                break;
+                            case "r": //mud block
+                                platforms.Add((BlockType.Stone, x, y, 1, 1));
+                                break;
+                            case "a":
+                                int px = x; int py = y;
+                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Apple](b, (px, py)));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
+                Levels[coords] = new(coords, spawnPos, [..platforms], [..plants]);
             }
-
-            List<Func<BlockManager, Plant>> plants = [];
-            string[] plantParts = lines[i + 3].Split(',');
-            for (int p = 0; p < plantParts.Length; p += 3)
-            {
-                string typeStr = plantParts[p].Trim();
-                int x = int.Parse(plantParts[p + 1], CultureInfo.InvariantCulture);
-                int y = int.Parse(plantParts[p + 2], CultureInfo.InvariantCulture);
-
-                if (Enum.TryParse(typeStr, out Species species))
-                {
-                    plants.Add(b => PlantUtil.SpeciesToPlantInit[species](b, (x, y)));
-                }
-            }
-            Levels[coords] = new(coords, spawnPos, [.. platforms], [.. plants]);
         }
-        LevelCoords = [.. Levels.Keys];
-    }
-
-    public static StoryLevelDef? Get((int,int) coords) {
-        if(Levels.TryGetValue(coords, out StoryLevelDef value)) return value;
-        return null;
     }
 }

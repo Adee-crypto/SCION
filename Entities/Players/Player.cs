@@ -36,7 +36,6 @@ public class Player : IPlayer
     public Vector2 Direction => direction;
 
     //States
-    public (int, int) LevelChangeCoords { get; private set; }
     private State playerState;
     public State PlayerState => playerState;
     public bool IsDead => playerState == State.Dead;
@@ -215,11 +214,6 @@ public class Player : IPlayer
         if (playerState != State.Dead)
         {
             playerState = State.None;
-            if (Collider.Position.X < 0) LevelChangeCoords = (-1, 0);
-            else if (Collider.Position.X > Consts.DefaultScreenSize.w) LevelChangeCoords = (1, 0);
-            else if (Collider.Position.Y > Consts.DefaultScreenSize.h) LevelChangeCoords = (0, 1);
-            else if (Collider.Position.Y < 0) LevelChangeCoords = (0, -1);
-            else LevelChangeCoords = (0, 0);
         }
     }
 
