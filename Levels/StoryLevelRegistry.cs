@@ -18,9 +18,13 @@ public static class StoryLevelRegistry
 
     public static void LoadLevelData()
     {
-        string[] lines = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "Content/StoryMap.csv");
-        // TODO move to consts or just not be random idk
+        string[] lines = File.ReadAllLines("Content/StoryMap.csv");
+        string[][] cells = new string[lines.Length][];
+        for (int i = 0; i < lines.Length; i++) {
+            cells[i] = lines[i].Split(',');
+        }
 
+        // TODO move to consts or just not be random idk
         int gridCols = 4;
         int gridRows = 4;
         int levelW = 40;
@@ -35,9 +39,11 @@ public static class StoryLevelRegistry
 
                 // Iterate through level's cells
                 for (int y = 0; y < levelH; y++) {
-                    string[] rowData = lines[(gr * levelH) + y].Split(',');
+                    int cellRow = gr * levelH + y;
                     for (int x = 0; x < levelW; x++) {
-                        string cell = rowData[(gc * levelW) + x].Trim();
+                        int cellCol = gc * levelW + x;
+                        int localX = x, localY = y; //yeah theres probably a better way to do this
+                        string cell = cells[cellRow][cellCol];
                         switch (cell) {
                             case "0": //player initial position
                                 spawnPos = new Vector2(x, y) * Consts.BlockWidth;
@@ -45,15 +51,22 @@ public static class StoryLevelRegistry
                             case "d": //dirt block
                                 platforms.Add((BlockType.Dirt, x, y, 1, 1));
                                 break;
-                            case "m": //mud block
+                            case "m": //muck block
                                 platforms.Add((BlockType.Dirt, x, y, 1, 1));
                                 break;
-                            case "r": //mud block
+                            case "r": //rock block
                                 platforms.Add((BlockType.Stone, x, y, 1, 1));
+                                if (y > 0 && cells[cellRow-1][cellCol].Length == 0) {
+                                    for (int i = 0; i < Math.Min(Funcs.RandInt(2, 4), y); i++){
+                                        platforms.Add((BlockType.Dirt, x, y-i-1, 1, 1));
+                                    }
+                                }
                                 break;
-                            case "a":
-                                int px = x; int py = y;
-                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Apple](b, (px, py)));
+                            case "a": //apple plant
+                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Apple](b, (localX, localY)));
+                                break;
+                            case "g": //grass plant
+                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Grass](b, (localX, localY)));
                                 break;
                             default:
                                 break;

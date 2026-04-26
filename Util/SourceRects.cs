@@ -39,18 +39,21 @@ public static class SourceRects
 
     public static Dictionary<BlockType, Rectangle> BlockSourceRects { get; } = new()
     {
-        { BlockType.Grass, TileAt24(1, 0) },
-        { BlockType.Apple, TileAt24(2, 1) },
-        { BlockType.Pineapple, TileAt24(3, 0) },
         { BlockType.Sandbox, TileAt24(0, 0) },
-        { BlockType.Dirt, TileAt24(4, 1) },
-        { BlockType.Stone, TileAt24(1, 0) },
+        { BlockType.Muck, TileAt24(1, 0) },
+        { BlockType.Pineapple, TileAt24(3, 0) },
+        { BlockType.Stone, TileAt24(0, 1) },
         { BlockType.StoneBrick, TileAt24(1, 1) },
-        { BlockType.CrackedStoneBrick, TileAt24(1, 1) }, //fix this being duplicate, we prob dnot actually need 3 stone variants
-        { BlockType.Void, TileAt24(2, 2) },
+        { BlockType.Apple, TileAt24(2, 1) },
+        { BlockType.Grass, TileAt24(3, 1) },
+        { BlockType.Snow, TileAt24(0, 2) },
+        { BlockType.Dirt, TileAt24(2, 2) },
+        { BlockType.Void, TileAt24(0, 3) },
+        //stinky
         { BlockType.Cherry, TileAt24(3, 9) },
         { BlockType.Gravebind, TileAt24(4, 12) },  // Change to Appropriate blocktype
         { BlockType.Catalyst,  TileAt24(6, 12) },  // Change to Appropriate blocktype
+        { BlockType.CrackedStoneBrick, TileAt24(5, 2) }, //fix this being duplicate, we prob dnot actually need 3 stone variants
     };
 
     public static Dictionary<ProjectileType, Rectangle[]> ProjectileSourceRects { get; } = new()

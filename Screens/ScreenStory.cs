@@ -179,7 +179,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
     private void StartNewGame()
     {
-        currentLevelCoords = (0,0);
+        currentLevelCoords = (0,3);
         StartStoryLevel(currentLevelCoords);
     }
 

@@ -32,9 +32,11 @@ public class BlockManager
             Gravebind,
             Catalyst,
             //platforms
-            Dirt,
             Stone,
             StoneBrick,
+            Dirt,
+            Muck,
+            Snow,
             CrackedStoneBrick,
             //void
 
