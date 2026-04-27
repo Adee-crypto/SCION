@@ -30,13 +30,13 @@ public class PlayerSprite : Animated
     private static readonly Dictionary<(State, int, bool, bool), SpriteState> StateTable = new()
     {
         { (State.None,  1,  false, true),  SpriteState.RightFalling  },
-        { (State.None, -1,  false, true),  SpriteState.LeftFacing    },
+        { (State.None, -1,  false, true),  SpriteState.LeftFalling    },
         { (State.None,  1,  true,  false), SpriteState.RightRunning  },
         { (State.None, -1,  true,  false), SpriteState.LeftRunning   },
         { (State.None,  1,  false, false), SpriteState.RightFacing   },
         { (State.None, -1,  false, false), SpriteState.LeftFacing    },
         { (State.None,  1,  true,  true),  SpriteState.RightFalling  },
-        { (State.None, -1,  true,  true),  SpriteState.LeftFacing    },
+        { (State.None, -1,  true,  true),  SpriteState.LeftFalling    },
         { (State.Dead,  1,  false, false), SpriteState.Dead          },
         { (State.Dead,  1,  false, true),  SpriteState.Dead          },
         { (State.Dead,  1,  true,  false), SpriteState.Dead          },
@@ -45,14 +45,14 @@ public class PlayerSprite : Animated
         { (State.Dead, -1,  false, true),  SpriteState.Dead          },
         { (State.Dead, -1,  true,  false), SpriteState.Dead          },
         { (State.Dead, -1,  true,  true),  SpriteState.Dead          },
-        { (State.Attack,  1,  false, false), SpriteState.RightAttack },
-        { (State.Attack,  1,  false, true),  SpriteState.RightAttack },
-        { (State.Attack,  1,  true,  false), SpriteState.RightAttack },
-        { (State.Attack,  1,  true,  true),  SpriteState.RightAttack },
-        { (State.Attack, -1,  false, false), SpriteState.LeftAttack  },
-        { (State.Attack, -1,  false, true),  SpriteState.LeftAttack  },
-        { (State.Attack, -1,  true,  false), SpriteState.LeftAttack  },
-        { (State.Attack, -1,  true,  true),  SpriteState.LeftAttack  },
+        //{ (State.Attack,  1,  false, false), SpriteState.RightAttack },
+        //{ (State.Attack,  1,  false, true),  SpriteState.RightAttack },
+        //{ (State.Attack,  1,  true,  false), SpriteState.RightAttack },
+        //{ (State.Attack,  1,  true,  true),  SpriteState.RightAttack },
+        //{ (State.Attack, -1,  false, false), SpriteState.LeftAttack  },
+        //{ (State.Attack, -1,  false, true),  SpriteState.LeftAttack  },
+        //{ (State.Attack, -1,  true,  false), SpriteState.LeftAttack  },
+        //{ (State.Attack, -1,  true,  true),  SpriteState.LeftAttack  },
     };
 
     public PlayerSprite()
