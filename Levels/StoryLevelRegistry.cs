@@ -60,26 +60,26 @@ public static class StoryLevelRegistry
                     {
                         int cellCol = gc * levelW + x;
                         int localX = x, localY = y;
-                        string cell = cells[cellRow][cellCol];
+                        string cell = cells[cellRow][cellCol]?.Trim() ?? "";
 
                         switch (cell)
                         {
-                            case "0": // player initial position
+                            case "0": // player spawn
                                 spawnPos = new Vector2(x, y) * Consts.BlockWidth;
                                 break;
 
-                            case "d": // dirt block
+                            case "d": // dirt
                                 blocks.Add((BlockType.Dirt, x, y));
                                 break;
 
-                            case "m": // muck block
-                                blocks.Add((BlockType.Dirt, x, y));   // or BlockType.Muck if you have it
+                            case "m": // muck ? treat as Dirt for now (or change to BlockType.Muck if you prefer)
+                                blocks.Add((BlockType.Dirt, x, y));
                                 break;
 
-                            case "r": // stone block + possible soil + plant
+                            case "r": // stone + possible soil layer + rare plant
                                 blocks.Add((BlockType.Stone, x, y));
 
-                                if (cellRow > 0 && cells[cellRow - 1][cellCol].Length == 0)
+                                if (cellRow > 0 && string.IsNullOrEmpty(cells[cellRow - 1][cellCol]))
                                 {
                                     int soilHeight = Math.Min(Funcs.RandInt(3, 5), cellRow);
                                     if (soilHeight > 0)
@@ -90,7 +90,7 @@ public static class StoryLevelRegistry
                                             BlockType soilType = biomeBlocks[biomeIndex];
                                             blocks.Add((soilType, x, y - i - 1));
 
-                                            // Add plant on top of the highest soil
+                                            // Plant on top of highest soil block
                                             if (i == soilHeight - 1 && Funcs.Random() < 0.15f)
                                             {
                                                 Species species = biomeSpecies[biomeIndex];

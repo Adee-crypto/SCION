@@ -14,10 +14,7 @@ public static class KeyboardController// : IController
     {
         KeyboardState currentKeyboardState = Keyboard.GetState();
 
-        //Commands to execute while key held
         if (!isPaused) ExecuteHoldBindings(currentKeyboardState);
-
-        //Comands to execute on key press
         ExecuteTapBindings(currentKeyboardState, isPaused);
 
         previousKeyboardState = currentKeyboardState;
@@ -27,9 +24,7 @@ public static class KeyboardController// : IController
     {
         foreach (var (keySet, command) in KeyBindings.HoldKeyBindings)
         {
-            if (!keySet.Any(currentKeyboardState.IsKeyDown)) continue;
-
-            command();
+            if (keySet.Any(currentKeyboardState.IsKeyDown)) command();
         }
     }
 
@@ -39,10 +34,7 @@ public static class KeyboardController// : IController
         
         foreach (var (keySet, command) in KeyBindings.TapKeyBindings)
         {
-            if (!keySet.Any(tappedKeys.Contains)) continue;
-            if (!isPaused && keySet.Contains(Keys.Q)) continue;
-
-            command();
+            if (keySet.Any(tappedKeys.Contains) && (isPaused || !keySet.Contains(Keys.Q))) command();
         }
     }
 }
