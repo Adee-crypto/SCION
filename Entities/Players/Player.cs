@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Sprint2.Entities.Colliders;
-using Sprint2.Entities.Items;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;

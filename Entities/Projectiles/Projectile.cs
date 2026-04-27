@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Colliders;
 using Sprint2.Extensions;
 using Sprint2.Levels;
-using Sprint2.Managers;
 using Sprint2.Util;
 using static Sprint2.Managers.BlockManager.Block;
 

@@ -4,7 +4,6 @@ using Sprint2.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Globalization;
 using Sprint2.Entities.Plants;
 using static Sprint2.Managers.BlockManager.Block;
 
@@ -12,27 +11,21 @@ namespace Sprint2.Levels;
 
 public static class StoryLevelRegistry
 {
-    //Move to consts or something?
-    private const int gridCols = 4, gridRows = 4, levelW = 40, levelH = 30;
-    private static readonly BlockType[] biomeBlocks = [BlockType.Muck, BlockType.Dirt, BlockType.Snow];
-    private static readonly Species[] biomeSpecies = [Species.Apple, Species.Grass, Species.Pineapple];
-    private static readonly (float bot, float top)[] bands = [(0, 0.3f), (0.6f, 1.3f), (1.7f, 4f)];
-
     private static Dictionary<(int, int), StoryLevelDef> Levels { get; } = [];
     public static bool Contains((int, int) coords) => Levels.ContainsKey(coords);
     public static StoryLevelDef Get((int,int) coords) => Levels[coords];
 
     private static int GenBiomeIndex(int cellRow) {
-        float alt = gridRows - cellRow*1f/levelH;
-        for (int i = 0; i < bands.Length; i++) {
-            (var b, var t) = bands[i];
+        float alt = Consts.gridRows - cellRow*1f/Consts.levelH;
+        for (int i = 0; i < Consts.bands.Length; i++) {
+            (var b, var t) = Consts.bands[i];
             if (alt < b && i != 0) {
-                return Funcs.Random() < (alt - bands[i-1].top)/(b - bands[i-1].top) ? i : i-1;
+                return Funcs.Random() < (alt - Consts.bands[i-1].top)/(b - Consts.bands[i-1].top) ? i : i-1;
             } else if (alt < t) {
                 return i;
             }
         }
-        return bands.Length-1;
+        return Consts.bands.Length-1;
     }
 
     public static void LoadLevelData()
@@ -44,28 +37,28 @@ public static class StoryLevelRegistry
         }
 
         //Iterate through level coordinates
-        for (int gr = 0; gr < gridRows; gr++) {
-            for (int gc = 0; gc < gridCols; gc++) {
+        for (int gr = 0; gr < Consts.gridRows; gr++) {
+            for (int gc = 0; gc < Consts.gridCols; gc++) {
                 (int, int) coords = (gc, gr);
                 List<(BlockType, int, int, int, int)> platforms = [];
                 List<Func<BlockManager, Plant>> plants = [];
                 Vector2 spawnPos = Vector2.Zero;
 
                 // Iterate through level's cells
-                for (int y = 0; y < levelH; y++) {
-                    int cellRow = gr * levelH + y;
-                    for (int x = 0; x < levelW; x++) {
-                        int cellCol = gc * levelW + x;
+                for (int y = 0; y < Consts.levelH; y++) {
+                    int cellRow = gr * Consts.levelH + y;
+                    for (int x = 0; x < Consts.levelW; x++) {
+                        int cellCol = gc * Consts.levelW + x;
                         int localX = x, localY = y; //yeah theres probably a better way to do this
                         string cell = cells[cellRow][cellCol];
                         switch (cell) {
                             case "0": //player initial position
                                 spawnPos = new Vector2(x, y) * Consts.BlockWidth;
                                 break;
-                            case "d": //dirt block
-                                platforms.Add((BlockType.Dirt, x, y, 1, 1));
-                                break;
                             case "m": //muck block
+                                platforms.Add((BlockType.Muck, x, y, 1, 1));
+                                break;
+                            case "d": //dirt block
                                 platforms.Add((BlockType.Dirt, x, y, 1, 1));
                                 break;
                             case "r": //stone block
@@ -75,9 +68,9 @@ public static class StoryLevelRegistry
                                     if (soilHeight > 0) {
                                         for (int i = 0; i < soilHeight; i++) {
                                             int biomeIndex = GenBiomeIndex(cellRow);
-                                            platforms.Add((biomeBlocks[biomeIndex], x, y-i-1, 1, 1));
+                                            platforms.Add((Consts.biomeBlocks[biomeIndex], x, y-i-1, 1, 1));
                                             if (i == soilHeight - 1 && Funcs.Random() < 0.15) {
-                                                plants.Add(b => PlantUtil.SpeciesToPlantInit[biomeSpecies[biomeIndex]](b, (localX, localY-soilHeight)));                                
+                                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Consts.biomeSpecies[biomeIndex]](b, (localX, localY-soilHeight)));                                
                                             }
                                         }
                                     }

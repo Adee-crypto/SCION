@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Sprint2.Entities.Plants;
+using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Util;
 
@@ -15,6 +17,15 @@ public static class Consts
     public static Vector2 DefaultScreenSizeVec { get; } = new(DefaultScreenSize.w, DefaultScreenSize.h);
     public static Vector2 LevelSize { get; } = new(960, 720);
     public const int BlockWidth = 24;
+    //dimensions of story mode map
+    public const int gridCols = 4, gridRows = 4;
+    //dimensions of a level
+    public const int levelW = 40, levelH = 30;
+
+    //biome generation
+    public static readonly BlockType[] biomeBlocks = [BlockType.Muck, BlockType.Dirt, BlockType.Snow];
+    public static readonly Species[] biomeSpecies = [Species.Apple, Species.Grass, Species.Pineapple];
+    public static readonly (float bot, float top)[] bands = [(0, 0.3f), (0.6f, 1.3f), (1.7f, 4f)];
 
     //physics
     public const float defaultGravity = 980f;
@@ -31,7 +42,6 @@ public static class Consts
     public const float playerYForce = -24000f*1.2247f;
     public const float playerMass = 1f;
     public static Vector2 playerHitbox {get;} = new(16-0.1f, 16-0.1f); //fix this offset perhaps
-    public static int LevelSizeVec { get; internal set; }
 
     public const float enemyXForce = 100f;
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Sprint2.Managers;
-using Sprint2.Util;
 
 namespace Sprint2.Entities.Plants;
 

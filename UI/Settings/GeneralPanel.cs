@@ -1,8 +1,5 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
-using Sprint2.Extensions;
 using Sprint2.Util;
 
 namespace Sprint2.UI.Settings;

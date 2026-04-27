@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Players;
 using Sprint2.Util;
-using System;
 
 namespace Sprint2.Entities.Items;
 
