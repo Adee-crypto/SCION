@@ -90,6 +90,6 @@ public class PlayerSprite : Animated
 
     public void Draw(SpriteBatch spriteBatch, Vector2 pos)
     {
-        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, color);
+        spriteBatch.Draw(Assets.BlockPlayerSpriteSheet, pos, CurrentSourceRect, color);
     }
 }

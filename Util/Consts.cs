@@ -44,7 +44,7 @@ public static class Consts
     public const float playerTargetWalkVelocity = 120f;
     public const float playerYForce = -24000f*1.2247f;
     public const float playerMass = 1f;
-    public static Vector2 playerHitbox {get;} = new(16-0.1f, 16-0.1f); //fix this offset perhaps
+    public static Vector2 playerHitbox {get;} = new(8-0.1f, 16-0.1f); //fix this offset perhaps
 
     public const float enemyXForce = 100f;
 
