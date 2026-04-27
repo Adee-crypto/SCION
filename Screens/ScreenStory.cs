@@ -240,7 +240,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 winMenu.Update();
                 break;
             case StoryState.Freeze:
-                levelManager.frozen = true;
+                levelManager.Frozen = true;
                 break;
         }
 
@@ -266,7 +266,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 levelSwapFadeAlpha = 0f;
                 levelSwapFading = false;
                 state = StoryState.Playing;
-                levelManager.frozen = false;
+                levelManager.Frozen = false;
                 StartStoryLevel(pendingLevelCoords);
             }
         }

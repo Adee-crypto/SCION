@@ -13,7 +13,7 @@ public class LevelManager
     public bool IsGameOver => current != null && current.IsOver;
     public LevelEndReason EndReason => current?.EndReason ?? LevelEndReason.None;
     public bool IsRunning => current != null;
-    public bool frozen = false;
+    public bool Frozen { get; set; }
 
     public void StartArcade(Player player)
     {
@@ -33,7 +33,7 @@ public class LevelManager
     }
 
     public void Update(GameTime gameTime) {
-        if (!frozen) current?.Update(gameTime);
+        if (!Frozen) current?.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch) => current?.Draw(spriteBatch);
