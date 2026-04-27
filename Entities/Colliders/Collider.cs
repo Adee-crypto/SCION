@@ -108,13 +108,13 @@ public static class ColliderMovement
                 ApplyBouncySurface(collider, dt);
                 break;
             case SurfaceType.Slippery:
-                // No friction needed
+                ApplyGroundFriction(collider, 0.4f);
                 break;
             case SurfaceType.Sticky:
-                ApplyStickyFriction(collider, dt);
+                ApplyGroundFriction(collider, 8f);
                 break;
             default: // SurfaceType.Normal
-                ApplyGroundFriction(collider, dt);
+                ApplyGroundFriction(collider);
                 break;
         }
     }
@@ -128,22 +128,11 @@ public static class ColliderMovement
         ApplyGroundFriction(collider, dt);
     }
 
-    private static void ApplyStickyFriction(Collider collider, float dt)
+    private static void ApplyGroundFriction(Collider collider, float multiplier = 1)
     {
-        const float stickyFrictionMultiplier = 4f;
-        float stickyResistance = Tunables.GroundResistance.Value * stickyFrictionMultiplier;
         if (collider.Velocity.X < 0)
-            collider.SetVelocityX(Math.Min(collider.Velocity.X + stickyResistance * dt, 0f));
+            collider.AddAcceleration(Vector2.UnitX*Math.Min(Tunables.GroundResistance.Value, 0f)*multiplier);
         else
-            collider.SetVelocityX(Math.Max(collider.Velocity.X - stickyResistance * dt, 0f));
-    }
-
-    private static void ApplyGroundFriction(Collider collider, float dt)
-    {
-        float resistance = Tunables.GroundResistance.Value * dt;
-        if (collider.Velocity.X < 0)
-            collider.SetVelocityX(Math.Min(collider.Velocity.X + resistance, 0f));
-        else
-            collider.SetVelocityX(Math.Max(collider.Velocity.X - resistance, 0f));
+            collider.AddAcceleration(-Vector2.UnitX*Math.Min(Tunables.GroundResistance.Value, 0f)*multiplier);
     }
 }
