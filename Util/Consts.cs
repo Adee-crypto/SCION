@@ -6,6 +6,9 @@ namespace Sprint2.Util;
 
 public static class Consts
 {
+    //initial volumes
+    public static readonly float baseMediaVolume = 0.2f;
+
     //player stats
     public const int defaultPlayerHealth = 5;
 

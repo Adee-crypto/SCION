@@ -52,7 +52,7 @@ public class GeneralPanel : SettingsListPanel
         float music = Tunables.MusicVolume.Value / 100f;
         float sfx = Tunables.SFXVolume.Value / 100f;
 
-        MediaPlayer.Volume = master * music;
+        MediaPlayer.Volume = master * music * Consts.baseMediaVolume;
         SoundEffect.MasterVolume = master * sfx;
     }
 }
