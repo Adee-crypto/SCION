@@ -15,7 +15,7 @@ namespace Sprint2.Entities.Players;
 public enum State
 {
     None,
-    Attack,
+    //Attack,
     BreakBlock,
     Dead
 };
