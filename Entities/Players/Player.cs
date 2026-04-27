@@ -31,7 +31,6 @@ public class Player : IPlayer
     public State PlayerState => playerState;
     public bool IsDead => playerState == State.Dead;
     private PlayerSprite playerSprite;
-    private bool isGrounded;
     private bool IsDamaged { get; set; }
     public bool IsBreakable { get; set; }
     private float damageTimer;
@@ -62,7 +61,6 @@ public class Player : IPlayer
         playerState = State.None;
         playerSprite = new();
         direction = new(1, 0);
-        isGrounded = false;
         health = MaxHealth;
         IsDamaged = false;
         damageTimer = 0f;
@@ -81,7 +79,7 @@ public class Player : IPlayer
     public void Move(int direction)
     {
         float xForce;
-        if (isGrounded)
+        if (Collider.IsGrounded)
         {
             xForce = Tunables.PlayerGroundXForce.Value * (Tunables.PlayerTargetWalkVelocity.Value - Math.Abs(Collider.Velocity.X));
         }
@@ -95,12 +93,12 @@ public class Player : IPlayer
 
     public void TryJump()
     {
-        if (isGrounded) Collider.Force += Vector2.UnitY * Tunables.PlayerYForce.Value;
+        if (Collider.IsGrounded) Collider.Force += Vector2.UnitY * Tunables.PlayerYForce.Value;
     }
 
     public void TryBreakBlock()
     {
-        if (isGrounded && Collider.Velocity.X == 0) playerState = State.BreakBlock;
+        if (Collider.IsGrounded && Collider.Velocity.X == 0) playerState = State.BreakBlock;
     }
 
     public void GetRandomSeed()
@@ -169,8 +167,7 @@ public class Player : IPlayer
         if (playerState == State.Dead) return;
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        var (_, groundedResult, surface) = Collider.UpdateMovement(dt, collisionManager);
-        isGrounded = groundedResult;
+        Collider.Update(collisionManager, dt);
         UpdateBreakBlock(dt);
         UpdateHealth(IsDamaged, dt);
 
@@ -178,7 +175,6 @@ public class Player : IPlayer
         playerSprite.Update(gameTime, playerState, direction, Collider.Velocity, IsDamaged);
 
         IsDamaged = false;
-        Collider.UpdatePlayerVelocity(isGrounded, surface, dt);
         if (playerState != State.Dead)
         {
             playerState = State.None;

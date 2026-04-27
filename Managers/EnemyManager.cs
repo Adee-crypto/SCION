@@ -22,9 +22,9 @@ public class EnemyManager(BaseLevel level) : Extensions.IDrawable
         enemies.Clear();
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
-        enemies.ForEach(e => e.Update(gameTime));
+        enemies.ForEach(e => e.Update(gameTime, collisionManager));
     }
 
     public void Draw(SpriteBatch spriteBatch)

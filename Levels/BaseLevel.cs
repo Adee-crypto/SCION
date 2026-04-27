@@ -88,7 +88,7 @@ public abstract class BaseLevel : ILevel
         //update entities
         ProjectileManager.Update(gameTime);
         Player.Update(gameTime, CollisionManager);
-        EnemyManager.Update(gameTime);
+        EnemyManager.Update(gameTime, CollisionManager);
 
         //check for player digging logic
         if (Player.IsBreakable)

@@ -32,26 +32,31 @@ public class CollisionManager(BlockManager blockManager)
         return output;
     }
 
-    public ((int, int)? collisionCoords, bool isGrounded, SurfaceType surface) ManageBlockCollision(Collider collider, Vector2 deltaPos) {
+    public ((int, int)? collisionCoords, SurfaceType surface) ManageBlockCollision(Collider collider, Vector2 deltaPos) {
         Vector2 newPos = collider.Position + deltaPos;
 
         if (!IsCollision(newPos, collider.Size))
         {
             collider.SetPosition(newPos);
-            return (null, false, SurfaceType.Normal);
+            collider.SetGrounded(false);
+            return (null, SurfaceType.Normal);
         }
 
         var candidates = BuildCandidateSpots(newPos, collider.Size);
         var (freePos, offsets) = FindFreePosition(candidates, collider.Size);
 
-        ApplyCollisionResponse(collider, freePos, offsets);
-
+        if (offsets.Any(o => o.X == 0)) collider.SetVelocityY(0);
+        if (offsets.Any(o => o.Y == 0)) collider.SetVelocityX(0);
         bool groundHit = offsets.Any(o => o.Y < 0);
-        SurfaceType surface = groundHit
-            ? GetLandingSurface(freePos, collider.Size)
-            : SurfaceType.Normal;
 
-        return (Funcs.GridCoords(newPos), groundHit, surface);
+        SurfaceType surface = SurfaceType.Normal;
+        (int gx, int gy) = Funcs.GridCoords(collider.Center + Vector2.UnitY*collider.Size.Y);
+        if (groundHit && blockManager.HasBlockAt((gx, gy)))
+            surface = blockManager.BlockAt((gx, gy)).Surface;
+
+        collider.SetPosition(freePos);
+        collider.SetGrounded(groundHit);
+        return (Funcs.GridCoords(newPos), surface);
     }
 
     // Builds the 8 candidate positions (4 orthogonal + 4 diagonal) around newPos,
@@ -100,20 +105,5 @@ public class CollisionManager(BlockManager blockManager)
                 return (pos, offsets);
             }
         }
-    }
-
-    private static void ApplyCollisionResponse(Collider collider, Vector2 freePos, List<Vector2> offsets)
-    {
-        if (offsets.Any(o => o.X == 0)) collider.SetVelocityY(0);
-        if (offsets.Any(o => o.Y == 0)) collider.SetVelocityX(0);
-        collider.SetPosition(freePos);
-    }
-
-    private SurfaceType GetLandingSurface(Vector2 landingPos, Vector2 size)
-    {
-        (int gx, int gy) = Funcs.GridCoords(landingPos + new Vector2(size.X / 2f, size.Y + t));
-        if (blockManager.HasBlockAt((gx, gy)))
-            return blockManager.BlockAt((gx, gy)).Surface;
-        return SurfaceType.Normal;
     }
 }

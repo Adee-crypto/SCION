@@ -1,8 +1,8 @@
-using Microsoft.Xna.Framework;              
+using Microsoft.Xna.Framework;
+
 using Sprint2.Entities.Players;
 using Sprint2.Entities.Plants;        //  Added for Species
 using Sprint2.Util;                   //  Added for PlantUtil
-using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Levels;
 

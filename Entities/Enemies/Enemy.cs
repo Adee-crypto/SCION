@@ -30,7 +30,6 @@ public class Enemy : Extensions.IDrawable
     //physics
     public Collider Collider { get; }
     private Vector2 direction;
-    private bool isGrounded;
     private float movementX;
     private float attackCoolDownTimer;
     private float attackDurationTimer;
@@ -49,7 +48,6 @@ public class Enemy : Extensions.IDrawable
         state = EnemyState.None;
         Collider.Reset();
         direction = new(1, 0);
-        isGrounded = false;
         movementX = 0;
         attackCoolDownTimer = Tunables.EnemyAttackCoolDown.Value;
         attackDurationTimer = 0;
@@ -74,7 +72,7 @@ public class Enemy : Extensions.IDrawable
 
     public void Jump()
     {
-        if (isGrounded) Collider.Force += Vector2.UnitY * Tunables.PlayerYForce.Value;
+        if (Collider.IsGrounded) Collider.Force += Vector2.UnitY * Tunables.PlayerYForce.Value;
     }
 
     private void UpdatePatrol()
@@ -127,14 +125,13 @@ public class Enemy : Extensions.IDrawable
         projectileManager.Spawn(ProjectileType.Void, 5f, initialPosition, initialVelocity);
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, CollisionManager collisionManager)
     {
         if (state == EnemyState.Dead) return;
 
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Collider.Update(collisionManager, dt);
         movementX += dt * Collider.Velocity.X;
-        isGrounded = Collider.UpdateMovement(dt, Level.CollisionManager).isGrounded;
-
         attackCoolDownTimer += dt;
         UpdatePatrol();
         UpdateAttack(dt, Level.Player, Level.ProjectileManager);

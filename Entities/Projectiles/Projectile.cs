@@ -2,13 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Entities.Colliders;
 using Sprint2.Extensions;
-
 using Sprint2.Managers;
-using Sprint2.Levels;
-
 using Sprint2.Util;
 using System;
-using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Entities.Projectiles;
 
@@ -60,7 +56,7 @@ public class Projectile : IProjectile
         float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
         Sprite.UpdateFrame(gameTime);
         var prevCoords = Funcs.GridCoords(Collider.Position);
-        var coords = Collider.UpdateMovement(dt, collisionManager).collisionCoords;
+        var coords = Collider.Update(collisionManager, dt);
 
         //ASSUMES PROJECTILES HAVE ZERO SIZE FOR NOW
         if (coords is not null)
