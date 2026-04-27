@@ -3,16 +3,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Util;
 using static Sprint2.Managers.BlockManager.Block.BlockType;
+using static Sprint2.Managers.BlockManager.Block.SurfaceType;
 
 namespace Sprint2.Managers;
 
-public enum SurfaceType
-{
-    Normal,
-    Bouncy,
-    Slippery,
-    Sticky
-}
 
 public class BlockManager
 {
@@ -43,8 +37,24 @@ public class BlockManager
             Void
         }
 
+        public enum SurfaceType
+        {
+            Normal,
+            Bouncy,
+            Slippery,
+            Sticky
+        }
+
         public readonly bool IsBreakable => Type switch
-        { Grass or Apple or Pineapple or Sandbox or Dirt => true, _ => false };
+        { Grass or Apple or Pineapple or Sandbox or Dirt or Muck => true, _ => false };
+
+        public readonly SurfaceType Surface => Type switch
+        {
+            Grass => Bouncy,
+            Snow or Pineapple => Slippery,
+            Muck => Sticky,
+            _ => Normal
+        };
     }
 
     private readonly Dictionary<(int x, int y), Block> blocks = [];
@@ -115,14 +125,4 @@ public class BlockManager
     }
 
     
-    public static SurfaceType GetSurfaceType(Block.BlockType type) => type switch
-    {
-        
-
-        
-         // (Add Plant here)                        => SurfaceType.Bouncy,
-         // (Add Plant here) => SurfaceType.Slippery,
-         // (Add Plant here)                     => SurfaceType.Sticky,
-         _                                      => SurfaceType.Normal
-    };
 }

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Sprint2.Managers;
 using Sprint2.Util;
 using System;
+using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Entities;
 
@@ -54,7 +55,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity = new(), 
         Acceleration = Vector2.Zero;
     }
 
-    // Forwarding wrappers — keep call sites in Player, Enemy, Projectile unchanged.
+    // Forwarding wrappers ï¿½ keep call sites in Player, Enemy, Projectile unchanged.
     // Logic lives in ColliderMovement for cohesion.
     public ((int, int)? collisionCoords, bool isGrounded, SurfaceType surface) UpdateMovement(
         float dt, CollisionManager collisionManager)

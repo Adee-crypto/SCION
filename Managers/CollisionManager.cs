@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Sprint2.Entities;
 using Sprint2.Util;
+using static Sprint2.Managers.BlockManager.Block;
 
 namespace Sprint2.Managers;
 
@@ -31,9 +32,7 @@ public class CollisionManager(BlockManager blockManager)
         return output;
     }
 
-    public ((int, int)? collisionCoords, bool isGrounded, SurfaceType surface) ManageBlockCollision(
-        Collider collider, Vector2 deltaPos)
-    {
+    public ((int, int)? collisionCoords, bool isGrounded, SurfaceType surface) ManageBlockCollision(Collider collider, Vector2 deltaPos) {
         Vector2 newPos = collider.Position + deltaPos;
 
         if (!IsCollision(newPos, collider.Size))
@@ -66,13 +65,13 @@ public class CollisionManager(BlockManager blockManager)
 
         var spots = new SortedDictionary<Vector2, List<Vector2>>(new Funcs.VectorComparer<Vector2>(newPos));
 
-        // Orthogonal — single expansion axis
+        // Orthogonal ï¿½ single expansion axis
         spots[new(newPos.X, topY)] = [new(0, -Consts.BlockWidth)];
         spots[new(newPos.X, bottomY)] = [new(0, Consts.BlockWidth)];
         spots[new(leftX, newPos.Y)] = [new(-Consts.BlockWidth, 0)];
         spots[new(rightX, newPos.Y)] = [new(Consts.BlockWidth, 0)];
 
-        // Diagonal — two expansion axes; key collision resolution picks one
+        // Diagonal ï¿½ two expansion axes; key collision resolution picks one
         spots[new(leftX, topY)] = [new(0, -Consts.BlockWidth), new(-Consts.BlockWidth, 0)];
         spots[new(rightX, topY)] = [new(0, -Consts.BlockWidth), new(Consts.BlockWidth, 0)];
         spots[new(leftX, bottomY)] = [new(0, Consts.BlockWidth), new(-Consts.BlockWidth, 0)];
@@ -84,8 +83,7 @@ public class CollisionManager(BlockManager blockManager)
     // BFS over candidate spots (sorted by euclidean distance from origin) until a
     // collision-free position is found. Returns the free position and the offsets
     // that led there, which encode which axes were blocked.
-    private (Vector2 freePos, List<Vector2> offsets) FindFreePosition(
-        SortedDictionary<Vector2, List<Vector2>> candidates, Vector2 size)
+    private (Vector2 freePos, List<Vector2> offsets) FindFreePosition(SortedDictionary<Vector2, List<Vector2>> candidates, Vector2 size)
     {
         while (true)
         {
@@ -115,7 +113,7 @@ public class CollisionManager(BlockManager blockManager)
     {
         (int gx, int gy) = Funcs.GridCoords(landingPos + new Vector2(size.X / 2f, size.Y + t));
         if (blockManager.HasBlockAt((gx, gy)))
-            return BlockManager.GetSurfaceType(blockManager.BlockAt((gx, gy)).Type);
+            return blockManager.BlockAt((gx, gy)).Surface;
         return SurfaceType.Normal;
     }
 }
