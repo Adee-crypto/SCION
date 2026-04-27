@@ -196,8 +196,6 @@ public class Player : IPlayer
         playerSprite.Draw(spriteBatch, Collider.Position);
         string text = $"{Seeds.Count}";
         spriteBatch.DrawString(Assets.UiFont, text, Collider.Position + new Vector2(1, 18), Color.Black, 0f, new(), 0.75f, SpriteEffects.None, 0f);
-
-        //if (item == Item.Seed) aimer?.Draw(spriteBatch, Collider.Center);
         aimer?.Draw(spriteBatch, Collider.Center);
     }
 }

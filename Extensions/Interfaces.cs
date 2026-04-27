@@ -25,7 +25,6 @@ public interface IPlayer : IDrawable, IPhysicsObject, IAim//, IUpdatable
 {
     void Move(int direction);
     void TryJump();
-    //void Attack();
     void TryBreakBlock();
     void ToggleDamaged();
     void Reset();
