@@ -61,8 +61,13 @@ public static class StoryLevelRegistry
                             case "d": //dirt block
                                 platforms.Add((BlockType.Dirt, x, y, 1, 1));
                                 break;
+                            case "s": //dirt block
+                                platforms.Add((BlockType.Snow, x, y, 1, 1));
+                                break;
                             case "r": //stone block
                                 platforms.Add((BlockType.Stone, x, y, 1, 1));
+
+                                //biome generation logic when bare rock is detected
                                 if (cellRow > 0 && cells[cellRow-1][cellCol].Length == 0) {
                                     int soilHeight = Math.Min(Funcs.RandInt(3, 5), cellRow);
                                     if (soilHeight > 0) {
@@ -81,6 +86,12 @@ public static class StoryLevelRegistry
                                 break;
                             case "g": //grass plant
                                 plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Grass](b, (localX, localY)));
+                                break;
+                            case "p": //pineapple plant
+                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Pineapple](b, (localX, localY)));
+                                break;
+                            case "b": //bomb/sandbox plant
+                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Sandbox](b, (localX, localY)));
                                 break;
                             default:
                                 break;
