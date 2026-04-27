@@ -21,34 +21,16 @@ public interface IPhysicsObject
     Collider Collider { get; }
 }
 
-// public interface IController
-// {
-//     bool IsPaused { get; set; }
-//     void Update();
-// }
-
-// public interface IMouseController : IController
-// {
-//     bool IsLeftClick();
-
-//     bool IsRightClick();
-
-//     bool IsLeftClickHeld();
-
-//     bool IsRightClickHeld();
-// }
-
 public interface IPlayer : IDrawable, IPhysicsObject, IAim//, IUpdatable
 {
     void Move(int direction);
     void TryJump();
-    void Attack();
+    //void Attack();
     void TryBreakBlock();
     void ToggleDamaged();
     void Reset();
     void UpdateHealth(bool isDamaged, float time);
     void UpdateBreakBlock(float time);
-    void ChangeItem(int num);
 }
 
 public interface IPlayerProvider
@@ -147,8 +129,3 @@ public interface ITunableInt
     int Value { get; set; }
     void Reset();
 }
-
-// internal interface IEntitySprite : IUpdatable
-// {
-//     void SetFrames(PlayerState linkAction, Vector2 direction, Vector2 velocity, bool isDamaged);
-// }

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sprint2.Entities.Colliders;
-using Sprint2.Entities.Items;
 using Sprint2.Entities.Plants;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
@@ -21,13 +20,6 @@ public enum State
     BreakBlock,
     Dead
 };
-
-public enum Item
-{
-    Sword,
-    Seed
-}
-
 public class Player : IPlayer
 {
     //Motion + Physics
@@ -59,9 +51,6 @@ public class Player : IPlayer
     //Inventory
     public List<ProjectileType> Seeds { get; set; } = [];
     private const int maximumSeedsDrawable = 5;
-    private Item item;
-    public Item Item => item;
-    public bool HasSword { get; set; }
 
     public Player()
     {
@@ -83,22 +72,7 @@ public class Player : IPlayer
         aimer = new(10f);
         Seeds.Clear();
         for (int i = 0; i < 5; i++) GetRandomSeed(); //prob change this
-        item = Item.Seed;
-        HasSword = false;
     }
-
-    public void PickUpSword()
-    {
-        item = Item.Sword;
-        HasSword = true;
-    }
-
-    public void ChangeItem(int num)
-    {
-        if (num == 1 && HasSword) item = Item.Sword;
-        else item = Item.Seed;
-    }
-
     public void TakeDamage(int damage) // could define damage
     {
         IsDamaged = true;
@@ -161,11 +135,6 @@ public class Player : IPlayer
 
     public void ToggleDamaged() => IsDamaged = !IsDamaged;
 
-    public void Attack()
-    {
-        if (playerState != State.Dead && HasSword && item == Item.Sword) playerState = State.Attack;
-    }
-
     public void UpdateBreakBlock(float time)
     {
         if (playerState == State.BreakBlock)
@@ -206,7 +175,7 @@ public class Player : IPlayer
         UpdateBreakBlock(dt);
         UpdateHealth(IsDamaged, dt);
 
-        if (item == Item.Seed) aimer.Update(Collider.Center);
+        aimer.Update(Collider.Center);
         playerSprite.Update(gameTime, playerState, direction, Collider.Velocity, IsDamaged);
 
         IsDamaged = false;
@@ -219,7 +188,6 @@ public class Player : IPlayer
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        //Draw seed in inventory
         int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
         for (int i = 0; i < drawableAmount; i++)
         {
@@ -230,6 +198,7 @@ public class Player : IPlayer
         string text = $"{Seeds.Count}";
         spriteBatch.DrawString(Assets.UiFont, text, Collider.Position + new Vector2(1, 18), Color.Black, 0f, new(), 0.75f, SpriteEffects.None, 0f);
 
-        if (item == Item.Seed) aimer?.Draw(spriteBatch, Collider.Center);
+        //if (item == Item.Seed) aimer?.Draw(spriteBatch, Collider.Center);
+        aimer?.Draw(spriteBatch, Collider.Center);
     }
 }

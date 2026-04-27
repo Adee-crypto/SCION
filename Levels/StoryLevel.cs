@@ -1,5 +1,4 @@
-using Microsoft.Xna.Framework;
-using Sprint2.Entities.Items;                   
+using Microsoft.Xna.Framework;              
 using Sprint2.Entities.Players;
 using Sprint2.Util;
 using static Sprint2.Managers.BlockManager.Block;
@@ -31,8 +30,6 @@ public sealed class StoryLevel : BaseLevel
         }
 
         EnemyManager.Spawn(Consts.BlockWidth * new Vector2(25, 10));
-
-        Sword.Spawn(Consts.BlockWidth * new Vector2(30, 19));
     }
 
     protected override void UpdateLevelLogic(GameTime gameTime) { }
