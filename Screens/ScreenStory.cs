@@ -1,5 +1,4 @@
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+// using System.Numerics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -37,6 +36,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     private bool isPaused;
     private (int x, int y) currentLevelCoords = (0, 0);
     private (int x, int y) pendingLevelCoords;
+    private (int x, int y) pendingDeltaLevelCoords;
 
     public bool IsPaused => isPaused;
     public IPlayer CurrentPlayer => state == StoryState.Playing ? player : null;
@@ -183,12 +183,15 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         StartStoryLevel(currentLevelCoords);
     }
 
-    private void StartStoryLevel((int, int) coords)
+
+    private void StartStoryLevel((int, int) coords) => StartStoryLevel(coords, Vector2.Zero);
+
+    private void StartStoryLevel((int, int) levelCoords, Vector2 playerCoords)
     {
-        if (StoryLevelRegistry.Contains(coords)) {
+        if (StoryLevelRegistry.Contains(levelCoords)) {
             state = StoryState.Playing;
-            currentLevelCoords = coords;
-            levelManager.StartStory(player, coords);
+            currentLevelCoords = levelCoords;
+            levelManager.StartStory(levelCoords, player, playerCoords);
         } else {
             state = StoryState.GameOver;
             player.Kill();
@@ -207,9 +210,10 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
         levelManager?.Reset();
     }
 
-    public void Move(int x, int y)
+    public void ShiftLevel(int x, int y)
     {
         pendingLevelCoords = (currentLevelCoords.x + x, currentLevelCoords.y + y);
+        pendingDeltaLevelCoords = (x, y);
         StartTransition();
     }
 
@@ -223,10 +227,10 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 menu.Update();
                 break;
             case StoryState.Playing:
-                if (player.Collider.Position.X < 0) Move(-1, 0);
-                else if (player.Collider.Position.X > Consts.DefaultScreenSize.w) Move(1, 0);
-                else if (player.Collider.Position.Y > Consts.DefaultScreenSize.h) Move(0, 1);
-                else if (player.Collider.Position.Y < 0) Move(0, -1);
+                if (player.Collider.Position.X < 0) ShiftLevel(-1, 0);
+                else if (player.Collider.Position.X > Consts.DefaultScreenSize.w) ShiftLevel(1, 0);
+                else if (player.Collider.Position.Y > Consts.DefaultScreenSize.h) ShiftLevel(0, 1);
+                else if (player.Collider.Position.Y < 0) ShiftLevel(0, -1);
                 levelManager.Update(gameTime);
                 if (levelManager.IsGameOver) {
                     state = StoryState.GameOver;
@@ -240,7 +244,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 winMenu.Update();
                 break;
             case StoryState.Freeze:
-                levelManager.frozen = true;
+                levelManager.Frozen = true;
                 break;
         }
 
@@ -266,8 +270,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 levelSwapFadeAlpha = 0f;
                 levelSwapFading = false;
                 state = StoryState.Playing;
-                levelManager.frozen = false;
-                StartStoryLevel(pendingLevelCoords);
+                levelManager.Frozen = false;
+                StartStoryLevel(pendingLevelCoords, player.Collider.Position - new Vector2(pendingDeltaLevelCoords.x, pendingDeltaLevelCoords.y)*Consts.LevelSize);
             }
         }
 

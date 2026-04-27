@@ -1,71 +1,78 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Sprint2.Controllers;
 using Sprint2.Entities;
 using Sprint2.Entities.Players;
 using Sprint2.Entities.Projectiles;
 using Sprint2.Extensions;
-using Sprint2.Levels;
+using System;
 using System.Collections.Generic;
 
 namespace Sprint2.Managers;
 
-public class ProjectileManager(BaseLevel level, Player player) : Extensions.IDrawable, IUpdatable
+public class ProjectileManager(
+    EnemyManager enemyManager,
+    Player player,
+    Func<bool> fireInput,                                               // e.g. () => MouseController.IsLeftClick()
+    Func<ProjectileType, float, Vector2, Vector2, Projectile> factory) // e.g. (t,l,p,v) => new Projectile(level, t,l,p,v)
+    : Extensions.IDrawable, IUpdatable
 {
-    private readonly BaseLevel level = level; //This is terrible for coupling idk how to fix
+    private readonly EnemyManager enemyManager = enemyManager;
     private readonly Collider playerCollider = player.Collider;
+    private readonly Func<bool> fireInput = fireInput;
+    private readonly Func<ProjectileType, float, Vector2, Vector2, Projectile> factory = factory;
     private readonly List<IProjectile> projectiles = [];
 
-    public void Reset()
-    {
-        projectiles.Clear();
-    }
+    public void Reset() => projectiles.Clear();
 
     public void Spawn(ProjectileType type, float lifeTime, Vector2 initialPosition, Vector2 initialVelocity)
     {
-        projectiles.Add(new Projectile(level, type, lifeTime, initialPosition, initialVelocity));
+        projectiles.Add(factory(type, lifeTime, initialPosition, initialVelocity));
     }
 
     public void Update(GameTime gameTime)
     {
-        //Launch projectile
-        if (MouseController.IsLeftClick() && player.Seeds.Count > 0)
-        {
-            Vector2 direction = player.AimDirection;
-
-            if (direction.LengthSquared() > 0.0001f)
-            {
-                direction.Normalize();
-                Vector2 initialPosition = playerCollider.Center;// + Consts.playerHitbox * new Vector2(direction.X * 0.5f, -0.25f);
-                Vector2 initialVelocity = direction * 300f;
-                Projectile projectile = new(level, player.ThrowSeed(), 5f, initialPosition, initialVelocity);
-                projectiles.Add(projectile);
-                player.Collider.Momentum -= projectile.Collider.Momentum;
-            }
-        }
+        TryFireProjectile(player);
 
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
             projectiles[i].Update(gameTime);
-
-            if (projectiles[i] is Projectile p && !p.IsDead && p.Type == ProjectileType.Void && p.Collider.Intersects(playerCollider))
-            {
-                p.Collider.KnockBack(playerCollider);
-                player.TakeDamage(1);
-                p.Kill();
-            }
-
-            if (projectiles[i] is Projectile pp && !pp.IsDead && pp.Type != ProjectileType.Void)
-            {
-                level.EnemyManager.CheckProjectileHit(pp);
-            }
-
-            if (projectiles[i].IsDead) projectiles.RemoveAt(i);
+            if (projectiles[i] is Projectile p)
+                HandleProjectileHits(p, player);
+            if (projectiles[i].IsDead)
+                projectiles.RemoveAt(i);
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    private void TryFireProjectile(Player player)
     {
-        projectiles.ForEach(p => p.Draw(spriteBatch));
+        if (!fireInput() || player.Seeds.Count == 0)
+            return;
+
+        Vector2 direction = player.AimDirection;
+        if (direction.LengthSquared() <= 0.0001f)
+            return;
+
+        direction.Normalize();
+        Projectile projectile = factory(player.ThrowSeed(), 5f, playerCollider.Center, direction * 300f);
+        projectiles.Add(projectile);
+        playerCollider.Momentum -= projectile.Collider.Momentum;
     }
+
+    private void HandleProjectileHits(Projectile p, Player player)
+    {
+        if (p.IsDead) return;
+
+        if (p.Type == ProjectileType.Void && p.Collider.Intersects(playerCollider))
+        {
+            p.Collider.KnockBack(playerCollider);
+            player.TakeDamage(1);
+            p.Kill();
+            return;
+        }
+
+        if (p.Type != ProjectileType.Void)
+            enemyManager.CheckProjectileHit(p);
+    }
+
+    public void Draw(SpriteBatch spriteBatch) => projectiles.ForEach(p => p.Draw(spriteBatch));
 }

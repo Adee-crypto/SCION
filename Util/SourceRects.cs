@@ -11,19 +11,21 @@ public static class SourceRects
 {
     //for now the testsheet.png has 16x16 tiles
     private static Rectangle TileAt(int x, int y) => new(x * 16, y * 16, 16, 16);
+    private static Rectangle TileAtPlayer(int x, int y) => new(x * 8 - 1 * x, y * 16, 8, 16);
+    private static Rectangle TileAtPlayerJump(int x, int y) => new(x * 16 + 39, y * 16, 13, 16);
     private static Rectangle TileAt24(int x, int y) => new(x * 24, y * 24 + 33, 24, 24);
 
     public static Dictionary<Players.SpriteState, Rectangle[]> PlayerSourceRects { get; } = new() {
-        { Players.SpriteState.LeftFacing, [TileAt(2, 0)] },
-        { Players.SpriteState.LeftRunning, [TileAt(2, 0), TileAt(3, 0)] },
-        { Players.SpriteState.RightFacing, [TileAt(0, 0)] },
-        { Players.SpriteState.RightRunning, [TileAt(0, 0), TileAt(1, 0)] },
-        { Players.SpriteState.LeftAttack, [TileAt(1, 2)]},
-        { Players.SpriteState.RightAttack, [TileAt(0, 2)]},
-        { Players.SpriteState.LeftFalling, [TileAt(3, 0)] },
-        { Players.SpriteState.RightFalling, [TileAt(1, 0)] },
-        { Players.SpriteState.BlockBreaking, [TileAt(1, 5)] },
-        { Players.SpriteState.Dead, [TileAt(0, 5)] }
+        { Players.SpriteState.LeftFacing, [TileAtPlayer(0, 0)] },
+        { Players.SpriteState.LeftRunning, [TileAtPlayer(1, 0), TileAtPlayer(2, 0)] },
+        { Players.SpriteState.RightFacing, [TileAtPlayer(0, 1)] },
+        { Players.SpriteState.RightRunning, [TileAtPlayer(1, 1), TileAtPlayer(2, 1)] },
+        { Players.SpriteState.LeftAttack, [TileAtPlayer(0, 0)] },
+        { Players.SpriteState.RightAttack, [TileAtPlayer(0, 1)] },
+        { Players.SpriteState.LeftFalling, [TileAtPlayerJump(0, 0)] },
+        { Players.SpriteState.RightFalling, [TileAtPlayerJump(0, 1)] },
+        { Players.SpriteState.BlockBreaking, [TileAtPlayer(0, 0)] },
+        { Players.SpriteState.Dead, [TileAtPlayer(0, 0)] }
     };
 
     public static Dictionary<Enemies.SpriteState, Rectangle[]> EnemySourceRects { get; } = new()

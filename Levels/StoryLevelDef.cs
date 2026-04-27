@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Sprint2.Entities.Plants;
 using Sprint2.Managers;
@@ -8,7 +7,7 @@ namespace Sprint2.Levels;
 
 public readonly record struct StoryLevelDef(
     (int, int) Coords,
-    Vector2 PlayerSpawnPos, 
-    (BlockType, int, int, int, int)[] Platforms, 
-    Func<BlockManager, Plant>[] Plants
+    Vector2 PlayerSpawnPos,
+    (BlockType Type, int X, int Y)[] Blocks,   // Much simpler than rectangles
+    (Species Species, int X, int Y)[] Plants   // Simple data instead of Func<>
 );

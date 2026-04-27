@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Sprint2.Extensions;
 using Sprint2.Util;
+using System.Collections.Generic;
 
 namespace Sprint2.Entities.Players;
 
@@ -24,6 +25,36 @@ public class PlayerSprite : Animated
     private SpriteState currentState;
     private Color color;
 
+    // Key: (playerState, directionX, isMovingX, isMovingY)
+    // To add a new state, add a new row here — no logic changes needed.
+    private static readonly Dictionary<(State, int, bool, bool), SpriteState> StateTable = new()
+    {
+        { (State.None,  1,  false, true),  SpriteState.RightFalling  },
+        { (State.None, -1,  false, true),  SpriteState.LeftFacing    },
+        { (State.None,  1,  true,  false), SpriteState.RightRunning  },
+        { (State.None, -1,  true,  false), SpriteState.LeftRunning   },
+        { (State.None,  1,  false, false), SpriteState.RightFacing   },
+        { (State.None, -1,  false, false), SpriteState.LeftFacing    },
+        { (State.None,  1,  true,  true),  SpriteState.RightFalling  },
+        { (State.None, -1,  true,  true),  SpriteState.LeftFacing    },
+        { (State.Dead,  1,  false, false), SpriteState.Dead          },
+        { (State.Dead,  1,  false, true),  SpriteState.Dead          },
+        { (State.Dead,  1,  true,  false), SpriteState.Dead          },
+        { (State.Dead,  1,  true,  true),  SpriteState.Dead          },
+        { (State.Dead, -1,  false, false), SpriteState.Dead          },
+        { (State.Dead, -1,  false, true),  SpriteState.Dead          },
+        { (State.Dead, -1,  true,  false), SpriteState.Dead          },
+        { (State.Dead, -1,  true,  true),  SpriteState.Dead          },
+        { (State.Attack,  1,  false, false), SpriteState.RightAttack },
+        { (State.Attack,  1,  false, true),  SpriteState.RightAttack },
+        { (State.Attack,  1,  true,  false), SpriteState.RightAttack },
+        { (State.Attack,  1,  true,  true),  SpriteState.RightAttack },
+        { (State.Attack, -1,  false, false), SpriteState.LeftAttack  },
+        { (State.Attack, -1,  false, true),  SpriteState.LeftAttack  },
+        { (State.Attack, -1,  true,  false), SpriteState.LeftAttack  },
+        { (State.Attack, -1,  true,  true),  SpriteState.LeftAttack  },
+    };
+
     public PlayerSprite()
     {
         currentState = SpriteState.RightFacing;
@@ -33,41 +64,14 @@ public class PlayerSprite : Animated
 
     public void UpdateState(State linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
     {
-        SpriteState newState;
-        if (linkAction == State.None)
-        {
-            if (velocity.Y != 0)
-            {
-                if (direction.X == 1) newState = SpriteState.RightFalling;
-                else newState = SpriteState.LeftFacing;
+        int dirX = direction.X >= 0 ? 1 : -1;
+        bool isMovingX = velocity.X != 0;
+        bool isMovingY = velocity.Y != 0;
 
-            }
-            else if (velocity.X != 0)
-            {
-                if (direction.X == 1) newState = SpriteState.RightRunning;
-                else newState = SpriteState.LeftRunning;
-
-            }
-            else
-            {
-                if (direction.X == 1) newState = SpriteState.RightFacing;
-                else newState = SpriteState.LeftFacing;
-            }
-        }
-        else if (linkAction == State.Dead)
-        {
-            newState = SpriteState.Dead;
-        }
-        else if (linkAction == State.Attack)
-        {
-            if (direction.X == 1) newState = SpriteState.RightAttack;
-            else newState = SpriteState.LeftAttack;
-
-        }
-        else
-        {
-            newState = SpriteState.BlockBreaking;
-        }
+        // Fall back to BlockBreaking for any unrecognised state (e.g. State.BreakBlock)
+        SpriteState newState = StateTable.TryGetValue((linkAction, dirX, isMovingX, isMovingY), out SpriteState mapped)
+            ? mapped
+            : SpriteState.BlockBreaking;
 
         if (currentState != newState)
         {
@@ -75,8 +79,7 @@ public class PlayerSprite : Animated
             ResetFrameState(SourceRects.PlayerSourceRects[currentState]);
         }
 
-        if (isDamaged) color = Color.Red;
-        else color = Color.White;
+        color = isDamaged ? Color.Red : Color.White;
     }
 
     public void Update(GameTime gameTime, State linkAction, Vector2 direction, Vector2 velocity, bool isDamaged)
@@ -87,6 +90,6 @@ public class PlayerSprite : Animated
 
     public void Draw(SpriteBatch spriteBatch, Vector2 pos)
     {
-        spriteBatch.Draw(Assets.PlayerTexture, pos, CurrentSourceRect, color);
+        spriteBatch.Draw(Assets.BlockPlayerSpriteSheet, pos, CurrentSourceRect, color);
     }
 }

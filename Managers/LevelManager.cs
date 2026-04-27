@@ -13,18 +13,16 @@ public class LevelManager
     public bool IsGameOver => current != null && current.IsOver;
     public LevelEndReason EndReason => current?.EndReason ?? LevelEndReason.None;
     public bool IsRunning => current != null;
-    public bool frozen = false;
+    public bool Frozen { get; set; }
 
     public void StartArcade(Player player)
     {
         current = new ArcadeLevel(player);
     }
 
-    public void StartStory(Player player, (int, int) coords)
+    public void StartStory((int, int) levelCoords, Player player, Vector2 playerCoords)
     {
-        var def = StoryLevelRegistry.Get(coords);
-        if (def is StoryLevelDef s)
-            current = new StoryLevel(player, s);
+        current = new StoryLevel(StoryLevelRegistry.Get(levelCoords), player, playerCoords);
     }
 
     public void Reset()
@@ -33,7 +31,7 @@ public class LevelManager
     }
 
     public void Update(GameTime gameTime) {
-        if (!frozen) current?.Update(gameTime);
+        if (!Frozen) current?.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch) => current?.Draw(spriteBatch);

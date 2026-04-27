@@ -5,22 +5,13 @@ using Sprint2.Util;
 
 namespace Sprint2.HUD;
 
-public class HealthBar
+public class HealthBar(Player player, Vector2 position, Vector2 size)
 {
-    private readonly Player player;
-    private readonly Vector2 initialPosition;
-    private readonly Vector2 initialSize;
-    private Vector2 position;
-    private Vector2 size;
-
-    public HealthBar(Player player, Vector2 position, Vector2 size)
-    {
-        this.player = player;
-        initialPosition = position;
-        this.position = position;
-        initialSize = size;
-        this.size = size;
-    }
+    private readonly Player player = player;
+    private readonly Vector2 initialPosition = position;
+    private readonly Vector2 initialSize = size;
+    private Vector2 position = position;
+    private Vector2 size = size;
 
     public void Resize(Vector2 screenSize)
     {
