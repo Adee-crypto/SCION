@@ -14,16 +14,16 @@ namespace Sprint2.Levels;
 
 public abstract class BaseLevel : ILevel
 {
-    public Player Player {get;}
+    public Player Player { get; }
     public Sword Sword { get; set; }
     //managers TODO: can these be made protected again in a way that works with composed classes (projectile, plants, etc.)?
-    public ProjectileManager ProjectileManager {get;}
+    public ProjectileManager ProjectileManager { get; }
     // public void AddBlockList(BlockList blocks) => CollisionManager.Blocks.Add(blocks); //bad for coupling if public
     // public bool HasBlockAt((int, int) pos) => CollisionManager.HasBlockAt(pos); //bad for coupling if public
-    public EnemyManager EnemyManager {get;}
-    public HUDManager HudManager {get;}
-    public BlockManager BlockManager {get;} = new();
-    public CollisionManager CollisionManager {get;}
+    public EnemyManager EnemyManager { get; }
+    public HUDManager HudManager { get; }
+    public BlockManager BlockManager { get; } = new();
+    public CollisionManager CollisionManager { get; }
 
     //static level elements (all with blocks for now)
     protected List<Plant> Plants { get; } = [];
@@ -33,13 +33,21 @@ public abstract class BaseLevel : ILevel
     public bool IsOver { get; protected set; }
     public LevelEndReason EndReason { get; protected set; } = LevelEndReason.None;
 
-    public BaseLevel(Player player) {
+    public BaseLevel(Player player)
+    {
         Player = player;
         Sword = new(player);
-        ProjectileManager = new(this, player);
-        EnemyManager = new(this);
-        HudManager = new(player);
         CollisionManager = new(BlockManager);
+        EnemyManager = new(this);
+        ProjectileManager = new(
+            EnemyManager,
+            player,
+            () => Controllers.MouseController.IsLeftClick(),
+            (type, lifetime, pos, vel) => new Projectile(
+                CollisionManager, type, lifetime, pos, vel,
+                TrySow,
+                coords => Infect(coords)));
+        HudManager = new(player);
     }
 
     public void Resize(Vector2 size)
@@ -88,10 +96,11 @@ public abstract class BaseLevel : ILevel
         EnemyManager.Update(gameTime);
 
         //check for player digging logic
-        if (Player.IsBreakable) {
+        if (Player.IsBreakable)
+        {
             if (BlockManager.TryDigBelow(new(Player.Collider.Center.X, Player.Collider.Bottom)) is BlockManager.Block block
                 && PlantUtil.BlockToSpecies.TryGetValue(block.Type, out Species value))
-                    Player.GetSeed(value);
+                Player.GetSeed(value);
             Player.IsBreakable = false;
         }
 

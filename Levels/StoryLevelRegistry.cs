@@ -39,62 +39,88 @@ public static class StoryLevelRegistry
     {
         string[] lines = File.ReadAllLines("Content/StoryMap.csv");
         string[][] cells = new string[lines.Length][];
-        for (int i = 0; i < lines.Length; i++) {
+        for (int i = 0; i < lines.Length; i++)
+        {
             cells[i] = lines[i].Split(',');
         }
 
-        //Iterate through level coordinates
-        for (int gr = 0; gr < gridRows; gr++) {
-            for (int gc = 0; gc < gridCols; gc++) {
+        for (int gr = 0; gr < gridRows; gr++)
+        {
+            for (int gc = 0; gc < gridCols; gc++)
+            {
                 (int, int) coords = (gc, gr);
-                List<(BlockType, int, int, int, int)> platforms = [];
-                List<Func<BlockManager, Plant>> plants = [];
+                List<(BlockType, int, int)> blocks = [];
+                List<(Species, int, int)> plants = [];
                 Vector2 spawnPos = Vector2.Zero;
 
-                // Iterate through level's cells
-                for (int y = 0; y < levelH; y++) {
+                for (int y = 0; y < levelH; y++)
+                {
                     int cellRow = gr * levelH + y;
-                    for (int x = 0; x < levelW; x++) {
+                    for (int x = 0; x < levelW; x++)
+                    {
                         int cellCol = gc * levelW + x;
-                        int localX = x, localY = y; //yeah theres probably a better way to do this
+                        int localX = x, localY = y;
                         string cell = cells[cellRow][cellCol];
-                        switch (cell) {
-                            case "0": //player initial position
+
+                        switch (cell)
+                        {
+                            case "0": // player initial position
                                 spawnPos = new Vector2(x, y) * Consts.BlockWidth;
                                 break;
-                            case "d": //dirt block
-                                platforms.Add((BlockType.Dirt, x, y, 1, 1));
+
+                            case "d": // dirt block
+                                blocks.Add((BlockType.Dirt, x, y));
                                 break;
-                            case "m": //muck block
-                                platforms.Add((BlockType.Dirt, x, y, 1, 1));
+
+                            case "m": // muck block
+                                blocks.Add((BlockType.Dirt, x, y));   // or BlockType.Muck if you have it
                                 break;
-                            case "r": //stone block
-                                platforms.Add((BlockType.Stone, x, y, 1, 1));
-                                if (cellRow > 0 && cells[cellRow-1][cellCol].Length == 0) {
+
+                            case "r": // stone block + possible soil + plant
+                                blocks.Add((BlockType.Stone, x, y));
+
+                                if (cellRow > 0 && cells[cellRow - 1][cellCol].Length == 0)
+                                {
                                     int soilHeight = Math.Min(Funcs.RandInt(3, 5), cellRow);
-                                    if (soilHeight > 0) {
-                                        for (int i = 0; i < soilHeight; i++) {
+                                    if (soilHeight > 0)
+                                    {
+                                        for (int i = 0; i < soilHeight; i++)
+                                        {
                                             int biomeIndex = GenBiomeIndex(cellRow);
-                                            platforms.Add((biomeBlocks[biomeIndex], x, y-i-1, 1, 1));
-                                            if (i == soilHeight - 1 && Funcs.Random() < 0.15) {
-                                                plants.Add(b => PlantUtil.SpeciesToPlantInit[biomeSpecies[biomeIndex]](b, (localX, localY-soilHeight)));                                
+                                            BlockType soilType = biomeBlocks[biomeIndex];
+                                            blocks.Add((soilType, x, y - i - 1));
+
+                                            // Add plant on top of the highest soil
+                                            if (i == soilHeight - 1 && Funcs.Random() < 0.15f)
+                                            {
+                                                Species species = biomeSpecies[biomeIndex];
+                                                plants.Add((species, localX, localY - soilHeight));
                                             }
                                         }
                                     }
                                 }
                                 break;
-                            case "a": //apple plant
-                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Apple](b, (localX, localY)));
+
+                            case "a": // apple plant
+                                plants.Add((Species.Apple, localX, localY));
                                 break;
-                            case "g": //grass plant
-                                plants.Add(b => PlantUtil.SpeciesToPlantInit[Species.Grass](b, (localX, localY)));
+
+                            case "g": // grass plant
+                                plants.Add((Species.Grass, localX, localY));
                                 break;
+
                             default:
                                 break;
                         }
                     }
                 }
-                Levels[coords] = new(coords, spawnPos, [..platforms], [..plants]);
+
+                Levels[coords] = new StoryLevelDef(
+                    coords,
+                    spawnPos,
+                    [.. blocks],
+                    [.. plants]
+                );
             }
         }
     }

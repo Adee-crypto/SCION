@@ -34,6 +34,8 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity = new(), 
     public void SetVelocityY(float y) => Velocity = new(Velocity.X, y); //this is explicit to discourage use
     public void SetVelocity(Vector2 newVelocity) => Velocity = newVelocity; //this is explicit to discourage use
     public Vector2 Acceleration { get; private set; }
+    public void AddAcceleration(Vector2 delta) => Acceleration += delta; //used by ColliderMovement
+    public void ClearAcceleration() => Acceleration = Vector2.Zero;      //used by ColliderMovement
     public Vector2 Force { get => Acceleration * Mass; set { Acceleration = value / Mass; } }
     public Vector2 Momentum { get => Velocity * Mass; set { Velocity = value / Mass; } }
 
@@ -52,73 +54,95 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity = new(), 
         Acceleration = Vector2.Zero;
     }
 
-    public ((int, int)? collisionCoords, bool isGrounded, SurfaceType surface) UpdateMovement(float dt, CollisionManager collisionManager)
-    {
-        //add all acceleration to velocity and clear it
-        Acceleration += Vector2.UnitY * Gravity;
-        Velocity += Acceleration * dt;
-        Acceleration = Vector2.Zero;
-        //update position
-        return collisionManager.ManageBlockCollision(this, Velocity * dt);
-    }
+    // Forwarding wrappers — keep call sites in Player, Enemy, Projectile unchanged.
+    // Logic lives in ColliderMovement for cohesion.
+    public ((int, int)? collisionCoords, bool isGrounded, SurfaceType surface) UpdateMovement(
+        float dt, CollisionManager collisionManager)
+        => ColliderMovement.UpdateMovement(this, dt, collisionManager);
 
     public void UpdatePlayerVelocity(bool isGrounded, SurfaceType surface, float dt)
-    {
-        if (isGrounded)
-        {
-            switch (surface)
-            {
-                case SurfaceType.Bouncy:
-                    // Only added vertical bounce
-                    const float bounciness = 0.65f;          // 0 = no bounce, 1 = perfect bounce
-                    const float bounceThreshold = 15f;        //stop bouncing below this speed
-                    if (Math.Abs(Velocity.Y) > bounceThreshold)
-                        SetVelocityY(-Velocity.Y * bounciness);
-                    // Normal horizontal friction
-                    ApplyGroundFriction(dt);
-                    break;
-
-                case SurfaceType.Slippery:
-                    // No Work needed to reduce horizontal velocity
-                    break;
-
-                case SurfaceType.Sticky:
-                    
-                    const float stickyFrictionMultiplier = 4f;  // multiplier on top of normal friction
-                    float stickyResistance = Tunables.GroundResistance.Value * stickyFrictionMultiplier;
-                    if (Velocity.X < 0) SetVelocityX(Math.Min(Velocity.X + stickyResistance * dt, 0f));
-                    else SetVelocityX(Math.Max(Velocity.X - stickyResistance * dt, 0f));
-                    break;
-                    
-                    
-
-                default: // SurfaceType.Normal
-                    ApplyGroundFriction(dt);
-                    break;
-            }
-        }
-        else
-        {
-            // Air resistance
-            Acceleration -= Velocity * Tunables.AirResistance.Value;
-        }
-    }
-
-
-    private void ApplyGroundFriction(float dt)
-    {
-        if (Velocity.X < 0) SetVelocityX(Math.Min(Velocity.X + Tunables.GroundResistance.Value * dt, 0f));
-        else SetVelocityX(Math.Max(Velocity.X - Tunables.GroundResistance.Value * dt, 0f));
-    }
+        => ColliderMovement.UpdatePlayerVelocity(this, isGrounded, surface, dt);
 
     public bool Intersects(Collider other)
     {
-        return (2 * Math.Abs(Center.X - other.Center.X) < (Size.X + other.Size.X)) && (2 * Math.Abs(Center.Y - other.Center.Y) < (Size.Y + other.Size.Y));
+        return (2 * Math.Abs(Center.X - other.Center.X) < (Size.X + other.Size.X))
+            && (2 * Math.Abs(Center.Y - other.Center.Y) < (Size.Y + other.Size.Y));
     }
 
     public void KnockBack(Collider other)
     {
         int direction = Velocity.X < 0 ? -1 : 1;
         other.Momentum += new Vector2(direction * 100f, -100f);
+    }
+}
+
+/// <summary>
+/// Handles movement integration and surface friction for a Collider.
+/// Extracted from Collider to keep that class focused on state and geometry.
+/// </summary>
+public static class ColliderMovement
+{
+    public static ((int, int)? collisionCoords, bool isGrounded, SurfaceType surface) UpdateMovement(
+        Collider collider, float dt, CollisionManager collisionManager)
+    {
+        collider.AddAcceleration(Vector2.UnitY * collider.Gravity);
+        collider.SetVelocity(collider.Velocity + collider.Acceleration * dt);
+        collider.ClearAcceleration();
+        return collisionManager.ManageBlockCollision(collider, collider.Velocity * dt);
+    }
+
+    public static void UpdatePlayerVelocity(Collider collider, bool isGrounded, SurfaceType surface, float dt)
+    {
+        if (isGrounded)
+            ApplySurfaceFriction(collider, surface, dt);
+        else
+            collider.AddAcceleration(-collider.Velocity * Tunables.AirResistance.Value);
+    }
+
+    private static void ApplySurfaceFriction(Collider collider, SurfaceType surface, float dt)
+    {
+        switch (surface)
+        {
+            case SurfaceType.Bouncy:
+                ApplyBouncySurface(collider, dt);
+                break;
+            case SurfaceType.Slippery:
+                // No friction needed
+                break;
+            case SurfaceType.Sticky:
+                ApplyStickyFriction(collider, dt);
+                break;
+            default: // SurfaceType.Normal
+                ApplyGroundFriction(collider, dt);
+                break;
+        }
+    }
+
+    private static void ApplyBouncySurface(Collider collider, float dt)
+    {
+        const float bounciness = 0.65f;     // 0 = no bounce, 1 = perfect bounce
+        const float bounceThreshold = 15f;  // stop bouncing below this speed
+        if (Math.Abs(collider.Velocity.Y) > bounceThreshold)
+            collider.SetVelocityY(-collider.Velocity.Y * bounciness);
+        ApplyGroundFriction(collider, dt);
+    }
+
+    private static void ApplyStickyFriction(Collider collider, float dt)
+    {
+        const float stickyFrictionMultiplier = 4f;
+        float stickyResistance = Tunables.GroundResistance.Value * stickyFrictionMultiplier;
+        if (collider.Velocity.X < 0)
+            collider.SetVelocityX(Math.Min(collider.Velocity.X + stickyResistance * dt, 0f));
+        else
+            collider.SetVelocityX(Math.Max(collider.Velocity.X - stickyResistance * dt, 0f));
+    }
+
+    private static void ApplyGroundFriction(Collider collider, float dt)
+    {
+        float resistance = Tunables.GroundResistance.Value * dt;
+        if (collider.Velocity.X < 0)
+            collider.SetVelocityX(Math.Min(collider.Velocity.X + resistance, 0f));
+        else
+            collider.SetVelocityX(Math.Max(collider.Velocity.X - resistance, 0f));
     }
 }
