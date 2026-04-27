@@ -72,11 +72,7 @@ public class VoidPlant(BlockManager blockManager, (int, int) root) : Plant(block
             foreach (var (dx, dy) in Consts.orthoDirs)
             {
                 var neighbor = (p.Item1 + dx, p.Item2 + dy);
-                if (!visited.Contains(neighbor))
-                {
-                    visited.Add(neighbor);
-                    queue.Enqueue((neighbor, dist + 1f));
-                }
+                if (visited.Add(neighbor)) queue.Enqueue((neighbor, dist + 1f));
             }
         }
 
