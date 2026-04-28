@@ -52,7 +52,7 @@ public static class StoryLevelRegistry
                     int cellRow = gr * levelH + y;
                     for (int x = 0; x < levelW; x++) {
                         int cellCol = gc * levelW + x;
-                        
+
                         string cell = cells[cellRow][cellCol];
                         switch (cell) {
                             case "0": // player spawn
@@ -73,19 +73,30 @@ public static class StoryLevelRegistry
                                 if (cellRow > 0 && string.IsNullOrEmpty(cells[cellRow - 1][cellCol]))
                                 {
                                     int soilHeight = Math.Min(Funcs.RandInt(3, 5), cellRow);
-                                    if (soilHeight > 0)
-                                    {
-                                        for (int i = 0; i < soilHeight; i++)
-                                        {
+                                    if (soilHeight > 0) {
+                                        for (int i = 0; i < soilHeight; i++) {
                                             int biomeIndex = GenBiomeIndex(cellRow);
                                             BlockType soilType = biomeBlocks[biomeIndex];
-                                            blocks.Add((soilType, x, y - i - 1));
 
-                                            // Plant on top of highest soil block
-                                            if (i == soilHeight - 1 && Funcs.Random() < 0.15f)
-                                            {
-                                                Species species = biomeSpecies[biomeIndex];
-                                                plants.Add((species, x, y - soilHeight));
+                                            int thisY = y - i - 1;
+                                            if (thisY < 0) {
+                                                Levels[(coords.Item1, coords.Item2-1)].Blocks.Add((soilType, x, thisY + Consts.levelH));
+
+                                                // Plant on top of highest soil block
+                                                if (i == soilHeight - 1 && Funcs.Random() < 0.15f)
+                                                {
+                                                    Species species = biomeSpecies[biomeIndex];
+                                                    Levels[(coords.Item1, coords.Item2-1)].Plants.Add((species, x, y - soilHeight + Consts.levelH));
+                                                }
+                                            } else {
+                                                blocks.Add((soilType, x, thisY));
+
+                                                // Plant on top of highest soil block
+                                                if (i == soilHeight - 1 && Funcs.Random() < 0.15f)
+                                                {
+                                                    Species species = biomeSpecies[biomeIndex];
+                                                    plants.Add((species, x, y - soilHeight));
+                                                }
                                             }
                                         }
                                     }
@@ -98,17 +109,17 @@ public static class StoryLevelRegistry
                                 plants.Add((Species.Grass, x, y));
                                 break;
                             case "p": // pineapple
-                                plants.Add((Species.Grass, x, y));
+                                plants.Add((Species.Pineapple, x, y));
                                 break;
                             case "b": // sandbox/bomb
-                                plants.Add((Species.Grass, x, y));
+                                plants.Add((Species.Sandbox, x, y));
                                 break;
                             default:
                                 break;
                         }
                     }
                 }
-                Levels[coords] = new(coords, spawnPos, [.. blocks], [.. plants]);
+                Levels[coords] = new(coords, spawnPos, blocks, plants);
             }
         }
     }

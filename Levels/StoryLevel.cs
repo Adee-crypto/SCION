@@ -15,9 +15,11 @@ public sealed class StoryLevel : BaseLevel
     {
         this.def = def;
         player.Collider.SetInitialPosition(def.PlayerSpawnPos);
+        Vector2 playerV = player.Collider.Velocity;
         Reset();
         if (playerPos != Vector2.Zero) {
             player.Collider.SetPosition(playerPos);
+            player.Collider.SetVelocity(playerV);
         }
     }
 

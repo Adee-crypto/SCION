@@ -81,7 +81,6 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity = new(), 
         Acceleration += Vector2.UnitY * Gravity;
         
         //friction
-        Console.WriteLine(IsGrounded + " : " + Acceleration);
         if (IsGrounded) {
             //constant dynamic ground friction
             float deltaV = dt * Tunables.GroundResistance.Value * BlockFrictionCoefficient;
@@ -96,7 +95,6 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity = new(), 
         }
 
         Velocity += Acceleration * dt;
-        
         
         var (collisionCoords, surface) = collisionManager.ManageBlockCollision(this, Velocity * dt);
         BlockFrictionCoefficient = surface switch {SurfaceType.Slippery => 0.2f, SurfaceType.Sticky => 6f, _ => 1f};

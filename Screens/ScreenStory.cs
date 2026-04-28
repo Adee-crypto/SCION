@@ -45,7 +45,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     private KeyboardState prevKeyboard;
     private float levelSwapFadeAlpha;
     private bool levelSwapFading;
-    private const float LevelSwapSpeed = 1.25f;
+    private const float LevelSwapSpeed = 4f;
     // END DEBUG
 
     public ScreenStory(Game1 game, ScreenManager screenManager)
