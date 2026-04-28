@@ -44,15 +44,7 @@ public class PlayerSprite : Animated
         { (State.Dead, -1,  false, false), SpriteState.Dead          },
         { (State.Dead, -1,  false, true),  SpriteState.Dead          },
         { (State.Dead, -1,  true,  false), SpriteState.Dead          },
-        { (State.Dead, -1,  true,  true),  SpriteState.Dead          },
-        //{ (State.Attack,  1,  false, false), SpriteState.RightAttack },
-        //{ (State.Attack,  1,  false, true),  SpriteState.RightAttack },
-        //{ (State.Attack,  1,  true,  false), SpriteState.RightAttack },
-        //{ (State.Attack,  1,  true,  true),  SpriteState.RightAttack },
-        //{ (State.Attack, -1,  false, false), SpriteState.LeftAttack  },
-        //{ (State.Attack, -1,  false, true),  SpriteState.LeftAttack  },
-        //{ (State.Attack, -1,  true,  false), SpriteState.LeftAttack  },
-        //{ (State.Attack, -1,  true,  true),  SpriteState.LeftAttack  },
+        { (State.Dead, -1,  true,  true),  SpriteState.Dead          }
     };
 
     public PlayerSprite()

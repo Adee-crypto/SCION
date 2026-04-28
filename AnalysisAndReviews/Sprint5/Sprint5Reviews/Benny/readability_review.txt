@@ -1,9 +1,10 @@
 Author: Benny
-Date: 2026-04-13
-Sprint: 4
-Reviewed file: CollisionManager.cs
-Author of reviewed file: Sean
+Date: 2026-04-27
+Sprint: 5
+Reviewed file: PlayerSprite.cs
+Author of reviewed file: Benny, Aiden
 Time taken for review: 5 mins
  
-The comment above the BFS loop does a good job of orienting the reader. 
-The volume of code to be read is quite large, but it is necessary for the implementation.
+The StateTable lookup pattern is excellent for readability.
+
+The key comment above the dictionary makes the four-tuple structure immediately clear, and adding a new animation state requires only a new row with no logic changes.
