@@ -1,0 +1,11 @@
+Author: Sean Lipton
+Date: 2026-04-27
+Sprint: 5
+Reviewed file: Collider.cs
+Author of reviewed file: Sean Lipton + Advait
+Time taken for review: 5 minutes 
+
+It is more readable now that some of the logic have been split into other methods.
+IsGrounded makes more sense to be in the Collider than as a return from CollisionManager, it increases cohesion.
+Update is simpler now, especially with DirectionX extracted to a getting method.
+BlockFrictionCoefficient is a very elegant solution to dealing with multiple different static physics elements.

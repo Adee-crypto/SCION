@@ -97,7 +97,7 @@ public class Collider(Vector2 initialPosition, Vector2 initialVelocity = new(), 
         Velocity += Acceleration * dt;
         
         var (collisionCoords, surface) = collisionManager.ManageBlockCollision(this, Velocity * dt);
-        BlockFrictionCoefficient = surface switch {SurfaceType.Slippery => 0.2f, SurfaceType.Sticky => 6f, _ => 1f};
+        BlockFrictionCoefficient = surface switch {SurfaceType.Slippery => 0.2f, SurfaceType.Sticky or SurfaceType.Bouncy => 6f, _ => 1f};
 
         Acceleration = new();
         return collisionCoords;

@@ -52,8 +52,8 @@ public class BlockManager
 
         public readonly SurfaceType Surface => Type switch
         {
-            Grass => Bouncy,
-            Snow or Pineapple => Slippery,
+            Up => Bouncy,
+            Snow => Slippery,
             Muck => Sticky,
             _ => Normal
         };

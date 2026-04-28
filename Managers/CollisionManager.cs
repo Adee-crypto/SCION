@@ -45,14 +45,23 @@ public class CollisionManager(BlockManager blockManager)
         var candidates = BuildCandidateSpots(newPos, collider.Size);
         var (freePos, offsets) = FindFreePosition(candidates, collider.Size);
 
-        if (offsets.Any(o => o.X == 0)) collider.SetVelocityY(0);
-        if (offsets.Any(o => o.Y == 0)) collider.SetVelocityX(0);
         bool groundHit = offsets.Any(o => o.Y < 0);
 
         SurfaceType surface = SurfaceType.Normal;
         (int gx, int gy) = Funcs.GridCoords(collider.Center + Vector2.UnitY*collider.Size.Y);
         if (groundHit && blockManager.HasBlockAt((gx, gy)))
             surface = blockManager.BlockAt((gx, gy)).Surface;
+
+        if (offsets.Any(o => o.X == 0)) {
+            if (surface == SurfaceType.Bouncy) {
+                collider.SetVelocityY(-collider.Velocity.Y*0.8f);
+            } else {
+                collider.SetVelocityY(0);
+            }
+        }
+        if (offsets.Any(o => o.Y == 0)) {
+            collider.SetVelocityX(0);
+        }
 
         collider.SetPosition(freePos);
         collider.SetGrounded(groundHit);

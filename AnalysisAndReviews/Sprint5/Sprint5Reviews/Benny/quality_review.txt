@@ -1,0 +1,12 @@
+Author: Benny
+Date: 2026-04-27
+Sprint: 5
+Reviewed file: CollisionManager.cs
+Author of reviewed file: Sean
+Time taken for review: 8 mins
+ 
+The decomposition into BuildCandidateSpots and FindFreePosition makes ManageBlockCollision easier to maintain. 
+
+The tolerance constant "t" should be renamed like "PositionTolerance" and moved into the Consts class so its purpose is self-documenting.
+ 
+The bounce damping factor "0.8f" in ManageBlockCollision is a magic number. It should be moved into "Tunables" so it can be adjusted without hunting through the collision logic.

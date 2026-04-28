@@ -1,0 +1,15 @@
+Justin Imber
+27 April 2026
+Sprint 5
+
+File being reviewed: GravebindRootPlant.cs
+Author of file being reviewed: Advait Kakade
+
+Number of minutes taken to complete the review: 10
+
+Specific comments on code quality:
+Code is well-formatted, but has quite a few nested loops.
+
+A hypothetical change to make to the game related to file being reviewed and how the current implementation could or could not easily support that change:
+A hypothetical change to make to the game related to the GravebindRootPlant and a change that is planned according to comments is to make the plant apply void 
+resistance which would likely make it take longer to be corrupted by the void. This change would not be too difficult to implement.
