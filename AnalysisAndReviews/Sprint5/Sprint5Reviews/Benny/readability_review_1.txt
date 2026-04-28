@@ -1,8 +1,12 @@
 Author: Benny
-Date: 2026-04-13
-Sprint: 4
-Reviewed file: Menu.cs
-Author of reviewed file: Justin
-Time taken for review: 3 mins
+Date: 2026-04-27
+Sprint: 5
+Reviewed file: Collider.cs
+Author of reviewed file: Sean, Benny
+Time taken for review: 7 mins
  
-The one-liner delegation methods keep the public interface compact and scannable.
+The section comments do a good job of breaking up a long property list into scannable groups.
+
+The Update method chains gravity, friction, velocity integration, and collision in one body without any sub comments.
+
+Short inline labels on each physics step would make the sequence much easier to follow for someone unfamiliar with it.

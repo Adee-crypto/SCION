@@ -1,10 +1,10 @@
 Author: Sean Lipton
-Date: 2026-04-13
-Sprint: 4
-Reviewed file: GeneralPanel.cs
+Date: 2026-04-27
+Sprint: 5
+Reviewed file: PauseOverlay.cs
 Author of reviewed file: Justin Imber
 Time taken for review: 5 minutes 
 
-Sliders being bound to lambda expressions is good for maintainability because the bodies of the methods they call can be altered while the functionality of the sliders remains the same.
-The "magic" constants of and 100f are ok, it would probably be best if they were put into Consts just in case we ever want to chnge the range later instead of having to dig through code to find where its set.
-The coupling is a little strange, in the sense that both the rows set Tunables and AdjustVolumes get Tunables. Either Tunables should be contained within GeneralPanel or it should have more clear setter and getters.
+Immediately I notice it stores a reference to OverlayManager. This isn't great for maintainability, as it's always better for composition hierarchies to not have cycles.
+Having simple/blank onEnter and OnExit methods allows for more functionality in the future.
+It doesn't seem to be based on screen resizing, so it would be better to change it to something like how levelmanager is rescaled.
