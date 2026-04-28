@@ -1,10 +1,11 @@
 Author: Sean Lipton
-Date: 2026-04-13
-Sprint: 4
-Reviewed file: Tunables.cs
-Author of reviewed file: Justin Imber
+Date: 2026-04-27
+Sprint: 5
+Reviewed file: Collider.cs
+Author of reviewed file: Sean Lipton + Advait
 Time taken for review: 5 minutes 
 
-Despite the many lines, incredibly obvious pattern that does not make it difficult to structurally decipher.
-However, since everything is kind of grouped together like that, there's not really a distinction between different types of physics constants.
-So, some comments splitting up things into blocks, just like in Consts (which it is very similar to already) would help us to find what we're looking for more quickly in the future.
+It is more readable now that some of the logic have been split into other methods.
+IsGrounded makes more sense to be in the Collider than as a return from CollisionManager, it increases cohesion.
+Update is simpler now, especially with DirectionX extracted to a getting method.
+BlockFrictionCoefficient is a very elegant solution to dealing with multiple different static physics elements.
