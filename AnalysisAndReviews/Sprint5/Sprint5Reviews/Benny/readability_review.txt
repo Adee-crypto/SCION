@@ -1,0 +1,9 @@
+Author: Benny
+Date: 2026-04-13
+Sprint: 4
+Reviewed file: CollisionManager.cs
+Author of reviewed file: Sean
+Time taken for review: 5 mins
+ 
+The comment above the BFS loop does a good job of orienting the reader. 
+The volume of code to be read is quite large, but it is necessary for the implementation.

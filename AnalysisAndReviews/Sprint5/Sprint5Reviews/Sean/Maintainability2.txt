@@ -1,0 +1,9 @@
+Author: Sean Lipton
+Date: 2026-04-13
+Sprint: 4
+Reviewed file: Sword.cs
+Author of reviewed file: Benny Jiang
+Time taken for review: 5 minutes 
+
+There are a few magic constants, such as the animation frequency and the hitbox size, which could definitely vary if we were to add more items or even just different types of swords.
+Other than that, most other functionality is tightly bound to Collider which is good, as not much else needs to happen with the uncollected item until the player actually collides with it.

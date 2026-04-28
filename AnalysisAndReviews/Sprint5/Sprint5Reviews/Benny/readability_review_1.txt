@@ -1,0 +1,8 @@
+Author: Benny
+Date: 2026-04-13
+Sprint: 4
+Reviewed file: Menu.cs
+Author of reviewed file: Justin
+Time taken for review: 3 mins
+ 
+The one-liner delegation methods keep the public interface compact and scannable.

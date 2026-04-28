@@ -1,0 +1,12 @@
+Justin Imber
+13 April 2026
+Sprint 4
+
+File being reviewed: BlockManager.cs
+Author of file being reviewed: Sean Lipton
+
+Number of minutes taken to complete the review: 5
+
+Specific comments on what is readable and what is not:
+There are a lot of BlockType enums, but that's to be expected. Everything is readable except for all of the individual character variables in AddRectangleArray(). Not that it matters much because one
+can tell the goal of such a layout and it's understandable. It just hurts my eyes to look at several individual characters used in math sequences.

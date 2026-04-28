@@ -1,0 +1,9 @@
+Author: Benny
+Date: 2026-04-13
+Sprint: 4
+Reviewed file: Sword.cs
+Author of reviewed file: Benny
+Time taken for review: 5 mins
+
+Implemented `spawn()` to customize the object's spawn position. Constants can be moved into the `Const` class in the future.
+The else if branch in Draw already guarantees player.HasSword is true, making the redundant check player.HasSword && in that branch unnecessary.

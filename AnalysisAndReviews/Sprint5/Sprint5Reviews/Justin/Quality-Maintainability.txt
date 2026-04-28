@@ -1,0 +1,17 @@
+Justin Imber
+13 April 2026
+Sprint 4
+
+File being reviewed: Game1.cs
+Author of file being reviewed: Sean Lipton (most changes committed to this file this sprint), Benny Jiang, Justin Imber
+
+Number of minutes taken to complete the review: 10
+
+Specific comments on code quality:
+New fields look good and the changes made to the function for TogglePause are concise. All changes made seem reasonable and well-written.
+
+A hypothetical change to make to the game related to file being reviewed and how the current implementation could or could not easily support that change:
+Not specifically related to maintainability or quality, but a hypothetical change that will likely occur in the future is changing the initial volume levels. 
+Either the new sounds should be modified decibel-wise in the base file or the default values will be changed because they seem obnoxiously loud, even when set low.
+Changing the file's actual sound peaks will make it so we don't have to set the initial value so low, although the same could essentially be accomplished by using
+a percentage (float) to change the initial value we set.
