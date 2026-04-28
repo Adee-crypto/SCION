@@ -26,9 +26,11 @@ public static class Consts
     public const int levelW = 40, levelH = 30;
 
     //biome generation
-    public static readonly BlockType[] biomeBlocks = [BlockType.Muck, BlockType.Dirt, BlockType.Snow];
-    public static readonly Species[] biomeSpecies = [Species.Apple, Species.Grass, Species.Pineapple];
-    public static readonly (float bot, float top)[] bands = [(0, 0.3f), (0.6f, 1.3f), (1.7f, 4f)];
+    public static readonly BlockType[] biomeBlocks = [BlockType.Muck, BlockType.Dirt, BlockType.Snow, BlockType.Up];
+    public static readonly Species[] biomeSpecies = [Species.Apple, Species.Grass, Species.Pineapple, Species.Sandbox];
+    //stratographic layers, in between intervals are lerped
+    public static readonly (float bot, float top)[] bands = [(0, 0.3f), (0.6f, 1.3f), (1.7f, 3f), (3.1f, 4f)];
+    public static readonly (int min, int max)[] topsoilRanges = [(3, 4), (3, 4), (2, 3), (1, 1)];
 
     //physics
     public const float defaultGravity = 980f;

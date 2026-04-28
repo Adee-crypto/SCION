@@ -93,9 +93,14 @@ public abstract class BaseLevel : ILevel
         //check for player digging logic
         if (Player.IsBreakable)
         {
-            if (BlockManager.TryDigBelow(new(Player.Collider.Center.X, Player.Collider.Bottom)) is BlockManager.Block block
-                && PlantUtil.BlockToSpecies.TryGetValue(block.Type, out Species value))
-                Player.GetSeed(value);
+            if (BlockManager.TryDigBelow(new(Player.Collider.Center.X, Player.Collider.Bottom)) is BlockManager.Block block) {
+                if (PlantUtil.BlockToSpecies.TryGetValue(block.Type, out Species value)) {
+                    Player.GetSeed(value);
+                } else if (block.Type == BlockManager.Block.BlockType.Warp) {
+                    IsOver = true;
+                    EndReason = LevelEndReason.Completed;
+                }
+            }
             Player.IsBreakable = false;
         }
 

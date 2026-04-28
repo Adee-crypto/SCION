@@ -44,6 +44,7 @@ public static class SourceRects
         { BlockType.Sandbox, TileAt24(0, 0) },
         { BlockType.Muck, TileAt24(1, 0) },
         { BlockType.Pineapple, TileAt24(3, 0) },
+        { BlockType.Up, TileAt24(4, 0) },
         { BlockType.Stone, TileAt24(0, 1) },
         { BlockType.StoneBrick, TileAt24(1, 1) },
         { BlockType.Apple, TileAt24(2, 1) },
@@ -51,6 +52,7 @@ public static class SourceRects
         { BlockType.Snow, TileAt24(0, 2) },
         { BlockType.Dirt, TileAt24(2, 2) },
         { BlockType.Void, TileAt24(0, 3) },
+        { BlockType.Warp, TileAt24(1, 4) },
         //stinky
         { BlockType.Cherry, TileAt24(3, 9) },
         { BlockType.Gravebind, TileAt24(4, 12) },  // Change to Appropriate blocktype

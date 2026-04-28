@@ -233,7 +233,11 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
                 else if (player.Collider.Position.Y < 0) ShiftLevel(0, -1);
                 levelManager.Update(gameTime);
                 if (levelManager.IsGameOver) {
-                    state = StoryState.GameOver;
+                    if (levelManager.EndReason == LevelEndReason.Completed) {
+                        state = StoryState.Won;
+                    } else {
+                        state = StoryState.GameOver;
+                    }
                     return;
                 }
                 break;
@@ -294,6 +298,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
 
         // BEGIN DEBUG
 
+        //pink/black side indicators of where level continues
         foreach (var delta in Consts.orthoDirs) {
             var AdjCoord = (delta.Item1+currentLevelCoords.x, delta.Item2+currentLevelCoords.y);
             if (StoryLevelRegistry.Contains(AdjCoord)) {
@@ -315,6 +320,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
             }
         }
 
+        //fade transition
         if (levelSwapFading && levelSwapFadeAlpha > 0f)
         {
             var viewport = game.VirtualScreenSize;
@@ -323,6 +329,7 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
             spriteBatch.Draw(Assets.PixelTexture, fullscreenRect, Color.White * levelSwapFadeAlpha);
         }
         // END DEBUG
+        
         switch (state)
         {
             case StoryState.Playing:

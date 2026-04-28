@@ -28,10 +28,12 @@ public class BlockManager
             //platforms
             Stone,
             StoneBrick,
+            CrackedStoneBrick,
             Dirt,
             Muck,
             Snow,
-            CrackedStoneBrick,
+            Up,
+            Warp,
             //void
 
             Void
@@ -46,7 +48,7 @@ public class BlockManager
         }
 
         public readonly bool IsBreakable => Type switch
-        { Grass or Apple or Pineapple or Sandbox or Dirt or Muck => true, _ => false };
+        { Grass or Apple or Pineapple or Sandbox or Dirt or Muck or Warp => true, _ => false };
 
         public readonly SurfaceType Surface => Type switch
         {
