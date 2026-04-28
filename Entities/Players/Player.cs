@@ -186,7 +186,17 @@ public class Player : IPlayer
         int drawableAmount = Math.Min(Seeds.Count, maximumSeedsDrawable);
         for (int i = 0; i < drawableAmount; i++)
         {
-            spriteBatch.Draw(Assets.BlockSpriteSheet, Collider.Position - Consts.BlockWidth * new Vector2(0, i + 1), SourceRects.ProjectileSourceRects[Seeds[i]][0], Color.White);
+            spriteBatch.Draw(
+            Assets.BallTexture,
+            Collider.Position - Consts.BlockWidth * new Vector2(0, i + 1),
+            null,
+            Projectile.GetProjectileColor(Seeds[i]),
+            0f,
+            new Vector2(8, 8),
+            1f,
+            SpriteEffects.None,
+            0f
+            );
         }
 
         playerSprite.Draw(spriteBatch, Collider.Position);

@@ -70,10 +70,35 @@ public class Projectile : IProjectile
     }
 
     public void Kill() => IsDead = true;
-
+    
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (!IsDead)
-            spriteBatch.Draw(Assets.BlockSpriteSheet, Collider.Position, Sprite.CurrentSourceRect, Color.White, Collider.Angle, Sprite.Origin, 1f, SpriteEffects.None, 0f);
+    if (!IsDead)
+        spriteBatch.Draw(
+            Assets.BallTexture,
+            Collider.Position,
+            null,
+            GetProjectileColor(Type),
+            Collider.Angle,
+            new Vector2(8, 8),
+            1f,
+            SpriteEffects.None,
+            0f
+        );
     }
+
+    // 👇 PUT THE METHOD RIGHT HERE (inside the class, before the final closing brace)
+    public static Color GetProjectileColor(ProjectileType type)
+    {
+        return type switch
+        {
+            ProjectileType.Grass => Color.Brown,
+            ProjectileType.Apple => Color.Green,
+            ProjectileType.Pineapple => Color.Purple,
+            ProjectileType.Sandbox => Color.Red,
+            ProjectileType.Void => Color.White,
+            _ => Color.White
+        };
+    }
+
 }

@@ -15,6 +15,7 @@ public static class Assets
     public static Texture2D SwordTexture { get; set; }
     public static Texture2D BlockSpriteSheet { get; set; }
     public static Texture2D BlockPlayerSpriteSheet { get; set; }
+    public static Texture2D BallTexture { get; set; }
     public static Texture2D ButtonTexture { get; set; }
     public static Texture2D ResetTexture { get; set; }
     public static Texture2D VoidspawnTexture { get; set; }
