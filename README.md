@@ -55,9 +55,9 @@ SCION is a platformer where the environment is constantly built through organic 
 * ✅ Various static physics (sticky, slippery, and bouncy surfaces)
 * ✅ Massive csv reading
 * ✅ Break ein block
+* ✅ Player projectiles damage enemies
 * 🔄 *In Progress: More species.*
 * 🔄 *In Progress: Customize projectile physics (different weights, air resistances).*
-* 🔄 *In Progress: Player projectiles damage enemies.*
 * 🔄 *In Progress: Arcade mode (+ camera movement).*
 Misc development notes:
 * Instead of using specific task-tracking software, due to our small team, we use a Google Doc and strikethrough tasks as we complete them. We communicate heavily over Discord so we don't get in each other's way and can take on any role when someone's stuck
