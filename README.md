@@ -53,6 +53,8 @@ SCION is a platformer where the environment is constantly built through organic 
 * ✅ Randomly generated level biomes
 * ✅ Dynamic Consonant and Dissonant SFX
 * ✅ Various static physics (sticky, slippery, and bouncy surfaces)
+* ✅ Massive csv reading
+* ✅ Break ein block
 * 🔄 *In Progress: More species.*
 * 🔄 *In Progress: Customize projectile physics (different weights, air resistances).*
 * 🔄 *In Progress: Player projectiles damage enemies.*
