@@ -32,20 +32,47 @@ public class Game1 : Game
 
     public Game1()
     {
-        _graphics = new(this);
+        _graphics = new(this)
+        {
+            HardwareModeSwitch = false
+        };
+
         Window.AllowUserResizing = true;
-        Window.ClientSizeChanged += new EventHandler<EventArgs>(OnResize);
+        Window.ClientSizeChanged += OnResize;
+        // OLD: Window.ClientSizeChanged += new EventHandler<EventArgs>(OnResize);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
 
+    public void ToggleFullscreen()
+    {
+        _graphics.IsFullScreen = !_graphics.IsFullScreen;
+
+        if (_graphics.IsFullScreen)
+        {
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        }
+        else
+        {
+            _graphics.PreferredBackBufferWidth = Consts.DefaultScreenSize.w;
+            _graphics.PreferredBackBufferHeight = Consts.DefaultScreenSize.h;
+        }
+
+        _graphics.ApplyChanges();
+        OnResize(null, null);
+    }
+
     private void OnResize(object sender, EventArgs e)
+    {
+        ScreenSize = (Window.ClientBounds.Width, Window.ClientBounds.Height);
+        RecalculateTransform();
+    }
+
+    private void RecalculateTransform()
     {
         //resizing _graphics
         ScreenSize = (Window.ClientBounds.Width, Window.ClientBounds.Height);
-        _graphics.PreferredBackBufferWidth = ScreenSize.w;
-        _graphics.PreferredBackBufferHeight = ScreenSize.h;
-        _graphics.ApplyChanges();
         //recalculate transformation matrix with letterboxing
         scale = Math.Min(ScreenSize.w / Consts.LevelSize.X, ScreenSize.h / Consts.LevelSize.Y)*0.9f;
         transform = Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(RawScreenSizeVec/2, 0));

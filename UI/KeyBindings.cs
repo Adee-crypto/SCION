@@ -28,7 +28,8 @@ public static class KeyBindings
             {new[] {Keys.Q}, game.Exit},
             {new[] {Keys.R}, game.ResetLevel},
             {new[] {Keys.E}, () => Target(game)?.ToggleDamaged()}, // for DEBUG
-            {new[] {Keys.M}, Funcs.MuteAndUnmuteMusic}
+            {new[] {Keys.M}, Funcs.MuteAndUnmuteMusic},
+            {new[] {Keys.F11,}, game.ToggleFullscreen}
         };
     }
 }
