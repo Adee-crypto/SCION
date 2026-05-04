@@ -115,8 +115,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     {
         gameOverMenu.ClearButtons();
 
-        float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
-        float y = game.GraphicsDevice.Viewport.Height * 0.4f;
+        float x = (Consts.DefaultScreenSize.w - buttonSize.X) / 2;
+        float y = Consts.DefaultScreenSize.h * 0.4f;
 
         gameOverMenu.AddButton(new(
             Assets.UiFont,
@@ -148,8 +148,8 @@ public class ScreenStory : IScreen, IResettableScreen, IPausableScreen, IPlayerP
     {
         winMenu.ClearButtons();
 
-        float x = (game.GraphicsDevice.Viewport.Width - buttonSize.X) / 2;
-        float y = game.GraphicsDevice.Viewport.Height * 0.4f;
+        float x = (Consts.DefaultScreenSize.w - buttonSize.X) / 2;
+        float y = Consts.DefaultScreenSize.h * 0.4f;
 
         winMenu.AddButton(new(
             Assets.UiFont,
