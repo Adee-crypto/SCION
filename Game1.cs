@@ -39,7 +39,6 @@ public class Game1 : Game
 
         Window.AllowUserResizing = true;
         Window.ClientSizeChanged += OnResize;
-        // OLD: Window.ClientSizeChanged += new EventHandler<EventArgs>(OnResize);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
