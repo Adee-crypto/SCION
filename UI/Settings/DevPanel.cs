@@ -87,7 +87,7 @@ public class DevPanel : ISettingsPanel
 
         contentBounds = new Rectangle(
             panelBounds.X + Padding,
-            panelBounds.Y + HeaderHeight,
+            panelBounds.Y + Padding,
             panelBounds.Width - (Padding * 2),
             panelBounds.Height - HeaderHeight - Padding
         );

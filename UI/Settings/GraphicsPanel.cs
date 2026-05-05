@@ -10,5 +10,10 @@ public class GraphicsPanel : SettingsListPanel
     protected override void BuildRows()
     {
         // TODO: Implement Graphics Settings
+        Rows.Add(new ToggleRow(
+            "Fullscreen",
+            () => Game.IsFullScreen,
+            v => Game.ToggleFullscreen()
+        ));
     }
 }

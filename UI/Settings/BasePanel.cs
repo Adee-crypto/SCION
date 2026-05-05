@@ -83,7 +83,12 @@ public abstract class BasePanel : ISettingsPanel
 
     protected virtual void DrawBackground(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Assets.PixelTexture, PanelBounds, Color.White * 0.92f);
+        spriteBatch.Draw(Assets.PixelTexture, PanelBounds, Color.Gray * 0.12f);
+        spriteBatch.Draw(
+            Assets.PixelTexture,
+            new Rectangle(ContentBounds.X, ContentBounds.Y - 8, ContentBounds.Width, 2),
+            Color.Black * 0.25f
+        );
     }
 
     protected abstract void OnBuildPanel();

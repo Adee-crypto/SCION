@@ -29,6 +29,7 @@ public class Game1 : Game
     private readonly OverlayManager overlayManager = new();
     public ScreenManager ScreenManager => screenManager;
     public OverlayManager OverlayManager => overlayManager;
+    public bool IsFullScreen => _graphics.IsFullScreen;
 
     public Game1()
     {
