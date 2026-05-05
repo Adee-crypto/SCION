@@ -79,10 +79,10 @@ public class DevPanel : ISettingsPanel
         (int w, int h) = game.VirtualScreenSize.ToPoint();
 
         panelBounds = new Rectangle(
-            (int)(w * 0.32f),
-            (int)(h * 0.18f),
-            (int)(w * 0.60f),
-            (int)(h * 0.68f)
+            (int)(w * 0.27f),
+            (int)(h * 0.27f),
+            (int)(w * 0.56f),
+            (int)(h * 0.52f)
         );
 
         contentBounds = new Rectangle(
