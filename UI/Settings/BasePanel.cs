@@ -43,7 +43,7 @@ public abstract class BasePanel : ISettingsPanel
         (int w, int h) = Game.VirtualScreenSize.ToPoint();
 
         PanelBounds = new Rectangle(
-            (int)(w * 0.27f),
+            (int)(w * 0.28f),
             (int)(h * 0.27f),
             (int)(w * 0.40f),
             (int)(h * 0.56f)

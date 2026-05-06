@@ -79,7 +79,7 @@ public class SliderRow(string rowLabel, float minVal, float maxVal, Func<float> 
         spriteBatch.Draw(Assets.ButtonTexture, bounds, Color.White);
         spriteBatch.DrawString(Assets.UiFont, label, new Vector2(bounds.X + 12,  bounds.Y + 8), Color.Black);
 
-        string valueText = $"{value:0.##}";
+        string valueText = $"{value:0.}";
         spriteBatch.DrawString(Assets.UiFont, valueText, new Vector2(bounds.X + 12, bounds.Y + 30), Color.Black);
 
         spriteBatch.Draw(Assets.PixelTexture, sliderTrack, Color.DarkGray);
