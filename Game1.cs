@@ -74,7 +74,7 @@ public class Game1 : Game
         //resizing _graphics
         ScreenSize = (Window.ClientBounds.Width, Window.ClientBounds.Height);
         //recalculate transformation matrix with letterboxing
-        scale = Math.Min(ScreenSize.w / Consts.LevelSize.X, ScreenSize.h / Consts.LevelSize.Y)*0.9f;
+        scale = Math.Min(ScreenSize.w / Consts.LevelSize.X, ScreenSize.h / Consts.LevelSize.Y);
         transform = Matrix.CreateTranslation(new(-Consts.LevelSize/2, 0)) * Matrix.CreateScale(scale) * Matrix.CreateTranslation(new(RawScreenSizeVec/2, 0));
         MouseController.SetTransform(Matrix.Invert(transform));
     }
